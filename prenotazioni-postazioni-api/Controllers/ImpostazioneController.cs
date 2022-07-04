@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Repositories;
+using prenotazioni_postazioni_api.Services;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -8,7 +9,8 @@ namespace prenotazioni_postazioni_api.Controllers
     public class ImpostazioneController : Controller
     {
 
-        private ImpostazioneRepository impostazioneRepository = ImpostazioneRepository.GetInstance();
+        private ImpostazioneRepository impostazioneRepository = new ImpostazioneRepository();
+        private ImpostazioneService impostazioneService = new ImpostazioneService();
 
 
         /// <summary>
@@ -19,7 +21,8 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("get-impostazione-emergenza")]
         public IActionResult GetImpostazioneEmergenza()
         {
-            return Ok(true);
+            bool impostazione = impostazioneService.GetImpostazioneEmergenza();
+            return Ok(impostazione);
         }
 
         /// <summary>
@@ -30,9 +33,17 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </param>
         [HttpPost]
         [Route("change-impostazione-emergenza")]
-        public void ChangeImpostazioneEmergenza(bool userValue)
+        public IActionResult ChangeImpostazioneEmergenza(bool userValue)
         {
-            
+            bool hasChanged = impostazioneService.ChangeImpostazioniEmergenza(userValue);
+            if (hasChanged)
+            {
+                return Ok(hasChanged);
+            }
+            else
+            {
+                return StatusCode(500);
+            }
         }
     }
 }
