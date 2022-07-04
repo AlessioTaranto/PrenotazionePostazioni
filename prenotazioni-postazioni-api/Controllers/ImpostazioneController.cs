@@ -6,7 +6,7 @@ namespace prenotazioni_postazioni_api.Controllers
 {
     [ApiController]
     [Route("/api/impostazioni")]
-    public class ImpostazioneController : Controller
+    public class ImpostazioneController : ControllerBase
     {
         private ImpostazioneService impostazioneService = new ImpostazioneService();
 

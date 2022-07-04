@@ -4,7 +4,7 @@ namespace prenotazioni_postazioni_api.Controllers
 {
     [ApiController]
     [Route("/api/voti")]
-    public class VotoController : Controller
+    public class VotoController : ControllerBase
     {
         public IActionResult Index()
         {
