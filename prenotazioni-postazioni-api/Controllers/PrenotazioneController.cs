@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prenotazioni_postazioni_api.Services;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -6,38 +7,40 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/prenotazioni")]
     public class PrenotazioneController : Controller
     {
+        private PrenotazioneService prenotazioneService = new PrenotazioneService();
+
         [HttpGet]
         [Route("/get-prenotazione-by-id")]
-        /*public Prenotazione getPrenotazioneById(string id)
+        public IActionResult GetPrenotazioneById(int id)
         {
-
-        }*/
+            Prenotazione prenotazione = prenotazioneService.
+        }
 
         [HttpGet]
         [Route("/get-all-prenotazioni")]
-        /*public List<Prenotazione> GetAllPrenotazioni()
+        public IActionResult GetAllPrenotazioni()
         {
 
-        }*/
+        }
 
         [HttpGet]
         [Route("/get-prenotazioni-by-stanza")]
-        /*public List<Prenotazione> GetPrenotazioneByStanza(string idStanza)
+        public IActionResult GetPrenotazioneByStanza(string idStanza)
         {
 
-        }*/
+        }
 
         [HttpGet]
         [Route("/get-prenotazioni-by-utente")]
-        /*public List<Prenotazione> GetPrenotazioneByUtente(string idUtente)
+        public IActionResult GetPrenotazioneByUtente(string idUtente)
         {
 
-        }*/
+        }
 
 
         [HttpPost]
         [Route("/add-prenotazione")]
-        public bool AddPrenotazione()
+        public IActionResult AddPrenotazione()
         {
 
         }
