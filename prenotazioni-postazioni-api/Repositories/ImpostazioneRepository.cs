@@ -13,7 +13,6 @@
             return false;
         }
 
-
         /// <summary>
         /// Aggiorna il campo di Impostazioni Emergenza nel Database con il valore inserito nel primo parametro
         /// </summary>
