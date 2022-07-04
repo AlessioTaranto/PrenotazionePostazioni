@@ -4,7 +4,7 @@ namespace prenotazioni_postazioni_api.Controllers
 {
     [ApiController]
     [Route("/api/utenti")]
-    public class UtenteCotroller : Controller
+    public class UtenteCotroller : ControllerBase
     {
         public IActionResult Index()
         {

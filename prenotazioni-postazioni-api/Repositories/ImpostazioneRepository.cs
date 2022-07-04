@@ -4,9 +4,9 @@
     {
 
         /// <summary>
-        /// Restituisce il valore Impostazione Emergenza situato nella tabella Impostazioni nel database.
+        /// Query al db per restituire il campo Impostazione Emergenza
         /// </summary>
-        /// <returns>Valore effettivo dell'impostazione di emergenza. True, o False</returns>
+        /// <returns>Lo stato dell'Impostazione Emergenza</returns>
         public bool FindImpostazioneEmergenza()
         {
             //TODO si bisogna fare una query al db
@@ -14,11 +14,11 @@
         }
 
         /// <summary>
-        /// Aggiorna il campo di Impostazioni Emergenza nel Database con il valore inserito nel primo parametro
+        /// Query al db per aggiornare lo stato di Impostazione Emergenza
         /// </summary>
-        /// <param name="userValue">Il valore con cui si aggiornera Impostazioni Emergenza</param>
-        /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
-        public bool UpdateImpostazioneEmergenza(bool userValue)
+        /// <param name="userValue">valore aggiornato, sostituendo lo stato di Impostazione Emergenza vecchia presente nel Database</param>
+        /// <returns>Lo stato di Impostazione Emergenza nuova</returns>
+     public bool UpdateImpostazioneEmergenza(bool userValue)
         {
             //TODO si bisogna fare una query al db per aggiornare il campo IMPOSTAZIONE EMERGENZA con *userValue*
             return false;
