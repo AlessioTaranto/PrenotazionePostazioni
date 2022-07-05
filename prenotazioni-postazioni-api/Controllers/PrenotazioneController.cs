@@ -89,7 +89,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/add-prenotazione")]
         public IActionResult AddPrenotazione([FromBody] PrenotazioneDto prenotazioneDto)
         {
-            return Ok(prenotazioneService.save(prenotazioneDto));
+            return Ok(prenotazioneService.Save(prenotazioneDto));
         }
 
     }
