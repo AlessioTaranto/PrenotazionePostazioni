@@ -6,9 +6,33 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/voti")]
     public class VotoController : ControllerBase
     {
-        public IActionResult Index()
+        /// <summary>
+        /// Serve per ottenere l'elenco di votazioni effettuate da un utente verso gli altri
+        /// </summary>
+        /// <param name="idUtente"></param>
+        /// <returns>
+        /// Restituisce una lista di voti in caso di ricerca con esito positivo
+        /// </returns>
+        [Route("getVotiFatti")]
+        public IActionResult GetVotiFromUtente(int idUtente)
         {
-            return View();
+
         }
+
+        /// <summary>
+        /// Serve per ottenere l'elenco di tutte le votazioni che un utente ha ricevuto
+        /// </summary>
+        /// <param name="idUtente"></param>
+        /// <returns>
+        /// Restituisce una lista di voti in caso di ricerca con esito positivo
+        /// </returns>
+        [Route("getVotiOfUtente")]
+        public IActionResult GetVotiToUtente(int idUtente)
+        {
+
+        }
+
+
+
     }
 }
