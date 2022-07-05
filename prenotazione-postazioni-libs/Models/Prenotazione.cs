@@ -9,14 +9,21 @@ namespace prenotazione_postazioni_libs.Models
     internal class Prenotazione
     {
 
-        private int idPrenotazioni;
-        private DateOnly date;
-        private int idStanza;
-        private int idUtente;
+        private int idPrenotazioni { get; set; }
+        private DateOnly date { get; set; }
+        private int idStanza { get; set; }
+        private int idUtente { get; set; }
 
-        public int IdPrenotazioni { get => idPrenotazioni; set => idPrenotazioni = value; }
-        public DateOnly Date { get => date; set => date = value; }
-        public int IdStanza { get => idStanza; set => idStanza = value; }
-        public int IdUtente { get => idUtente; set => idUtente = value; }
+        public Prenotazione(int idPrenotazioni, DateOnly date, int idStanza, int idUtente)
+        {
+            this.idPrenotazioni = idPrenotazioni;
+            this.date = date;
+            this.idStanza = idStanza;
+            this.idUtente = idUtente;
+        }
+
+        public Prenotazione()
+        {
+        }
     }
 }

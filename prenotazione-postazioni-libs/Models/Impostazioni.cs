@@ -9,8 +9,7 @@ namespace prenotazione_postazioni_libs.Models
     internal class Impostazioni
     {
 
-        private static bool modEmergenza;
+        private static bool modEmergenza { get; set; }
 
-        public static bool ModEmergenza { get => modEmergenza; set => modEmergenza = value; }
     }
 }
