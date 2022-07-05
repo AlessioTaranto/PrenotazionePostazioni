@@ -208,19 +208,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\stefa\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\c#\\prenotazioni-posti-api\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "projectUniqueName": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
       "projectName": "prenotazioni-postazioni-api",
-      "projectPath": "C:\\Users\\User\\Desktop\\c#\\prenotazioni-posti-api\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\c#\\prenotazioni-posti-api\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
+      "projectPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "packagesPath": "C:\\Users\\stefa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\stefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
