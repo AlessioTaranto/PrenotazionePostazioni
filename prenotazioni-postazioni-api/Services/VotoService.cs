@@ -1,4 +1,5 @@
-﻿using prenotazioni_postazioni_api.Repositories;
+﻿using prenotazione_postazioni_libs.Dto;
+using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 
 namespace prenotazioni_postazioni_api.Services
@@ -7,19 +8,20 @@ namespace prenotazioni_postazioni_api.Services
     {
         private VotoRepository votoRepository = new VotoRepository();
 
-        internal VotoDto GetVotiFromUtente(int idUtente)
+        internal Voto GetVotiFromUtente(int idUtente)
         {
             return votoRepository.FindAllByIdUtenteFrom(idUtente);
         }
 
-        internal VotoDto GetVotiToUtente(int idUtente)
+        internal Voto GetVotiToUtente(int idUtente)
         {
             return votoRepository.FindAllByIdUtenteTo(idUtente);
         }
 
-        internal VotoDto MakeVotoToUtente(UtenteDto utenteTo, List<UtenteDto> utenteFrom)
+        internal Voto MakeVotoToUtente(UtenteDto utenteTo, List<UtenteDto> utenteFrom)
         {
-            return votoRepository.UpdateVoti(utenteTo, utenteFrom);
+            return null;
+            //return votoRepository.UpdateVoti(utenteTo, utenteFrom);
         }
     }
 }

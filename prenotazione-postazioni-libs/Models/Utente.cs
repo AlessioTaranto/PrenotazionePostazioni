@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    public class UtenteDto
+    public class Utente
     {
         public int IdUtente { get; set; }
         public string Nome { get; set; }
@@ -20,7 +20,7 @@ namespace prenotazione_postazioni_libs.Models
         private Exception ModelException { get; set; }
         public bool IsValid { get; set; } = false;
 
-        public UtenteDto(int idUtente, string nome, string cognome, string image, string email, int idRuolo)
+        public Utente(int idUtente, string nome, string cognome, string image, string email, int idRuolo)
         {
             this.IdUtente = idUtente;
             this.Nome = nome;
@@ -32,7 +32,7 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
-        public UtenteDto()
+        public Utente()
         {
         }
 

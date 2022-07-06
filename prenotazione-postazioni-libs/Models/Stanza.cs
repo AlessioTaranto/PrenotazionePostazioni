@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    public class StanzaDto
+    public class Stanza
     {
 
         public int IdStanza { get; set; }
@@ -19,7 +19,7 @@ namespace prenotazione_postazioni_libs.Models
         private Exception ModelException { get; set; }
         public bool isValid { get; set; } = false;
 
-        public StanzaDto(int idStanza, string nome, int postiMax, int postiMaxEmergenza)
+        public Stanza(int idStanza, string nome, int postiMax, int postiMaxEmergenza)
         {
             this.IdStanza = idStanza;
             this.Nome = nome;
@@ -29,7 +29,7 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
-        public StanzaDto()
+        public Stanza()
         {
         }
 
