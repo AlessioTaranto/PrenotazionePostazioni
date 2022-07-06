@@ -1,3 +1,4 @@
+<<<<<<< feature/client
 <<<<<<< Updated upstream
 is_global = true
 build_property.TargetFramework = net6.0
@@ -21,3 +22,15 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = prenotazione_postazioni_libs
 build_property.ProjectDir = C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-libs\
 >>>>>>> Stashed changes
+=======
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = prenotazione_postazioni_libs
+build_property.ProjectDir = C:\Users\User\Desktop\c#\prenotazioni-posti-api\prenotazione-postazioni\prenotazione-postazioni-libs\
+>>>>>>> Add files via upload
