@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
+using prenotazione_postazioni_libs.Models;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
