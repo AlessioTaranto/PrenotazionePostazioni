@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazioni-postazioni-api
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni-libs", "prenotazione-postazioni-libs\prenotazione-postazioni-libs.csproj", "{415E7403-E1BD-44B2-8D70-E7EC6AFF7F2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test-db", "test-db\test-db.csproj", "{67E9E84D-086A-46CF-8AA6-6A2479743E86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
