@@ -12,7 +12,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="idPrenotazione">ID Prenotazione da trovare</param>
         /// <returns>Prenotazione trovata, altrimenti null</returns>
-        internal Prenotazione GetPrenotazioneById(int idPrenotazione)
+        internal PrenotazioneDto GetPrenotazioneById(int idPrenotazione)
         {
             return prenotazioneRepository.FindById(idPrenotazione);
         }
@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="idStanza">ID della stanza associata alla Prenotazione da trovare</param>
         /// <returns>Prenotazione trovata, altrimenti null</returns>
-        internal Prenotazione GetPrenotazioneByStanza(string idStanza)
+        internal PrenotazioneDto GetPrenotazioneByStanza(string idStanza)
         {
             return prenotazioneRepository.FindByStanza(idStanza);
         }
@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Services
         /// Trova tutte le prenotazioni presenti nel Database
         /// </summary>
         /// <returns>Lista di Prenotazioni trovate nel Database</returns>
-        internal List<Prenotazione> GetAllPrenotazioni()
+        internal List<PrenotazioneDto> GetAllPrenotazioni()
         {
             return prenotazioneRepository.FindAll();
         }
@@ -41,7 +41,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="idUtente">ID utente associata alla Prenotazione</param>
         /// <returns>Prenotazione trovata, altrimenti null</returns
-        internal Prenotazione GetPrenotazioneByUtente(string idUtente)
+        internal PrenotazioneDto GetPrenotazioneByUtente(string idUtente)
         {
             return prenotazioneRepository.FindByUtente(idUtente);
         }

@@ -12,7 +12,7 @@ namespace prenotazioni_postazioni_api.Services
         /// restituisce tutte le stanze presenti nel database
         /// </summary>
         /// <returns>una lista di stanza</returns>
-        internal List<Stanza> GetAllStanze()
+        internal List<StanzaDto> GetAllStanze()
         {
             return stanzaRepository.FindAll();
         }
@@ -22,7 +22,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>Stanza trovata, null altrimenti</returns>
-        internal Stanza GetStanzaByid(int id)
+        internal StanzaDto GetStanzaByid(int id)
         {
             return stanzaRepository.FindById(id);
         }
@@ -32,7 +32,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="stanzaName">il nome della stanza da trovare</param>
         /// <returns>stanza trovata, null altrimenti</returns>
-        internal Stanza GetStanzaByName(string stanzaName)
+        internal StanzaDto GetStanzaByName(string stanzaName)
         {
             return stanzaRepository.FindByName(stanzaName);
         }

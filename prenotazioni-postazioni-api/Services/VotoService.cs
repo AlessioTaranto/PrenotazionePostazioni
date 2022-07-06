@@ -7,17 +7,17 @@ namespace prenotazioni_postazioni_api.Services
     {
         private VotoRepository votoRepository = new VotoRepository();
 
-        internal Voto GetVotiFromUtente(int idUtente)
+        internal VotoDto GetVotiFromUtente(int idUtente)
         {
             return votoRepository.FindAllByIdUtenteFrom(idUtente);
         }
 
-        internal Voto GetVotiToUtente(int idUtente)
+        internal VotoDto GetVotiToUtente(int idUtente)
         {
             return votoRepository.FindAllByIdUtenteTo(idUtente);
         }
 
-        internal Voto MakeVotoToUtente(UtenteDto utenteTo, List<UtenteDto> utenteFrom)
+        internal VotoDto MakeVotoToUtente(UtenteDto utenteTo, List<UtenteDto> utenteFrom)
         {
             return votoRepository.UpdateVoti(utenteTo, utenteFrom);
         }

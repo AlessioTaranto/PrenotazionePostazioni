@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getRuoloUtente")]
         public IActionResult GetRuoloUtenteByUtenteId(int idUtente)
         {
-            Ruolo ruolo = ruoloService.GetRuoloByUtenteId(idUtente);
+            RuoloDto ruolo = ruoloService.GetRuoloByUtenteId(idUtente);
             if (ruolo == null)
             {
                 return NotFound();

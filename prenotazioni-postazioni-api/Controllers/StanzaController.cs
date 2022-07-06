@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzeById")]
         public IActionResult GetStanzaById(int id)
         {
-            Stanza stanza = stanzaService.GetStanzaByid(id);
+            StanzaDto stanza = stanzaService.GetStanzaByid(id);
             if (stanza == null)
             {
                 return NotFound();
@@ -51,7 +51,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzaByName")]
         public IActionResult GetStanzaByName(string stanzaName)
         {
-            Stanza stanza = stanzaService.GetStanzaByName(stanzaName);
+            StanzaDto stanza = stanzaService.GetStanzaByName(stanzaName);
             if(stanza == null)
             {
                 return NotFound();

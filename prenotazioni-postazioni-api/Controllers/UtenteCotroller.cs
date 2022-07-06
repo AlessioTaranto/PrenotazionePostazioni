@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getUtenteById")]
         public IActionResult GetUtenteById(int id)
         {
-            Utente utente = utenteService.GetUtenteById(id);
+            UtenteDto utente = utenteService.GetUtenteById(id);
             if (utente == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getUtenteByEmail")]
         public IActionResult GetUtenteByEmail(string email)
         {
-            Utente utente = utenteService.GetUtenteByEmail(email);
+            UtenteDto utente = utenteService.GetUtenteByEmail(email);
             if(utente == null)
             {
                 return NotFound();

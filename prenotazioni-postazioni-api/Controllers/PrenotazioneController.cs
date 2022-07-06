@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-prenotazione-by-id")]
         public IActionResult GetPrenotazioneById(int idPrenotazione)
         {
-            Prenotazione prenotazione = prenotazioneService.GetPrenotazioneById(idPrenotazione);
+            PrenotazioneDto prenotazione = prenotazioneService.GetPrenotazioneById(idPrenotazione);
             if(prenotazione == null)
             {
                 return NotFound();
@@ -51,7 +51,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-prenotazioni-by-stanza")]
         public IActionResult GetPrenotazioneByStanza(string idStanza)
         {
-            Prenotazione prenotazione = prenotazioneService.GetPrenotazioneByStanza(idStanza);
+            PrenotazioneDto prenotazione = prenotazioneService.GetPrenotazioneByStanza(idStanza);
             if(prenotazione == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-prenotazioni-by-utente")]
         public IActionResult GetPrenotazioneByUtente(string idUtente)
         {
-            Prenotazione prenotazione = prenotazioneService.GetPrenotazioneByUtente(idUtente);
+            PrenotazioneDto prenotazione = prenotazioneService.GetPrenotazioneByUtente(idUtente);
             if (prenotazione == null)
             {
                 return NotFound();

@@ -8,7 +8,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public Ruolo FindByUtenteId(int idUtente)
+        public RuoloDto FindByUtenteId(int idUtente)
         {
             
             return null;
