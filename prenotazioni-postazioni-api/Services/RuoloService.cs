@@ -1,5 +1,5 @@
-
-﻿using prenotazioni_postazioni_api.Repositories;
+using prenotazione_postazioni_libs.Dto;
+using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 
 namespace prenotazioni_postazioni_api.Services
@@ -14,7 +14,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public RuoloDto GetRuoloByUtenteId(int idUtente)
+        public Ruolo GetRuoloByUtenteId(int idUtente)
         {
             return ruoloRepository.FindByUtenteId(idUtente);
         }

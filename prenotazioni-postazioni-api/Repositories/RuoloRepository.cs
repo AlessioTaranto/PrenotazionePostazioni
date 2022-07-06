@@ -1,3 +1,4 @@
+using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -8,7 +9,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public RuoloDto FindByUtenteId(int idUtente)
+        public Ruolo FindByUtenteId(int idUtente)
         {
             
             return null;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    public class ImpostazioniDto
+    public class Impostazioni
     {
 
         public static bool ModEmergenza { get; set; }

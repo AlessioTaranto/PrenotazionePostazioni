@@ -2,6 +2,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_libs.Dto;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -20,7 +21,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getRuoloUtente")]
         public IActionResult GetRuoloUtenteByUtenteId(int idUtente)
         {
-            RuoloDto ruolo = ruoloService.GetRuoloByUtenteId(idUtente);
+            Ruolo ruolo = ruoloService.GetRuoloByUtenteId(idUtente);
             if (ruolo == null)
             {
                 return NotFound();

@@ -1,19 +1,20 @@
-﻿using prenotazione_postazioni_libs.Models;
+﻿using prenotazione_postazioni_libs.Dto;
+using prenotazione_postazioni_libs.Models;
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class VotoRepository
     {
-        internal VotoDto FindAllByIdUtenteFrom(int idUtente)
+        internal Voto FindAllByIdUtenteFrom(int idUtente)
         {
             throw new NotImplementedException();
         }
 
-        internal VotoDto FindAllByIdUtenteTo(int idUtente)
+        internal Voto FindAllByIdUtenteTo(int idUtente)
         {
             throw new NotImplementedException();
         }
 
-        internal VotoDto UpdateVoti(UtenteDto utenteTo, List<UtenteDto> utenteFrom)
+        internal Voto UpdateVoti(Utente utenteTo, List<Utente> utenteFrom)
         {
             throw new NotImplementedException();
         }

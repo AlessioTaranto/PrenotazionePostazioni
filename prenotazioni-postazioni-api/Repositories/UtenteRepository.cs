@@ -1,3 +1,4 @@
+using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -9,7 +10,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal UtenteDto FindById(int id)
+        internal Utente FindById(int id)
         {
             return null;
         }
@@ -19,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="email">L'email dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal UtenteDto FindByEmail(string email)
+        internal Utente FindByEmail(string email)
         {
             return null;
         }

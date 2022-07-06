@@ -2,6 +2,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_libs.Dto;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -20,7 +21,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-prenotazione-by-id")]
         public IActionResult GetPrenotazioneById(int idPrenotazione)
         {
-            PrenotazioneDto prenotazione = prenotazioneService.GetPrenotazioneById(idPrenotazione);
+            Prenotazione prenotazione = prenotazioneService.GetPrenotazioneById(idPrenotazione);
             if(prenotazione == null)
             {
                 return NotFound();

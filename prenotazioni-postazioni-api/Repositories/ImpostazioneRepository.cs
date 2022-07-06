@@ -1,4 +1,5 @@
-﻿using prenotazione_postazioni_libs.Models;
+﻿using prenotazione_postazioni_libs.Dto;
+using prenotazione_postazioni_libs.Models;
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class ImpostazioneRepository

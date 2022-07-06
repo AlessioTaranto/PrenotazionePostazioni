@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    public class RuoloDto
+    public class Ruolo
     {
 
         public int IdRuolo { get; set; }
@@ -17,7 +17,7 @@ namespace prenotazione_postazioni_libs.Models
         private Exception ModelException { get; set; }
         public bool IsValid { get; set; } = false;
 
-        public RuoloDto(int idRuolo, string descRuolo, bool accessoImpostazioni)
+        public Ruolo(int idRuolo, string descRuolo, bool accessoImpostazioni)
         {
             this.IdRuolo = idRuolo;
             this.DescRuolo = descRuolo;
@@ -26,7 +26,7 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
-        public RuoloDto()
+        public Ruolo()
         {
         }
 
