@@ -1,4 +1,5 @@
 ﻿using prenotazioni_postazioni_api.Repositories;
+using prenotazione_postazioni_libs.Models;
 
 namespace prenotazioni_postazioni_api.Services
 {

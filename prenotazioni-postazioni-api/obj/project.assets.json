@@ -72,6 +72,16 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "prenotazione-postazioni-libs/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/prenotazione-postazioni-libs.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/prenotazione-postazioni-libs.dll": {}
+        }
       }
     }
   },
@@ -200,27 +210,33 @@
         "swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "prenotazione-postazioni-libs/1.0.0": {
+      "type": "project",
+      "path": "../prenotazione-postazioni-libs/prenotazione-postazioni-libs.csproj",
+      "msbuildProject": "../prenotazione-postazioni-libs/prenotazione-postazioni-libs.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Swashbuckle.AspNetCore >= 6.2.3"
+      "Swashbuckle.AspNetCore >= 6.2.3",
+      "prenotazione-postazioni-libs >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\user\\.nuget\\packages\\": {}
+    "C:\\Users\\stefa\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "projectUniqueName": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
       "projectName": "prenotazioni-postazioni-api",
-      "projectPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
+      "projectPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "packagesPath": "C:\\Users\\stefa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\stefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -233,7 +249,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj": {
+              "projectPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
