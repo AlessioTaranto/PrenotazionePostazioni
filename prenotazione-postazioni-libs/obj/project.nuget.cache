@@ -1,17 +1,9 @@
 <<<<<<< feature/client
 {
   "version": 2,
-  "dgSpecHash": "JIkNdVHAX/+a5z+a3lO9XrL0FZVBXznoySncWUv5WnACGKYB0PMIiRoWMkUJqGtPhhbBaewKTcwgYW5H5Rg+Bw==",
+  "dgSpecHash": "BJO09NLccBRMcUoPzstcpxMGmk5Lw4SxTwUYU8BobgxiJLYoZ2T3x++FBrXkjFkJOGrxr5Y8uMcbxGaKCgajig==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
-=======
-{
-  "version": 2,
-  "dgSpecHash": "hkpQO9UJVWHCKe7s3UMKzFOGu5PmDx2rvdQIyzGyiN1qrZ/OwAn4FUmlSwTUDOPitjD6cC/7ixgpAlFnv1N+7g==",
-  "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\c#\\prenotazioni-posti-api\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
+  "projectFilePath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
   "expectedPackageFiles": [],
   "logs": []
 >>>>>>> Add files via upload

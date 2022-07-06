@@ -8,26 +8,26 @@ namespace prenotazione_postazioni_libs.Models
 {
     internal class Utente
     {
-        private int idUtente { get; set; }
-        private string nome { get; set; }
-        private string cognome { get; set; }
-        private string image { get; set; }
-        //Base 64x converter (https://stackoverflow.com/questions/69303512/converting-an-sql-image-to-base64-in-c-sharp)
-        private string email { get; set; }
-        private int idRuolo { get; set; }
+        public int IdUtente { get; set; }
+        public string Nome { get; set; }
+        public string Cognome { get; set; }
+        public string Image { get; set; }
+        //Base 64x converter (https://stackoverflow.com/questions/69303512/converting-an-sql-Image-to-base64-in-c-sharp)
+        public string Email { get; set; }
+        public int IdRuolo { get; set; }
 
         
-        private Exception modelExceprion { get; set; }
-        private bool isValid { get; set; } = false;
+        private Exception ModelException { get; set; }
+        public bool IsValid { get; set; } = false;
 
         public Utente(int idUtente, string nome, string cognome, string image, string email, int idRuolo)
         {
-            this.idUtente = idUtente;
-            this.nome = nome;
-            this.cognome = cognome;
-            this.image = image;
-            this.email = email;
-            this.idRuolo = idRuolo;
+            this.IdUtente = idUtente;
+            this.Nome = nome;
+            this.Cognome = cognome;
+            this.Image = image;
+            this.Email = email;
+            this.IdRuolo = idRuolo;
 
             this.Validate();
         }
@@ -40,28 +40,28 @@ namespace prenotazione_postazioni_libs.Models
         {
             try
             {
-                if (this.nome == null)
-                    throw new Exception("Il nome non può essere nullo");
-                else if (this.nome.Length < 3)
-                    throw new Exception("Il nome deve contenere almeno 3 caratteri");
+                if (this.Nome == null)
+                    throw new Exception("Il Nome non può essere nullo");
+                else if (this.Nome.Length < 3)
+                    throw new Exception("Il Nome deve contenere almeno 3 caratteri");
 
-                if (this.cognome == null)
-                    throw new Exception("Il cognome non può essere nullo");
-                else if (this.cognome.Length < 3)
-                    throw new Exception("Il cognome deve contenere almeno 3 caratteri");
+                if (this.Cognome == null)
+                    throw new Exception("Il Cognome non può essere nullo");
+                else if (this.Cognome.Length < 3)
+                    throw new Exception("Il Cognome deve contenere almeno 3 caratteri");
 
-                if (this.email == null)
-                    throw new Exception("L'indirizzo email non può essere nullo");
-                else if (!this.email.Contains("@"))
-                    throw new Exception("L'indirizzo email non è valido");
+                if (this.Email == null)
+                    throw new Exception("L'indirizzo Email non può essere nullo");
+                else if (!this.Email.Contains("@"))
+                    throw new Exception("L'indirizzo Email non è valido");
 
 
-                this.isValid = true;
+                this.IsValid = true;
             }
             catch (Exception e)
             {
-                this.modelExceprion = e;
-                this.isValid = false;
+                this.ModelException = e;
+                this.IsValid = false;
             }
         }
 
