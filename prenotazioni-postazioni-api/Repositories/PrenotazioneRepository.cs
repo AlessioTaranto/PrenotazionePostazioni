@@ -9,7 +9,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idPrenotazione">Id della Prenotazione</param>
         /// <returns>Prenotazione</returns>
-        internal Prenotazione FindById(int idPrenotazione)
+        internal PrenotazioneDto FindById(int idPrenotazione)
         {
             
             throw new NotImplementedException();
@@ -19,7 +19,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idStanza">L'Id della stanza associata alla Prenotazione</param>
         /// <returns>Prenotazione</returns>
-        internal Prenotazione FindByStanza(string idStanza)
+        internal PrenotazioneDto FindByStanza(string idStanza)
         {
             throw new NotImplementedException();
         }
@@ -28,7 +28,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db per salvare una prenotazione nel database
         /// </summary>
         /// <param name="prenotazioneDto"></param>
-        internal List<Prenotazione> FindAll()
+        internal List<PrenotazioneDto> FindAll()
         {
             throw new NotImplementedException();
         }
@@ -38,7 +38,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idUtente">L'id dell'utente associata alla Prenotazione</param>
         /// <returns>Prenotazione</returns>
 
-        internal Prenotazione FindByUtente(string idUtente)
+        internal PrenotazioneDto FindByUtente(string idUtente)
         {
             throw new NotImplementedException();
         }

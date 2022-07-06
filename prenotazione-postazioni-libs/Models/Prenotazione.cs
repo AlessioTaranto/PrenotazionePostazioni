@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    public class Prenotazione
+    public class PrenotazioneDto
     {
 
         public int IdPrenotazioni { get; set; }
@@ -15,7 +15,7 @@ namespace prenotazione_postazioni_libs.Models
         public int IdStanza { get; set; }
         public int IdUtente { get; set; }
 
-        public Prenotazione(int idPrenotazioni, DateOnly date, int idStanza, int idUtente)
+        public PrenotazioneDto(int idPrenotazioni, DateOnly date, int idStanza, int idUtente)
         {
             this.IdPrenotazioni = idPrenotazioni;
             this.Date = date;
@@ -23,7 +23,7 @@ namespace prenotazione_postazioni_libs.Models
             this.IdUtente = idUtente;
         }
 
-        public Prenotazione()
+        public PrenotazioneDto()
         {
         }
     }

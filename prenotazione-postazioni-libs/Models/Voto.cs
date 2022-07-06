@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    public class Voto
+    public class VotoDto
     {
 
         public int IdVoto { get; set; }
@@ -17,7 +17,7 @@ namespace prenotazione_postazioni_libs.Models
         private Exception ModelException { get; set; }
         public bool IsValid { get; set; } = false;
 
-        public Voto(int idVoto, int idUtente, int idUtenteVotato, bool votoEffettuato)
+        public VotoDto(int idVoto, int idUtente, int idUtenteVotato, bool votoEffettuato)
         {
             this.IdVoto = idVoto;
             this.IdUtente = idUtente;
@@ -27,7 +27,7 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
-        public Voto()
+        public VotoDto()
         {
         }
 

@@ -13,7 +13,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente GetUtenteById(int id)
+        internal UtenteDto GetUtenteById(int id)
         {
             return utenteRepository.FindById(id);
         }
@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="email">L'email dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente GetUtenteByEmail(string email)
+        internal UtenteDto GetUtenteByEmail(string email)
         {
             return utenteRepository.FindByEmail(email);
         }

@@ -7,7 +7,7 @@ using prenotazione_postazioni_libs.Models;
         /// Query al db, restituisce tutte le stanze presente nel database
         /// </summary>
         /// <returns>Lista di Stanza</returns>
-        internal List<Stanza> FindAll()
+        internal List<StanzaDto> FindAll()
         {
             throw new NotImplementedException();
         }
@@ -18,7 +18,7 @@ using prenotazione_postazioni_libs.Models;
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza FindById(int id)
+        internal StanzaDto FindById(int id)
         {
             return null;
         }
@@ -28,7 +28,7 @@ using prenotazione_postazioni_libs.Models;
         /// </summary>
         /// <param name="stanzaName">Il nome della stanza da trovare</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza FindByName(string stanzaName)
+        internal StanzaDto FindByName(string stanzaName)
         {
             return null;
         }
