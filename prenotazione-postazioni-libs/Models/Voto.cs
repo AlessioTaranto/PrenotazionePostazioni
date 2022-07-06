@@ -9,20 +9,20 @@ namespace prenotazione_postazioni_libs.Models
     internal class Voto
     {
 
-        private int idVoto { get; set; }
-        private int idUtente { get; set; }
-        private int idUtenteVotato { get; set; }
-        private bool votoEffettuato { get; set; }
+        public int IdVoto { get; set; }
+        public int IdUtente { get; set; }
+        public int IdUtenteVotato { get; set; }
+        public bool VotoEffettuato { get; set; }
 
-        private Exception modelExceprion { get; set; }
-        private bool isValid { get; set; } = false;
+        private Exception ModelException { get; set; }
+        public bool IsValid { get; set; } = false;
 
         public Voto(int idVoto, int idUtente, int idUtenteVotato, bool votoEffettuato)
         {
-            this.idVoto = idVoto;
-            this.idUtente = idUtente;
-            this.idUtenteVotato = idUtenteVotato;
-            this.votoEffettuato = votoEffettuato;
+            this.IdVoto = idVoto;
+            this.IdUtente = idUtente;
+            this.IdUtenteVotato = idUtenteVotato;
+            this.VotoEffettuato = votoEffettuato;
 
             this.Validate();
         }
@@ -35,15 +35,15 @@ namespace prenotazione_postazioni_libs.Models
         {
             try
             {
-                if (this.idUtente == this.idUtenteVotato)
+                if (this.IdUtente == this.IdUtenteVotato)
                     throw new Exception("L'id dell'utente votato non può essere lo stesso dell'utente che vota");
 
-                this.isValid = true;
+                this.IsValid = true;
             }
             catch (Exception e)
             {
-                this.modelExceprion = e;
-                this.isValid = false;
+                this.ModelException = e;
+                this.IsValid = false;
             }
         }
     }
