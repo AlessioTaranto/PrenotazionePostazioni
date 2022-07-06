@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    internal class Utente
+    public class Utente
     {
         public int IdUtente { get; set; }
         public string Nome { get; set; }
@@ -16,7 +16,7 @@ namespace prenotazione_postazioni_libs.Models
         public string Email { get; set; }
         public int IdRuolo { get; set; }
 
-        
+
         private Exception ModelException { get; set; }
         public bool IsValid { get; set; } = false;
 
