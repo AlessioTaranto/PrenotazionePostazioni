@@ -18,7 +18,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <returns>Lo stato di emergenza. True o False</returns>
         [HttpGet]
-        [Route("get-impostazione-emergenza")]
+        [Route("getImpostazioneEmergenza")]
         public IActionResult GetImpostazioneEmergenza()
         {
             return Ok(_impostazioneService.GetImpostazioneEmergenza());
@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// il valore inserito dall'utente per cambiare l'impostazione di emergenza
         /// </param>
         [HttpPost]
-        [Route("change-impostazione-emergenza")]
+        [Route("changeImpostazioneEmergenza")]
         public IActionResult ChangeImpostazioneEmergenza(bool userValue)
         {
             return Ok(_impostazioneService.ChangeImpostazioniEmergenza(userValue));

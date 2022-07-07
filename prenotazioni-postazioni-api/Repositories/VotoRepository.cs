@@ -4,19 +4,30 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class VotoRepository
     {
-        internal Voto FindAllByIdUtenteFrom(int idUtente)
+        
+        /// <summary>
+        /// Query al db, restituisce tutti i voti fatti ad un utente
+        /// </summary>
+        /// <param name="idUtente">L'id dell'utente</param>
+        /// <returns>Lista di voti</returns>
+        internal List<Voto> FindAllByIdUtenteFrom(int idUtente)
         {
-            throw new NotImplementedException();
+            return null;
         }
-
-        internal Voto FindAllByIdUtenteTo(int idUtente)
+        
+        /// <summary>
+        /// Query al db, restituisce tutti i voti dell'utente che ha votato
+        /// </summary>
+        /// <param name="idUtente">L'id dell'utente</param>
+        /// <returns>Lista di voti</returns>
+        internal List<Voto> FindAllByIdUtenteTo(int idUtente)
         {
-            throw new NotImplementedException();
+            return null;
         }
-
+        
         internal Voto UpdateVoti(Utente utenteTo, List<Utente> utenteFrom)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
