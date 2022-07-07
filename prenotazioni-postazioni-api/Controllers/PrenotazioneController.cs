@@ -18,7 +18,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="idPrenotazione">Id della Prenotazione</param>
         /// <returns>Prenotazione e status 200, status 404 altrimenti</returns>
         [HttpGet]
-        [Route("/get-prenotazione-by-id")]
+        [Route("/getPrenotazioneById")]
         public IActionResult GetPrenotazioneById(int idPrenotazione)
         {
             Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <returns>Lista di Prenotazioni e status 200</returns>
         [HttpGet]
-        [Route("/get-all-prenotazioni")]
+        [Route("/getAllPrenotazioni")]
         public IActionResult GetAllPrenotazioni()
         {
             return Ok(_prenotazioneService.GetAllPrenotazioni());
@@ -46,7 +46,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="idStanza">L'Id della stanza associata alla Prenotazione</param>
         /// <returns>Prenotazione e status 200, 404 altrimenti</returns>
         [HttpGet]
-        [Route("/get-prenotazioni-by-stanza")]
+        [Route("/getPrenotazioniByStanza")]
         public IActionResult GetPrenotazioneByStanza(string idStanza)
         {
             Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneByStanza(idStanza);
@@ -63,7 +63,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="idUtente">L'id utente associata alla Prenotazione</param>
         /// <returns>Prenotazione e status 200, 404 altrimenti</returns>
         [HttpGet]
-        [Route("/get-prenotazioni-by-utente")]
+        [Route("/getPrenotazioniByUtente")]
         public IActionResult GetPrenotazioneByUtente(string idUtente)
         {
             Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneByUtente(idUtente);
@@ -71,7 +71,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 return NotFound();
             }
-                return Ok(prenotazione);
+            return Ok(prenotazione);
         }
 
         /// <summary>

@@ -26,10 +26,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 return NotFound();
             }
-            else
-            {
-                return Ok(ruolo);
-            }
+            return Ok(ruolo);
         }
 
 
