@@ -12,6 +12,7 @@ namespace prenotazioni_postazioni_api.Repositories
         public bool FindImpostazioneEmergenza()
         {
             //TODO si bisogna fare una query al db
+
             return false;
         }
 

@@ -32,7 +32,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzeById")]
         public IActionResult GetStanzaById(int id)
         {
-            Stanza stanza = _stanzaService.GetStanzaByid(id);
+            Stanza stanza = _stanzaService.GetStanzaById(id);
             if (stanza == null)
             {
                 return NotFound();

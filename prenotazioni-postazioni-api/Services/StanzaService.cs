@@ -22,7 +22,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>Stanza trovata, null altrimenti</returns>
-        internal Stanza GetStanzaByid(int id)
+        internal Stanza GetStanzaById(int id)
         {
             return _stanzaRepository.FindById(id);
         }
