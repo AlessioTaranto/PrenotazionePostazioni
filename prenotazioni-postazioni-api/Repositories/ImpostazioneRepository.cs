@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="userValue">valore aggiornato, sostituendo lo stato di Impostazione Emergenza vecchia presente nel Database</param>
         /// <returns>Lo stato di Impostazione Emergenza nuova</returns>
-     public bool UpdateImpostazioneEmergenza(bool userValue)
+        public bool UpdateImpostazioneEmergenza(bool userValue)
         {
             //TODO si bisogna fare una query al db per aggiornare il campo IMPOSTAZIONE EMERGENZA con *userValue*
             return false;
