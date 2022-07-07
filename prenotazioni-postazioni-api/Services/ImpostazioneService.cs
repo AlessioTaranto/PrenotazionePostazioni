@@ -1,5 +1,6 @@
 ﻿using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -11,9 +12,12 @@ namespace prenotazioni_postazioni_api.Services
         /// Restituisce il valore Impostazione Emergenza situato nella tabella Impostazioni nel database.
         /// </summary>
         /// <returns>Valore effettivo dell'impostazione di emergenza. True, o False</returns>
-      public bool GetImpostazioneEmergenza()
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
+        public bool GetImpostazioneEmergenza()
         {
-            return _impostazioneRepository.FindImpostazioneEmergenza();
+            bool impostazioni= _impostazioneRepository.FindImpostazioneEmergenza();
+            if (impostazioni == null) throw new PrenotazionePostazioniApiException("Impostazione di emergenza non trovata");
+            else return impostazioni;
         }
 
         /// <summary>
@@ -21,9 +25,17 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="userValue">Il valore con cui si aggiornera Impostazioni Emergenza</param>
         /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
-        public bool ChangeImpostazioniEmergenza(bool userValue)
+        public bool ChangeImpostazioniEmergenza()
         {
-            return _impostazioneRepository.UpdateImpostazioneEmergenza(userValue);
+            if(_impostazioneRepository.FindImpostazioneEmergenza() == true)
+            {
+                return _impostazioneRepository.UpdateImpostazioneEmergenza(false);
+            }
+            else
+            {
+                return _impostazioneRepository.UpdateImpostazioneEmergenza(true);
+            }
+            
         }
     }
 }
