@@ -1,9 +1,11 @@
 ﻿using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Repositories.Database;
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class PrenotazioneRepository
     {
+        private DatabaseManager _databaseManager = new DatabaseManager();
         /// <summary>
         /// Query al db per restitire una Prenotazione in base al suo Id
         /// </summary>

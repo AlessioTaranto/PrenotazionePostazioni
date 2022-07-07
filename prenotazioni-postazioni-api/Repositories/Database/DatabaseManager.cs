@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace prenotazioni_postazioni_api.Repositories.Database
 {
-    public class Database
+    public class DatabaseManager
     {
         public static string DatabaseName { get; } = "[prenotazioni-impostazioni].dbo";
         public static string DefaultInitialCatalog { get; } = "prenotazioni-impostazioni";

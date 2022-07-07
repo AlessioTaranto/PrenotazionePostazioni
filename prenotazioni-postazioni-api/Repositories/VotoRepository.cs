@@ -1,10 +1,11 @@
 ﻿using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Repositories.Database;
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class VotoRepository
     {
-        
+        private DatabaseManager _databaseManager = new DatabaseManager();
         /// <summary>
         /// Query al db, restituisce tutti i voti fatti ad un utente
         /// </summary>
