@@ -61,7 +61,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             {
                 return null;
             }
-            string jsonResults;
             using (var conn = _conn)
             {
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -83,8 +82,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                     } while (reader.NextResult());
                 }
                 conn.Close();
-                jsonResults = JsonConvert.SerializeObject(values);
-                return jsonResults;
+                return JsonConvert.SerializeObject(values);
             }
         }
 
