@@ -8,7 +8,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 {
     public class Database
     {
-
         public static string DatabaseName { get; } = "[prenotazioni-impostazioni].dbo";
         public static string DefaultInitialCatalog { get; } = "prenotazioni-impostazioni";
         public static string DefaultDataSource { get; } = "LTP040";
@@ -27,19 +26,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             connBuilder.InitialCatalog = initialCatalog ?? DefaultInitialCatalog;
             connBuilder.DataSource = datasource ?? DefaultDataSource;
             connBuilder.IntegratedSecurity = integratedSecurity;
-            //Insert example: INSEùRT INTO "+db+ ".Ruoli (idRuolo, descRuolo, accessoImpostazioni) VALUES ("+0+",'Amministratore',"+0+")
-            //using (SqlConnection conn = new SqlConnection(connBuilder.ToString()))
-            //{
-            //    SqlCommand cmd = new SqlCommand(query, conn);
-
-            //    conn.Open();
-
-            //    var obj = cmd.ExecuteScalar();
-
-            //    conn.Close();
-            //}
-
-
             _conn = new SqlConnection(connBuilder.ToString());
         }
 
@@ -63,7 +49,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 return jsonResult;
             }
         }
-
 
         /// <summary>
         /// Viene usato per restituire tutte le colonne trovate
@@ -121,8 +106,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 conn.Close();
             }
         }
-
-
         private bool checkConnectionDatabase()
         {
             return _conn != null;
