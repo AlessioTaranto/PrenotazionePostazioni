@@ -15,7 +15,7 @@ namespace prenotazione_postazioni_libs.Dto
 
 
         private Exception ModelException { get; set; }
-        public bool isValid { get; set; } = false;
+        public bool IsValid { get; set; } = false;
 
         public StanzaDto(string nome, int postiMax, int postiMaxEmergenza)
         {
@@ -37,12 +37,12 @@ namespace prenotazione_postazioni_libs.Dto
                 if (this.PostiMax <= 0)
                     throw new Exception("I posti devono essere un numero maggiore di 0");
 
-                this.isValid = true;
+                this.IsValid = true;
             }
             catch (Exception e)
             {
                 this.ModelException = e;
-                this.isValid = false;
+                this.IsValid = false;
             }
         }
     }

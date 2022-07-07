@@ -1,5 +1,5 @@
 
-﻿using Microsoft.AspNetCore.Mvc;
+ using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
@@ -11,7 +11,7 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/ruoli")]
     public class RuoloController : ControllerBase
     {
-        private RuoloService ruoloService = new RuoloService();
+        private RuoloService _ruoloService = new RuoloService();
         /// <summary>
         /// Restituisce il ruolo di un utente mediante l'id dell'utente
         /// </summary>
@@ -21,7 +21,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getRuoloUtente")]
         public IActionResult GetRuoloUtenteByUtenteId(int idUtente)
         {
-            Ruolo ruolo = ruoloService.GetRuoloByUtenteId(idUtente);
+            Ruolo ruolo = _ruoloService.GetRuoloByUtenteId(idUtente);
             if (ruolo == null)
             {
                 return NotFound();
@@ -45,7 +45,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("updateRuoloUtenteByUtenteId")]
         public IActionResult UpdateRuoloUtenteByAdminUtenteId([FromBody] UtenteDto utenteDto)
         {
-            bool ok = ruoloService.UpdateRuoloUtenteByAdminUtenteId(utenteDto);
+            bool ok = _ruoloService.UpdateRuoloUtenteByAdminUtenteId(utenteDto);
             if (ok)
             {
                 return Ok();

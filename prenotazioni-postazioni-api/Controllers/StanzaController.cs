@@ -1,5 +1,5 @@
 
-﻿using Microsoft.AspNetCore.Mvc;
+ using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
@@ -10,7 +10,7 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/stanze")]
     public class StanzaController : ControllerBase
     {
-        private StanzaService stanzaService = new StanzaService();
+        private StanzaService _stanzaService = new StanzaService();
 
         /// <summary>
         /// Restituisce tutte le stanze
@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getAllStanze")]
         public IActionResult GetAllStanze()
         {
-            return Ok(stanzaService.GetAllStanze());
+            return Ok(_stanzaService.GetAllStanze());
         }
         
         /// <summary>
@@ -32,7 +32,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzeById")]
         public IActionResult GetStanzaById(int id)
         {
-            StanzaDto stanza = stanzaService.GetStanzaByid(id);
+            Stanza stanza = _stanzaService.GetStanzaByid(id);
             if (stanza == null)
             {
                 return NotFound();
@@ -52,7 +52,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzaByName")]
         public IActionResult GetStanzaByName(string stanzaName)
         {
-            StanzaDto stanza = stanzaService.GetStanzaByName(stanzaName);
+            Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
             if(stanza == null)
             {
                 return NotFound();
@@ -68,11 +68,11 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <param name="stanzaDto">L'oggetto stanza da aggiungere al database</param>
         /// <returns>httpstatus 200</returns>
-        [HttpPost]
-        [Route("addStanza")]
-        public IActionResult AddNewStanza(StanzaDto stanzaDto)
-        {
-            return Ok(stanzaService.Save(stanzaDto));
-        }
+        // [HttpPost]
+        // [Route("addStanza")]
+        // public IActionResult AddNewStanza(StanzaDto stanzaDto)
+        // {
+        //     return Ok(_stanzaService.Save(stanzaDto));
+        // }
     }
 }

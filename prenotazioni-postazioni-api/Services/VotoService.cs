@@ -6,16 +6,16 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class VotoService
     {
-        private VotoRepository votoRepository = new VotoRepository();
+        private VotoRepository _votoRepository = new VotoRepository();
 
         internal Voto GetVotiFromUtente(int idUtente)
         {
-            return votoRepository.FindAllByIdUtenteFrom(idUtente);
+            return _votoRepository.FindAllByIdUtenteFrom(idUtente);
         }
 
         internal Voto GetVotiToUtente(int idUtente)
         {
-            return votoRepository.FindAllByIdUtenteTo(idUtente);
+            return _votoRepository.FindAllByIdUtenteTo(idUtente);
         }
 
         internal Voto MakeVotoToUtente(UtenteDto utenteTo, List<UtenteDto> utenteFrom)

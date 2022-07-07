@@ -9,9 +9,8 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/voti")]
     public class VotoController : ControllerBase
     {
-        private VotoService votoService = new VotoService();
-
-
+        private VotoService _votoService = new VotoService();
+        
         /// <summary>
         /// Serve per ottenere l'elenco di votazioni effettuate da un utente verso gli altri
         /// </summary>
@@ -23,7 +22,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getVotiFromUtente")]
         public IActionResult GetVotiFromUtente(int idUtente)
         {
-            return Ok(votoService.GetVotiFromUtente(idUtente));
+            return Ok(_votoService.GetVotiFromUtente(idUtente));
         }
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [HttpGet]
         public IActionResult GetVotiToUtente(int idUtente)
         {
-            return Ok(votoService.GetVotiToUtente(idUtente));
+            return Ok(_votoService.GetVotiToUtente(idUtente));
         }
 
 
@@ -47,12 +46,12 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="utenteTo">L'utente che ha votato</param>
         /// <param name="utenteFrom">L'utente che ha subito la votazione di utenteTo</param>
         /// <returns></returns>
-        [Route("makeVotoToUtente")]
-        [HttpPost]
-        public IActionResult makeVotoToUtente([FromBody] UtenteDto utenteTo, List<UtenteDto> utenteFrom)
-        {
-            return Ok(votoService.MakeVotoToUtente(utenteTo, utenteFrom));
-        }
+        // [Route("makeVotoToUtente")]
+        // [HttpPost]
+        // public IActionResult MakeVotoToUtente([FromBody] UtenteDto utenteTo,[FromBody] List<UtenteDto> utenteFrom)
+        // {
+        //     return Ok(_votoService.MakeVotoToUtente(utenteTo, utenteFrom));
+        // }
     }
 }
 

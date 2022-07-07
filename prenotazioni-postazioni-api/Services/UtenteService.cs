@@ -6,7 +6,7 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class UtenteService
     {
-        UtenteRepository utenteRepository = new UtenteRepository();
+        UtenteRepository _utenteRepository = new UtenteRepository();
 
         /// <summary>
         /// Resituisce l'utente mediante il suo id
@@ -15,7 +15,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal Utente GetUtenteById(int id)
         {
-            return utenteRepository.FindById(id);
+            return _utenteRepository.FindById(id);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal Utente GetUtenteByEmail(string email)
         {
-            return utenteRepository.FindByEmail(email);
+            return _utenteRepository.FindByEmail(email);
         }
 
         /// <summary>

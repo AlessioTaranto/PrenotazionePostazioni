@@ -6,7 +6,7 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class RuoloService
     {
-        private RuoloRepository ruoloRepository = new RuoloRepository();
+        private RuoloRepository _ruoloRepository = new RuoloRepository();
 
 
         /// <summary>
@@ -16,7 +16,12 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Ruolo trovato, null altrimenti</returns>
         public Ruolo GetRuoloByUtenteId(int idUtente)
         {
-            return ruoloRepository.FindByUtenteId(idUtente);
+            return _ruoloRepository.FindByUtenteId(idUtente);
+        }
+
+        public bool UpdateRuoloUtenteByAdminUtenteId(UtenteDto utenteDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

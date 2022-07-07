@@ -6,7 +6,7 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class StanzaService
     {
-        private StanzaRepository stanzaRepository = new StanzaRepository();
+        private StanzaRepository _stanzaRepository = new StanzaRepository();
         
         /// <summary>
         /// restituisce tutte le stanze presenti nel database
@@ -14,7 +14,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>una lista di stanza</returns>
         internal List<Stanza> GetAllStanze()
         {
-            return stanzaRepository.FindAll();
+            return _stanzaRepository.FindAll();
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Stanza trovata, null altrimenti</returns>
         internal Stanza GetStanzaByid(int id)
         {
-            return stanzaRepository.FindById(id);
+            return _stanzaRepository.FindById(id);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>stanza trovata, null altrimenti</returns>
         internal Stanza GetStanzaByName(string stanzaName)
         {
-            return stanzaRepository.FindByName(stanzaName);
+            return _stanzaRepository.FindByName(stanzaName);
         }
 
         /// <summary>
