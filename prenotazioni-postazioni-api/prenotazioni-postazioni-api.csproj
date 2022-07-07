@@ -16,4 +16,9 @@
     <ProjectReference Include="..\prenotazione-postazioni-libs\prenotazione-postazioni-libs.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
 </Project>

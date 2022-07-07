@@ -11,8 +11,8 @@ namespace test_db
         public void TestMethod1()
         {
             SqlConnectionStringBuilder connBuilder = new SqlConnectionStringBuilder();
-            connBuilder.InitialCatalog = "master";
-            connBuilder.DataSource = "DESKTOP-B8G3449";
+            connBuilder.InitialCatalog = "prenotazioni-impostazioni";
+            connBuilder.DataSource = "LTP040";
             connBuilder.IntegratedSecurity = true;
 
             string db = "[prenotazioni-impostazioni].dbo";
@@ -26,6 +26,8 @@ namespace test_db
                 conn.Open();
 
                 var test = cmd.ExecuteScalar();
+                Console.Write(test);
+                Console.ReadLine();
 
                 conn.Close();
             }
