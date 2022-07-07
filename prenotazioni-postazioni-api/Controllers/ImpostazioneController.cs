@@ -10,7 +10,7 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/impostazioni")]
     public class ImpostazioneController : ControllerBase
     {
-        private ImpostazioneService impostazioneService = new ImpostazioneService();
+        private ImpostazioneService _impostazioneService = new ImpostazioneService();
 
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("get-impostazione-emergenza")]
         public IActionResult GetImpostazioneEmergenza()
         {
-            return Ok(impostazioneService.GetImpostazioneEmergenza());
+            return Ok(_impostazioneService.GetImpostazioneEmergenza());
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("change-impostazione-emergenza")]
         public IActionResult ChangeImpostazioneEmergenza(bool userValue)
         {
-            return Ok(impostazioneService.ChangeImpostazioniEmergenza(userValue));
+            return Ok(_impostazioneService.ChangeImpostazioniEmergenza(userValue));
         }
     }
 }

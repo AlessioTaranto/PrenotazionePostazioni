@@ -9,7 +9,7 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/utenti")]
     public class UtenteCotroller : ControllerBase
     {
-        private UtenteService utenteService = new UtenteService();
+        private UtenteService _utenteService = new UtenteService();
 
         /// <summary>
         /// Restituisce un utente mediante il suo id
@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getUtenteById")]
         public IActionResult GetUtenteById(int id)
         {
-            UtenteDto utente = utenteService.GetUtenteById(id);
+            Utente utente = _utenteService.GetUtenteById(id);
             if (utente == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getUtenteByEmail")]
         public IActionResult GetUtenteByEmail(string email)
         {
-            UtenteDto utente = utenteService.GetUtenteByEmail(email);
+            Utente utente = _utenteService.GetUtenteByEmail(email);
             if(utente == null)
             {
                 return NotFound();
@@ -57,12 +57,12 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="utenteDto">L'utente da inserire nel database</param>
         /// <returns>httpstatus 200</returns>
 
-        [HttpPost]
-        [Route("addNewUtente")]
-        public IActionResult AddNewUtente(UtenteDto utenteDto)
-        {
-            return Ok(utenteService.Save(utenteDto));
-        }
+        // [HttpPost]
+        // [Route("addNewUtente")]
+        // public IActionResult AddNewUtente(UtenteDto utenteDto)
+        // {
+        //     return Ok(_utenteService.Save(utenteDto));
+        // }
         
     }
 }

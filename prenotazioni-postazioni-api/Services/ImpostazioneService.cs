@@ -5,7 +5,7 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class ImpostazioneService
     {
-        private ImpostazioneRepository impostazioneRepository = new ImpostazioneRepository();
+        private ImpostazioneRepository _impostazioneRepository = new ImpostazioneRepository();
 
         /// <summary>
         /// Restituisce il valore Impostazione Emergenza situato nella tabella Impostazioni nel database.
@@ -13,7 +13,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Valore effettivo dell'impostazione di emergenza. True, o False</returns>
       public bool GetImpostazioneEmergenza()
         {
-            return impostazioneRepository.FindImpostazioneEmergenza();
+            return _impostazioneRepository.FindImpostazioneEmergenza();
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
         public bool ChangeImpostazioniEmergenza(bool userValue)
         {
-            return impostazioneRepository.UpdateImpostazioneEmergenza(userValue);
+            return _impostazioneRepository.UpdateImpostazioneEmergenza(userValue);
         }
     }
 }

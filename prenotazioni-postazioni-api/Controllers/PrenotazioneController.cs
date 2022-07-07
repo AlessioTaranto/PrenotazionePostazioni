@@ -1,8 +1,8 @@
 
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
-using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
+using prenotazione_postazioni_libs.Models;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -10,8 +10,8 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/prenotazioni")]
     public class PrenotazioneController : ControllerBase
     {
-        private PrenotazioneService prenotazioneService = new PrenotazioneService();
-
+        private PrenotazioneService _prenotazioneService = new PrenotazioneService();
+        
         /// <summary>
         /// Restituisce la Prenotazione trovata mediante il suo ID
         /// </summary>
@@ -21,15 +21,12 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-prenotazione-by-id")]
         public IActionResult GetPrenotazioneById(int idPrenotazione)
         {
-            Prenotazione prenotazione = prenotazioneService.GetPrenotazioneById(idPrenotazione);
+            Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
             if(prenotazione == null)
             {
                 return NotFound();
             }
-            else
-            {
-                return Ok(prenotazione);
-            }
+            return Ok(prenotazione);
         }
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-all-prenotazioni")]
         public IActionResult GetAllPrenotazioni()
         {
-            return Ok(prenotazioneService.GetAllPrenotazioni());
+            return Ok(_prenotazioneService.GetAllPrenotazioni());
         }
 
         /// <summary>
@@ -52,17 +49,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-prenotazioni-by-stanza")]
         public IActionResult GetPrenotazioneByStanza(string idStanza)
         {
-            PrenotazioneDto prenotazione = prenotazioneService.GetPrenotazioneByStanza(idStanza);
+            Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneByStanza(idStanza);
             if(prenotazione == null)
             {
                 return NotFound();
             }
-            else
-            {
-                return Ok(prenotazione);
-            }
+            return Ok(prenotazione);
         }
-
+        
         /// <summary>
         /// Restituisce una Prenotazione dall'Id utente associato
         /// </summary>
@@ -72,15 +66,12 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("/get-prenotazioni-by-utente")]
         public IActionResult GetPrenotazioneByUtente(string idUtente)
         {
-            PrenotazioneDto prenotazione = prenotazioneService.GetPrenotazioneByUtente(idUtente);
+            Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneByUtente(idUtente);
             if (prenotazione == null)
             {
                 return NotFound();
             }
-            else
-            {
                 return Ok(prenotazione);
-            }
         }
 
         /// <summary>
@@ -88,12 +79,12 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <param name="prenotazioneDto">L'oggetto dto da mappare e poi salvare</param>
         /// <returns>status 200</returns>
-        [HttpPost]
-        [Route("/add-prenotazione")]
-        public IActionResult AddPrenotazione([FromBody] PrenotazioneDto prenotazioneDto)
-        {
-            return Ok(prenotazioneService.Save(prenotazioneDto));
-        }
+        // [HttpPost]
+        // [Route("/add-prenotazione")]
+        // public IActionResult AddPrenotazione([FromBody] PrenotazioneDto prenotazioneDto)
+        // {
+        //     return Ok(_prenotazioneService.Save(prenotazioneDto));
+        // }
 
     }
 }
