@@ -1,6 +1,7 @@
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -22,9 +23,12 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>Stanza trovata, null altrimenti</returns>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Stanza GetStanzaById(int id)
         {
-            return _stanzaRepository.FindById(id);
+            Stanza stanza = _stanzaRepository.FindById(id);
+            if (stanza == null) throw new PrenotazionePostazioniApiException("Stanza non trovata");
+            else return stanza;
         }
 
         /// <summary>
@@ -34,7 +38,10 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>stanza trovata, null altrimenti</returns>
         internal Stanza GetStanzaByName(string stanzaName)
         {
-            return _stanzaRepository.FindByName(stanzaName);
+            Stanza stanza = _stanzaRepository.FindByName(stanzaName);
+            if (stanza == null) throw new PrenotazionePostazioniApiException("Stanza non trovata");
+            else
+                return stanza;
         }
 
         /// <summary>
