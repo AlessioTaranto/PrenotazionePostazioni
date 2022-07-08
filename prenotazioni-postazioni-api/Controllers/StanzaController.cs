@@ -69,11 +69,18 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <param name="stanzaDto">L'oggetto stanza da aggiungere al database</param>
         /// <returns>httpstatus 200</returns>
-        // [HttpPost]
-        // [Route("addStanza")]
-        // public IActionResult AddNewStanza(StanzaDto stanzaDto)
-        // {
-        //     return Ok(_stanzaService.Save(stanzaDto));
-        // }
+        [HttpPost]
+        [Route("addStanza")]
+        public IActionResult AddNewStanza(StanzaDto stanzaDto)
+        {
+            try
+            {
+                _stanzaService.Save(stanzaDto);
+                return Ok()
+            }catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
