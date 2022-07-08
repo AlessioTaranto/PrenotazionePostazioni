@@ -16,9 +16,9 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        public Ruolo GetRuoloByUtenteId(int idUtente)
+        public Ruolo GetRuoloById(int idRuolo)
         {
-            Ruolo ruolo = _ruoloRepository.FindByUtenteId(idUtente);
+            Ruolo ruolo = _ruoloRepository.FindById(idRuolo);
             if (ruolo == null) throw new PrenotazionePostazioniApiException("Ruolo utente non trovato");
             else return ruolo;
         }
