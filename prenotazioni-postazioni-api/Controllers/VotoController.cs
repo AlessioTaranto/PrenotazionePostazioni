@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -40,18 +41,26 @@ namespace prenotazioni_postazioni_api.Controllers
         }
 
 
+
         /// <summary>
         /// Aggiunge una lista di utenti votati da un altro utente
         /// </summary>
-        /// <param name="utenteTo">L'utente che ha votato</param>
-        /// <param name="utenteFrom">L'utente che ha subito la votazione di utenteTo</param>
+        /// <param name="votoDto"></param>
         /// <returns></returns>
-        // [Route("makeVotoToUtente")]
-        // [HttpPost]
-        // public IActionResult MakeVotoToUtente([FromBody] UtenteDto utenteTo,[FromBody] List<UtenteDto> utenteFrom)
-        // {
-        //     return Ok(_votoService.MakeVotoToUtente(utenteTo, utenteFrom));
-        // }
+        [Route("makeVotoToUtente")]
+        [HttpPost]
+        public IActionResult MakeVotoToUtente([FromBody] VotoDto votoDto)
+        {
+            try
+            {
+                _votoService.MakeVotoToUtente(votoDto);
+                return Ok();
+            }
+            catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
 
