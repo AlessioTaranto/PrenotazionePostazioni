@@ -1,5 +1,6 @@
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
+using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -11,10 +12,13 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public Ruolo FindByUtenteId(int idUtente)
+        public Ruolo FindById(int idRuolo)
         {
-            
-            return null;
+            string query = $"SELECT descRuolo, accessoImpostazioni FROM Ruoli WHERE idRuolo = {idRuolo};";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            Ruolo ruolo = (Ruolo)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            _databaseManager.DeleteConnection();
+            return ruolo;
         }
     }
 }
