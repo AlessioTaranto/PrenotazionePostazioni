@@ -29,6 +29,11 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             _conn = new SqlConnection(connBuilder.ToString());
         }
 
+        public void DeleteConnection()
+        {
+            _conn = null;
+        }
+
         /// <summary>
         /// Viene usato per restituire la prima colonna trovata
         /// </summary>

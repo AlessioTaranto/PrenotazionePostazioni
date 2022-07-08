@@ -6,13 +6,14 @@ namespace prenotazioni_postazioni_api.Repositories
     public class ImpostazioneRepository
     {
         private DatabaseManager _databaseManager = new DatabaseManager();
+
         /// <summary>
         /// Query al db per restituire il campo Impostazione Emergenza
         /// </summary>
         /// <returns>Lo stato dell'Impostazione Emergenza</returns>
         public bool FindImpostazioneEmergenza()
         {
-            //TODO si bisogna fare una query al db
+            
             return false;
         }
 
