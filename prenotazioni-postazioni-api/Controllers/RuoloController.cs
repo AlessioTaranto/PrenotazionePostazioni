@@ -3,6 +3,7 @@
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -21,12 +22,15 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getRuoloUtente")]
         public IActionResult GetRuoloUtenteByUtenteId(int idUtente)
         {
-            Ruolo ruolo = _ruoloService.GetRuoloByUtenteId(idUtente);
-            if (ruolo == null)
+            try
+            {
+                Ruolo ruolo = _ruoloService.GetRuoloByUtenteId(idUtente);
+                return Ok(ruolo);
+            }
+            catch (PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
             }
-            return Ok(ruolo);
         }
 
 
