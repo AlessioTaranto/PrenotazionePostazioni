@@ -20,11 +20,11 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>L'utente trovato con 200, 404 altrimenti</returns>
         [HttpGet]
         [Route("getRuoloUtente")]
-        public IActionResult GetRuoloUtenteByUtenteId(int idUtente)
+        public IActionResult GetRuoloUtenteById(int idRuolo)
         {
             try
             {
-                Ruolo ruolo = _ruoloService.GetRuoloByUtenteId(idUtente);
+                Ruolo ruolo = _ruoloService.GetRuoloById(idRuolo);
                 return Ok(ruolo);
             }
             catch (PrenotazionePostazioniApiException ex)
