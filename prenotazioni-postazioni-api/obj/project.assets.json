@@ -2564,19 +2564,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\stefa\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
       "projectName": "prenotazioni-postazioni-api",
-      "projectPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
-      "packagesPath": "C:\\Users\\stefa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
+      "projectPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\stefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2590,8 +2590,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj": {
-              "projectPath": "C:\\Users\\stefa\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj"
+            "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj"
             }
           }
         }

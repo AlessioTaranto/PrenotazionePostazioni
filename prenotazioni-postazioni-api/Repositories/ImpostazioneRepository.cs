@@ -14,9 +14,10 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lo stato dell'Impostazione Emergenza</returns>
         public bool FindImpostazioneEmergenza()
         {
-            string query = "";
+            string query = "SELECT modEmergenza FROM Impostazioni;";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             bool result = (bool)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            _databaseManager.DeleteConnection();
             return result;
         }
 
@@ -25,10 +26,12 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="userValue">valore aggiornato, sostituendo lo stato di Impostazione Emergenza vecchia presente nel Database</param>
         /// <returns>Lo stato di Impostazione Emergenza nuova</returns>
-        public bool UpdateImpostazioneEmergenza(bool userValue)
+        public void UpdateImpostazioneEmergenza(bool userValue)
         {
-            //TODO si bisogna fare una query al db per aggiornare il campo IMPOSTAZIONE EMERGENZA con *userValue*
-            return false;
+            string query = "UPDATE Impostazioni SET modEmergenza = 1 ^ modEmergenza;";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            _databaseManager.GetNoneResult(query);
+            _databaseManager.DeleteConnection();
         }
     }
 }
