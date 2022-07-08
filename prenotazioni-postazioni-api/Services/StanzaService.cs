@@ -49,6 +49,7 @@ namespace prenotazioni_postazioni_api.Services
         /// Salva una stanza nel database
         /// </summary>
         /// <param name="stanzaDto">la stanza da salvare</param>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal void Save(StanzaDto stanzaDto)
         {
             string nomestanza = stanzaDto.Nome;
@@ -65,6 +66,11 @@ namespace prenotazioni_postazioni_api.Services
 
         }
 
+        /// <summary>
+        /// Controlla se esiste già una stanza con lo stesso nome di quella che si vuole inserire
+        /// </summary>
+        /// <param name="stanzaDto"></param>
+        /// <returns>True se il nome è unico, False se la stanza è già presente</returns>
         private bool CheckStanza(StanzaDto stanzaDto)
         {
             List<Stanza> stanze = GetAllStanze();
