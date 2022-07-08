@@ -22,6 +22,11 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// <param name="integratedSecurity">integrated security</param>
         public void CreateConnectionToDatabase(string initialCatalog, string datasource, bool integratedSecurity)
         {
+            //significa che _conn ha gia un'istanza di SqlConnection
+            if(checkConnectionDatabase())
+            {
+                return;
+            }
             SqlConnectionStringBuilder connBuilder = new SqlConnectionStringBuilder();
             connBuilder.InitialCatalog = initialCatalog ?? DefaultInitialCatalog;
             connBuilder.DataSource = datasource ?? DefaultDataSource;
@@ -111,7 +116,14 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         }
         private bool checkConnectionDatabase()
         {
-            return _conn != null;
+            if(_conn == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
