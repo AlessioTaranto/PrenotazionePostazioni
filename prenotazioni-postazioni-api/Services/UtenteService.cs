@@ -37,9 +37,10 @@ namespace prenotazioni_postazioni_api.Services
 
 
         /// <summary>
-        /// 
+        /// Serve per salvare nel database un utente
         /// </summary>
         /// <param name="utenteDto"></param>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal void Save(UtenteDto utenteDto)
         {
             string nome = utenteDto.Nome, cognome = utenteDto.Cognome;

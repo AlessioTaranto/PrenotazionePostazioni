@@ -55,8 +55,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// Aggiunge un utente al database
         /// </summary>
         /// <param name="utenteDto">L'utente da inserire nel database</param>
-        /// <returns>httpstatus 200</returns>
-
+        /// <returns>httpstatus 200 se salvataggio corretto, httpstatus 400 altrimenti</returns>
         [HttpPost]
         [Route("addNewUtente")]
         public IActionResult AddNewUtente(UtenteDto utenteDto)
