@@ -36,6 +36,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="stanzaName">il nome della stanza da trovare</param>
         /// <returns>stanza trovata, null altrimenti</returns>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Stanza GetStanzaByName(string stanzaName)
         {
             Stanza stanza = _stanzaRepository.FindByName(stanzaName);

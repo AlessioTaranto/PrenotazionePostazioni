@@ -3,6 +3,7 @@
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -32,15 +33,15 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzeById")]
         public IActionResult GetStanzaById(int id)
         {
-            Stanza stanza = _stanzaService.GetStanzaById(id);
-            if (stanza == null)
+            try
+            {
+                Stanza stanza = _stanzaService.GetStanzaById(id);
+                return stanza;
+            }catch(PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
             }
-            else
-            {
-                return Ok(stanza);
-            }
+            
         }
 
         /// <summary>
@@ -52,14 +53,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzaByName")]
         public IActionResult GetStanzaByName(string stanzaName)
         {
-            Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
-            if(stanza == null)
+            try
+            {
+                Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
+                return stanza;
+            }
+            catch (PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
-            }
-            else
-            {
-                return Ok(stanza);
             }
         }
 
