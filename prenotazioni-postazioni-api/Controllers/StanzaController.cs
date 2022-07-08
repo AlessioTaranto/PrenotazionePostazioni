@@ -56,7 +56,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
-                return stanza;
+                return Ok(stanza);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
