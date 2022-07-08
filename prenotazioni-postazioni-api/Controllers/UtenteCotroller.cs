@@ -57,12 +57,19 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="utenteDto">L'utente da inserire nel database</param>
         /// <returns>httpstatus 200</returns>
 
-        // [HttpPost]
-        // [Route("addNewUtente")]
-        // public IActionResult AddNewUtente(UtenteDto utenteDto)
-        // {
-        //     return Ok(_utenteService.Save(utenteDto));
-        // }
+        [HttpPost]
+        [Route("addNewUtente")]
+        public IActionResult AddNewUtente(UtenteDto utenteDto)
+        {
+            try
+            {
+                _utenteService.Save(utenteDto);
+                return Ok();
+            }catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest();
+            }
+        }
         
     }
 }
