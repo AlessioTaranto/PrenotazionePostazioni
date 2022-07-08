@@ -1,6 +1,7 @@
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -13,9 +14,12 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Utente GetUtenteById(int id)
         {
-            return _utenteRepository.FindById(id);
+            Utente utente = _utenteRepository.FindById(id);
+            if (utente == null) throw new PrenotazionePostazioniApiException("Utente non trovato");
+            else return utente;
         }
 
         /// <summary>
@@ -23,10 +27,14 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="email">L'email dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Utente GetUtenteByEmail(string email)
         {
-            return _utenteRepository.FindByEmail(email);
+            Utente utente = _utenteRepository.FindByEmail(email);
+            if (utente == null) throw new PrenotazionePostazioniApiException("Utente non trovato");
+            else return utente;
         }
+
 
         /// <summary>
         /// 
