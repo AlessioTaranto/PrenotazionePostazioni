@@ -15,7 +15,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal Prenotazione FindById(int idPrenotazione)
         {
 
-            string query = $"SELECT data, idStanza, idUtente FROM Prenotazioni WHERE idPrenotazione = {idPrenotazione};";
+            string query = $"SELECT data, idStanza, idPrenotazione, idUtente FROM Prenotazioni WHERE idPrenotazione = {idPrenotazione};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             Prenotazione prenotazione = (Prenotazione)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
@@ -28,7 +28,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Prenotazione</returns>
         internal List<Prenotazione> FindByStanza(int idStanza)
         {
-            string query = $"SELECT idPrenotazioni, data, idStanza, idUtente FROM Prenotazioni WHERE idStanza = {idStanza};";
+            string query = $"SELECT idPrenotazioni, idStanza, data, idStanza, idUtente FROM Prenotazioni WHERE idStanza = {idStanza};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Prenotazione> prenotazioni = (List<Prenotazione>) JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
@@ -54,7 +54,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Prenotazione</returns>
         internal List<Prenotazione> FindByUtente(int idUtente)
         {
-            string query = $"SELECT idPrenotazioni, data, idStanza, idUtente FROM Prenotazioni WHERE idUtente = {idUtente};";
+            string query = $"SELECT idPrenotazioni, data, idUtente, idStanza, idUtente FROM Prenotazioni WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Prenotazione> prenotazioni = (List<Prenotazione>)JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();

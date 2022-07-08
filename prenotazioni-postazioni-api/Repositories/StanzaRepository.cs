@@ -28,7 +28,7 @@ using prenotazioni_postazioni_api.Repositories.Database;
         /// <returns>La stanza trovata, null altrimenti</returns>
         internal Stanza FindById(int idStanza)
         {
-            string query = $"SELECT nome, postiMax, postiMaxEmergenza FROM Stanze WHERE idStanza = {idStanza};";
+            string query = $"SELECT nome, postiMax, idStanza, postiMaxEmergenza FROM Stanze WHERE idStanza = {idStanza};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             Stanza stanza = (Stanza)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
@@ -42,7 +42,7 @@ using prenotazioni_postazioni_api.Repositories.Database;
         /// <returns>La stanza trovata, null altrimenti</returns>
         internal Stanza FindByName(string stanzaName)
         {
-            string query = $"SELECT idStanza, postiMax, postiMaxEmergenza FROM Stanze WHERE nome = {stanzaName};";
+            string query = $"SELECT idStanza, postiMax,stanzaName, postiMaxEmergenza FROM Stanze WHERE nome = {stanzaName};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             Stanza stanza = (Stanza) JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();

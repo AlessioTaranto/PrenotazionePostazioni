@@ -1,5 +1,6 @@
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
+using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -11,9 +12,13 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente FindById(int id)
+        internal Utente FindById(int idUtente)
         {
-            return null;
+            string query = $"SELECT nome, cognome, idUtente, immagine, email, idRuolo FROM Utenti WHERE idUtente = {idUtente};";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            Utente utente = (Utente)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            _databaseManager.DeleteConnection();
+            return utente;
         }
 
         /// <summary>
@@ -23,7 +28,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal Utente FindByEmail(string email)
         {
-            return null;
+            string query = $"SELECT idUtente, nome, cognome, email, immagine, idRuolo FROM Utenti WHERE email = {email};";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            Utente utente = (Utente)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            _databaseManager.DeleteConnection();
+            return utente;
         }
     }
 }

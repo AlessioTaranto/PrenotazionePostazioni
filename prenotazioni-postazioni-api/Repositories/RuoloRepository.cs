@@ -14,7 +14,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Ruolo trovato, null altrimenti</returns>
         public Ruolo FindById(int idRuolo)
         {
-            string query = $"SELECT descRuolo, accessoImpostazioni FROM Ruoli WHERE idRuolo = {idRuolo};";
+            string query = $"SELECT descRuolo, idRuolo, accessoImpostazioni FROM Ruoli WHERE idRuolo = {idRuolo};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             Ruolo ruolo = (Ruolo)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
