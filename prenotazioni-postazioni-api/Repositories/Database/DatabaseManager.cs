@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// <param name="initialCatalog">Nome del database</param>
         /// <param name="datasource">Nome del server sql</param>
         /// <param name="integratedSecurity">integrated security</param>
-        public void CreateConnectionToDatabase(string initialCatalog, string datasource, bool integratedSecurity)
+        public void CreateConnectionToDatabase(string? initialCatalog, string? datasource, bool integratedSecurity)
         {
             //significa che _conn ha gia un'istanza di SqlConnection
             if(checkConnectionDatabase())
@@ -48,7 +48,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         {
             if (!checkConnectionDatabase())
             {
-                return null;
+                throw new DatabaseException("Database connection not set");
             }
             using (var conn = _conn)
             {
@@ -69,7 +69,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         {
             if (!checkConnectionDatabase())
             {
-                return null;
+                throw new DatabaseException("Database connection not set");
             }
             using (var conn = _conn)
             {
@@ -104,7 +104,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         {
             if (!checkConnectionDatabase())
             {
-                return;
+                throw new DatabaseException("Database connection not set");
             }
             using (var conn = _conn)
             {
