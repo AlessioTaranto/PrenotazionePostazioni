@@ -51,7 +51,28 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="stanzaDto">la stanza da salvare</param>
         internal void Save(StanzaDto stanzaDto)
         {
-            //TODO da implemenetare
+            string nomestanza = stanzaDto.Nome;
+            int postiMax = stanzaDto.PostiMax;
+            int postiMaxEmergenza = stanzaDto.PostiMaxEmergenza;
+
+            if (stanzaDto.IsValid && CheckStanza(stanzaDto))
+            {
+                Stanza stanza = new Stanza(nomestanza, postiMax, postiMaxEmergenza); //TODO aggiungere costruttore
+                _stanzaRepository.Save(stanza);
+            }
+            else throw new PrenotazionePostazioniApiException("Stanza da salvare non valida");
+
+
+        }
+
+        private bool CheckStanza(StanzaDto stanzaDto)
+        {
+            List<Stanza> stanze = GetAllStanze();
+            for(int i = 0; i < stanze.Count; i++)
+            {
+                if (stanze[i].Nome == stanzaDto.Nome) return false;
+            }
+            return true;
         }
     }
 }
