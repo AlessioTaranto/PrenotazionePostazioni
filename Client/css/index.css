@@ -1,0 +1,68 @@
+html {
+    max-height: 100vh;
+    height: 100vh;
+}
+
+body {
+    background: linear-gradient(50deg, rgba(225, 225, 225, 0.66) 0, rgba(220, 220, 220, 0.92) 100%) no-repeat right top !important;
+    font-family: Poppins, serif;
+    width: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.bg-darkorange {
+    background-color: darkorange;
+}
+
+.logo-img {
+    width: 80%;
+    height: auto;
+}
+
+.ml-nav {
+    margin-left: 50% !important;
+}
+.ml-2-nav {
+    margin-left: 90% !important;
+}
+
+.nav-item a {
+    color:white;
+    font-size: 1.15vw;
+}
+
+.nav-item a:hover {
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.black {
+    color: black !important;
+}
+
+.ml-23 {
+    margin-left: 21% !important;
+}
+
+.calendar-div {
+    width: 20vw;
+    height: 50vh;
+    background-color: white;
+}
+
+.piantina-div img {
+    width: 57vw;
+    height: 75vh;
+}
+
+.room-info-div {
+    width: 19vw;
+    height: 70vh;
+    background-color: white;
+}
+
+.ml-70 {
+    margin-left: 80% !important;
+}
+
