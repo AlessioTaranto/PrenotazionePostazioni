@@ -29,6 +29,14 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+        public Stanza(string nome, int postiMax, int postiMaxEmergenza)
+        {
+            Nome = nome;
+            PostiMax = postiMax;
+            PostiMaxEmergenza = postiMaxEmergenza;
+            this.Validate();
+        }
+
         public Stanza()
         {
         }

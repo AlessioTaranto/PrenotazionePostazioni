@@ -27,6 +27,14 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+        public Voto(int idUtente, int idUtenteVotato, bool votoEffettuato)
+        {
+            IdUtente = idUtente;
+            IdUtenteVotato = idUtenteVotato;
+            VotoEffettuato = votoEffettuato;
+            this.Validate();
+        }
+
         public Voto()
         {
         }
