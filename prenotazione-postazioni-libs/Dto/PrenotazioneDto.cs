@@ -9,13 +9,15 @@ namespace prenotazione_postazioni_libs.Dto
 {
     public class PrenotazioneDto
     {
-        public DateOnly Date { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public int IdStanza { get; set; }
         public int IdUtente { get; set; }
 
-        public PrenotazioneDto(DateOnly date, int idStanza, int idUtente)
+        public PrenotazioneDto(DateTime startDate, DateTime endDate, int idStanza, int idUtente)
         {
-            Date = date;
+            StartDate = startDate;
+            EndDate = endDate;
             IdStanza = idStanza;
             IdUtente = idUtente;
         }
