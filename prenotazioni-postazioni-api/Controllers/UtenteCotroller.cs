@@ -2,6 +2,7 @@ using prenotazione_postazioni_libs.Dto;
 using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -20,12 +21,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getUtenteById")]
         public IActionResult GetUtenteById(int id)
         {
-            Utente utente = _utenteService.GetUtenteById(id);
-            if (utente == null)
+            try
+            {
+                Utente utente = _utenteService.GetUtenteById(id);
+                return Ok(utente);
+            }catch(PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
             }
-            return Ok(utente);
         }
 
         /// <summary>
@@ -37,26 +40,35 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getUtenteByEmail")]
         public IActionResult GetUtenteByEmail(string email)
         {
-            Utente utente = _utenteService.GetUtenteByEmail(email);
-            if(utente == null)
+            try
+            {
+                Utente utente = _utenteService.GetUtenteByEmail(email);
+                return Ok(utente);
+            }
+            catch (PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
-            }
-            return Ok(utente);
+            };
         }
 
         /// <summary>
         /// Aggiunge un utente al database
         /// </summary>
         /// <param name="utenteDto">L'utente da inserire nel database</param>
-        /// <returns>httpstatus 200</returns>
-
-        // [HttpPost]
-        // [Route("addNewUtente")]
-        // public IActionResult AddNewUtente(UtenteDto utenteDto)
-        // {
-        //     return Ok(_utenteService.Save(utenteDto));
-        // }
+        /// <returns>httpstatus 200 se salvataggio corretto, httpstatus 400 altrimenti</returns>
+        [HttpPost]
+        [Route("addNewUtente")]
+        public IActionResult AddNewUtente(UtenteDto utenteDto)
+        {
+            try
+            {
+                _utenteService.Save(utenteDto);
+                return Ok();
+            }catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest();
+            }
+        }
         
     }
 }

@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
     [ApiController]
-    [Route("/api/prenotazioni")]
+    [Route("api/prenotazioni")]
     public class PrenotazioneController : ControllerBase
     {
         private PrenotazioneService _prenotazioneService = new PrenotazioneService();
@@ -18,15 +19,17 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="idPrenotazione">Id della Prenotazione</param>
         /// <returns>Prenotazione e status 200, status 404 altrimenti</returns>
         [HttpGet]
-        [Route("/getPrenotazioneById")]
+        [Route("getPrenotazioneById")]
         public IActionResult GetPrenotazioneById(int idPrenotazione)
         {
-            Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
-            if(prenotazione == null)
+            try
+            {
+                Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
+                return Ok(prenotazione);
+            }catch(PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
             }
-            return Ok(prenotazione);
         }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <returns>Lista di Prenotazioni e status 200</returns>
         [HttpGet]
-        [Route("/getAllPrenotazioni")]
+        [Route("getAllPrenotazioni")]
         public IActionResult GetAllPrenotazioni()
         {
             return Ok(_prenotazioneService.GetAllPrenotazioni());
@@ -44,34 +47,59 @@ namespace prenotazioni_postazioni_api.Controllers
         /// Restituisce la Prenotazione associata alla sua stanza.
         /// </summary>
         /// <param name="idStanza">L'Id della stanza associata alla Prenotazione</param>
-        /// <returns>Prenotazione e status 200, 404 altrimenti</returns>
+        /// <returns>Lista di Prenotazione e status 200, 404 altrimenti</returns>
         [HttpGet]
-        [Route("/getPrenotazioniByStanza")]
-        public IActionResult GetPrenotazioneByStanza(string idStanza)
+        [Route("getPrenotazioniByStanza")]
+        public IActionResult GetPrenotazioniByStanza(string idStanza)
         {
-            Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneByStanza(idStanza);
-            if(prenotazione == null)
+            try
+            {
+                List<Prenotazione>   prenotazione = _prenotazioneService.GetPrenotazioniByStanza(idStanza);
+                return Ok(prenotazione);
+            }catch(PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
             }
-            return Ok(prenotazione);
+            
         }
         
         /// <summary>
-        /// Restituisce una Prenotazione dall'Id utente associato
+        /// Restituisce tutte le Prenotazioni dall'Id utente associato
         /// </summary>
         /// <param name="idUtente">L'id utente associata alla Prenotazione</param>
-        /// <returns>Prenotazione e status 200, 404 altrimenti</returns>
+        /// <returns>Lista di Prenotazione e status 200, 404 altrimenti</returns>
         [HttpGet]
-        [Route("/getPrenotazioniByUtente")]
+        [Route("getPrenotazioniByUtente")]
         public IActionResult GetPrenotazioneByUtente(string idUtente)
         {
-            Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneByUtente(idUtente);
-            if (prenotazione == null)
+            try
+            {
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByUtente(idUtente);
+                return Ok(prenotazioni);
+            }catch(PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
             }
-            return Ok(prenotazione);
+        }
+
+        /// <summary>
+        /// Restituisce tutte le Prenotazioni effettuate in una Stanza
+        /// </summary>
+        /// <param name="idStanza"></param>
+        /// <param name="date"></param>
+        /// <returns>Lista di Prenotazioni e status 200, altrimenti 404</returns>
+        [HttpGet]
+        [Route("getPrenotazioniByDate")]
+        public IActionResult GetPrenotazioniByDate(int idStanza,DateOnly date)
+        {
+            try
+            {
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByDate(idStanza, date);
+                return Ok(prenotazioni);
+            }catch(PrenotazionePostazioniApiException ex)
+            {
+                return NotFound();
+            }
         }
 
         /// <summary>
@@ -79,12 +107,19 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <param name="prenotazioneDto">L'oggetto dto da mappare e poi salvare</param>
         /// <returns>status 200</returns>
-        // [HttpPost]
-        // [Route("/add-prenotazione")]
-        // public IActionResult AddPrenotazione([FromBody] PrenotazioneDto prenotazioneDto)
-        // {
-        //     return Ok(_prenotazioneService.Save(prenotazioneDto));
-        // }
+        [HttpPost]
+        [Route("addPrenotazione")]
+        public IActionResult AddPrenotazione([FromBody] PrenotazioneDto prenotazioneDto)
+        {
+            try
+            {
+                _prenotazioneService.Save(prenotazioneDto);
+                return Ok();
+            }catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest();
+            }
+        }
 
     }
 }

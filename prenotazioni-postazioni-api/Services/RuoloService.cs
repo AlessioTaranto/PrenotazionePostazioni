@@ -1,6 +1,7 @@
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -14,14 +15,17 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public Ruolo GetRuoloByUtenteId(int idUtente)
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
+        public Ruolo GetRuoloById(int idRuolo)
         {
-            return _ruoloRepository.FindByUtenteId(idUtente);
+            Ruolo ruolo = _ruoloRepository.FindById(idRuolo);
+            if (ruolo == null) throw new PrenotazionePostazioniApiException("Ruolo utente non trovato");
+            else return ruolo;
         }
 
         public bool UpdateRuoloUtenteByAdminUtenteId(UtenteDto utenteDto)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

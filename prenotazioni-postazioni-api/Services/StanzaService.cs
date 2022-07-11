@@ -1,6 +1,7 @@
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -22,9 +23,12 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>Stanza trovata, null altrimenti</returns>
-        internal Stanza GetStanzaByid(int id)
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
+        internal Stanza GetStanzaById(int id)
         {
-            return _stanzaRepository.FindById(id);
+            Stanza stanza = _stanzaRepository.FindById(id);
+            if (stanza == null) throw new PrenotazionePostazioniApiException("Stanza non trovata");
+            else return stanza;
         }
 
         /// <summary>
@@ -32,18 +36,49 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="stanzaName">il nome della stanza da trovare</param>
         /// <returns>stanza trovata, null altrimenti</returns>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Stanza GetStanzaByName(string stanzaName)
         {
-            return _stanzaRepository.FindByName(stanzaName);
+            Stanza stanza = _stanzaRepository.FindByName(stanzaName);
+            if (stanza == null) throw new PrenotazionePostazioniApiException("Stanza non trovata");
+            else
+                return stanza;
         }
 
         /// <summary>
         /// Salva una stanza nel database
         /// </summary>
         /// <param name="stanzaDto">la stanza da salvare</param>
+        /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal void Save(StanzaDto stanzaDto)
         {
-            //TODO da implemenetare
+            string nomestanza = stanzaDto.Nome;
+            int postiMax = stanzaDto.PostiMax;
+            int postiMaxEmergenza = stanzaDto.PostiMaxEmergenza;
+
+            if (stanzaDto.IsValid && CheckStanza(stanzaDto))
+            {
+                Stanza stanza = new Stanza(nomestanza, postiMax, postiMaxEmergenza); //TODO aggiungere costruttore
+                _stanzaRepository.Save(stanza);
+            }
+            else throw new PrenotazionePostazioniApiException("Stanza da salvare non valida");
+
+
+        }
+
+        /// <summary>
+        /// Controlla se esiste già una stanza con lo stesso nome di quella che si vuole inserire
+        /// </summary>
+        /// <param name="stanzaDto"></param>
+        /// <returns>True se il nome è unico, False se la stanza è già presente</returns>
+        private bool CheckStanza(StanzaDto stanzaDto)
+        {
+            List<Stanza> stanze = GetAllStanze();
+            for(int i = 0; i < stanze.Count; i++)
+            {
+                if (stanze[i].Nome == stanzaDto.Nome) return false;
+            }
+            return true;
         }
     }
 }

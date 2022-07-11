@@ -3,6 +3,7 @@ using prenotazioni_postazioni_api.Repositories;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -21,7 +22,15 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getImpostazioneEmergenza")]
         public IActionResult GetImpostazioneEmergenza()
         {
-            return Ok(_impostazioneService.GetImpostazioneEmergenza());
+            try
+            {
+                return Ok(_impostazioneService.GetImpostazioneEmergenza());
+            }
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                return NotFound();
+            }
+            
         }
 
         /// <summary>
@@ -32,9 +41,9 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </param>
         [HttpPost]
         [Route("changeImpostazioneEmergenza")]
-        public IActionResult ChangeImpostazioneEmergenza(bool userValue)
+        public IActionResult ChangeImpostazioneEmergenza()
         {
-            return Ok(_impostazioneService.ChangeImpostazioniEmergenza(userValue));
+            return Ok(_impostazioneService.ChangeImpostazioniEmergenza());
         }
     }
 }

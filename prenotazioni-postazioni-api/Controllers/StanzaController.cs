@@ -3,6 +3,7 @@
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -32,15 +33,15 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzeById")]
         public IActionResult GetStanzaById(int id)
         {
-            Stanza stanza = _stanzaService.GetStanzaByid(id);
-            if (stanza == null)
+            try
+            {
+                Stanza stanza = _stanzaService.GetStanzaById(id);
+                return stanza;
+            }catch(PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
             }
-            else
-            {
-                return Ok(stanza);
-            }
+            
         }
 
         /// <summary>
@@ -52,14 +53,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getStanzaByName")]
         public IActionResult GetStanzaByName(string stanzaName)
         {
-            Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
-            if(stanza == null)
+            try
+            {
+                Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
+                return Ok(stanza);
+            }
+            catch (PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
-            }
-            else
-            {
-                return Ok(stanza);
             }
         }
 
@@ -68,11 +69,18 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <param name="stanzaDto">L'oggetto stanza da aggiungere al database</param>
         /// <returns>httpstatus 200</returns>
-        // [HttpPost]
-        // [Route("addStanza")]
-        // public IActionResult AddNewStanza(StanzaDto stanzaDto)
-        // {
-        //     return Ok(_stanzaService.Save(stanzaDto));
-        // }
+        [HttpPost]
+        [Route("addStanza")]
+        public IActionResult AddNewStanza(StanzaDto stanzaDto)
+        {
+            try
+            {
+                _stanzaService.Save(stanzaDto);
+                return Ok()
+            }catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
