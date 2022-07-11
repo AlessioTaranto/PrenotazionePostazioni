@@ -32,6 +32,16 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+        public Utente(string nome, string cognome, string image, string email, int idRuolo)
+        {
+            Nome = nome;
+            Cognome = cognome;
+            Image = image;
+            Email = email;
+            IdRuolo = idRuolo;
+            this.Validate();
+        }
+
         public Utente()
         {
         }

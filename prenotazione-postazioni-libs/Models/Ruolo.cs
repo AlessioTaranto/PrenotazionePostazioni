@@ -26,6 +26,14 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+        public Ruolo(string descRuolo, bool accessoImpostazioni)
+        {
+            DescRuolo = descRuolo;
+            AccessoImpostazioni = accessoImpostazioni;
+
+            this.Validate();
+        }
+
         public Ruolo()
         {
         }
