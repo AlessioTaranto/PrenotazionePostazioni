@@ -81,10 +81,10 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idStanza">L'id della stanza dove sono effettuate delle prenotazioni</param>
         /// <param name="date">La data delle prenotazioni</param>
         /// <returns></returns>
-        //internal List<Prenotazione> FindAllByIdStanzaAndDate(int idStanza, DateOnly date)
-        //{
-
-        //}
+        internal List<Prenotazione> FindAllByIdStanzaAndDate(int idStanza, DateTime dateDay)
+        {
+            return null;
+        }
 
 
 

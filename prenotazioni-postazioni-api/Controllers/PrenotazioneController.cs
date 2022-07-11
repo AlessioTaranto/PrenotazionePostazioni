@@ -50,7 +50,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>Lista di Prenotazione e status 200, 404 altrimenti</returns>
         [HttpGet]
         [Route("getPrenotazioniByStanza")]
-        public IActionResult GetPrenotazioniByStanza(string idStanza)
+        public IActionResult GetPrenotazioniByStanza(int idStanza)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>Lista di Prenotazione e status 200, 404 altrimenti</returns>
         [HttpGet]
         [Route("getPrenotazioniByUtente")]
-        public IActionResult GetPrenotazioneByUtente(string idUtente)
+        public IActionResult GetPrenotazioneByUtente(int idUtente)
         {
             try
             {
@@ -90,11 +90,11 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>Lista di Prenotazioni e status 200, altrimenti 404</returns>
         [HttpGet]
         [Route("getPrenotazioniByDate")]
-        public IActionResult GetPrenotazioniByDate(int idStanza,DateOnly date)
+        public IActionResult GetPrenotazioniByDate(int idStanza, DateTime dateDay)
         {
             try
             {
-                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByDate(idStanza, date);
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByDate(idStanza, dateDay);
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
