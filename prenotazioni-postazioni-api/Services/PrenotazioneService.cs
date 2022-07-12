@@ -47,7 +47,7 @@ using prenotazioni_postazioni_api.Exceptions;
         {
             return _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, dateDay);
         }
-        \
+        
          /// <summary>
          /// Trova tutte le prenotazioni presenti nel Database
          /// </summary>
@@ -79,11 +79,11 @@ using prenotazioni_postazioni_api.Exceptions;
             DateTime startDate = prenotazioneDto.StartDate;
             DateTime endDate = prenotazioneDto.EndDate;
             int postiMax = _impostazioneService.GetImpostazioneEmergenza() == false ? stanza.PostiMax : stanza.PostiMaxEmergenza;
-            List<Prenotazione> prenotazioni = FindAllByIdStanzaAndDate(idStanza, date);
+            List<Prenotazione> prenotazioni = _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, startDate);
 
             if (prenotazioni.Count < postiMax)
             {
-                Prenotazione prenotazione = new Prenotazione(date, idStanza, idUtente);
+                Prenotazione prenotazione = new Prenotazione(startDate,endDate, idStanza, idUtente);
                 _prenotazioneRepository.Save(prenotazione);
             }
             else throw new PrenotazionePostazioniApiException("Posti liberi esauriti");

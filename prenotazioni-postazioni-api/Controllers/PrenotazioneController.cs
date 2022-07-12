@@ -94,7 +94,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByDate(idStanza, dateDay);
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioniByIdStanzaAndDate(idStanza, dateDay);
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
