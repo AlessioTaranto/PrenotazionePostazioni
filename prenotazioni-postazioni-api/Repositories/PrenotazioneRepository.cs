@@ -17,7 +17,7 @@ namespace prenotazioni_postazioni_api.Repositories
 
             string query = $"SELECT data, idStanza, idPrenotazione, idUtente FROM Prenotazioni WHERE idPrenotazione = {idPrenotazione};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Prenotazione prenotazione = (Prenotazione)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            Prenotazione prenotazione = JsonConvert.DeserializeObject<Prenotazione>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return prenotazione;
         }
@@ -30,7 +30,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT idPrenotazioni, idStanza, data, idStanza, idUtente FROM Prenotazioni WHERE idStanza = {idStanza};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Prenotazione> prenotazioni = (List<Prenotazione>) JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
+            List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
             return prenotazioni;
         }
@@ -42,8 +42,8 @@ namespace prenotazioni_postazioni_api.Repositories
         internal List<Prenotazione> FindAll()
         {
             string query = "SELECT * FROM Prenotazioni;";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Prenotazione> prenotazioni = (List<Prenotazione>) JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
+            _databaseManager.CreateConnectionToDatabase(null, null, false);
+            List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
             return prenotazioni;
         }
@@ -56,7 +56,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT idPrenotazioni, data, idUtente, idStanza, idUtente FROM Prenotazioni WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Prenotazione> prenotazioni = (List<Prenotazione>)JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
+            List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
             return prenotazioni;
 
@@ -72,6 +72,12 @@ namespace prenotazioni_postazioni_api.Repositories
             //_databaseManager.CreateConnectionToDatabase(null, null, true);
             //_databaseManager.GetNoneResult(query);
             //_databaseManager.DeleteConnection();
+        }
+
+        internal List<Prenotazione> FindAllByStartAndEndDate(int startHour, int endHour)
+        {
+            //da implementare
+            return null;
         }
 
 

@@ -25,15 +25,15 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="userValue">Il valore con cui si aggiornera Impostazioni Emergenza</param>
         /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
-        public bool ChangeImpostazioniEmergenza()
+        public void ChangeImpostazioniEmergenza()
         {
             if(_impostazioneRepository.FindImpostazioneEmergenza() == true)
             {
-                return _impostazioneRepository.UpdateImpostazioneEmergenza(false);
+                _impostazioneRepository.UpdateImpostazioneEmergenza(false);
             }
             else
             {
-                return _impostazioneRepository.UpdateImpostazioneEmergenza(true);
+                _impostazioneRepository.UpdateImpostazioneEmergenza(true);
             }
             
         }

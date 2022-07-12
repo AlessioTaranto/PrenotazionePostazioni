@@ -16,7 +16,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = "SELECT modEmergenza FROM Impostazioni;";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            bool result = (bool)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            bool result = JsonConvert.DeserializeObject<bool>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return result;
         }

@@ -16,7 +16,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT descRuolo, idRuolo, accessoImpostazioni FROM Ruoli WHERE idRuolo = {idRuolo};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Ruolo ruolo = (Ruolo)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return ruolo;
         }
@@ -25,9 +25,9 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT idRuolo FROM dbo.Utenti WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            int idRuolo = (int)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            int idRuolo = JsonConvert.DeserializeObject<int>(_databaseManager.GetOneResult(query));
             query = $"SELECT* FROM dbo.Ruoli WHERE idRuolo = {idRuolo};";
-            Ruolo ruolo = (Ruolo)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
             return ruolo;
         }
     }

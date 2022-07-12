@@ -17,7 +17,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT idVoti, idUtente, idUtenteVotato, voto FROM Voti WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Voto> voti = (List<Voto>)JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
+            List<Voto> voti = JsonConvert.DeserializeObject<List<Voto>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
             return voti;
         }
@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT idVoti, idUtente, idUtenteVotato, voto FROM voti WHERE idUtenteVotato = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Voto> voti = (List<Voto>)JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
+            List<Voto> voti = JsonConvert.DeserializeObject<List<Voto>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
             return voti;
         }
