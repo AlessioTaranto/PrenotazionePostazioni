@@ -2,6 +2,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
+
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class RuoloRepository
@@ -29,6 +30,14 @@ namespace prenotazioni_postazioni_api.Repositories
             query = $"SELECT* FROM dbo.Ruoli WHERE idRuolo = {idRuolo};";
             Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
             return ruolo;
+        }
+
+        internal void UpdateRuoloUtente(int idRuolo)
+        {
+            string query = $"UPDATE Ruolo SET accessoImpostazioni 1 ^ accessoImpostazioni WHERE idRuolo = {idRuolo};";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            _databaseManager.GetNoneResult(query);
+            _databaseManager.DeleteConnection();
         }
     }
 }
