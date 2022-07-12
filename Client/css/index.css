@@ -41,8 +41,12 @@ body {
     color: black !important;
 }
 
-.ml-23 {
+.ml-21 {
     margin-left: 21% !important;
+}
+
+.ml-25 {
+    margin-left: 25% !important;
 }
 
 .calendar-div {
