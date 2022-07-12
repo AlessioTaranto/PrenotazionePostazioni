@@ -71,25 +71,53 @@ using prenotazioni_postazioni_api.Exceptions;
          /// Salva una prenotazione al database
          /// </summary>
          /// <param name="prenotazioneDto">La prenotazione da salvare</param>
-         public void Save(PrenotazioneDto prenotazioneDto)
+         public int Save(PrenotazioneDto prenotazioneDto)
          {
-            int idStanza = prenotazioneDto.IdStanza;
-            int idUtente = prenotazioneDto.IdUtente;
-            Stanza stanza = _stanzaService.GetStanzaById(idStanza);
-            DateTime startDate = prenotazioneDto.StartDate;
-            DateTime endDate = prenotazioneDto.EndDate;
-            int postiMax = _impostazioneService.GetImpostazioneEmergenza() == false ? stanza.PostiMax : stanza.PostiMaxEmergenza;
-            List<Prenotazione> prenotazioni = _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, startDate);
-
-            if (prenotazioni.Count < postiMax)
+            Stanza stanza = _stanzaService.GetStanzaById(prenotazioneDto.IdStanza);
+            if (stanza == null)
             {
-                Prenotazione prenotazione = new Prenotazione(startDate,endDate, idStanza, idUtente);
-                _prenotazioneRepository.Save(prenotazione);
+                throw new ArgumentException("Stanza e' null");
             }
-            else throw new PrenotazionePostazioniApiException("Posti liberi esauriti");
+            int MAX_STANZA = Impostazioni.ModEmergenza ? stanza.PostiMaxEmergenza : stanza.PostiMax;
+            Prenotazione newPrenotazione = new Prenotazione(prenotazioneDto.StartDate, prenotazioneDto.EndDate, prenotazioneDto.IdStanza, prenotazioneDto.IdUtente);
+            List<Prenotazione> prenotazioni = _prenotazioneRepository.FindAllByStartAndEndDate(newPrenotazione.StartDate.Hour, newPrenotazione.EndDate.Hour);
+            int resultOreOverlap = ControlloPrenotazioneOrePiena(newPrenotazione, prenotazioni, MAX_STANZA);
+            if(resultOreOverlap == 0)
+            {
+                _prenotazioneRepository.Save(newPrenotazione);
+                return 0;
+            }
+            return resultOreOverlap;
+        }
 
-         }
-
-
-     }
+        private int ControlloPrenotazioneOrePiena(Prenotazione newPrenotazione, List<Prenotazione> prenotazioni, int MAX_STANZA)
+        {
+            
+            int maxOre = 1;
+            for (int i = newPrenotazione.StartDate.Hour; i <= newPrenotazione.EndDate.Hour; i++)
+            {
+                int contatore = 1;
+                int checkContatore = 1;
+                foreach (var prenotazione in prenotazioni)
+                {
+                    if (prenotazione.StartDate.Hour <= i && i < prenotazione.EndDate.Hour)
+                    {
+                        contatore++;
+                    }
+                    checkContatore++;
+                    if (contatore > MAX_STANZA)
+                    {
+                        maxOre++;
+                        if (contatore < checkContatore)
+                        {
+                            int inizioOreBlocco = contatore - maxOre - 1;
+                            int fineOreBlocco = contatore;
+                            return maxOre;
+                        }
+                    }
+                }
+            }
+            return 0;
+        }
+    }
  }
