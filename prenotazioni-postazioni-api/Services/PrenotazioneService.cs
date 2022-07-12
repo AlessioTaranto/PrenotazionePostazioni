@@ -43,9 +43,9 @@ using prenotazioni_postazioni_api.Exceptions;
         /// <param name="idStanza"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        internal List<Prenotazione> GetAllPrenotazioniByIdStanzaAndDate(int idStanza, DateTime dateDay)
+        internal List<Prenotazione> GetAllPrenotazioniByIdStanzaAndDate(int idStanza, DateTime startDate, DateTime endDate)
         {
-            return _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, dateDay);
+            return _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, startDate, endDate);
         }
         
          /// <summary>
