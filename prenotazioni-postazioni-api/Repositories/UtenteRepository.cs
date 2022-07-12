@@ -2,6 +2,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
+
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class UtenteRepository
@@ -16,7 +17,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT nome, cognome, idUtente, immagine, email, idRuolo FROM Utenti WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Utente utente = (Utente)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return utente;
         }
@@ -30,9 +31,17 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"SELECT idUtente, nome, cognome, email, immagine, idRuolo FROM Utenti WHERE email = {email};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Utente utente = (Utente)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return utente;
+        }
+
+        internal void Save(Utente utente)
+        {
+            string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ({utente.Nome}, {utente.Cognome}, {utente.Image}, {utente.IdRuolo});";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            _databaseManager.GetNoneResult(query);
+            _databaseManager.DeleteConnection();
         }
     }
 }

@@ -43,7 +43,8 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("changeImpostazioneEmergenza")]
         public IActionResult ChangeImpostazioneEmergenza()
         {
-            return Ok(_impostazioneService.ChangeImpostazioniEmergenza());
+            _impostazioneService.ChangeImpostazioniEmergenza();
+            return Ok();
         }
     }
 }

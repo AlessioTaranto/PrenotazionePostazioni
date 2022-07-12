@@ -2,7 +2,8 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
-﻿namespace prenotazioni_postazioni_api.Repositories
+
+namespace prenotazioni_postazioni_api.Repositories
 {
     public class StanzaRepository
     {
@@ -15,7 +16,7 @@ using prenotazioni_postazioni_api.Repositories.Database;
         {
             string query = $"SELECT * FROM Stanze";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Stanza> stanze = (List<Stanza>) JsonConvert.DeserializeObject(_databaseManager.GetAllResults(query));
+            List<Stanza> stanze = JsonConvert.DeserializeObject<List<Stanza>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
             return stanze;
         }
@@ -30,7 +31,7 @@ using prenotazioni_postazioni_api.Repositories.Database;
         {
             string query = $"SELECT nome, postiMax, idStanza, postiMaxEmergenza FROM Stanze WHERE idStanza = {idStanza};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Stanza stanza = (Stanza)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            Stanza stanza = JsonConvert.DeserializeObject<Stanza>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return stanza;
         }
@@ -44,9 +45,17 @@ using prenotazioni_postazioni_api.Repositories.Database;
         {
             string query = $"SELECT idStanza, postiMax,stanzaName, postiMaxEmergenza FROM Stanze WHERE nome = {stanzaName};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Stanza stanza = (Stanza) JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            Stanza stanza = JsonConvert.DeserializeObject<Stanza>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return stanza;
+        }
+
+        internal void Save(Stanza stanza)
+        {
+            string query = $"INSERT INTO Stanze (nome, postiMax, postiMaxEmergenza) VALUES ({stanza.Nome}, {stanza.PostiMax}, {stanza.PostiMaxEmergenza});";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            _databaseManager.GetNoneResult(query);
+            _databaseManager.DeleteConnection();
         }
     }
 }

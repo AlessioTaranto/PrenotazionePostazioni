@@ -74,7 +74,7 @@ namespace test_db
                     {
                         contatore++;
                     }
-                    checkContatore++
+                    checkContatore++;
                     if (contatore > MAX_STANZA)
                     {
                         maxOre++;
@@ -82,12 +82,12 @@ namespace test_db
                         {
                             int inizioOreBlocco = contatore - maxOre - 1;
                             int fineOreBlocco = contatore;
-                            return false; 
+                            //return false; 
                         }
                     }
                 }
             }
-            return true;
+            //return true;
         }
     }
 }
