@@ -33,6 +33,25 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        /// <summary>
+        /// Serve a ottenere il Ruolo di un utente tramite l'id dell'utente
+        /// </summary>
+        /// <param name="idUtente"></param>
+        /// <returns>Il ruolo e stato 200 in caso di ricerca effettuata con successo, 404 altrimenti</returns>
+        [HttpGet]
+        [Route("getRuoloByIdUtente")]
+        public IActionResult GetRuoloUtenteByIdUtente(int idUtente)
+        {
+            try
+            {
+                Ruolo ruolo = _ruoloService.GetRuoloByIdUtente(idUtente);
+                return Ok(ruolo);
+            }catch(PrenotazionePostazioniApiException ex)
+            {
+                return NotFound();
+            }
+        }
+
 
         //da aggiornare la cors policy, oppure implementare un sistema di accesso
 
