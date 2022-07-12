@@ -8,6 +8,7 @@ namespace prenotazioni_postazioni_api.Services
     public class RuoloService
     {
         private RuoloRepository _ruoloRepository = new RuoloRepository();
+        private UtenteRepository _utenteRepository = new UtenteRepository();
 
 
         /// <summary>
@@ -36,9 +37,29 @@ namespace prenotazioni_postazioni_api.Services
             else return ruolo;
         }
 
-        internal bool UpdateRuoloUtenteByAdminUtenteId(UtenteDto utenteDto)
+        /// <summary>
+        /// switch il ruolo dell'utente, solo se l'admin ha AccessoImpostazioni a TRUE
+        /// </summary>
+        /// <param name="idUtente">L'id del'utente che gli verra modificato l'accesso impostazioni</param>
+        /// <param name="idAdmin">L'id dell'admin che effettua il cambiamento di accesso impostazioni all'utente</param>
+        /// <returns>TRUE se l'admin ha accesso impostazioni a true, FALSE altrimenti</returns>
+        /// <exception cref="PrenotazionePostazioniApiException">Se admin, utente, ruoloUtente, o ruoloAdmin sono null</exception>
+        internal bool UpdateRuoloUtenteByAdminUtenteId(int idUtente, int idAdmin)
         {
-            //da implementare (admin utente)
+            Utente utente = _utenteRepository.FindById(idUtente);
+            Utente admin = _utenteRepository.FindById(idAdmin);
+            if (admin == null) throw new PrenotazionePostazioniApiException("admin e' null");
+            if (utente == null) throw new PrenotazionePostazioniApiException("utente e' null");
+            Ruolo ruoloUtente = _ruoloRepository.FindById(utente.IdRuolo);
+            Ruolo ruoloAdmin = _ruoloRepository.FindById(admin.IdRuolo);
+            if (ruoloAdmin == null) throw new PrenotazionePostazioniApiException("ruolo admin non trovato");
+            if (ruoloUtente == null) throw new PrenotazionePostazioniApiException("ruolo utente non trovato");
+            
+            if(ruoloAdmin.AccessoImpostazioni)
+            {
+                _ruoloRepository.UpdateRuoloUtente(ruoloUtente.IdRuolo);
+                return true;
+            }
             return false;
         }
     }

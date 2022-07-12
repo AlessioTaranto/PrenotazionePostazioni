@@ -12,7 +12,6 @@ namespace prenotazioni_postazioni_api.Controllers
     public class PrenotazioneController : ControllerBase
     {
         private PrenotazioneService _prenotazioneService = new PrenotazioneService();
-        
         /// <summary>
         /// Restituisce la Prenotazione trovata mediante il suo ID
         /// </summary>

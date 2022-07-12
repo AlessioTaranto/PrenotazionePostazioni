@@ -53,9 +53,6 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-
-        //da aggiornare la cors policy, oppure implementare un sistema di accesso
-
         /// <summary>
         /// Aggiorna il ruolo di un utente dall'admin
         /// </summary>
@@ -64,16 +61,23 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpPost]
         [Route("updateRuoloUtenteByUtenteId")]
-        public IActionResult UpdateRuoloUtenteByAdminUtenteId([FromBody] UtenteDto utenteDto)
+        public IActionResult UpdateRuoloUtenteByAdminUtenteId([FromBody] int idUtente, [FromBody] int idAdmin)
         {
-            bool ok = _ruoloService.UpdateRuoloUtenteByAdminUtenteId(utenteDto);
-            if (ok)
+            try
             {
-                return Ok();
+                bool ok = _ruoloService.UpdateRuoloUtenteByAdminUtenteId(idUtente, idAdmin);
+                if (ok)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return Forbid("Non autorizzato");
+                }
             }
-            else
+            catch (PrenotazionePostazioniApiException ex)
             {
-                return Forbid("Non autorizzato");
+                return BadRequest();
             }
         }
     }
