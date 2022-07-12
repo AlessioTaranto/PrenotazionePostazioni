@@ -3,6 +3,7 @@ using System;
 using System.Text;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Repositories.Database
 {
