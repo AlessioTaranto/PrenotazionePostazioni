@@ -36,10 +36,10 @@ namespace prenotazioni_postazioni_api.Services
             else return ruolo;
         }
 
-        //public bool UpdateRuoloUtenteByAdminUtenteId(int idUtente, int idAdmin)
-        //{
-        //    if()
-
-        //}
+        internal bool UpdateRuoloUtenteByAdminUtenteId(UtenteDto utenteDto)
+        {
+            //da implementare (admin utente)
+            return false;
+        }
     }
 }
