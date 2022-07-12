@@ -20,5 +20,15 @@ namespace prenotazioni_postazioni_api.Repositories
             _databaseManager.DeleteConnection();
             return ruolo;
         }
+
+        public Ruolo FindByIdUtente(int idUtente)
+        {
+            string query = $"SELECT idRuolo FROM dbo.Utenti WHERE idUtente = {idUtente};";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            int idRuolo = (int)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            query = $"SELECT* FROM dbo.Ruoli WHERE idRuolo = {idRuolo};";
+            Ruolo ruolo = (Ruolo)JsonConvert.DeserializeObject(_databaseManager.GetOneResult(query));
+            return ruolo;
+        }
     }
 }

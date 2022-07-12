@@ -41,6 +41,10 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 return NotFound();
             }
+            catch(Exception ex)
+            {
+                return BadRequest();
+            }
             
         }
 
@@ -62,6 +66,10 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 return NotFound();
             }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -78,6 +86,10 @@ namespace prenotazioni_postazioni_api.Controllers
                 _stanzaService.Save(stanzaDto);
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest();
+            }
+            catch (Exception ex)
             {
                 return BadRequest();
             }
