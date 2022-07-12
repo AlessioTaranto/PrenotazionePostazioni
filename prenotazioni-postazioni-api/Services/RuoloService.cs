@@ -29,17 +29,17 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="idUtente"></param>
         /// <returns></returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        public Ruolo GetRuoloByIdUtente(int idUtente)
-        {
-            Ruolo ruolo = _ruoloRepository.FindByIdUtente(idUtente);
-            if (ruolo == null) throw new PrenotazionePostazioniApiException("Ruolo utente non trovato");
-            else return ruolo;
-        }
+        //public Ruolo GetRuoloByIdUtente(int idUtente)
+        //{
+        //    Ruolo ruolo = _ruoloRepository.FindByIdUtente(idUtente);
+        //    if (ruolo == null) throw new PrenotazionePostazioniApiException("Ruolo utente non trovato");
+        //    else return ruolo;
+        //}
 
-        public bool UpdateRuoloUtenteByAdminUtenteId(int idUtente, int idAdmin)
-        {
-            if()
+        //public bool UpdateRuoloUtenteByAdminUtenteId(int idUtente, int idAdmin)
+        //{
+        //    if()
 
-        }
+        //}
     }
 }
