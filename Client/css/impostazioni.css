@@ -25,10 +25,13 @@ body {
     border: 1px solid #464545 !important;
 }
 
-.active-orange {
-    background-color: darkorange !important;
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: darkorange;
 }
 
-.color-black {
-    color: black !important;
+a {
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
 }
