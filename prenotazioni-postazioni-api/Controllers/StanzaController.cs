@@ -36,7 +36,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 Stanza stanza = _stanzaService.GetStanzaById(id);
-                return stanza;
+                return Ok(stanza);
             }catch(PrenotazionePostazioniApiException ex)
             {
                 return NotFound();
@@ -76,7 +76,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _stanzaService.Save(stanzaDto);
-                return Ok()
+                return Ok();
             }catch(PrenotazionePostazioniApiException ex)
             {
                 return BadRequest();
