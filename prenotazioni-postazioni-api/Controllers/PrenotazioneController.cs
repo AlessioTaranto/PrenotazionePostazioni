@@ -89,11 +89,11 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>Lista di Prenotazioni e status 200, altrimenti 404</returns>
         [HttpGet]
         [Route("getPrenotazioniByDate")]
-        public IActionResult GetPrenotazioniByDate(int idStanza, DateTime dateDay)
+        public IActionResult GetPrenotazioniByDate(int idStanza, DateTime startDate, DateTime endDate)
         {
             try
             {
-                List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioniByIdStanzaAndDate(idStanza, dateDay);
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioniByIdStanzaAndDate(idStanza, startDate, endDate);
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
