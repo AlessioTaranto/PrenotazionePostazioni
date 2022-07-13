@@ -23,7 +23,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getVotiFromUtente")]
         public IActionResult GetVotiFromUtente(int idUtente)
         {
-            return Ok(_votoService.GetVotiFromUtente(idUtente));
+            try
+            {
+                return Ok(_votoService.GetVotiFromUtente(idUtente));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
 
         /// <summary>
@@ -37,7 +44,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [HttpGet]
         public IActionResult GetVotiToUtente(int idUtente)
         {
-            return Ok(_votoService.GetVotiToUtente(idUtente));
+            try
+            {
+                return Ok(_votoService.GetVotiToUtente(idUtente));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
 
 
@@ -58,7 +72,11 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch(PrenotazionePostazioniApiException ex)
             {
-                return BadRequest();
+                return BadRequest("Impossibile effettuare il voto");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
     }
