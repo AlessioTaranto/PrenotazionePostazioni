@@ -15,7 +15,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal Prenotazione FindById(int idPrenotazione)
         {
 
-            string query = $"SELECT data, idStanza, idPrenotazione, idUtente FROM Prenotazioni WHERE idPrenotazione = {idPrenotazione};";
+            string query = $"SELECT * FROM Prenotazioni WHERE idPrenotazione = {idPrenotazione};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             Prenotazione prenotazione = JsonConvert.DeserializeObject<Prenotazione>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
@@ -28,7 +28,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Prenotazione</returns>
         internal List<Prenotazione> FindByStanza(int idStanza)
         {
-            string query = $"SELECT idPrenotazioni, idStanza, data, idStanza, idUtente FROM Prenotazioni WHERE idStanza = {idStanza};";
+            string query = $"SELECT * FROM Prenotazioni WHERE idStanza = {idStanza};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
@@ -54,7 +54,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Prenotazione</returns>
         internal List<Prenotazione> FindByUtente(int idUtente)
         {
-            string query = $"SELECT idPrenotazioni, data, idUtente, idStanza, idUtente FROM Prenotazioni WHERE idUtente = {idUtente};";
+            string query = $"SELECT * FROM Prenotazioni WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
@@ -85,7 +85,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string start = startDate.ToString("yyyy-MM-dd hh:mm:ss:fff");
             string end = endDate.ToString("yyyy-MM-dd hh:mm:ss:fff");
-            string query = $"SELECT * FROM dbo.Prenotazioni WHERE((idStanza = 1 AND idUtente = 1)AND((DATEDIFF(ss, startDate, {start}) <= 0 AND DATEDIFF(ss, endDate, {start}) >= 0)OR(DATEDIFF(ss, startDate, {end}) <= 0 AND DATEDIFF(ss, endDate, {end}) >= 0)OR(DATEDIFF(ss, startDate, {start}) >= 0 AND DATEDIFF(ss, endDate, {end}) <= 0)))";
+            string query = $"SELECT * FROM dbo.Prenotazioni WHERE((idStanza = {idStanza}) AND((DATEDIFF(ss, startDate, {start}) <= 0 AND DATEDIFF(ss, endDate, {start}) >= 0)OR(DATEDIFF(ss, startDate, {end}) <= 0 AND DATEDIFF(ss, endDate, {end}) >= 0)OR(DATEDIFF(ss, startDate, {start}) >= 0 AND DATEDIFF(ss, endDate, {end}) <= 0)))";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
 
