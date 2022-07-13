@@ -13,7 +13,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public Ruolo FindById(int idRuolo)
+        public Ruolo? FindById(int idRuolo)
         {
             string query = $"SELECT descRuolo, idRuolo, accessoImpostazioni FROM Ruoli WHERE idRuolo = {idRuolo};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
@@ -22,7 +22,12 @@ namespace prenotazioni_postazioni_api.Repositories
             return ruolo;
         }
 
-        public Ruolo FindByIdUtente(int idUtente)
+        /// <summary>
+        /// Qeury al db, restituisce il ruolo di un utente mediante il suo id
+        /// </summary>
+        /// <param name="idUtente">L'id dell'utente che servira per trovare il suo ruolo</param>
+        /// <returns>Ruolo dell'utente, null altrimenti</returns>
+        public Ruolo? FindByIdUtente(int idUtente)
         {
             string query = $"SELECT idRuolo FROM dbo.Utenti WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
@@ -31,7 +36,10 @@ namespace prenotazioni_postazioni_api.Repositories
             Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
             return ruolo;
         }
-
+        /// <summary>
+        /// Query al db, switch il ruolo accesso impostazioni dell'utente
+        /// </summary>
+        /// <param name="idRuolo">L'id del ruolo che gli verra modificato l'accesso impostazione</param>
         internal void UpdateRuoloUtente(int idRuolo)
         {
             string query = $"UPDATE Ruolo SET accessoImpostazioni 1 ^ accessoImpostazioni WHERE idRuolo = {idRuolo};";
