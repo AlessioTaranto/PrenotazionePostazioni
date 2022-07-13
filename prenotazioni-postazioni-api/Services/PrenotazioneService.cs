@@ -78,7 +78,7 @@ using prenotazioni_postazioni_api.Exceptions;
             {
                 throw new ArgumentException("Stanza e' null");
             }
-            int MAX_STANZA = Impostazioni.ModEmergenza ? stanza.PostiMaxEmergenza : stanza.PostiMax;
+            int MAX_STANZA = _impostazioneService.GetImpostazioneEmergenza() ? stanza.PostiMaxEmergenza : stanza.PostiMax;
             Prenotazione newPrenotazione = new Prenotazione(prenotazioneDto.StartDate, prenotazioneDto.EndDate, prenotazioneDto.IdStanza, prenotazioneDto.IdUtente);
             List<Prenotazione> prenotazioni = _prenotazioneRepository.FindAllByIdStanzaAndDate(newPrenotazione.IdStanza,newPrenotazione.StartDate,newPrenotazione.EndDate);
             int resultOreOverlap = ControlloPrenotazioneOrePiena(newPrenotazione, prenotazioni, MAX_STANZA);
