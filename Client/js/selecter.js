@@ -35,14 +35,65 @@ function clickCalendar(id) {
     if (dayIdSelected !== null) {
         $('#'.concat(dayIdSelected)).css("color","black");
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
-        $('#'.concat(dayIdSelected)).css("font-weight","normal");
     }
 
     dayIdSelected = id;
 
     selector.css("color","white");
     selector.css("background-color","darkorange");
-    selector.css("font-weight","bold");
 
     selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
+}
+
+function clickCalendarFest(id) {
+    
+    let selector = $('#'.concat(id));
+    
+    if (selector.css("color") !== "rgb(0, 0, 0)" && selector.css("color") !== "rgb(255, 140, 0)")
+        return;
+
+    if (dayIdSelected !== null) {
+        if($('#'.concat(dayIdSelected)).css("font-weight") !== "bold")
+            $('#'.concat(dayIdSelected)).css("color","black");
+        else $('#'.concat(dayIdSelected)).css("color","darkorange");
+        $('#'.concat(dayIdSelected)).css("background-color","transparent");
+        $('#'.concat(dayIdSelected)).css("font-weight","normal");
+    }
+
+    dayIdSelected = id;
+
+    if(selector.css("color") === "rgb(0, 0, 0)") {
+        document.getElementById("festabutton").value = "Imposta come festività";
+        document.getElementById("festabutton").innerText = "Imposta come festività";
+    }
+    else {
+        document.getElementById("festabutton").value = "Rimuovi festività";
+        document.getElementById("festabutton").innerText = "Rimuovi festività";
+    }
+    if(selector.css("color") === "rgb(255, 140, 0)") selector.css("font-weight","bold");
+    selector.css("color","white");
+    selector.css("background-color","darkorange");
+
+    selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
+}
+
+function festaButton() {
+    if(dayIdSelected === null) return;
+    let selector = $('#'.concat(dayIdSelected));
+    let btn = document.getElementById("festabutton");
+    if(btn.value === "Imposta come festività") {
+        btn.value = "Rimuovi festività"
+        btn.innerText = "Rimuovi festività"
+        selector.css("color", "darkorange");
+        selector.css("background-color", "transparent");
+        selector.css("font-weight", "normal");
+        dayIdSelected = null;
+    }
+    else {
+        btn.value = "Imposta come festività"
+        btn.innerText = "Imposta come festività"
+        selector.css("color", "black");
+        selector.css("background-color", "transparent");
+        selector.css("font-weight", "normal");
+    }
 }

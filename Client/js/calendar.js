@@ -1,10 +1,10 @@
 const date = new Date;
 let month = date.getMonth();
 
-function loadCalendar() {
+function loadCalendar(id) {
     date.setDate(1);
 
-    $('#month-year').text(translateMonth(date.getMonth()) + " " + date.getFullYear());
+    $(id).text(translateMonth(date.getMonth()) + " " + date.getFullYear());
     month = date.getMonth();
 
     for (let i = 0; i<7; i++)
@@ -31,14 +31,14 @@ function loadCalendar() {
     checkSelected()
 }
 
-function prevMonth() {
+function prevMonth(id) {
     date.setMonth(date.getMonth()-2);
-    loadCalendar();
+    loadCalendar(id);
 }
 
-function nextMonth() {
+function nextMonth(id) {
     date.setMonth(date.getMonth());
-    loadCalendar();
+    loadCalendar(id);
 }
 
 function translateMonth(number) {
@@ -79,10 +79,8 @@ function checkSelected() {
     if (daySelected.getMonth() !== date.getMonth()) {
         $('#'.concat(dayIdSelected)).css("color","black");
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
-        $('#'.concat(dayIdSelected)).css("font-weight","normal");
     } else {
         $('#'.concat(dayIdSelected)).css("color","white");
         $('#'.concat(dayIdSelected)).css("background-color","darkorange");
-        $('#'.concat(dayIdSelected)).css("font-weight","bold");
     }
 }

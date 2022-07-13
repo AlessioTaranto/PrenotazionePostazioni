@@ -22,7 +22,7 @@ body {
 }
 
 .bd-gray {
-    border: 1px solid #464545 !important;
+    border: 0.1px solid #464545 !important;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
@@ -34,4 +34,16 @@ a {
     color: black;
     text-decoration: none;
     background-color: transparent;
+}
+
+.calendar-info-div {
+    width: 40vw;
+    height: 100vh;
+    background-color: white;
+}
+
+.calendar-div-alt {
+    width: 30vw;
+    height: 70vh;
+    background-color: white;
 }
