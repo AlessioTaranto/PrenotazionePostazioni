@@ -21,7 +21,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getAllStanze")]
         public IActionResult GetAllStanze()
         {
-            return Ok(_stanzaService.GetAllStanze());
+            try
+            {
+                return Ok(_stanzaService.GetAllStanze());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
         
         /// <summary>
@@ -39,7 +46,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(stanza);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Stanza non trovata");
             }
             catch(Exception ex)
             {
@@ -64,7 +71,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Stanza non trovata");
             }
             catch (Exception ex)
             {
@@ -87,7 +94,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return BadRequest();
+                return BadRequest("Impossibile aggiungere la stanza");
             }
             catch (Exception ex)
             {

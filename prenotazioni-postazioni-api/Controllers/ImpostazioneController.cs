@@ -28,7 +28,11 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Impostazioni non trovate");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500);
             }
             
         }
@@ -43,8 +47,15 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("changeImpostazioneEmergenza")]
         public IActionResult ChangeImpostazioneEmergenza()
         {
-            _impostazioneService.ChangeImpostazioniEmergenza();
-            return Ok();
+            try
+            {
+                _impostazioneService.ChangeImpostazioniEmergenza();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }
