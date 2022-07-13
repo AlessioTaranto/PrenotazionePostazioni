@@ -36,6 +36,11 @@ namespace prenotazioni_postazioni_api.Repositories
             return utente;
         }
 
+
+        /// <summary>
+        /// Query al db, salva un utente al database
+        /// </summary>
+        /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Save(Utente utente)
         {
             string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ({utente.Nome}, {utente.Cognome}, {utente.Image}, {utente.IdRuolo});";

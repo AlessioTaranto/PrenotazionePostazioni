@@ -2,7 +2,7 @@
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
-    
+
 namespace prenotazioni_postazioni_api.Services
 {
     public class VotoService
@@ -28,24 +28,29 @@ namespace prenotazioni_postazioni_api.Services
         {
             return _votoRepository.FindAllByIdUtenteTo(idUtente);
         }
-        
+
         /// <summary>
         /// Aggiunge un voto al database 
         /// </summary>
         /// <param name="votoDto"></param>
-        /// <returns></returns>
-        internal Voto MakeVotoToUtente(VotoDto votoDto)
+        internal void MakeVotoToUtente(VotoDto votoDto)
         {
-            int idUtenteFrom = votoDto.IdUtente;
-            int idUtenteTo = votoDto.IdUtenteVotato;
-            bool votoEffettuato = votoDto.VotoEffettuato;
-
-            if (votoDto.IsValid)
+            if (!votoDto.IsValid)
             {
-                Voto voto = new Voto(idUtenteFrom, idUtenteTo, votoEffettuato);
-                return voto;
+                throw new PrenotazionePostazioniApiException("Voto non valido");
             }
-            else throw new PrenotazionePostazioniApiException("Voto da aggiornare non valido");
+            Voto voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.IdUtente, votoDto.IdUtenteVotato);
+            if(voto == null)
+            {
+                _votoRepository.Save(new Voto(votoDto.IdUtente, votoDto.IdUtenteVotato, votoDto.VotoEffettuato));
+                return;
+            }
+            if(voto.VotoEffettuato == votoDto.VotoEffettuato)
+            {
+                throw new PrenotazionePostazioniApiException("Il voto e' uguale");
+            }
+            //switch il valore del voto
+            _votoRepository.UpdateVoto(voto);
         }
     }
 }

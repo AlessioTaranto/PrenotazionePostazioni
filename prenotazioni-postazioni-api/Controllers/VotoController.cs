@@ -47,20 +47,20 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </summary>
         /// <param name="votoDto"></param>
         /// <returns></returns>
-        [Route("makeVotoToUtente")]
-        [HttpPost]
-        public IActionResult MakeVotoToUtente([FromBody] VotoDto votoDto)
-        {
-            try
-            {
-                _votoService.MakeVotoToUtente(votoDto);
-                return Ok();
-            }
-            catch(PrenotazionePostazioniApiException ex)
-            {
-                return BadRequest();
-            }
-        }
+        //[Route("makeVotoToUtente")]
+        //[HttpPost]
+        //public IActionResult MakeVotoToUtente([FromBody] VotoDto votoDto)
+        //{
+        //    try
+        //    {
+        //        _votoService.MakeVotoToUtente(votoDto);
+        //        return Ok();
+        //    }
+        //    catch(PrenotazionePostazioniApiException ex)
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
     }
 }
 
