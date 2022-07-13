@@ -27,7 +27,10 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazione);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Prenotazione non trovata");
+            }catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
 
@@ -39,7 +42,14 @@ namespace prenotazioni_postazioni_api.Controllers
         [Route("getAllPrenotazioni")]
         public IActionResult GetAllPrenotazioni()
         {
-            return Ok(_prenotazioneService.GetAllPrenotazioni());
+            try
+            {
+                return Ok(_prenotazioneService.GetAllPrenotazioni());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
 
         /// <summary>
@@ -57,9 +67,13 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazione);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Prenotazioni non trovate");
             }
-            
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
         }
         
         /// <summary>
@@ -77,7 +91,11 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Prenotazioni non trovate");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
 
@@ -97,7 +115,11 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Prenotazioni non trovate");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
 
@@ -116,7 +138,11 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return BadRequest();
+                return BadRequest("Impossibile salvare la prenotazione");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
 

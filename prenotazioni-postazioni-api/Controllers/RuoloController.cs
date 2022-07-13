@@ -29,7 +29,11 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Ruolo non trovato");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
 
@@ -49,7 +53,11 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound();
+                return NotFound("Ruolo non trovato");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
 
@@ -77,7 +85,11 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return BadRequest();
+                return BadRequest("Impossibile aggiornare ruolo");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
     }
