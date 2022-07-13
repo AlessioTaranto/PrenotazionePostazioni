@@ -23,17 +23,20 @@ namespace prenotazioni_postazioni_api.Repositories
         }
 
         /// <summary>
-        /// Qeury al db, restituisce il ruolo di un utente mediante il suo id
+        /// Query al db, restituisce il ruolo di un utente mediante il suo id
         /// </summary>
         /// <param name="idUtente">L'id dell'utente che servira per trovare il suo ruolo</param>
         /// <returns>Ruolo dell'utente, null altrimenti</returns>
         public Ruolo? FindByIdUtente(int idUtente)
         {
-            string query = $"SELECT idRuolo FROM dbo.Utenti WHERE idUtente = {idUtente};";
+            string query = $"SELECT * FROM Utenti WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            int idRuolo = JsonConvert.DeserializeObject<int>(_databaseManager.GetOneResult(query));
-            query = $"SELECT* FROM dbo.Ruoli WHERE idRuolo = {idRuolo};";
+            Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
+            _databaseManager.DeleteConnection();
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            query = $"SELECT * FROM Ruoli WHERE idRuolo = {utente.IdRuolo};";
             Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
+            _databaseManager.DeleteConnection();
             return ruolo;
         }
         /// <summary>

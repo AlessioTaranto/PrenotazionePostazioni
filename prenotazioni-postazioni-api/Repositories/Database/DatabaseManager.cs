@@ -59,9 +59,11 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 conn.Open();
                 var reader = cmd.ExecuteReader();
                 IEnumerable<Dictionary<string, object>> result = Serialize(reader);
+                Console.WriteLine(result);
                 string jsonResult = JsonConvert.SerializeObject(result);
                 conn.Close();
                 jsonResult = jsonResult.Replace("[", "").Replace("]", "");
+                Console.WriteLine("JsonResult: "+jsonResult);
                 return jsonResult;
             }
         }

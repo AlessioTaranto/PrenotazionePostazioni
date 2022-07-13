@@ -58,7 +58,8 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, ex.StackTrace);
             }
         }
 
