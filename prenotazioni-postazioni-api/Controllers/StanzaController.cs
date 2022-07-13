@@ -27,7 +27,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
         
@@ -75,7 +75,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -98,7 +98,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return StatusCode(500, ex.Message);
             }
         }
     }
