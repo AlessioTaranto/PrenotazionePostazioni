@@ -56,7 +56,7 @@ namespace prenotazioni_postazioni_api.Services
             int postiMax = stanzaDto.PostiMax;
             int postiMaxEmergenza = stanzaDto.PostiMaxEmergenza;
 
-            if (stanzaDto.IsValid && CheckStanza(stanzaDto))
+            if (CheckStanza(stanzaDto))
             {
                 Stanza stanza = new Stanza(nomestanza, postiMax, postiMaxEmergenza);
                 _stanzaRepository.Save(stanza);

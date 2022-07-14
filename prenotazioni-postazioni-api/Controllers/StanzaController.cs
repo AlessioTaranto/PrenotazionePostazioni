@@ -4,6 +4,7 @@ using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
+using Microsoft.AspNetCore.Cors;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -46,7 +47,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(stanza);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Stanza non trovata");
+                return NotFound(ex.Message);
             }
             catch(Exception ex)
             {
@@ -71,7 +72,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Stanza non trovata");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -94,7 +95,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return BadRequest("Impossibile aggiungere la stanza");
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

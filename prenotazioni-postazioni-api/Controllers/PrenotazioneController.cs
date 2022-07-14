@@ -27,7 +27,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazione);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Prenotazione non trovata");
+                return NotFound(ex.Message);
             }catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -67,7 +67,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazione);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Prenotazioni non trovate");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Prenotazioni non trovate");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -115,7 +115,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Prenotazioni non trovate");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -136,9 +136,14 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _prenotazioneService.Save(prenotazioneDto);
                 return Ok();
-            }catch(PrenotazionePostazioniApiException ex)
+            }
+            catch(ArgumentException ex)
             {
-                return BadRequest("Impossibile salvare la prenotazione");
+                return BadRequest(ex.Message);
+            }
+            catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

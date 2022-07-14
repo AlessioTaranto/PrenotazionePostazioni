@@ -2,6 +2,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
+using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -33,6 +34,10 @@ namespace prenotazioni_postazioni_api.Repositories
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
+            if(utente == null)
+            {
+                throw new PrenotazionePostazioniApiException("Utente non trovato");
+            }
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             query = $"SELECT * FROM Ruoli WHERE idRuolo = {utente.IdRuolo};";
             Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
