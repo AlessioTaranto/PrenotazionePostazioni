@@ -9,19 +9,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\user\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
+      "projectUniqueName": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
       "projectName": "prenotazione-postazioni-libs",
-      "projectPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\obj\\",
+      "projectPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
+      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

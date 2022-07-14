@@ -68,7 +68,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="prenotazione">La prenotazione da aggiungere al database</param>
         internal void Save(Prenotazione prenotazione)
         {
-            string query = $"INSERT INTO Prenotazioni (startDate, endDate, idStanza, idUtente) VALUES ({prenotazione.StartDate.ToString("yyyy-MM-dd hh:mm:ss:fff")}, {prenotazione.EndDate.ToString("yyyy-MM-dd hh:mm:ss:fff")}, {prenotazione.IdStanza}, {prenotazione.IdUtente});";
+            string query = $"INSERT INTO Prenotazioni (startDate, endDate, idStanza, idUtente) VALUES ('{prenotazione.StartDate.ToString("yyyy-MM-dd hh:mm:ss:fff")}', '{prenotazione.EndDate.ToString("yyyy-MM-dd hh:mm:ss:fff")}', {prenotazione.IdStanza}, {prenotazione.IdUtente});";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();
@@ -85,7 +85,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string start = startDate.ToString("yyyy-MM-dd hh:mm:ss:fff");
             string end = endDate.ToString("yyyy-MM-dd hh:mm:ss:fff");
-            string query = $"SELECT * FROM dbo.Prenotazioni WHERE((idStanza = {idStanza}) AND((DATEDIFF(ss, startDate, {start}) <= 0 AND DATEDIFF(ss, endDate, {start}) >= 0)OR(DATEDIFF(ss, startDate, {end}) <= 0 AND DATEDIFF(ss, endDate, {end}) >= 0)OR(DATEDIFF(ss, startDate, {start}) >= 0 AND DATEDIFF(ss, endDate, {end}) <= 0)))";
+            string query = $"SELECT * FROM dbo.Prenotazioni WHERE((idStanza = {idStanza}) AND((DATEDIFF(ss, startDate, '{start}') <= 0 AND DATEDIFF(ss, endDate, '{start}') >= 0)OR(DATEDIFF(ss, startDate, '{end}') <= 0 AND DATEDIFF(ss, endDate, '{end}') >= 0)OR(DATEDIFF(ss, startDate, '{start}') >= 0 AND DATEDIFF(ss, endDate, '{end}') <= 0)))";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
 

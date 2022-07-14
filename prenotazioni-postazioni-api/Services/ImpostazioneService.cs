@@ -15,9 +15,9 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         public bool GetImpostazioneEmergenza()
         {
-            bool impostazioni= _impostazioneRepository.FindImpostazioneEmergenza();
+            Impostazioni impostazioni= _impostazioneRepository.FindImpostazioneEmergenza();
             if (impostazioni == null) throw new PrenotazionePostazioniApiException("Impostazione di emergenza non trovata");
-            else return impostazioni;
+            else return impostazioni.ModEmergenza;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
         public void ChangeImpostazioniEmergenza()
         {
-            if(_impostazioneRepository.FindImpostazioneEmergenza() == true)
+            if(GetImpostazioneEmergenza() == true)
             {
                 _impostazioneRepository.UpdateImpostazioneEmergenza(false);
             }

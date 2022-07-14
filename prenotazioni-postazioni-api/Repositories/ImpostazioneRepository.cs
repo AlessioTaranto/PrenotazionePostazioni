@@ -13,11 +13,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db per restituire il campo Impostazione Emergenza
         /// </summary>
         /// <returns>Lo stato dell'Impostazione Emergenza</returns>
-        public bool FindImpostazioneEmergenza()
+        public Impostazioni FindImpostazioneEmergenza()
         {
-            string query = "SELECT modEmergenza FROM Impostazioni;";
+            string query = "SELECT * FROM Impostazioni;";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            bool impostazione = JsonConvert.DeserializeObject<bool>(_databaseManager.GetOneResult(query));
+            Impostazioni impostazione = JsonConvert.DeserializeObject<Impostazioni>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return impostazione;
         }
