@@ -8,5 +8,10 @@ namespace prenotazioni_postazioni_api.Services
         {
             throw new NotImplementedException();
         }
+
+        internal List<Festa> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

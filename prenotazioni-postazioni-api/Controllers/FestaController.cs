@@ -63,7 +63,23 @@ namespace prenotazioni_postazioni_api.Controllers
         [HttpGet]
         public IActionResult GetAllByMonth(int month)
         {
-
+            try
+            {
+                List<Feste> festeByMonth = _festaService.GetAllByMonth(month);
+                if(festeByMonth == null)
+                {
+                    return NotFound("Feste by month e' null");
+                }
+                return Ok(festeByMonth);
+            }
+            catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [Route("addFesta")]
