@@ -16,7 +16,8 @@ function selectRoom(room) {
 
 function selectDay(date) {
     daySelected = date;
-    $('#day-sel-2').text("Giorno selezionato: " + date.getDate() + "/" + date.getMonth() + "/" +  date.getFullYear());
+    if(dayIdSelected !== null)
+        $('#day-sel-2').text("Giorno selezionato: " + date.getDate() + "/" + date.getMonth() + "/" +  date.getFullYear());
     loadPresenti();
 }
 
