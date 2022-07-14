@@ -8,6 +8,21 @@ namespace prenotazioni_postazioni_api.Repositories
     public class UtenteRepository
     {
         private DatabaseManager _databaseManager = new DatabaseManager();
+
+        /// <summary>
+        /// Serve per ottenere una lista completa di tutti gli utenti
+        /// </summary>
+        /// <returns>Lista di Utente trovati, null altrimenti</returns>
+        internal List<Utente> FindAllUtenti()
+        {
+            string query = "SELECT * FROM Utenti";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            List<Utente> utenti = JsonConvert.DeserializeObject<List<Utente>>(_databaseManager.GetAllResults(query));
+            _databaseManager.DeleteConnection();
+            return utenti;
+        }
+        
+
         /// <summary>
         /// Query al db, restituisce un utente mediante il suo id
         /// </summary>
@@ -43,7 +58,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Save(Utente utente)
         {
-            string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ({utente.Nome}, {utente.Cognome}, {utente.Image}, {utente.IdRuolo});";
+            string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ('{utente.Nome}', '{utente.Cognome}', '{utente.Image}', '{utente.Email}', {utente.IdRuolo});";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();
