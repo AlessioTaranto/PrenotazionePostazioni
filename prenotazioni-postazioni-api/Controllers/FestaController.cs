@@ -10,7 +10,11 @@ namespace prenotazioni_postazioni_api.Controllers
     public class FestaController : ControllerBase
     {
         private FestaService _festaService = new FestaService();
-
+        /// <summary>
+        /// Restituisce tutte le feste di un giorno
+        /// </summary>
+        /// <param name="date">Il giorno </param>
+        /// <returns>Lista di feste trovate</returns>
 
         [Route("getByDate")]
         [HttpGet]
@@ -18,7 +22,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                Festa festa = _festaService.GetByDate(date);
+                List<Festa> feste = _festaService.GetByDate(date);
                 if(festa == null)
                 {
                     return NotFound("Festa e' null");
@@ -35,7 +39,10 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             
         }
-
+        /// <summary>
+        /// Restituisce tutte le feste fatte
+        /// </summary>
+        /// <returns>Lista di tutte le feste trovate</returns>
         [Route("getAll")]
         [HttpGet]
         public IActionResult GetAll()
@@ -59,13 +66,18 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        /// <summary>
+        /// Restituisce tutte le feste di un mese
+        /// </summary>
+        /// <param name="month">Il mese delle feste</param>
+        /// <returns>Lista di feste</returns>
         [Route("getAllByMonth")]
         [HttpGet]
         public IActionResult GetAllByMonth(int month)
         {
             try
             {
-                List<Feste> festeByMonth = _festaService.GetAllByMonth(month);
+                List<Festa> festeByMonth = _festaService.GetAllByMonth(month);
                 if(festeByMonth == null)
                 {
                     return NotFound("Feste by month e' null");
