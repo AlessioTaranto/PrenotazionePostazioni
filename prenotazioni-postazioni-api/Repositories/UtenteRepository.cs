@@ -13,9 +13,9 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Serve per ottenere una lista completa di tutti gli utenti
         /// </summary>
         /// <returns>Lista di Utente trovati, null altrimenti</returns>
-        internal List<Utente> FindAllUtenti()
+        internal List<Utente> FindAll()
         {
-            string query = "SELECT * FROM Utenti";
+            string query = "SELECT * FROM Utenti;";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Utente> utenti = JsonConvert.DeserializeObject<List<Utente>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
