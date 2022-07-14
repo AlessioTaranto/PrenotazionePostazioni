@@ -9,48 +9,48 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/festivita")]
     public class FestaController : ControllerBase
     {
-        private FestaService _festaService = new FestaService();
+        //private FestaService _festaService = new FestaService();
 
 
-        [Route("getByDate")]
-        [HttpGet]
-        public IActionResult GetByDate(DateOnly date)
-        {
-            try
-            {
-                Festa festa = _festaService.GetByDate(date);
-                if(festa == null)
-                {
-                    return NotFound("Festa e' null");
-                }
-                return Ok(festa);
-            }
-            catch(PrenotazionePostazioniApiException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+        //[Route("getByDate")]
+        //[HttpGet]
+        //public IActionResult GetByDate(DateOnly date)
+        //{
+        //    try
+        //    {
+        //        Festa festa = _festaService.GetByDate(date);
+        //        if(festa == null)
+        //        {
+        //            return NotFound("Festa e' null");
+        //        }
+        //        return Ok(festa);
+        //    }
+        //    catch(PrenotazionePostazioniApiException ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
             
-        }
+        //}
 
-        [Route("getAll")]
-        [HttpGet]
-        public IActionResult GetAll()
-        {
+        //[Route("getAll")]
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
 
-        }
+        //}
 
-        [Route("getAllByMonth")]
-        [HttpGet]
-        public IActionResult GetAllByMonth(int month)
-        {
+        //[Route("getAllByMonth")]
+        //[HttpGet]
+        //public IActionResult GetAllByMonth(int month)
+        //{
 
-        }
+        //}
 
-        [Route("addFesta")]
+        //[Route("addFesta")]
 
         //[Route("deleteFestaByDate")]
     }
