@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
-    public class Festivita
+    public class Festa
     {
         public int IdFestivita { get; set; }
         public DateOnly Date { get; set; }
@@ -15,24 +15,24 @@ namespace prenotazione_postazioni_libs.Models
         public Exception ModelException;
         public bool IsValid { get; set; } = false;
 
-        public Festivita()
+        public Festa()
         {
 
         }
-        public Festivita(DateOnly date, string? desc)
+        public Festa(DateOnly date, string? desc)
         {
             this.Date = date;
             this.Desc = desc;
             this.Validate();
         }
-        public Festivita(int idFestivita, DateOnly date, string? desc)
+        public Festa(int idFestivita, DateOnly date, string? desc)
         {
             IdFestivita = idFestivita;
             Date = date;
             Desc = desc;
             this.Validate();
         }
-        public Festivita(DateOnly date)
+        public Festa(DateOnly date)
         {
             this.Date = date;
             this.Validate();

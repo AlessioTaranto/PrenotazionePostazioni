@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Dto
 {
-    public class FestivitaDto
+    public class FestaDto
     {
         public DateOnly Date { get; set; }
         public string? Desc { get; set; }
         
-        public FestivitaDto()
+        public FestaDto()
         {
 
         }
-        public FestivitaDto(DateOnly date, string? desc)
+        public FestaDto(DateOnly date, string? desc)
         {
             Date = date;
             Desc = desc;
         }
-        public FestivitaDto(DateOnly date)
+        public FestaDto(DateOnly date)
         {
             this.Date = date;   
         }
