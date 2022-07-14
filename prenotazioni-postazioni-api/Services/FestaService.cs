@@ -1,17 +1,19 @@
 ﻿using prenotazione_postazioni_libs.Models;
+using prenotazioni_postazioni_api.Repositories;
 
 namespace prenotazioni_postazioni_api.Services
 {
     public class FestaService
     {
-        internal Festa GetByDate(DateOnly date)
+        private FestaRepository _festaRepository = new FestaRepository();
+        internal List<Festa> GetByDate(DateOnly date)
         {
-            throw new NotImplementedException();
+            return _festaRepository.FindByDate(date);
         }
 
         internal List<Festa> GetAll()
         {
-            throw new NotImplementedException();
+            return _festaRepository.FindAll();
         }
     }
 }
