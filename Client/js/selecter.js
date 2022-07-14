@@ -41,12 +41,14 @@ function clickCalendar(id) {
     if (dayIdSelected !== null) {
         $('#'.concat(dayIdSelected)).css("color","black");
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
+        $('#'.concat(dayIdSelected)).css("font-weight","normal");
     }
 
     dayIdSelected = id;
 
     selector.css("color","white");
     selector.css("background-color","darkorange");
+    selector.css("font-weight","bold");
 
     selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
 }
@@ -64,6 +66,7 @@ function clickCalendarFest(id) {
         else $('#'.concat(dayIdSelected)).css("color","darkorange");
         
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
+        $('#'.concat(dayIdSelected)).css("font-weight","normal");
     }
 
     dayIdSelected = id;
@@ -92,12 +95,14 @@ function clickCalendarPres(id) {
     if (dayIdSelected !== null) {
         $('#'.concat(dayIdSelected)).css("color","black");
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
+        $('#'.concat(dayIdSelected)).css("font-weight","normal");
     }
 
     dayIdSelected = id;
 
     selector.css("color","white");
     selector.css("background-color","darkorange");
+    selector.css("font-weight","bold");
 
     selectDay(new Date(date1.getFullYear(), date1.getMonth(), selector.text()));
 }
