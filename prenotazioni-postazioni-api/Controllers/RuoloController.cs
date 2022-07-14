@@ -69,7 +69,7 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpPost]
         [Route("updateRuoloUtenteByUtenteId")]
-        public IActionResult UpdateRuoloUtenteByAdminUtenteId([FromBody] int idUtente, int idAdmin)
+        public IActionResult UpdateRuoloUtenteByAdminUtenteId([FromRouteAttribute] int idUtente,[FromRouteAttribute] int idAdmin)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return BadRequest("Impossibile aggiornare ruolo");
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

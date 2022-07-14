@@ -15,7 +15,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal Utente FindById(int idUtente)
         {
-            string query = $"SELECT nome, cognome, idUtente, immagine, email, idRuolo FROM Utenti WHERE idUtente = {idUtente};";
+            string query = $"SELECT * FROM Utenti WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();

@@ -57,13 +57,22 @@ namespace prenotazioni_postazioni_api.Services
             Ruolo ruoloAdmin = _ruoloRepository.FindById(admin.IdRuolo);
             if (ruoloAdmin == null) throw new PrenotazionePostazioniApiException("ruolo admin non trovato");
             if (ruoloUtente == null) throw new PrenotazionePostazioniApiException("ruolo utente non trovato");
-            
-            if(ruoloAdmin.AccessoImpostazioni)
+
+            if (ruoloAdmin.AccessoImpostazioni)
             {
                 _ruoloRepository.UpdateRuoloUtente(ruoloUtente.IdRuolo);
                 return true;
             }
             return false;
+            //Ruolo utente = _ruoloRepository.FindByIdUtente(idUtente);
+            //Ruolo admin = _ruoloRepository.FindByIdUtente(idAdmin);
+            //if (admin == null) throw new PrenotazionePostazioniApiException("admin è null");
+            //if (utente == null) throw new PrenotazionePostazioniApiException("utente è null");
+            //if (admin.AccessoImpostazioni)
+            //{
+            //    _ruoloRepository.UpdateRuoloUtente(utente.IdRuolo);
+            //}
+            //return true;
         }
     }
 }
