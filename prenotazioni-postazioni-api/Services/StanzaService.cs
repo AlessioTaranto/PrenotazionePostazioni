@@ -58,7 +58,7 @@ namespace prenotazioni_postazioni_api.Services
 
             if (stanzaDto.IsValid && CheckStanza(stanzaDto))
             {
-                Stanza stanza = new Stanza(nomestanza, postiMax, postiMaxEmergenza); //TODO aggiungere costruttore
+                Stanza stanza = new Stanza(nomestanza, postiMax, postiMaxEmergenza);
                 _stanzaRepository.Save(stanza);
             }
             else throw new PrenotazionePostazioniApiException("Stanza da salvare non valida");
