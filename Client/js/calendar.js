@@ -9,11 +9,12 @@ function loadCalendar() {
     $('#month-year').text(translateMonth(date.getMonth()) + " " + date.getFullYear());
     month = date.getMonth();
 
-    for (let i = 0; i<7; i++)
+    for (let i = 0; i<7; i++) {
         for (let j = 0; j<6; j++) {
             $('#'.concat(i).concat('-').concat(j)).text("");
             $('#'.concat(i).concat('-').concat(j)).css("color", "black");
         }
+    }
 
     let firstLineLoad = true
 
