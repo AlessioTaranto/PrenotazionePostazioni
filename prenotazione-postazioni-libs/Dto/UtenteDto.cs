@@ -14,11 +14,6 @@ namespace prenotazione_postazioni_libs.Dto
         //Base 64x converter (https://stackoverflow.com/questions/69303512/converting-an-sql-Image-to-base64-in-c-sharp)
         public string Email { get; set; }
         public int IdRuolo { get; set; }
-
-
-        private Exception ModelException { get; set; }
-        public bool IsValid { get; set; } = false;
-
         public UtenteDto(string nome, string cognome, string image, string email, int idRuolo)
         {
             this.Nome = nome;
@@ -26,43 +21,11 @@ namespace prenotazione_postazioni_libs.Dto
             this.Image = image;
             this.Email = email;
             this.IdRuolo = idRuolo;
-
-            this.Validate();
         }
 
         public UtenteDto()
         {
         }
-
-        public void Validate()
-        {
-            try
-            {
-                if (this.Nome == null)
-                    throw new Exception("Il Nome non può essere nullo");
-                else if (this.Nome.Length < 3)
-                    throw new Exception("Il Nome deve contenere almeno 3 caratteri");
-
-                if (this.Cognome == null)
-                    throw new Exception("Il Cognome non può essere nullo");
-                else if (this.Cognome.Length < 3)
-                    throw new Exception("Il Cognome deve contenere almeno 3 caratteri");
-
-                if (this.Email == null)
-                    throw new Exception("L'indirizzo Email non può essere nullo");
-                else if (!this.Email.Contains("@"))
-                    throw new Exception("L'indirizzo Email non è valido");
-
-
-                this.IsValid = true;
-            }
-            catch (Exception e)
-            {
-                this.ModelException = e;
-                this.IsValid = false;
-            }
-        }
-
     }
 
 
