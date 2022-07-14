@@ -7,6 +7,12 @@ namespace prenotazioni_postazioni_api.Repositories
     public class FestaRepository
     {
         private DatabaseManager _databaseManager = new DatabaseManager();
+
+        /// <summary>
+        /// query al db, restituisce tutte le feste in una data
+        /// </summary>
+        /// <param name="date">la data</param>
+        /// <returns>Lista di Feste</returns>
         internal List<Festa> FindByDate(DateOnly date)
         {
             string query = $"SELECT * FROM Feste WHERE giorno = {date.ToString("yyyy-MM-dd hh:mm:ss:fff")};";
@@ -15,7 +21,10 @@ namespace prenotazioni_postazioni_api.Repositories
             _databaseManager.DeleteConnection();
             return feste;
         }
-
+        /// <summary>
+        /// query al db, restituisce tutte le feste
+        /// </summary>
+        /// <returns>Lista di feste</returns>
         internal List<Festa> FindAll()
         {
             string query = $"SELECT * FROM Feste";
