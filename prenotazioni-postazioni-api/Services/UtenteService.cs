@@ -10,6 +10,15 @@ namespace prenotazioni_postazioni_api.Services
         UtenteRepository _utenteRepository = new UtenteRepository();
 
         /// <summary>
+        /// Restituisce tutti gli utenti
+        /// </summary>
+        /// <returns>List di Utente trovati, null altrimenti</returns>
+        internal List<Utente> getAllUtenti()
+        {
+            return _utenteRepository.FindAllUtenti();
+        }
+
+        /// <summary>
         /// Resituisce l'utente mediante il suo id
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>

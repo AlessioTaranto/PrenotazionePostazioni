@@ -12,6 +12,20 @@ namespace prenotazioni_postazioni_api.Controllers
     {
         private UtenteService _utenteService = new UtenteService();
 
+        [HttpGet]
+        [Route("getAllUtenti")]
+        public IActionResult GetAllUtenti()
+        {
+            try
+            {
+                return Ok(_utenteService.getAllUtenti);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         /// <summary>
         /// Restituisce un utente mediante il suo id
         /// </summary>
