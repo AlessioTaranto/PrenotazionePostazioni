@@ -22,7 +22,7 @@ namespace prenotazione_postazioni_libs.Dto
         }
         public FestivitaDto(DateOnly date)
         {
-            this.Date = date;
+            this.Date = date;   
         }
     }
 }
