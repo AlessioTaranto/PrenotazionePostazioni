@@ -7,6 +7,17 @@ let rumCommerciale = 60;
 let rumAssistenza = 70;
 let rumSviluppo = 80;
 
+function loadPrenotazioni() {
+    let persone = 5;
+    document.getElementById('lista-prenotazioni').innerHTML = "";
+
+    for(let i=0; i<presenti; i++) {
+        let newLine = document.createElement('li');
+        newLine.innerHTML+='<img src="img/example/example-2.png" alt="example">Persona '+i;
+        document.getElementById('lista-prenotazioni').appendChild(newLine);
+    }
+}
+
 function prenota() {
     let rum;
     let room = document.getElementById('room-sel').innerText;
