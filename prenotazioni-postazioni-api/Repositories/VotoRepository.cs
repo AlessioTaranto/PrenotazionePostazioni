@@ -16,7 +16,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di voti</returns>
         internal List<Voto> FindAllByIdUtenteFrom(int idUtente)
         {
-            string query = $"SELECT idVoti, idUtente, idUtenteVotato, voto FROM Voti WHERE idUtente = {idUtente};";
+            string query = $"SELECT * FROM Voti WHERE idUtente = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Voto> voti = JsonConvert.DeserializeObject<List<Voto>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
@@ -30,7 +30,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di voti</returns>
         internal List<Voto> FindAllByIdUtenteTo(int idUtente)
         {
-            string query = $"SELECT idVoti, idUtente, idUtenteVotato, voto FROM voti WHERE idUtenteVotato = {idUtente};";
+            string query = $"SELECT * FROM voti WHERE idUtenteVotato = {idUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Voto> voti = JsonConvert.DeserializeObject<List<Voto>>(_databaseManager.GetAllResults(query));
             _databaseManager.DeleteConnection();
