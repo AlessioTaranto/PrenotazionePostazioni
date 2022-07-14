@@ -14,10 +14,21 @@ namespace prenotazioni_postazioni_api.Controllers
         }
 
         [Route("getAll")]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
 
+        }
 
         [Route("getAllByMonth")]
+        [HttpGet]
+        public IActionResult GetAllByMonth(int month)
+        {
 
-        [Route("addFestivita")]
+        }
+
+        [Route("addFesta")]
+
+        //[Route("deleteFestaByDate")]
     }
 }
