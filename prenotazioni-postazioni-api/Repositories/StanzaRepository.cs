@@ -55,7 +55,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="stanza">La stanza da aggiungere al db</param>
         internal void Save(Stanza stanza)
         {
-            string query = $"INSERT INTO Stanze (nome, postiMax, postiMaxEmergenza) VALUES ({stanza.Nome}, {stanza.PostiMax}, {stanza.PostiMaxEmergenza});";
+            string query = $"INSERT INTO Stanze (nome, postiMax, postiMaxEmergenza) VALUES ('{stanza.Nome}', {stanza.PostiMax}, {stanza.PostiMaxEmergenza});";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();
