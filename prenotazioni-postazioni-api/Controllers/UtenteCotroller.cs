@@ -18,7 +18,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                return Ok(_utenteService.getAllUtenti);
+                return Ok(_utenteService.getAllUtenti());
             }
             catch (Exception ex)
             {

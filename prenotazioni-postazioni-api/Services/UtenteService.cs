@@ -15,7 +15,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>List di Utente trovati, null altrimenti</returns>
         internal List<Utente> getAllUtenti()
         {
-            return _utenteRepository.FindAllUtenti();
+            return _utenteRepository.FindAll();
         }
 
         /// <summary>
