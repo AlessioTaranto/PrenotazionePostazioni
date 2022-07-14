@@ -57,9 +57,9 @@
         <div class="calendar">
             <div class="head">
                 <ul class="d-flex align-items-center justify-content-center">
-                    <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth('#month-year')"></li>
+                    <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
                     <li><a class="item" id="month-year"></a></li>
-                    <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth('#month-year')"></li>
+                    <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
                 </ul>
             </div>
             <div class="body">
@@ -209,7 +209,7 @@
     </div>
 
     <script>
-        loadCalendar('#month-year');
+        loadCalendar();
     </script>
     <script src="js/selecter.js"></script>
     <script src="js/jquery.rwdImageMaps.min.js"></script>

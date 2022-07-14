@@ -145,9 +145,9 @@
                     <div class="calendar">
                         <div class="head">
                             <ul class="d-flex align-items-center justify-content-center">
-                                <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth('#month-year')"></li>
+                                <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
                                 <li><a class="item" id="month-year"></a></li>
-                                <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth('#month-year')"></li>
+                                <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
                             </ul>
                         </div>
                         <div class="body">
@@ -220,7 +220,7 @@
                     </div>
                 </div>
                 <script>
-                    loadCalendar('#month-year');
+                    loadCalendar();
                 </script>
                 <div class="container mt-4 ml-50 mr-3 calendar-info-div">
                     <h1 id="day-sel">Seleziona una data</h1>
@@ -235,9 +235,9 @@
                     <div class="calendar">
                         <div class="head">
                             <ul class="d-flex align-items-center justify-content-center">
-                                <li><img class="item item-img" src="img/left.png" alt="left-1" onclick="prevMonth('#month-year-1')"></li>
+                                <li><img class="item item-img" src="img/left.png" alt="left-1" onclick="prevMonth1()"></li>
                                 <li><a class="item" id="month-year-1"></a></li>
-                                <li><img class="item item-img" src="img/right.png" alt="right-1" onclick="nextMonth('#month-year-1')"></li>
+                                <li><img class="item item-img" src="img/right.png" alt="right-1" onclick="nextMonth1()"></li>
                             </ul>
                         </div>
                         <div class="body">
@@ -310,7 +310,7 @@
                     </div>
                 </div>
                 <script>
-                    loadCalendar('#month-year-1');
+                    loadCalendar1();
                 </script>
             </div>
         </div>
