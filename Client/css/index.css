@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    background: linear-gradient(50deg, rgba(225, 225, 225, 0.66) 0, rgba(220, 220, 220, 0.92) 100%) no-repeat right top !important;
+    background: rgba(225, 225, 225, 0.66) !important;
     font-family: Poppins, serif;
     width: 100%;
     margin: 0;

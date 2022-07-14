@@ -1,5 +1,7 @@
 const date = new Date;
+const date1 = new Date;
 let month = date.getMonth();
+let month1 = date1.getMonth();
 
 function loadCalendar() {
     date.setDate(1);
@@ -28,7 +30,37 @@ function loadCalendar() {
         }
     }
 
-    checkSelected()
+    checkSelected();
+}
+
+function loadCalendar1() {
+    date1.setDate(1);
+
+    $('#month-year-1').text(translateMonth(date1.getMonth()) + " " + date1.getFullYear());
+    month1 = date1.getMonth();
+
+    for (let i = 0; i<7; i++)
+        for (let j = 0; j<6; j++) {
+            $('#'.concat(i).concat('-').concat(j).concat('1')).text("");
+            $('#'.concat(i).concat('-').concat(j).concat('1')).css("color", "black");
+        }
+
+    let firstLineLoad = true
+
+    for (let i = 0; i<6; i++) {
+        for (let j = 0; j<7; j++) {
+            if (firstLineLoad === true) {
+                date1.setDate(date1.getDate()-((date1.getDay() === 0 ? +6 : date1.getDay()-1)));
+                firstLineLoad = false;
+            }
+            $('#'.concat(j).concat('-').concat(i).concat('1')).text(date1.getDate());
+            if (date1.getMonth() !== month1)
+                $('#'.concat(j).concat('-').concat(i).concat('1')).css("color", "#a6a6a6");
+            date1.setDate(date1.getDate()+1);
+        }
+    }
+
+    checkSelected1()
 }
 
 function prevMonth() {
@@ -36,9 +68,19 @@ function prevMonth() {
     loadCalendar();
 }
 
+function prevMonth1() {
+    date1.setMonth(date1.getMonth()-2);
+    loadCalendar1();
+}
+
 function nextMonth() {
     date.setMonth(date.getMonth());
     loadCalendar();
+}
+
+function nextMonth1() {
+    date1.setMonth(date1.getMonth());
+    loadCalendar1();
 }
 
 function translateMonth(number) {
@@ -79,10 +121,18 @@ function checkSelected() {
     if (daySelected.getMonth() !== date.getMonth()) {
         $('#'.concat(dayIdSelected)).css("color","black");
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
-        $('#'.concat(dayIdSelected)).css("font-weight","normal");
     } else {
         $('#'.concat(dayIdSelected)).css("color","white");
         $('#'.concat(dayIdSelected)).css("background-color","darkorange");
-        $('#'.concat(dayIdSelected)).css("font-weight","bold");
+    }
+}
+
+function checkSelected1() {
+    if (daySelected.getMonth() !== date1.getMonth()) {
+        $('#'.concat(dayIdSelected)).css("color","black");
+        $('#'.concat(dayIdSelected)).css("background-color","transparent");
+    } else {
+        $('#'.concat(dayIdSelected)).css("color","white");
+        $('#'.concat(dayIdSelected)).css("background-color","darkorange");
     }
 }
