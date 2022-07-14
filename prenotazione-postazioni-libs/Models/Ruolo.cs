@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
+    public enum RuoloEnum
+    {
+        Admin = 1,
+        Utente = 2,
+    }
     public class Ruolo
     {
 

@@ -43,9 +43,9 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db, switch il ruolo accesso impostazioni dell'utente
         /// </summary>
         /// <param name="idRuolo">L'id del ruolo che gli verra modificato l'accesso impostazione</param>
-        internal void UpdateRuoloUtente(int idRuolo)
+        internal void UpdateRuolo(int idUtente, RuoloEnum ruoloEnum)
         {
-            string query = $"UPDATE Ruolo SET accessoImpostazioni 1 ^ accessoImpostazioni WHERE idRuolo = {idRuolo};";
+            string query = $"UPDATE Utenti SET idRuolo = '{ruoloEnum.ToString()}' WHERE idUtente = '{idUtente}';";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();
