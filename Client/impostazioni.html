@@ -18,6 +18,7 @@
 
     <script src="js/calendar.js"></script>
     <script src="js/selecter.js"></script>
+    <script src="js/impostazioni.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -223,7 +224,7 @@
                     loadCalendar();
                 </script>
                 <div class="container mt-4 ml-50 mr-3 calendar-info-div">
-                    <h1 id="day-sel">Seleziona una data</h1>
+                    <h1 id="day-sel-1">Seleziona una data</h1>
                     <br>
                     <div>
                         <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività" onclick="festaButton()">Imposta come festività</button>
@@ -252,58 +253,58 @@
                                     <th>Dom</th>
                                 </tr>
                                 <tr>
-                                    <td id="0-01"  onclick="clickCalendar('0-01')">1</td>
-                                    <td id="1-01"  onclick="clickCalendar('1-01')">2</td>
-                                    <td id="2-01"  onclick="clickCalendar('2-01')">3</td>
-                                    <td id="3-01"  onclick="clickCalendar('3-01')">4</td>
-                                    <td id="4-01"  onclick="clickCalendar('4-01')">5</td>
-                                    <td id="5-01"  onclick="clickCalendar('5-01')">6</td>
-                                    <td id="6-01"  onclick="clickCalendar('6-01')">7</td>
+                                    <td id="0-01"  onclick="clickCalendarPres('0-01')">1</td>
+                                    <td id="1-01"  onclick="clickCalendarPres('1-01')">2</td>
+                                    <td id="2-01"  onclick="clickCalendarPres('2-01')">3</td>
+                                    <td id="3-01"  onclick="clickCalendarPres('3-01')">4</td>
+                                    <td id="4-01"  onclick="clickCalendarPres('4-01')">5</td>
+                                    <td id="5-01"  onclick="clickCalendarPres('5-01')">6</td>
+                                    <td id="6-01"  onclick="clickCalendarPres('6-01')">7</td>
                                 </tr>
                                 <tr>
-                                    <td id="0-11"  onclick="clickCalendar('0-11')">8</td>
-                                    <td id="1-11"  onclick="clickCalendar('1-11')">9</td>
-                                    <td id="2-11"  onclick="clickCalendar('2-11')">10</td>
-                                    <td id="3-11"  onclick="clickCalendar('3-11')">11</td>
-                                    <td id="4-11"  onclick="clickCalendar('4-11')">12</td>
-                                    <td id="5-11"  onclick="clickCalendar('5-11')">13</td>
-                                    <td id="6-11"  onclick="clickCalendar('6-11')">14</td>
+                                    <td id="0-11"  onclick="clickCalendarPres('0-11')">8</td>
+                                    <td id="1-11"  onclick="clickCalendarPres('1-11')">9</td>
+                                    <td id="2-11"  onclick="clickCalendarPres('2-11')">10</td>
+                                    <td id="3-11"  onclick="clickCalendarPres('3-11')">11</td>
+                                    <td id="4-11"  onclick="clickCalendarPres('4-11')">12</td>
+                                    <td id="5-11"  onclick="clickCalendarPres('5-11')">13</td>
+                                    <td id="6-11"  onclick="clickCalendarPres('6-11')">14</td>
                                 </tr>
                                 <tr>
-                                    <td id="0-21"  onclick="clickCalendar('0-21')">15</td>
-                                    <td id="1-21"  onclick="clickCalendar('1-21')">16</td>
-                                    <td id="2-21"  onclick="clickCalendar('2-21')">17</td>
-                                    <td id="3-21"  onclick="clickCalendar('3-21')">18</td>
-                                    <td id="4-21"  onclick="clickCalendar('4-21')">19</td>
-                                    <td id="5-21"  onclick="clickCalendar('5-21')">20</td>
-                                    <td id="6-21"  onclick="clickCalendar('6-21')">21</td>
+                                    <td id="0-21"  onclick="clickCalendarPres('0-21')">15</td>
+                                    <td id="1-21"  onclick="clickCalendarPres('1-21')">16</td>
+                                    <td id="2-21"  onclick="clickCalendarPres('2-21')">17</td>
+                                    <td id="3-21"  onclick="clickCalendarPres('3-21')">18</td>
+                                    <td id="4-21"  onclick="clickCalendarPres('4-21')">19</td>
+                                    <td id="5-21"  onclick="clickCalendarPres('5-21')">20</td>
+                                    <td id="6-21"  onclick="clickCalendarPres('6-21')">21</td>
                                 </tr>
                                 <tr>
-                                    <td id="0-31"  onclick="clickCalendar('0-31')">22</td>
-                                    <td id="1-31"  onclick="clickCalendar('1-31')">23</td>
-                                    <td id="2-31"  onclick="clickCalendar('2-31')">24</td>
-                                    <td id="3-31"  onclick="clickCalendar('3-31')">25</td>
-                                    <td id="4-31"  onclick="clickCalendar('4-31')">26</td>
-                                    <td id="5-31"  onclick="clickCalendar('5-31')">27</td>
-                                    <td id="6-31"  onclick="clickCalendar('6-31')">28</td>
+                                    <td id="0-31"  onclick="clickCalendarPres('0-31')">22</td>
+                                    <td id="1-31"  onclick="clickCalendarPres('1-31')">23</td>
+                                    <td id="2-31"  onclick="clickCalendarPres('2-31')">24</td>
+                                    <td id="3-31"  onclick="clickCalendarPres('3-31')">25</td>
+                                    <td id="4-31"  onclick="clickCalendarPres('4-31')">26</td>
+                                    <td id="5-31"  onclick="clickCalendarPres('5-31')">27</td>
+                                    <td id="6-31"  onclick="clickCalendarPres('6-31')">28</td>
                                 </tr>
                                 <tr>
-                                    <td id="0-41"  onclick="clickCalendar('0-41')">29</td>
-                                    <td id="1-41"  onclick="clickCalendar('1-41')">30</td>
-                                    <td id="2-41"  onclick="clickCalendar('2-41')">31</td>
-                                    <td id="3-41"  onclick="clickCalendar('3-41')">1</td>
-                                    <td id="4-41"  onclick="clickCalendar('4-41')">2</td>
-                                    <td id="5-41"  onclick="clickCalendar('5-41')">3</td>
-                                    <td id="6-41"  onclick="clickCalendar('6-41')">4</td>
+                                    <td id="0-41"  onclick="clickCalendarPres('0-41')">29</td>
+                                    <td id="1-41"  onclick="clickCalendarPres('1-41')">30</td>
+                                    <td id="2-41"  onclick="clickCalendarPres('2-41')">31</td>
+                                    <td id="3-41"  onclick="clickCalendarPres('3-41')">1</td>
+                                    <td id="4-41"  onclick="clickCalendarPres('4-41')">2</td>
+                                    <td id="5-41"  onclick="clickCalendarPres('5-41')">3</td>
+                                    <td id="6-41"  onclick="clickCalendarPres('6-41')">4</td>
                                 </tr>
                                 <tr>
-                                    <td id="0-51"  onclick="clickCalendar('0-51')">29</td>
-                                    <td id="1-51"  onclick="clickCalendar('1-51')">30</td>
-                                    <td id="2-51"  onclick="clickCalendar('2-51')">31</td>
-                                    <td id="3-51"  onclick="clickCalendar('3-51')">1</td>
-                                    <td id="4-51"  onclick="clickCalendar('4-51')">2</td>
-                                    <td id="5-51"  onclick="clickCalendar('5-51')">3</td>
-                                    <td id="6-51"  onclick="clickCalendar('6-51')">4</td>
+                                    <td id="0-51"  onclick="clickCalendarPres('0-51')">29</td>
+                                    <td id="1-51"  onclick="clickCalendarPres('1-51')">30</td>
+                                    <td id="2-51"  onclick="clickCalendarPres('2-51')">31</td>
+                                    <td id="3-51"  onclick="clickCalendarPres('3-51')">1</td>
+                                    <td id="4-51"  onclick="clickCalendarPres('4-51')">2</td>
+                                    <td id="5-51"  onclick="clickCalendarPres('5-51')">3</td>
+                                    <td id="6-51"  onclick="clickCalendarPres('6-51')">4</td>
                                 </tr>
                             </table>
                         </div>
@@ -312,57 +313,24 @@
                 <script>
                     loadCalendar1();
                 </script>
-            </div>
-        </div>
-
-    <!--
-    <div class="container mt-4 ml-70 position-fixed mod-emerg-div">
-        <h1 id="room-sel"></h1>
-        <br>
-        <div class="btn-collapse">
-            <a data-toggle="collapse" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Seleziona orario
-            </a>
-        </div>
-        <div>
-            <div class="collapse" id="orario">
-                <div class="card card-body">
-                    <h5 id="day-sel"></h5>
-                    <label for="start">Inizio</label>
-                    <input type="time" id="start" name="start" step="3600000" value="09:00"
-                           min="07:00" max="22:00" required>
-                    <label for="finish">Termine</label>
-                    <input type="time" id="finish" name="finish" step="3600000" value="18:00"
-                           min="07:00" max="22:00" required>
+                <div class="container mt-4 ml-50 mr-3 calendar-info-div">
+                    <h1 id="day-sel-2">Seleziona una data</h1>
+                    <br>
+                    <div class="btn-collapse">
+                        <a data-toggle="collapse" href="#presenti" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Persone presenti
+                        </a>
+                    </div>
+                    <div>
+                        <div class="collapse" id="presenti">
+                            <div class="card card-body person-div">
+                                <ul id="lista-presenti"></ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <br>
-        <div class="btn-collapse">
-            <a data-toggle="collapse" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Persone prenotate
-            </a>
-        </div>
-        <div>
-            <div class="collapse" id="prenotazioni">
-                <div class="card card-body person-div">
-                    <ul>
-                        <li><img src="img/example/example-1.png" alt="example"></li>
-                        <li><img src="img/example/example-2.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div>
-            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
-        </div>
-
-    </div>
-    -->
 
 </body>
 </html>

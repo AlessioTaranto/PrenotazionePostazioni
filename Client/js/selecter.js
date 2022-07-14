@@ -16,7 +16,13 @@ function selectRoom(room) {
 
 function selectDay(date) {
     daySelected = date;
-    $('#day-sel').text("Giorno selezionato: " + date.getDate() + "/" + date.getMonth() + "/" +  date.getFullYear());
+    $('#day-sel-2').text("Giorno selezionato: " + date.getDate() + "/" + date.getMonth() + "/" +  date.getFullYear());
+    loadPresenti();
+}
+
+function selectDayFest(date) {
+    daySelected = date;
+    $('#day-sel-1').text("Giorno selezionato: " + date.getDate() + "/" + date.getMonth() + "/" +  date.getFullYear());
 }
 
 //Link api google https://developers.google.com/people/api/rest/v1/people/get
@@ -58,7 +64,6 @@ function clickCalendarFest(id) {
         else $('#'.concat(dayIdSelected)).css("color","darkorange");
         
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
-        $('#'.concat(dayIdSelected)).css("font-weight","normal");
     }
 
     dayIdSelected = id;
@@ -75,7 +80,26 @@ function clickCalendarFest(id) {
     selector.css("color","white");
     selector.css("background-color","darkorange");
 
-    selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
+    selectDayFest(new Date(date.getFullYear(), date.getMonth(), selector.text()));
+}
+
+function clickCalendarPres(id) {
+    let selector = $('#'.concat(id));
+
+    if (selector.css("color") !== "rgb(0, 0, 0)")
+        return;
+
+    if (dayIdSelected !== null) {
+        $('#'.concat(dayIdSelected)).css("color","black");
+        $('#'.concat(dayIdSelected)).css("background-color","transparent");
+    }
+
+    dayIdSelected = id;
+
+    selector.css("color","white");
+    selector.css("background-color","darkorange");
+
+    selectDay(new Date(date1.getFullYear(), date1.getMonth(), selector.text()));
 }
 
 function festaButton() {
