@@ -35,10 +35,6 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="votoDto"></param>
         internal void MakeVotoToUtente(VotoDto votoDto)
         {
-            if (!votoDto.IsValid)
-            {
-                throw new PrenotazionePostazioniApiException("Voto non valido");
-            }
             Voto voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.IdUtente, votoDto.IdUtenteVotato);
             if(voto == null)
             {

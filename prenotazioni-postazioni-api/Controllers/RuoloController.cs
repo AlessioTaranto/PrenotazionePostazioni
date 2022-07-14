@@ -29,7 +29,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Ruolo non trovato");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Ruolo non trovato");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

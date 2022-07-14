@@ -41,7 +41,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok(utente);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Utente non trovato");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Utente non trovato");
+                return NotFound(ex.Message);
             }
             catch (Exception ex) 
             { 
@@ -88,7 +88,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
             {
-                return BadRequest("Impossibile aggiungere nuovo utente");
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

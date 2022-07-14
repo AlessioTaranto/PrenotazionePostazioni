@@ -28,7 +28,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                return NotFound("Impostazioni non trovate");
+                return NotFound(ex.Message);
             }
             catch(Exception ex)
             {

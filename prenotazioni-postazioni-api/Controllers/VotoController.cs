@@ -72,7 +72,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch(PrenotazionePostazioniApiException ex)
             {
-                return BadRequest("Impossibile effettuare il voto");
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

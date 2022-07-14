@@ -1,6 +1,7 @@
 ﻿using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
+using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Repositories.Database;
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -14,11 +15,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lo stato dell'Impostazione Emergenza</returns>
         public bool FindImpostazioneEmergenza()
         {
-            string query = "SELECT * FROM Impostazioni;";
+            string query = "SELECT modEmergenza FROM Impostazioni;";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Impostazioni impostazioni = JsonConvert.DeserializeObject<Impostazioni>(_databaseManager.GetOneResult(query));
+            bool impostazione = JsonConvert.DeserializeObject<bool>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
-            return impostazioni.ModEmergenza;
+            return impostazione;
         }
 
         /// <summary>

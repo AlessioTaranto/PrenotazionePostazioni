@@ -55,13 +55,8 @@ namespace prenotazioni_postazioni_api.Services
             string nome = utenteDto.Nome, cognome = utenteDto.Cognome;
             string image = utenteDto.Image, email = utenteDto.Email;
             int idRuolo = utenteDto.IdRuolo;
-
-            if (utenteDto.IsValid)
-            {
-                Utente utente = new Utente(nome, cognome, image, email, idRuolo);//aggiungere costruttore
-                _utenteRepository.Save(utente);
-            }
-            else throw new PrenotazionePostazioniApiException("Utente da salvare non valido");
+            Utente utente = new Utente(nome, cognome, image, email, idRuolo);//aggiungere costruttore
+            _utenteRepository.Save(utente);
         }
 
     }
