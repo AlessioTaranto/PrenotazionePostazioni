@@ -34,4 +34,18 @@ public class HomeController : Controller
 
         return View(prenotazione);
     }
+
+    public IActionResult ReloadDay(DateTime date, PrenotazioneViewModel prenotazione)
+    {
+        prenotazione = new PrenotazioneViewModel(date, prenotazione.Stanza, prenotazione.Start, prenotazione.End);
+
+        return View(prenotazione);
+    }
+
+    public IActionResult ReloadStanza(string stanza, PrenotazioneViewModel prenotazione)
+    {
+        prenotazione = new PrenotazioneViewModel(prenotazione.Date, stanza, prenotazione.Start, prenotazione.End);
+
+        return View(prenotazione);
+    }
 }
