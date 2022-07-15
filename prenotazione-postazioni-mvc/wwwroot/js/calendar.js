@@ -13,7 +13,7 @@ function loadCalendar() {
             $('#'.concat(i).concat('-').concat(j)).css("color", "black");
         }
 
-    let firstLineLoad = true
+    let firstLineLoad = true;
 
     for (let i = 0; i<6; i++) {
         for (let j = 0; j<7; j++) {
@@ -28,7 +28,8 @@ function loadCalendar() {
         }
     }
 
-    checkSelected()
+    checkSelected();
+    defaultSelecter();
 }
 
 function prevMonth() {

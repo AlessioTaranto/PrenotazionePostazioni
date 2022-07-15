@@ -15,6 +15,8 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
     <script src="js/calendar.js"></script>
+    <script src="js/prenota.js"></script>
+    <script src="js/impostazioni.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -184,26 +186,26 @@
         </div>
         <br>
         <div class="btn-collapse">
-            <a data-toggle="collapse" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a data-toggle="collapse" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample" onclick="loadPrenotazioni()">
                 Persone prenotate
             </a>
         </div>
         <div>
             <div class="collapse" id="prenotazioni">
                 <div class="card card-body person-div">
-                    <ul>
-                        <li><img src="img/example/example-1.png" alt="example"></li>
-                        <li><img src="img/example/example-2.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
+                    <ul id="lista-prenotazioni">
+                        <!--<li><img src="img/example/example-1.png" alt="example">Persona 1</li>
+                        <li><img src="img/example/example-2.png" alt="example">Persona 2</li>
+                        <li><img src="img/example/example-3.png" alt="example">Persona 3</li>
+                        <li><img src="img/example/example-3.png" alt="example">Persona 4</li>
+                        <li><img src="img/example/example-3.png" alt="example">Persona 5</li>-->
                     </ul>
                 </div>
             </div>
         </div>
         <br>
         <div>
-            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
+            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota" onclick="prenota()">Prenota</button>
         </div>
 
     </div>

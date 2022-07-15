@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Postazioni";
+
+
 }
 
     <div class="container mt-4 ml-3 position-fixed calendar-div">
@@ -141,18 +143,16 @@
             <div class="collapse" id="prenotazioni">
                 <div class="card card-body person-div">
                     <ul>
-                        <li><img src="img/example/example-1.png" alt="example"></li>
-                        <li><img src="img/example/example-2.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
-                        <li><img src="img/example/example-3.png" alt="example"></li>
+                        <!--
+                             <li><img src="img/" alt=""></li>
+                        -->
                     </ul>
                 </div>
             </div>
         </div>
         <br>
         <div>
-            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
+            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota" onclick="console.log(getIdDay(19))">Prenota</button>
         </div>
 
     </div>

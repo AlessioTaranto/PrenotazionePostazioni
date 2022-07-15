@@ -23,7 +23,18 @@ function selectDay(date) {
 
 function defaultSelecter() {
     $('#room-sel').text("Seleziona una Stanza");
-    selectDay(daySelected);
+    clickCalendar(getIdDay(daySelected.getDate())); //Auto day select
+}
+
+function getIdDay(number) {
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 7; j++) {
+            if ($('#'.concat(j).concat('-').concat(i)).css("color") === "rgb(0, 0, 0)" &&
+                $('#'.concat(j).concat('-').concat(i)).text() == number)
+                return j + '-' + i;
+        }
+    }
+    return "null";
 }
 
 function clickCalendar(id) {
