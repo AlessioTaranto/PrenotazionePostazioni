@@ -23,6 +23,11 @@ function impostaFesta(date) {
         year:year
     });
     nFestivita++;
+    let festa = document.createElement('li');
+    festa.setAttribute("id", date);
+    festa.setAttribute("style", "list-style-type:none; margin: 0px 0px 10px 0px");
+    festa.innerText = day + "/" + month + "/" + year;
+    document.getElementById("lista-feste").appendChild(festa);
 }
 
 function rimuoviFesta(date) {
@@ -33,6 +38,7 @@ function rimuoviFesta(date) {
         if(festivita[i].day === day && festivita[i].month === month && festivita[i].year === year) {
             festivita.splice(i, 1);
             nFestivita--;
+            document.getElementById(date).remove();
             return;
         }
     }
