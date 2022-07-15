@@ -23,11 +23,11 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 List<Festa> feste = _festaService.GetByDate(date);
-                if(festa == null)
+                if(feste == null)
                 {
                     return NotFound("Festa e' null");
                 }
-                return Ok(festa);
+                return Ok(feste);
             }
             catch(PrenotazionePostazioniApiException ex)
             {
@@ -94,7 +94,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [Route("addFesta")]
+        //[Route("addFesta")]
 
         //[Route("deleteFestaByDate")]
     }
