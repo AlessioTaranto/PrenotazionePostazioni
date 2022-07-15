@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -64,6 +67,8 @@
         </ul>
     </nav>
 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <nav class="navbar navbar-expand-sm bg-light">
         <div class="ml-3 order-0">
             <a class="navbar-brand mx-auto black" href="#">@ViewData["Title"]</a>
@@ -71,12 +76,30 @@
         <div class="navbar-collapse collapse w-000 order-3 dual-collapse2">
             <ul class="navbar-nav ml-2-nav">
                 <li class="nav-item">
-                    <a class="nav-link black" href="#">Login Google</a>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <!--<a href="#" onclick="signOut();">Sign out</a>-->
                 </li>
 
             </ul>
         </div>
     </nav>
+
+    <script>
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
 </header>
 
     <main role="main">
@@ -97,10 +120,6 @@
 
         $(document).ready(function(e) {
             $('img[usemap]').rwdImageMaps();
-
-            $('area').on('click', function () {
-                selectRoom($(this).attr('alt'));
-            });
         });
     </script>
 </body>
