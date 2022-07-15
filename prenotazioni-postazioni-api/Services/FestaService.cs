@@ -26,5 +26,11 @@ namespace prenotazioni_postazioni_api.Services
         {
             return _festaRepository.FindAll();
         }
+
+        internal List<Festa> GetAllByMonth(int month)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
