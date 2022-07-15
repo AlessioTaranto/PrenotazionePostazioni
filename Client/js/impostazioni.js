@@ -26,7 +26,8 @@ function impostaFesta(date, dateId) {
     let festa = document.createElement('li');
     festa.setAttribute("id", festaId);
     festa.setAttribute("style", "list-style-type:none; margin: 0px 0px 10px 0px");
-    festa.innerText = day + "/" + month + "/" + year;
+    if(month === 0) festa.innerText = day + "/12/" + (year-1);
+    else festa.innerText = day + "/" + month + "/" + year;
     document.getElementById("lista-feste").appendChild(festa);
 }
 
