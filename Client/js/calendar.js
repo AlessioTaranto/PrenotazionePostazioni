@@ -31,7 +31,15 @@ function loadCalendar() {
         }
     }
 
+    loadFeste();
     checkSelected();
+}
+
+function loadFeste() {
+    for(let i=0; i<nFestivita; i++) {
+        if(festivita[i].date.getMonth()===month+1)
+            $('#'.concat(festivita[i].id.replace('f', ''))).css("color", "darkorange");
+    }
 }
 
 function loadCalendar1() {
@@ -61,7 +69,16 @@ function loadCalendar1() {
         }
     }
 
+    loadFeste1();
     checkSelected1()
+}
+
+function loadFeste1() {
+    for(let i=0; i<nFestivita; i++) {
+        if((festivita[i].date.getMonth())===month1+1) {
+            $('#'.concat(festivita[i].id.replace('f', '')).concat('1')).css("color", "darkorange");
+        }
+    }
 }
 
 function prevMonth() {
