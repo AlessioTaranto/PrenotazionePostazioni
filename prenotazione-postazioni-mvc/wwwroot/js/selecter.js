@@ -2,10 +2,6 @@
 
 let roomSelected = null;
 let daySelected = new Date();
-let startHoursSelected = 9;
-let startMinutesSelected = 0;
-let finishHoursSelected = 13;
-let finishMinutesSelected = 0;
 
 let dayIdSelected = null;
 
@@ -56,4 +52,9 @@ function clickCalendar(id) {
     selector.css("font-weight","bold");
 
     selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
+}
+
+function goDate(newDate) {
+    date = newDate;
+    loadCalendar();
 }

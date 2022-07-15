@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Postazioni";
 
-
+    PrenotazioneViewModel ViewModel = (PrenotazioneViewModel) Model;
 }
 
     <div class="container mt-4 ml-3 position-fixed calendar-div">
@@ -87,7 +87,7 @@
         <img src="img/piantina.png" usemap="#image-map">
 
         <map name="image-map" id="image-map">
-            <area alt="Contabilità" onclick="alert(1)" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
+            <area alt="Contabilità" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
             <!--<area alt="s2" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
             <area alt="s3" title="s3" coords="185,161,185,127,300,126,300,175" shape="poly">
             <area alt="s4" title="s4" coords="306,126,344,128,344,182,306,177" shape="poly">
@@ -152,12 +152,24 @@
         </div>
         <br>
         <div>
-            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota" onclick="console.log(getIdDay(19))">Prenota</button>
+            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
         </div>
 
     </div>
 
     <script>
         loadCalendar();
+        defaultSelecter();
     </script>
     <script src="js/selecter.js"></script>
+    <script>
+
+    goDate(new Date(@ViewModel.Date.Year, @ViewModel.Date.Month, @ViewModel.Date.Day));
+
+        $('area').on('click', function () {
+                selectRoom($(this).attr('alt'));
+                @{
+
+                }
+            });
+    </script>

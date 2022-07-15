@@ -1,4 +1,4 @@
-const date = new Date;
+let date = new Date;
 let month = date.getMonth();
 
 function loadCalendar() {
@@ -29,7 +29,6 @@ function loadCalendar() {
     }
 
     checkSelected();
-    defaultSelecter();
 }
 
 function prevMonth() {
@@ -77,7 +76,7 @@ function daysInMonth (month) {
 }
 
 function checkSelected() {
-    if (daySelected.getMonth() !== date.getMonth()) {
+    if (daySelected.getMonth() !== date.getMonth() || daySelected.getFullYear() !== date.getFullYear()) {
         $('#'.concat(dayIdSelected)).css("color","black");
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
         $('#'.concat(dayIdSelected)).css("font-weight","normal");
