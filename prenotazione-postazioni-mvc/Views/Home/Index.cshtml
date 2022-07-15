@@ -2,7 +2,9 @@
     ViewData["Title"] = "Postazioni";
 
     PrenotazioneViewModel ViewModel = (PrenotazioneViewModel) Model;
+
 }
+
 
     <div class="container mt-4 ml-3 position-fixed calendar-div">
         <div class="calendar">
@@ -173,9 +175,22 @@
         $('td').on('click', function(event) {
             let idElement = event.target.id;
             clickCalendar(idElement);
-            @{
-                //ReloadDay();
-            }
+            
+            $.ajax({
+                type: "POST",
+                url: "Home/ReloadDay",
+                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDate() },
+                function (response)  
+                    {  
+                    alert("Success"); 
+                    },  
+                error:  
+                    function (response)  
+                    {  
+                        alert("Error: " + response);  
+                    } 
+            });
+
         });
 
     </script>
