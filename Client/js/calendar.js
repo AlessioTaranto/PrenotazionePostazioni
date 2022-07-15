@@ -37,7 +37,7 @@ function loadCalendar() {
 
 function loadFeste() {
     for(let i=0; i<nFestivita; i++) {
-        if(festivita[i].date.getMonth()===month+1)
+        if(festivita[i].date.getMonth()===month+1 && festivita[i].date.getFullYear() === date.getFullYear())
             $('#'.concat(festivita[i].id.replace('f', ''))).css("color", "darkorange");
     }
 }
@@ -75,7 +75,7 @@ function loadCalendar1() {
 
 function loadFeste1() {
     for(let i=0; i<nFestivita; i++) {
-        if((festivita[i].date.getMonth())===month1+1) {
+        if((festivita[i].date.getMonth())===month1+1 && festivita[i].date.getFullYear()===date1.getFullYear()) {
             $('#'.concat(festivita[i].id.replace('f', '')).concat('1')).css("color", "darkorange");
         }
     }
