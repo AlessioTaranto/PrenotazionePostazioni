@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Services;
@@ -94,7 +95,24 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        //[Route("addFesta")]
+        [Route("addFesta")]
+        [HttpPost]
+        public IActionResult AddFestaByDate([FromBody] FestaDto festaDto)
+        {
+            try
+            {
+                _festaService.Save(date);
+                return Ok();
+            }
+            catch(PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         //[Route("deleteFestaByDate")]
     }

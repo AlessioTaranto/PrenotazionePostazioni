@@ -1,5 +1,7 @@
 ﻿using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Repositories;
+using prenotazioni_postazioni_api.Exceptions;
+using prenotazione_postazioni_libs.Dto;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -27,10 +29,18 @@ namespace prenotazioni_postazioni_api.Services
             return _festaRepository.FindAll();
         }
 
-        internal List<Festa> GetAllByMonth(int month)
+        /// <summary>
+        /// salva una festaDto nel database
+        /// </summary>
+        /// <param name="festaDto">la festa da salvare</param>
+        /// <exception cref="PrenotazionePostazioniApiException">throw nel caso in cui la data e' gia esistenze</exception>
+        internal void Save(FestaDto festaDto)
         {
-            throw new NotImplementedException();
+            if(_festaRepository.FindByDate(festaDto.Date) != null)
+            {
+                throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
+            }
+            _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc);
         }
-
     }
 }

@@ -33,5 +33,17 @@ namespace prenotazioni_postazioni_api.Repositories
             _databaseManager.DeleteConnection();
             return feste;
         }
+
+        /// <summary>
+        /// query al db, salva una festa al database
+        /// </summary>
+        /// <param name="festa">la festa da salvare</param>
+        internal void Save(Festa festa)
+        {
+            string query = $"INSERT INTO Festa (giorno, descrizione) VALUES ({festa.Date.ToString("yyyy-MM-dd hh:mm:ss:fff")}, {festa.Desc});";
+            _databaseManager.CreateConnectionToDatabase(null, null, true);
+            _databaseManager.GetNoneResult(query);
+            _databaseManager.DeleteConnection();
+        }
     }
 }
