@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Services
         public Ruolo GetRuoloById(int idRuolo)
         {
             Ruolo ruolo = _ruoloRepository.FindById(idRuolo);
-            if (ruolo == null) throw new PrenotazionePostazioniApiException("Ruolo utente non trovato");
+            if (ruolo == null) throw new PrenotazionePostazioniApiException("IdRuolo utente non trovato");
             else return ruolo;
         }
 
@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Services
         public Ruolo GetRuoloByIdUtente(int idUtente)
         {
             Ruolo ruolo = _ruoloRepository.FindByIdUtente(idUtente);
-            if (ruolo == null) throw new PrenotazionePostazioniApiException("Ruolo utente non trovato");
+            if (ruolo == null) throw new PrenotazionePostazioniApiException("IdRuolo utente non trovato");
             else
             {
                 return ruolo;
@@ -53,8 +53,8 @@ namespace prenotazioni_postazioni_api.Services
             Utente admin = _utenteRepository.FindById(idAdmin);
             if (admin == null) throw new PrenotazionePostazioniApiException("admin e' null");
             if (utente == null) throw new PrenotazionePostazioniApiException("utente e' null");
-            Ruolo ruoloUtente = _ruoloRepository.FindById(utente.Ruolo.IdRuolo);
-            Ruolo ruoloAdmin = _ruoloRepository.FindById(admin.Ruolo.IdRuolo);
+            Ruolo ruoloUtente = _ruoloRepository.FindById(utente.IdRuolo);
+            Ruolo ruoloAdmin = _ruoloRepository.FindById(admin.IdRuolo);
             if (ruoloAdmin == null) throw new PrenotazionePostazioniApiException("ruolo admin non trovato");
             if (ruoloUtente == null) throw new PrenotazionePostazioniApiException("ruolo utente non trovato");
 

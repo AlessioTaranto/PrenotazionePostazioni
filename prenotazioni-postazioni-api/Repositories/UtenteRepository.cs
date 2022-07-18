@@ -58,7 +58,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Save(Utente utente)
         {
-            string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ('{utente.Nome}', '{utente.Cognome}', '{utente.Image}', '{utente.Email}', {utente.Ruolo});";
+            string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ('{utente.Nome}', '{utente.Cognome}', '{utente.Image}', '{utente.Email}', {utente.IdRuolo});";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();

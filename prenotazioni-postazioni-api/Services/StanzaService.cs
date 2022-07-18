@@ -27,7 +27,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Stanza GetStanzaById(int id)
         {
             Stanza stanza = _stanzaRepository.FindById(id);
-            if (stanza == null) throw new PrenotazionePostazioniApiException("Stanza non trovata");
+            if (stanza == null) throw new PrenotazionePostazioniApiException("IdStanza non trovata");
             else return stanza;
         }
 
@@ -40,7 +40,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Stanza GetStanzaByName(string stanzaName)
         {
             Stanza stanza = _stanzaRepository.FindByName(stanzaName);
-            if (stanza == null) throw new PrenotazionePostazioniApiException("Stanza non trovata");
+            if (stanza == null) throw new PrenotazionePostazioniApiException("IdStanza non trovata");
             else
                 return stanza;
         }
@@ -61,7 +61,7 @@ namespace prenotazioni_postazioni_api.Services
                 Stanza stanza = new Stanza(nomestanza, postiMax, postiMaxEmergenza);
                 _stanzaRepository.Save(stanza);
             }
-            else throw new PrenotazionePostazioniApiException("Stanza da salvare non valida");
+            else throw new PrenotazionePostazioniApiException("IdStanza da salvare non valida");
 
 
         }

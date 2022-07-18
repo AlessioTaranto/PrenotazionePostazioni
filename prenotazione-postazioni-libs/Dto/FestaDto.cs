@@ -8,19 +8,19 @@ namespace prenotazione_postazioni_libs.Dto
 {
     public class FestaDto
     {
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
         public string? Desc { get; set; }
         
         public FestaDto()
         {
 
         }
-        public FestaDto(DateOnly date, string? desc)
+        public FestaDto(DateTime date, string? desc)
         {
             Date = date;
             Desc = desc;
         }
-        public FestaDto(DateOnly date)
+        public FestaDto(DateTime date)
         {
             this.Date = date;   
         }

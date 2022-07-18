@@ -23,12 +23,12 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                List<Festa> feste = _festaService.GetByDate(new DateOnly(year, month, day));
-                if(feste == null)
+                Festa festa = _festaService.GetByDate(new DateTime(year, month, day));
+                if(festa == null)
                 {
-                    return NotFound("Festa e' null");
+                    return NotFound("Festa è null");
                 }
-                return Ok(feste);
+                return Ok(festa);
             }
             catch(PrenotazionePostazioniApiException ex)
             {
@@ -36,7 +36,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.Message+"\nStack Trace:"+ex.StackTrace);
             }
             
         }

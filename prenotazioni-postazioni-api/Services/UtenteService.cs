@@ -27,7 +27,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Utente GetUtenteById(int id)
         {
             Utente utente = _utenteRepository.FindById(id);
-            if (utente == null) throw new PrenotazionePostazioniApiException("Utente non trovato");
+            if (utente == null) throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             else return utente;
         }
 
@@ -40,7 +40,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Utente GetUtenteByEmail(string email)
         {
             Utente utente = _utenteRepository.FindByEmail(email);
-            if (utente == null) throw new PrenotazionePostazioniApiException("Utente non trovato");
+            if (utente == null) throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             else return utente;
         }
 
@@ -55,7 +55,7 @@ namespace prenotazioni_postazioni_api.Services
             string nome = utenteDto.Nome, cognome = utenteDto.Cognome;
             string image = utenteDto.Image, email = utenteDto.Email;
             Ruolo ruolo = utenteDto.Ruolo;
-            Utente utente = new Utente(nome, cognome, image, email, ruolo);//aggiungere costruttore
+            Utente utente = new Utente(nome, cognome, image, email, ruolo.IdRuolo);
             _utenteRepository.Save(utente);
         }
 
