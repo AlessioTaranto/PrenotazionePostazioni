@@ -54,8 +54,8 @@ namespace prenotazioni_postazioni_api.Services
         {
             string nome = utenteDto.Nome, cognome = utenteDto.Cognome;
             string image = utenteDto.Image, email = utenteDto.Email;
-            int idRuolo = utenteDto.Ruolo.IdRuolo;
-            Utente utente = new Utente(nome, cognome, image, email, idRuolo);//aggiungere costruttore
+            Ruolo ruolo = utenteDto.Ruolo;
+            Utente utente = new Utente(nome, cognome, image, email, ruolo);//aggiungere costruttore
             _utenteRepository.Save(utente);
         }
 
