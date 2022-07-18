@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                List<Festa> feste = _festaService.GetByDate(new DateOnly(year, month, day);
+                List<Festa> feste = _festaService.GetByDate(new DateOnly(year, month, day));
                 if(feste == null)
                 {
                     return NotFound("Festa e' null");
