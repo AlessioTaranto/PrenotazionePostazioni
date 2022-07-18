@@ -57,7 +57,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.LogInformation("Trovando tutte le prenotazioni...");
                 List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioni();
                 _logger.LogInformation("Prenotazioni trovate con successo!");
-                return Ok();
+                return Ok(prenotazioni);
             }
             catch (Exception ex)
             {
