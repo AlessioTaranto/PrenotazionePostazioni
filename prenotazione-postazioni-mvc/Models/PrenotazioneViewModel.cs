@@ -27,7 +27,7 @@
 
         public PrenotazioneViewModel(string stanza)
         {
-            Date = new DateTime();
+            Date = DateTime.Now;
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
@@ -35,7 +35,7 @@
 
         public PrenotazioneViewModel()
         {
-            Date = new DateTime();
+            Date = DateTime.Now;
             Stanza = "";
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);

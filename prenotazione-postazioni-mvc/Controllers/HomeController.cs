@@ -15,29 +15,26 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        PrenotazioneViewModel prenotazione = new PrenotazioneViewModel();
 
+        PrenotazioneViewModel prenotazione = HttpContext.Session.GetObjectFromJson<PrenotazioneViewModel>("PrenotazioneViewModel");
+
+        if (prenotazione == null)
+            prenotazione = new PrenotazioneViewModel();
+
+        HttpContext.Session.SetObjectAsJson("PrenotazioneViewModel", prenotazione);
         return View(prenotazione);
     }
 
-    public IActionResult SelectDay(DateTime date)
+    [HttpPost]
+    [ActionName("ReloadDay")]
+    public IActionResult ReloadDay(int year, int month, int day)
     {
-        PrenotazioneViewModel prenotazione = new PrenotazioneViewModel(date, "");
 
-        return View(prenotazione);
-    }
+        PrenotazioneViewModel prenotazione = HttpContext.Session.GetObjectFromJson<PrenotazioneViewModel>("PrenotazioneViewModel");
 
-    public IActionResult SelectStanza(DateTime date, string stanza)
-    {
-        PrenotazioneViewModel prenotazione = new PrenotazioneViewModel(date, stanza);
+        prenotazione.Date = new DateTime(year, month, day);
 
-        return View(prenotazione);
-    }
-
-    public IActionResult SelectStanza(DateTime date, string stanza, DateTime start, DateTime end)
-    {
-        PrenotazioneViewModel prenotazione = new PrenotazioneViewModel(date, stanza, start, end);
-
+        HttpContext.Session.SetObjectAsJson("PrenotazioneViewModel", prenotazione);
         return View(prenotazione);
     }
 }

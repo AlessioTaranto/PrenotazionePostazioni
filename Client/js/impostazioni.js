@@ -13,32 +13,33 @@ function loadPresenti() {
     }
 }
 
-function impostaFesta(date) {
+function impostaFesta(date, dateId) {
+    let festaId = 'f'.concat(dateId);
     let day = date.getDate();
     let month = date.getMonth();
     let year = date.getFullYear();
     festivita.push({
-        day:day,
-        month:month,
-        year:year
+        date: date,
+        id: festaId
     });
     nFestivita++;
     let festa = document.createElement('li');
-    festa.setAttribute("id", date);
+    festa.setAttribute("id", festaId);
     festa.setAttribute("style", "list-style-type:none; margin: 0px 0px 10px 0px");
-    festa.innerText = day + "/" + month + "/" + year;
+    if(month === 0) festa.innerText = day + "/12/" + (year-1);
+    else festa.innerText = day + "/" + month + "/" + year;
     document.getElementById("lista-feste").appendChild(festa);
 }
 
-function rimuoviFesta(date) {
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getFullYear();
+function rimuoviFesta(date, dateId) {
+    let festaId = 'f'.concat(dateId);
     for(let i=0; i<nFestivita; i++) {
-        if(festivita[i].day === day && festivita[i].month === month && festivita[i].year === year) {
+        if(festivita[i].id === festaId) {
             festivita.splice(i, 1);
             nFestivita--;
-            document.getElementById(date).remove();
+            document.getElementById(festaId).remove();
+            $('#'.concat(dateId)).css("color", "black");
+            $('#'.concat(dateId).concat('1')).css("color", "black");
             return;
         }
     }

@@ -118,8 +118,10 @@ function festaButton() {
         selector.css("color", "darkorange");
         selector.css("background-color", "transparent");
         selector.css("font-weight", "normal");
+        impostaFesta(daySelected, dayIdSelected);
+        loadFeste();
+        loadFeste1();
         dayIdSelected = null;
-        impostaFesta(daySelected);
     }
     else {
         btn.value = "Imposta come festività"
@@ -127,6 +129,9 @@ function festaButton() {
         selector.css("color", "black");
         selector.css("background-color", "transparent");
         selector.css("font-weight", "normal");
-        rimuoviFesta(daySelected);
+        rimuoviFesta(daySelected, dayIdSelected);
+        loadFeste();
+        loadFeste1();
+        dayIdSelected = null;
     }
 }
