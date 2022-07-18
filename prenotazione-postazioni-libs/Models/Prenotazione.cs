@@ -13,26 +13,26 @@ namespace prenotazione_postazioni_libs.Models
         public int IdPrenotazioni { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Stanza Stanza { get; set; }
-        public Utente Utente { get; set; }
+        public int IdStanza { get; set; }
+        public int IdUtente { get; set; }
         private Exception ModelException { get; set; }
         public bool IsValid { get; set; } = false;
 
-        public Prenotazione(int idPrenotazioni, DateTime startDate, DateTime endDate, Stanza stanza, Utente utente)
+        public Prenotazione(int idPrenotazioni, DateTime startDate, DateTime endDate, int idStanza, int idUtente)
         {
             IdPrenotazioni = idPrenotazioni;
             StartDate = startDate;
             EndDate = endDate;
-            Stanza = stanza;
-            Utente = utente;
+            IdStanza = idStanza;
+            this.IdUtente = idUtente;
         }
 
-        public Prenotazione(DateTime startDate, DateTime endDate, Stanza stanza, Utente utente)
+        public Prenotazione(DateTime startDate, DateTime endDate, int idStanza, int idUtente)
         {
             StartDate = startDate;
             EndDate = endDate;
-            Stanza = stanza;
-            Utente = utente;
+            IdStanza = idStanza;
+            IdUtente = idUtente;
         }
 
         public Prenotazione()

@@ -36,10 +36,10 @@ namespace prenotazioni_postazioni_api.Repositories
             _databaseManager.DeleteConnection();
             if(utente == null)
             {
-                throw new PrenotazionePostazioniApiException("Utente non trovato");
+                throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             }
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            query = $"SELECT * FROM Ruoli WHERE idRuolo = {utente.Ruolo};";
+            query = $"SELECT * FROM Ruoli WHERE idRuolo = {utente.IdRuolo};";
             Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
             _databaseManager.DeleteConnection();
             return ruolo;

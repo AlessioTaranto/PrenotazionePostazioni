@@ -1,10 +1,15 @@
-<<<<<<< feature/client
 {
   "version": 2,
   "dgSpecHash": "oSm7cdvuM/uOoWwE3VFCY4YTAjHq2ve36tt4SrmuMbyzD/xfW2yBfmiqfPzbVnbNLVGgjG9hpylkFodCFyFtDQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
   "expectedPackageFiles": [],
-  "logs": []
->>>>>>> Add files via upload
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Si è verificato un problema durante la lettura del file di cache C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\obj\\project.nuget.cache: Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
+    }
+  ]
 }
