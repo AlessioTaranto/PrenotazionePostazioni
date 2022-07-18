@@ -19,11 +19,11 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [Route("getByDate")]
         [HttpGet]
-        public IActionResult GetByDate(DateOnly date)
+        public IActionResult GetByDate(int year, int month, int day)
         {
             try
             {
-                List<Festa> feste = _festaService.GetByDate(date);
+                List<Festa> feste = _festaService.GetByDate(new DateOnly(year, month, day);
                 if(feste == null)
                 {
                     return NotFound("Festa e' null");
@@ -69,11 +69,11 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [Route("addFesta")]
         [HttpGet]
-        public IActionResult AddFestaByDate(int year, int month, int day, string desc)
+        public IActionResult AddFestaByDate([FromBody] FestaDto festaDto)
         {
             try
             {
-                _festaService.Save(new DateOnly(year, month, day), desc);
+                _festaService.Save(festaDto);
                 return Ok();
             }
             catch(PrenotazionePostazioniApiException ex)
