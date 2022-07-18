@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add logging Log4Net
 builder.Logging.AddLog4Net();
 
-
 // Add services to the container.
 
 builder.Services.AddControllers();
