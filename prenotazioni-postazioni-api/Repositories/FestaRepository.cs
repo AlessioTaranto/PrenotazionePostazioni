@@ -25,10 +25,12 @@ namespace prenotazioni_postazioni_api.Repositories
         internal Festa FindByDate(DateTime date)
         {
             string query = $"SELECT * FROM Feste WHERE giorno = '{date.ToString("yyyy-MM-dd hh:mm:ss:fff")}';";
+            logger.LogInformation("Connessione al database...");
             _databaseManager.CreateConnectionToDatabase(null, null, true);
-            string jsonTest = _databaseManager.GetOneResult(query);
-            Console.WriteLine(jsonTest);
-            Festa festa = JsonConvert.DeserializeObject<Festa>(jsonTest);
+            logger.LogInformation("Effettuando la query al database...");
+            logger.LogInformation("Deserializzando il json restituito da DatabaseManager...");
+            Festa festa = JsonConvert.DeserializeObject<Festa>(_databaseManager.GetOneResult(query));
+            logger.LogInformation("Disconetto dal database");
             _databaseManager.DeleteConnection();
             return festa;
         }
@@ -39,8 +41,11 @@ namespace prenotazioni_postazioni_api.Repositories
         internal List<Festa> FindAll()
         {
             string query = $"SELECT * FROM Feste";
+            logger.LogInformation("Mi connetto al database...");
             _databaseManager.CreateConnectionToDatabase(null, null, true);
+            logger.LogInformation("Deserializzo il json returnato da GetAllResults...");
             List<Festa> feste = JsonConvert.DeserializeObject<List<Festa>>(_databaseManager.GetAllResults(query));
+            logger.LogInformation("Mi disconetto dal database");
             _databaseManager.DeleteConnection();
             return feste;
         }
@@ -52,8 +57,11 @@ namespace prenotazioni_postazioni_api.Repositories
         internal void Save(Festa festa)
         {
             string query = $"INSERT INTO Festa (giorno, descrizione) VALUES ('{festa.Date.ToString("yyyy-MM-dd hh:mm:ss:fff")}', '{festa.Desc})';";
+            logger.LogInformation("Mi connetto al database...");
             _databaseManager.CreateConnectionToDatabase(null, null, true);
+            logger.LogInformation("faccio una query al db");
             _databaseManager.GetNoneResult(query);
+            logger.LogInformation("mi disconnetto dal db");
             _databaseManager.DeleteConnection();
         }
     }
