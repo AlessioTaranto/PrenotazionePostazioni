@@ -76,7 +76,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="prenotazione">La prenotazione da aggiungere al database</param>
         internal void Save(Prenotazione prenotazione)
         {
-            string query = $"INSERT INTO Prenotazioni (startDate, endDate, idStanza, idUtente) VALUES ('{prenotazione.StartDate.ToString("yyyy-MM-dd hh:mm:ss:fff")}', '{prenotazione.EndDate.ToString("yyyy-MM-dd hh:mm:ss:fff")}', {prenotazione.IdStanza}, {prenotazione.IdUtente});";
+            string query = $"INSERT INTO Prenotazioni (startDate, endDate, idStanza, idUtente) VALUES ('{prenotazione.StartDate.ToString("yyyy-MM-ddTHH:mm:ss")}', '{prenotazione.EndDate.ToString("yyyy-MM-ddTHH:mm:ss")}', {prenotazione.IdStanza}, {prenotazione.IdUtente});";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();

@@ -79,7 +79,7 @@ namespace prenotazioni_postazioni_api.Services
             _logger.LogInformation("Trovando un utente admin mediante il suo idL: " + idAdmin);
             Utente admin = _utenteRepository.FindById(idAdmin);
             _logger.LogInformation("Controllando se admin e' valido");
-            if (admin == null{
+            if (admin == null){
                 _logger.LogError("Admin non e' valido");
                 throw new PrenotazionePostazioniApiException("admin e' null");
             }
@@ -116,7 +116,7 @@ namespace prenotazioni_postazioni_api.Services
             if (ruoloUtente.AccessoImpostazioni)
             {
                 _logger.LogInformation("L'utente ha i permessi!");
-                _logger.LogInformation("Chiedo di cambiare i permessi dell'utente in: " + RuoloEnum.Utente.ToString();
+                _logger.LogInformation("Chiedo di cambiare i permessi dell'utente in: " + RuoloEnum.Utente.ToString());
                 _ruoloRepository.UpdateRuolo (utente.IdUtente, RuoloEnum.Utente);
             }
             else
