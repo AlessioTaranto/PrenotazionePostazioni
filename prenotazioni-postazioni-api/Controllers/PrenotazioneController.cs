@@ -29,13 +29,17 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Trovando una prenotazione mediante l'id...");
                 Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
+                _logger.LogInformation("Trovato una prenotazione con id: " + prenotazione.IdPrenotazioni + " con successo");
                 return Ok(prenotazione);
             }catch(PrenotazionePostazioniApiException ex)
             {
+                _logger.LogWarning("Prenotazione non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -50,10 +54,14 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                return Ok(_prenotazioneService.GetAllPrenotazioni());
+                _logger.LogInformation("Trovando tutte le prenotazioni...");
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioni();
+                _logger.LogInformation("Prenotazioni trovate con successo!");
+                return Ok();
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -69,14 +77,18 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                List<Prenotazione>   prenotazione = _prenotazioneService.GetPrenotazioniByStanza(idStanza);
-                return Ok(prenotazione);
+                _logger.LogInformation("Trovando tutte le prenotazioni di una stanza...");
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByStanza(idStanza);
+                _logger.LogInformation("Prenotazioni della stanza ID: " + idStanza + " trovate!");
+                return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
+                _logger.LogWarning("Non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
 
@@ -93,14 +105,18 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Trovando tutte le prenotazioni di un utente");
                 List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByUtente(idUtente);
+                _logger.LogInformation("Prenotazioni dell'id utente: " + idUtente + " trovate con successo!");
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
+                _logger.LogWarning("Non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -117,14 +133,22 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Date inserite: ");
+                _logger.LogInformation("Id Stanza: " + idStanza);
+                _logger.LogInformation("StartDate: " + startDate.ToString());
+                _logger.LogInformation("EndDate: " + endDate.ToString());
+                _logger.LogInformation("Trovando tutte le prenotazioni di una data...");
                 List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioniByIdStanzaAndDate(idStanza, startDate, endDate);
+                _logger.LogInformation("Prenotazioni della stanza trovate con successo");
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
             {
+                _logger.LogWarning("Non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -140,19 +164,24 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Aggiungendo una prenotazioneDto nel database...");
                 _prenotazioneService.Save(prenotazioneDto);
+                _logger.LogInformation("PrenotazioneDto aggiunto con successo!");
                 return Ok();
             }
             catch(ArgumentException ex)
             {
+                _logger.LogError("Errore insertimento del parametro: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch(PrenotazionePostazioniApiException ex)
             {
+                _logger.LogError("Errore: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

@@ -30,10 +30,14 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                return Ok(_votoService.GetVotiFromUtente(idUtente));
+                _logger.LogInformation("Trovando tutti i voti effettuati di un utente...");
+                List<Voto> voti = _votoService.GetVotiFromUtente(idUtente);
+                _logger.LogInformation("Voti dell'utente trovati con successo!");
+                return Ok();
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -51,10 +55,14 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                return Ok(_votoService.GetVotiToUtente(idUtente));
+                _logger.LogInformation("Trovando tutti i voti che sono stati effettuati su un utente...");
+                List<Voto> voti = _votoService.GetVotiToUtente(idUtente);
+                _logger.LogInformation("Voti trovati con successo!");
+                return Ok();
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -72,15 +80,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Effettuando un voto su un utente...");
                 _votoService.MakeVotoToUtente(votoDto);
+                _logger.LogInformation("Voto effettuato con successo!");
                 return Ok();
             }
             catch(PrenotazionePostazioniApiException ex)
             {
+                _logger.LogInformation("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
