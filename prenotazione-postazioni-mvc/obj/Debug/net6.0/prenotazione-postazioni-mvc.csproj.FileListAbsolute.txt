@@ -24,6 +24,7 @@ C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\
 C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.pdb
 C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.genruntimeconfig.cache
 C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\ref\prenotazione-postazioni-mvc.dll
+<<<<<<< develop
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.csproj.AssemblyReference.cache
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.AssemblyInfoInputs.cache
@@ -32,3 +33,34 @@ C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.RazorAssemblyInfo.cache
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.RazorAssemblyInfo.cs
+=======
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.csproj.AssemblyReference.cache
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.AssemblyInfoInputs.cache
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.AssemblyInfo.cs
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.csproj.CoreCompileInputs.cache
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.RazorAssemblyInfo.cache
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.RazorAssemblyInfo.cs
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.dll
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\refint\prenotazione-postazioni-mvc.dll
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.pdb
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\appsettings.json
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\prenotazione-postazioni-mvc.staticwebassets.runtime.json
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\prenotazione-postazioni-mvc.exe
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\prenotazione-postazioni-mvc.deps.json
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\prenotazione-postazioni-mvc.runtimeconfig.json
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\prenotazione-postazioni-mvc.dll
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\prenotazione-postazioni-mvc.pdb
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\scopedcss\bundle\prenotazione-postazioni-mvc.styles.css
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\scopedcss\projectbundle\prenotazione-postazioni-mvc.bundle.scp.css
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.csproj.CopyComplete
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.genruntimeconfig.cache
+C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\ref\prenotazione-postazioni-mvc.dll
+>>>>>>> Terminata la pagina postazioni.

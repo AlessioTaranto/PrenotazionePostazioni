@@ -23,6 +23,8 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
     <script src="js/calendar.js"></script>
+    
+    <script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -115,12 +117,11 @@
 
     <!--Inerente alla pagina Prenotazioni. NON SPOSTARE -->
     <script src="js/jquery.rwdImageMaps.min.js"></script>
-    <script>
-        defaultSelecter();
+<script>
+    $(document).ready(function(e) {
+        $('img[usemap]').rwdImageMaps();
+    });
+</script>
 
-        $(document).ready(function(e) {
-            $('img[usemap]').rwdImageMaps();
-        });
-    </script>
 </body>
 </html>

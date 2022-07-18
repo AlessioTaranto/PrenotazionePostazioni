@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "oSm7cdvuM/uOoWwE3VFCY4YTAjHq2ve36tt4SrmuMbyzD/xfW2yBfmiqfPzbVnbNLVGgjG9hpylkFodCFyFtDQ==",
+  "dgSpecHash": "y6qgkWkTlH0ZCaqa0E9bEKN8DyfRXAixWDDNc60U1RfE+NYa1Fni2HGpuFhM9GXfSvS+YhwgFkMoINdwPI663g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
+  "projectFilePath": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
   "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Si è verificato un problema durante la lettura del file di cache C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-libs\\obj\\project.nuget.cache: Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
+    }
+  ]
   "logs": []
 }

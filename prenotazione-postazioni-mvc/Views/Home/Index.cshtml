@@ -114,85 +114,138 @@
 
     <script src="js/selecter.js"></script>
 
-    <div class="container mt-4 ml-70 position-fixed room-info-div">
-        <h1 id="room-sel">@ViewModel.Stanza</h1>
-        <br>
-        <div class="btn-collapse">
-            <a data-toggle="collapse" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Seleziona orario
-            </a>
-        </div>
-        <div>
-            <div class="collapse" id="orario">
-                <div class="card card-body">
-                    <h5 id="day-sel"></h5>
-                    <label for="start">Inizio</label>
-                    <input type="time" id="start" name="start" step="3600000" value="09:00"
-                           min="07:00" max="22:00" required>
-                    <label for="finish">Termine</label>
-                    <input type="time" id="finish" name="finish" step="3600000" value="18:00"
-                           min="07:00" max="22:00" required>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="btn-collapse">
-            <a data-toggle="collapse" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Persone prenotate
-            </a>
-        </div>
-        <div>
-            <div class="collapse" id="prenotazioni">
-                <div class="card card-body person-div">
-                    <ul>
-                        <!--
-                             <li><img src="img/" alt=""></li>
-                        -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div>
-            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
-        </div>
-
+<div class="container mt-4 ml-70 position-fixed room-info-div">
+    <h1>@ViewModel.GetStanza()</h1>
+    <br>
+    <div class="btn-collapse">
+        <a data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Seleziona orario
+        </a>
     </div>
+    <div>
+        <div class="collapse" id="orario">
+            <div class="card card-body">
+                <label for="start">Inizio</label>
+                <input type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
+                       min="07:00" max="22:00" required>
+                <label for="finish">Termine</label>
+                <input type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
+                       min="07:00" max="22:00" required>
+            </div>
+        </div>
+        <script>
+            //Problemi collapse orario
+            let openCollapse = @ViewModel.CollapsedHour;
+
+            if (openCollapse === 0) {
+                $('#orario').addClass("collapse");
+                $('#orario').removeClass("collapsed");
+            } else{
+                $('#orario').addClass("collapsed");
+                $('#orario').removeClass("collapse");
+            }
+        </script>
+    </div>
+    <br>
+    <div class="btn-collapse">
+        <a data-toggle="collapse" id="list-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Persone prenotate
+        </a>
+    </div>
+    <div>
+        <div class="collapse" id="prenotazioni">
+            <div class="card card-body person-div">
+                <ul>
+                    <!--
+                    <li><img src="img/" alt=""></li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div>
+        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
+    </div>
+
+</div>
 
     <script>
         loadCalendar();
-        defaultSelecter();
     </script>
     <script src="js/selecter.js"></script>
-    <script>
+<script>
 
-        goDate(new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month-1), @ViewModel.Date.Day));
+    let daySel = new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month - 1), @ViewModel.Date.Day);
 
-        $('area').on('click', function () {
-            //selectRoom($(this).attr('alt'));
-            let nameStanza = event.target.alt;
+    goDate(daySel);
+    clickCalendar(getIdDay(@ViewModel.Date.Day));
+    selectDay(daySel);
 
-            let request = $.ajax({
-                type: "POST",
-                url: "Home/ReloadRoom",
-                data: { "room": nameStanza }
-            });
+    $('area').on('click', function () {
+        let nameStanza = event.target.alt;
 
-            request.success(function(data) {
-                alert(data);
-            });
+        $.ajax({
+            type: "POST",
+            url: "Home/ReloadRoom",
+            data: { "room": nameStanza }
+        }).done(function() {
+            window.location.reload();
         });
+    });
 
-        $('td').on('click', function(event) {
-            let idElement = event.target.id;
-            clickCalendar(idElement);
-            
+    $('td').on('click', function(event) {
+        if (isValidDay(event.target.id))
             $.ajax({
                 type: "POST",
                 url: "Home/ReloadDay",
-                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDate() }
+                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() }
+            }).done(function() {
+                window.location.reload();
             });
+    });
 
-        });
+    $('#start').on('change', function(event) {
+        let hourSel = (event.target.value).split(":")[0];
 
-    </script>
+        if (hourSel >= 8 && hourSel <= 22)
+            $.ajax({
+                type: "POST",
+                url: "Home/ReloadStart",
+                data: { "hour": hourSel }
+            }).done(function() {
+                window.location.reload();
+            });
+    });
+
+    $('#finish').on('change', function(event) {
+        let hourSel = (event.target.value).split(":")[0];
+
+        if (hourSel >= 8 && hourSel <= 22)
+            $.ajax({
+                type: "POST",
+                url: "Home/ReloadFinish",
+                data: { "hour": hourSel }
+            }).done(function() {
+                window.location.reload();
+            });
+    });
+
+</script>
+<script>
+
+    //Da problemi (Collapse orario)
+
+    $(document).ready(function() {
+        $('#orario-btn').on('click',
+            function(event) {
+                $.ajax({
+                    type: "POST",
+                    url: "Home/CollapseHour",
+                    data: { "collapse": (event.target.classList.contains("collapsed") ? 1 : 0) }
+                }).done(function() {
+                });
+            }
+        );
+    });
+</script>
