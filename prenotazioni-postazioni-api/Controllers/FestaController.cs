@@ -107,7 +107,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex.Message + " errore interno, 500")
+                logger.LogCritical(ex.Message + " errore interno, 500");
                 return StatusCode(500, ex.Message);
             }
         }
