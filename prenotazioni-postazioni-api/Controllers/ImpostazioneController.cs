@@ -11,11 +11,12 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/impostazioni")]
     public class ImpostazioneController : ControllerBase
     {
-        private ImpostazioneService _impostazioneService = new ImpostazioneService();
+        private ImpostazioneService _impostazioneService;
         private readonly ILogger<ImpostazioneController> _logger;
 
-        public ImpostazioneController(ILogger<ImpostazioneController> logger)
+        public ImpostazioneController(ILogger<ImpostazioneController> logger, ImpostazioneService impostazioneService)
         {
+            _impostazioneService = impostazioneService;
             _logger = logger;
         }
 

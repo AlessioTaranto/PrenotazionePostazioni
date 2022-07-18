@@ -7,7 +7,16 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class VotoRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private DatabaseManager _databaseManager;
+        private readonly ILogger<VotoRepository> logger;
+
+        public VotoRepository(DatabaseManager databaseManager, ILogger<VotoRepository> logger)
+        {
+            _databaseManager = databaseManager;
+            this.logger = logger;
+        }
+
+
 
         /// <summary>
         /// Query al db, restituisce tutti i voti dell'utente che ha votato

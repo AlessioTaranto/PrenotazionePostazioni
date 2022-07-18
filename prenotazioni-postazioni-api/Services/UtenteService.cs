@@ -7,7 +7,16 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class UtenteService
     {
-        UtenteRepository _utenteRepository = new UtenteRepository();
+        private UtenteRepository _utenteRepository;
+        private readonly ILogger<UtenteService> logger;
+
+        public UtenteService(UtenteRepository utenteRepository, ILogger<UtenteService> logger)
+        {
+            _utenteRepository = utenteRepository;
+            this.logger = logger;
+        }
+
+
 
         /// <summary>
         /// Restituisce tutti gli utenti
@@ -15,6 +24,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>List di Utente trovati, null altrimenti</returns>
         internal List<Utente> getAllUtenti()
         {
+            logger.LogInformation("Trovando tutti gli utenti nel database...");
             return _utenteRepository.FindAll();
         }
 
@@ -26,22 +36,41 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Utente GetUtenteById(int id)
         {
+            logger.LogInformation("Trovando l'utente mediante il suo id: " + id);
             Utente utente = _utenteRepository.FindById(id);
-            if (utente == null) throw new PrenotazionePostazioniApiException("IdUtente non trovato");
-            else return utente;
+            logger.LogInformation("Controllando se l'utente trovato e' valido...");
+            if (utente == null)
+            {
+                logger.LogError("L'utente trovato NON e' valido");
+                throw new PrenotazionePostazioniApiException("IdUtente non trovato");
+            }
+            else
+            {
+                logger.LogInformation("L'utente trovato e' valido");
+                return utente;
+
+            }
         }
 
-        /// <summary>
-        /// Restituisce l'utente mediante la sua email
-        /// </summary>
-        /// <param name="email">L'email dell'utente da trovare</param>
-        /// <returns>L'utente trovato, null altrimenti</returns>
-        /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        internal Utente GetUtenteByEmail(string email)
+            /// <summary>
+            /// Restituisce l'utente mediante la sua email
+            /// </summary>
+            /// <param name="email">L'email dell'utente da trovare</param>
+            /// <returns>L'utente trovato, null altrimenti</returns>
+            /// <exception cref="PrenotazionePostazioniApiException"></exception>
+            internal Utente GetUtenteByEmail(string email)
         {
+            logger.LogInformation("Trovando l'utente mediante il suo email: " + email);
             Utente utente = _utenteRepository.FindByEmail(email);
-            if (utente == null) throw new PrenotazionePostazioniApiException("IdUtente non trovato");
-            else return utente;
+            logger.LogInformation("Controllando se l'utente e' null...");
+            if (utente == null)
+            {
+                logger.LogError("L'utente non e' valido");
+                throw new PrenotazionePostazioniApiException("IdUtente non trovato");
+
+            }
+            logger.LogInformation("L'utente e' valido!");
+            return utente;
         }
 
 
@@ -52,10 +81,9 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal void Save(UtenteDto utenteDto)
         {
-            string nome = utenteDto.Nome, cognome = utenteDto.Cognome;
-            string image = utenteDto.Image, email = utenteDto.Email;
-            Ruolo ruolo = utenteDto.Ruolo;
-            Utente utente = new Utente(nome, cognome, image, email, ruolo.IdRuolo);
+            logger.LogInformation("Convertendo utenteDto in Utente...");
+            Utente utente = new Utente(utenteDto.Nome, utenteDto.Cognome, utenteDto.Image, utenteDto.Email, utenteDto.Ruolo.IdRuolo));
+            logger.LogInformation("Procedo con il salvataggio dell'utente nel database");
             _utenteRepository.Save(utente);
         }
 

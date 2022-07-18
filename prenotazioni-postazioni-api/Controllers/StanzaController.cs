@@ -12,11 +12,12 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/stanze")]
     public class StanzaController : ControllerBase
     {
-        private StanzaService _stanzaService = new StanzaService();
+        private StanzaService _stanzaService;
         private ILogger<StanzaController> _logger;
 
-        public StanzaController(ILogger<StanzaController> logger)
+        public StanzaController(ILogger<StanzaController> logger, StanzaService serviceService)
         {
+            _stanzaService = serviceService;
             this._logger = logger;
         }
         /// <summary>

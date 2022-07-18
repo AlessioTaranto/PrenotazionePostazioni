@@ -7,7 +7,16 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class UtenteRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private DatabaseManager _databaseManager;
+        private readonly ILogger<UtenteRepository> logger;
+
+        public UtenteRepository(DatabaseManager databaseManager, ILogger<UtenteRepository> logger)
+        {
+            _databaseManager = databaseManager;
+            this.logger = logger;
+        }
+
+
 
         /// <summary>
         /// Serve per ottenere una lista completa di tutti gli utenti

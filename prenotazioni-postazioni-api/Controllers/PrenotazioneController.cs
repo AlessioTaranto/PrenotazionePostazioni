@@ -11,11 +11,12 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("api/prenotazioni")]
     public class PrenotazioneController : ControllerBase
     {
-        private PrenotazioneService _prenotazioneService = new PrenotazioneService();
+        private PrenotazioneService _prenotazioneService;
         private readonly ILogger<PrenotazioneController> _logger;
 
-        public PrenotazioneController(ILogger<PrenotazioneController> logger)
+        public PrenotazioneController(ILogger<PrenotazioneController> logger, PrenotazioneService prenotazioneService)
         {
+            _prenotazioneService = prenotazioneService;
             _logger = logger;
         }
         /// <summary>
