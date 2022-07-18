@@ -3025,19 +3025,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\user\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "projectUniqueName": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
       "projectName": "prenotazioni-postazioni-api",
-      "projectPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
+      "projectPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\prenotazioni-postazioni-api.csproj",
+      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3051,8 +3051,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj": {
-              "projectPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj"
+            "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj": {
+              "projectPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj"
             }
           }
         }
@@ -3102,16 +3102,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazioni-postazioni-api\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

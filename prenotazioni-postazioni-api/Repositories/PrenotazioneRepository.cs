@@ -91,12 +91,12 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns></returns>
         internal List<Prenotazione> FindAllByIdStanzaAndDate(int idStanza, DateTime startDate, DateTime endDate)
         {
-            string start = startDate.ToString("yyyy-MM-dd hh:mm:ss:fff");
-            string end = endDate.ToString("yyyy-MM-dd hh:mm:ss:fff");
-            string query = $"SELECT * FROM dbo.Prenotazioni WHERE((idStanza = {idStanza}) AND((DATEDIFF(ss, startDate, '{start}') <= 0 AND DATEDIFF(ss, endDate, '{start}') >= 0)OR(DATEDIFF(ss, startDate, '{end}') <= 0 AND DATEDIFF(ss, endDate, '{end}') >= 0)OR(DATEDIFF(ss, startDate, '{start}') >= 0 AND DATEDIFF(ss, endDate, '{end}') <= 0)))";
+            string start = startDate.ToString("yyyy-MM-ddTHH:mm:ss");
+            string end = endDate.ToString("yyyy-MM-ddTHH:mm:ss");
+            string query = $"SELECT * FROM dbo.Prenotazioni WHERE((idStanza = {idStanza})AND((startDate BETWEEN '{start}' AND '{end}') OR(endDate BETWEEN '{start}' AND '{end}') OR (DATEDIFF(HH, startDate, '{start}') >= 0 AND DATEDIFF(HH, endDate, '{end}') <= 0)))";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             List<Prenotazione> prenotazioni = JsonConvert.DeserializeObject<List<Prenotazione>>(_databaseManager.GetAllResults(query));
-
+            _databaseManager.DeleteConnection();
             return prenotazioni;
         }
 
