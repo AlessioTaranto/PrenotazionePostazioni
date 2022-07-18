@@ -14,31 +14,31 @@ namespace prenotazione_postazioni_libs.Models
         public string Image { get; set; }
         //Base 64x converter (https://stackoverflow.com/questions/69303512/converting-an-sql-Image-to-base64-in-c-sharp)
         public string Email { get; set; }
-        public int IdRuolo { get; set; }
+        public Ruolo Ruolo { get; set; }
 
 
         private Exception ModelException { get; set; }
         public bool IsValid { get; set; } = false;
 
-        public Utente(int idUtente, string nome, string cognome, string image, string email, int idRuolo)
+        public Utente(int idUtente, string nome, string cognome, string image, string email, Ruolo ruolo)
         {
             this.IdUtente = idUtente;
             this.Nome = nome;
             this.Cognome = cognome;
             this.Image = image;
             this.Email = email;
-            this.IdRuolo = idRuolo;
+            this.Ruolo = ruolo;
 
             this.Validate();
         }
 
-        public Utente(string nome, string cognome, string image, string email, int idRuolo)
+        public Utente(string nome, string cognome, string image, string email, Ruolo ruolo)
         {
             Nome = nome;
             Cognome = cognome;
             Image = image;
             Email = email;
-            IdRuolo = idRuolo;
+            Ruolo = ruolo;
             this.Validate();
         }
 
