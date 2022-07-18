@@ -13,6 +13,14 @@ namespace prenotazioni_postazioni_api.Controllers
     public class RuoloController : ControllerBase
     {
         private RuoloService _ruoloService = new RuoloService();
+        private readonly ILogger<RuoloService> _logger;
+
+        public RuoloController(ILogger<RuoloService> logger)
+        {
+            _logger = logger;
+        }
+
+
         /// <summary>
         /// Restituisce il ruolo di un utente mediante l'id dell'utente
         /// </summary>

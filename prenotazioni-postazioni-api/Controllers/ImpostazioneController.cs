@@ -12,6 +12,13 @@ namespace prenotazioni_postazioni_api.Controllers
     public class ImpostazioneController : ControllerBase
     {
         private ImpostazioneService _impostazioneService = new ImpostazioneService();
+        private readonly ILogger<ImpostazioneController> _logger;
+
+        public ImpostazioneController(ILogger<ImpostazioneController> logger)
+        {
+            _logger = logger;
+        }
+
 
 
         /// <summary>

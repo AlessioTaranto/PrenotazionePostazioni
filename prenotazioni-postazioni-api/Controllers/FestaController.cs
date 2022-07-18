@@ -10,7 +10,18 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/festivita")]
     public class FestaController : ControllerBase
     {
+        private readonly ILogger<FestaController> logger;
         private FestaService _festaService = new FestaService();
+
+        public FestaController(ILogger<FestaController> logger)
+        {
+            this.logger = logger;
+        }
+
+
+
+
+
         /// <summary>
         /// Restituisce tutte le feste di un giorno
         /// </summary>

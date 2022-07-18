@@ -11,6 +11,12 @@ namespace prenotazioni_postazioni_api.Controllers
     public class UtenteCotroller : ControllerBase
     {
         private UtenteService _utenteService = new UtenteService();
+        private readonly ILogger<UtenteCotroller> _logger;
+
+        public UtenteCotroller( ILogger<UtenteCotroller> logger)
+        {
+            _logger = logger;
+        }
 
         [HttpGet]
         [Route("getAllUtenti")]

@@ -11,7 +11,12 @@ namespace prenotazioni_postazioni_api.Controllers
     public class VotoController : ControllerBase
     {
         private VotoService _votoService = new VotoService();
-        
+        private readonly ILogger<VotoController> _logger;
+
+        public VotoController(ILogger<VotoController> logger)
+        {
+            this._logger = logger;
+        }
         /// <summary>
         /// Serve per ottenere l'elenco di votazioni effettuate da un utente verso gli altri
         /// </summary>

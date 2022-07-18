@@ -13,7 +13,12 @@ namespace prenotazioni_postazioni_api.Controllers
     public class StanzaController : ControllerBase
     {
         private StanzaService _stanzaService = new StanzaService();
+        private ILogger<StanzaController> _logger;
 
+        public StanzaController(ILogger<StanzaController> logger)
+        {
+            this._logger = logger;
+        }
         /// <summary>
         /// Restituisce tutte le stanze
         /// </summary>
