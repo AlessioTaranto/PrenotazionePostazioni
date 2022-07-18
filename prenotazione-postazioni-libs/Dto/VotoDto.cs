@@ -1,3 +1,4 @@
+using prenotazione_postazioni_libs.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,14 @@ namespace prenotazione_postazioni_libs.Dto
 {
     public class VotoDto
     {
-        public int IdUtente { get; set; }
-        public int IdUtenteVotato { get; set; }
+        public Utente Utente { get; set; }
+        public Utente UtenteVotato { get; set; }
         public bool VotoEffettuato { get; set; }
 
-        public VotoDto(int idUtente, int idUtenteVotato, bool votoEffettuato)
+        public VotoDto(Utente utente, Utente utenteVotato, bool votoEffettuato)
         {
-            this.IdUtente = idUtente;
-            this.IdUtenteVotato = idUtenteVotato;
+            this.Utente = utente;
+            this.UtenteVotato = utenteVotato;
             this.VotoEffettuato = votoEffettuato;
         }
 
