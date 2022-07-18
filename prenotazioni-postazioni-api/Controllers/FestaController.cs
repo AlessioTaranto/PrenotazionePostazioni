@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
@@ -32,6 +33,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [HttpGet]
         public IActionResult GetByDate(int year, int month, int day)
         {
+            logger.Log("INFO", "Inizio GetByDate");
             try
             {
                 Festa festa = _festaService.GetByDate(new DateTime(year, month, day));
