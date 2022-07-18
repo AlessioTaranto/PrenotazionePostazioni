@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Controllers
         [HttpGet]
         public IActionResult GetByDate(int year, int month, int day)
         {
-            logger.Log("INFO", "Inizio GetByDate");
+            logger.LogInformation("Hello world");
             try
             {
                 Festa festa = _festaService.GetByDate(new DateTime(year, month, day));
