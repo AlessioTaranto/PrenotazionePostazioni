@@ -34,7 +34,7 @@ using prenotazioni_postazioni_api.Exceptions;
             logger.LogInformation("Cercando una prenotazione mediante il suo id " + idPrenotazione);
             Prenotazione prenotazione = _prenotazioneRepository.FindById(idPrenotazione);
             logger.LogInformation("Controllando se e' una prenotazione valida...");
-            if (prenotazione == null{
+            if (prenotazione == null){
                 logger.LogWarning("Prenotazione e' null, non e' valida!");
                 throw new PrenotazionePostazioniApiException("Prenotazione non trovata");
             }
