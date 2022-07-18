@@ -68,12 +68,12 @@ namespace prenotazioni_postazioni_api.Controllers
         }
 
         [Route("addFesta")]
-        [HttpPost]
-        public IActionResult AddFestaByDate([FromBody] FestaDto festaDto)
+        [HttpGet]
+        public IActionResult AddFestaByDate(int year, int month, int day, string desc)
         {
             try
             {
-                _festaService.Save(festaDto);
+                _festaService.Save(new DateOnly(year, month, day), desc);
                 return Ok();
             }
             catch(PrenotazionePostazioniApiException ex)
