@@ -32,15 +32,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Prelevando un ruolo mediante Ruolo Id...");
                 Ruolo ruolo = _ruoloService.GetRuoloById(idRuolo);
+                _logger.LogInformation("Ruolo prelevato con successo!");
                 return Ok(ruolo);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
+                _logger.LogWarning("Ruolo non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -56,15 +60,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Trovando un ruolo mediante l'id dell'utente...");
                 Ruolo ruolo = _ruoloService.GetRuoloByIdUtente(idUtente);
+                _logger.LogInformation("Ruolo dell'id utente: " + idUtente + " trovato con successo!");
                 return Ok(ruolo);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
+                _logger.LogWarning("Ruolo non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -81,22 +89,28 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.LogInformation("Aggiornando il ruolo di un utente...");
                 bool ok = _ruoloService.UpdateRuoloUtenteByAdminUtenteId(idUtente, idAdmin);
+                _logger.LogInformation("Controllando se l'autorizzazione e' valida...");
                 if (ok)
                 {
+                    _logger.LogInformation("Autorizzazione riconosciuta!");
                     return Ok();
                 }
                 else
                 {
+                    _logger.LogError("Autorizzazione NON riconosciuta");
                     return Forbid("Non autorizzato");
                 }
             }
             catch (PrenotazionePostazioniApiException ex)
             {
+                _logger.LogError("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
