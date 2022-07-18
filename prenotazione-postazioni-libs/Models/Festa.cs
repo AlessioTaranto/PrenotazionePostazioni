@@ -9,7 +9,7 @@ namespace prenotazione_postazioni_libs.Models
     public class Festa
     {
         public int IdFestivita { get; set; }
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
         public string? Desc { get; set; }
 
         public Exception ModelException;
@@ -19,20 +19,20 @@ namespace prenotazione_postazioni_libs.Models
         {
 
         }
-        public Festa(DateOnly date, string? desc)
+        public Festa(DateTime date, string? desc)
         {
             this.Date = date;
             this.Desc = desc;
             this.Validate();
         }
-        public Festa(int idFestivita, DateOnly date, string? desc)
+        public Festa(int idFestivita, DateTime date, string? desc)
         {
             IdFestivita = idFestivita;
             Date = date;
             Desc = desc;
             this.Validate();
         }
-        public Festa(DateOnly date)
+        public Festa(DateTime date)
         {
             this.Date = date;
             this.Validate();

@@ -121,7 +121,10 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                     } while (reader.NextResult());
                 }
                 conn.Close();
-                return JsonConvert.SerializeObject(values);
+                var json = JsonConvert.SerializeObject(values);
+                Console.WriteLine(json);
+                return json;
+               
             }
         }
 

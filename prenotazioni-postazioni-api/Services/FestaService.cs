@@ -14,7 +14,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="date">la data</param>
         /// <returns>lista di date</returns>
-        internal List<Festa> GetByDate(DateOnly date)
+        internal Festa GetByDate(DateTime date)
         {
             return _festaRepository.FindByDate(date);
         }
