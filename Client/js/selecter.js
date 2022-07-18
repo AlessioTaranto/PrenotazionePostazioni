@@ -64,8 +64,9 @@ function clickCalendarFest(id) {
     if (dayIdSelected !== null) {
         if(document.getElementById("festabutton").value === "Imposta come festività")
             $('#'.concat(dayIdSelected)).css("color","black");
+        else if(dayIdSelected.length === 4)
+            $('#'.concat(dayIdSelected)).css("color","black");
         else $('#'.concat(dayIdSelected)).css("color","darkorange");
-        
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
         $('#'.concat(dayIdSelected)).css("font-weight","normal");
     }
@@ -94,7 +95,11 @@ function clickCalendarPres(id) {
         return;
 
     if (dayIdSelected !== null) {
-        $('#'.concat(dayIdSelected)).css("color","black");
+        if(dayIdSelected.length === 3 && document.getElementById("festabutton").value === "Rimuovi festività")
+            $('#'.concat(dayIdSelected)).css("color","darkorange");
+        else
+            $('#'.concat(dayIdSelected)).css("color","black");
+    
         $('#'.concat(dayIdSelected)).css("background-color","transparent");
         $('#'.concat(dayIdSelected)).css("font-weight","normal");
     }
