@@ -34,13 +34,13 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="festaDto">la festa da salvare</param>
         /// <exception cref="PrenotazionePostazioniApiException">throw nel caso in cui la data e' gia esistenze</exception>
-        internal void Save(FestaDto festaDto)
+        internal void Save(DateOnly date, string desc)
         {
-            if(_festaRepository.FindByDate(festaDto.Date) != null)
+            if(_festaRepository.FindByDate(date) != null)
             {
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
-            _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc));
+            _festaRepository.Save(new Festa(date, desc));
         }
     }
 }
