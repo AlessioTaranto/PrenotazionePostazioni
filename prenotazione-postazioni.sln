@@ -5,11 +5,11 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazioni-postazioni-api", "prenotazioni-postazioni-api\prenotazioni-postazioni-api.csproj", "{69E53831-5D1A-4B02-A91A-5F0ACA8F9E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prenotazione-postazioni-mvc", "prenotazione-postazioni-mvc\prenotazione-postazioni-mvc.csproj", "{35677C43-2E26-4733-B218-DA00DE771748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni-mvc", "prenotazione-postazioni-mvc\prenotazione-postazioni-mvc.csproj", "{35677C43-2E26-4733-B218-DA00DE771748}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prenotazioni-postazioni-api", "prenotazioni-postazioni-api\prenotazioni-postazioni-api.csproj", "{69E53831-5D1A-4B02-A91A-5F0ACA8F9E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni-libs", "prenotazione-postazioni-libs\prenotazione-postazioni-libs.csproj", "{37463ED7-6FC6-4EA3-B379-C47B8F390854}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prenotazione-postazioni-libs", "prenotazione-postazioni-libs\prenotazione-postazioni-libs.csproj", "{37463ED7-6FC6-4EA3-B379-C47B8F390854}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni", "prenotazione-postazioni\prenotazione-postazioni.csproj", "{D5A06D2E-5257-4E17-B980-8729332C8E88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,22 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{32492426-163F-4C08-B117-9F8B4FC2A703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32492426-163F-4C08-B117-9F8B4FC2A703}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32492426-163F-4C08-B117-9F8B4FC2A703}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32492426-163F-4C08-B117-9F8B4FC2A703}.Release|Any CPU.Build.0 = Release|Any CPU
 		{69E53831-5D1A-4B02-A91A-5F0ACA8F9E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{69E53831-5D1A-4B02-A91A-5F0ACA8F9E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69E53831-5D1A-4B02-A91A-5F0ACA8F9E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69E53831-5D1A-4B02-A91A-5F0ACA8F9E89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{415E7403-E1BD-44B2-8D70-E7EC6AFF7F2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{415E7403-E1BD-44B2-8D70-E7EC6AFF7F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{415E7403-E1BD-44B2-8D70-E7EC6AFF7F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{415E7403-E1BD-44B2-8D70-E7EC6AFF7F2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67E9E84D-086A-46CF-8AA6-6A2479743E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67E9E84D-086A-46CF-8AA6-6A2479743E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67E9E84D-086A-46CF-8AA6-6A2479743E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67E9E84D-086A-46CF-8AA6-6A2479743E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35677C43-2E26-4733-B218-DA00DE771748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35677C43-2E26-4733-B218-DA00DE771748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35677C43-2E26-4733-B218-DA00DE771748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35677C43-2E26-4733-B218-DA00DE771748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37463ED7-6FC6-4EA3-B379-C47B8F390854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37463ED7-6FC6-4EA3-B379-C47B8F390854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37463ED7-6FC6-4EA3-B379-C47B8F390854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37463ED7-6FC6-4EA3-B379-C47B8F390854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
