@@ -43,7 +43,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="voto">il voto che verra salvato nel database</param>
         internal void Save(Voto voto)
         {
-            string query = $"INSERT INTO Voti (idUtente, idUtenteVotato, voto) VALUES ({voto.IdUtente}, {voto.IdUtenteVotato}, {voto.VotoEffettuato});";
+            string query = $"INSERT INTO Voti (idUtente, idUtenteVotato, voto) VALUES ({voto.Utente.IdUtente}, {voto.UtenteVotato.IdUtente}, {voto.VotoEffettuato});";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();
@@ -69,7 +69,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="voto">Il voto da aggiornare</param>
         internal void UpdateVoto(Voto voto)
         {
-            string query = $"UPDATE Voti SET voto = 1 ^ voto WHERE idUtente = {voto.IdUtente} AND idUtenteVotato = {voto.IdUtenteVotato};";
+            string query = $"UPDATE Voti SET voto = 1 ^ voto WHERE idUtente = {voto.Utente.IdUtente} AND idUtenteVotato = {voto.UtenteVotato.IdUtente};";
             _databaseManager.CreateConnectionToDatabase(null, null, true);
             _databaseManager.GetNoneResult(query);
             _databaseManager.DeleteConnection();

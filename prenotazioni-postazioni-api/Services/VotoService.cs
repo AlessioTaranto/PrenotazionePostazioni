@@ -38,7 +38,7 @@ namespace prenotazioni_postazioni_api.Services
             Voto voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente);
             if(voto == null)
             {
-                _votoRepository.Save(new Voto(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente, votoDto.VotoEffettuato));
+                _votoRepository.Save(new Voto(votoDto.Utente, votoDto.UtenteVotato, votoDto.VotoEffettuato));
                 return;
             }
             if(voto.VotoEffettuato == votoDto.VotoEffettuato)
