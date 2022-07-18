@@ -18,7 +18,7 @@ function selectDay(date) {
 //Link api google https://developers.google.com/people/api/rest/v1/people/get
 
 function defaultSelecter() {
-    $('#room-sel').text("Seleziona una Stanza");
+    //$('#room-sel').text("Seleziona una Stanza");
     clickCalendar(getIdDay(daySelected.getDate())); //Auto day select
 }
 
