@@ -2,7 +2,7 @@
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
-    public class VotazioniController : Controller
+    public class ImpostazioniController : Controller
     {
         public IActionResult Index()
         {

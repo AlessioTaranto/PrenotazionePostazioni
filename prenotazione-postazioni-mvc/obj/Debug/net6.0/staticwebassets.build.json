@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< develop
   "Hash": "x6qV7ARQvvSU+XXS15Vhl+TqC5ruGYDZdIaQFPLWt3Q=",
+=======
+  "Hash": "2KYIF73UbqdPA8GnOvqIO7tcSqOcdithJLy5qV9NpQs=",
+>>>>>>> Aggiunta pagina Impostazioni, fixato css generale
   "Source": "prenotazione-postazioni-mvc",
   "BasePath": "_content/prenotazione-postazioni-mvc",
   "Mode": "Default",
@@ -119,7 +123,28 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
+<<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\favicon.ico",
+=======
+      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\votazioni.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+      "BasePath": "_content/prenotazione-postazioni-mvc",
+      "RelativePath": "css/votazioni.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\votazioni.css"
+    },
+    {
+      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\favicon.ico",
+>>>>>>> Aggiunta pagina Impostazioni, fixato css generale
       "SourceId": "prenotazione-postazioni-mvc",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
@@ -289,10 +314,37 @@
       "OriginalItemSpec": "wwwroot\\js\\calendar.js"
     },
     {
+<<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\jquery.rwdImageMaps.min.js",
+=======
+      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\impostazioni.js",
+>>>>>>> Aggiunta pagina Impostazioni, fixato css generale
       "SourceId": "prenotazione-postazioni-mvc",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+      "BasePath": "_content/prenotazione-postazioni-mvc",
+      "RelativePath": "js/impostazioni.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\impostazioni.js"
+    },
+    {
+<<<<<<< develop
+      "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\selecter.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+=======
+      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\jquery.rwdImageMaps.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "js/jquery.rwdImageMaps.min.js",
       "AssetKind": "All",
@@ -306,10 +358,11 @@
       "OriginalItemSpec": "wwwroot\\js\\jquery.rwdImageMaps.min.js"
     },
     {
-      "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\selecter.js",
+      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\selecter.js",
       "SourceId": "prenotazione-postazioni-mvc",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> Aggiunta pagina Impostazioni, fixato css generale
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "js/selecter.js",
       "AssetKind": "All",
