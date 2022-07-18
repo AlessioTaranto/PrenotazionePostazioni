@@ -67,41 +67,13 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        /// <summary>
-        /// Restituisce tutte le feste di un mese
-        /// </summary>
-        /// <param name="month">Il mese delle feste</param>
-        /// <returns>Lista di feste</returns>
-        [Route("getAllByMonth")]
-        [HttpGet]
-        public IActionResult GetAllByMonth(int month)
-        {
-            try
-            {
-                List<Festa> festeByMonth = _festaService.GetAllByMonth(month);
-                if(festeByMonth == null)
-                {
-                    return NotFound("Feste by month e' null");
-                }
-                return Ok(festeByMonth);
-            }
-            catch(PrenotazionePostazioniApiException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch(Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
         [Route("addFesta")]
         [HttpPost]
         public IActionResult AddFestaByDate([FromBody] FestaDto festaDto)
         {
             try
             {
-                _festaService.Save(date);
+                _festaService.Save(festaDto);
                 return Ok();
             }
             catch(PrenotazionePostazioniApiException ex)

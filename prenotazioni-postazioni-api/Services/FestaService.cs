@@ -40,7 +40,7 @@ namespace prenotazioni_postazioni_api.Services
             {
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
-            _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc);
+            _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc));
         }
     }
 }

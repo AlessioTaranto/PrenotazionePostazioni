@@ -35,10 +35,10 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="votoDto"></param>
         internal void MakeVotoToUtente(VotoDto votoDto)
         {
-            Voto voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.IdUtente, votoDto.IdUtenteVotato);
+            Voto voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente);
             if(voto == null)
             {
-                _votoRepository.Save(new Voto(votoDto.IdUtente, votoDto.IdUtenteVotato, votoDto.VotoEffettuato));
+                _votoRepository.Save(new Voto(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente, votoDto.VotoEffettuato));
                 return;
             }
             if(voto.VotoEffettuato == votoDto.VotoEffettuato)
