@@ -115,7 +115,7 @@
     <script src="js/selecter.js"></script>
 
     <div class="container mt-4 ml-70 position-fixed room-info-div">
-        <h1 id="room-sel"></h1>
+        <h1 id="room-sel">@ViewModel.Stanza</h1>
         <br>
         <div class="btn-collapse">
             <a data-toggle="collapse" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -169,7 +169,18 @@
         goDate(new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month-1), @ViewModel.Date.Day));
 
         $('area').on('click', function () {
-            selectRoom($(this).attr('alt'));
+            //selectRoom($(this).attr('alt'));
+            let nameStanza = event.target.alt;
+
+            let request = $.ajax({
+                type: "POST",
+                url: "Home/ReloadRoom",
+                data: { "room": nameStanza }
+            });
+
+            request.success(function(data) {
+                alert(data);
+            });
         });
 
         $('td').on('click', function(event) {
@@ -179,16 +190,7 @@
             $.ajax({
                 type: "POST",
                 url: "Home/ReloadDay",
-                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDate() },
-                function (response)  
-                    {  
-                    alert("Success"); 
-                    },  
-                error:  
-                    function (response)  
-                    {  
-                        alert("Error: " + response);  
-                    } 
+                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDate() }
             });
 
         });
