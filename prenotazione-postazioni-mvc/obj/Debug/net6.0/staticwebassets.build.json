@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "d4h+fNkAni1ehRtQtTYVwMBgwvo54n6p3uN+6q37BHI=",
+  "Hash": "2KYIF73UbqdPA8GnOvqIO7tcSqOcdithJLy5qV9NpQs=",
   "Source": "prenotazione-postazioni-mvc",
   "BasePath": "_content/prenotazione-postazioni-mvc",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\votazioni.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+      "BasePath": "_content/prenotazione-postazioni-mvc",
+      "RelativePath": "css/votazioni.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\votazioni.css"
     },
     {
       "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\favicon.ico",
@@ -289,6 +306,23 @@
       "OriginalItemSpec": "wwwroot\\js\\calendar.js"
     },
     {
+      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\impostazioni.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+      "BasePath": "_content/prenotazione-postazioni-mvc",
+      "RelativePath": "js/impostazioni.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\impostazioni.js"
+    },
+    {
       "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\jquery.rwdImageMaps.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
       "SourceType": "Discovered",
@@ -304,23 +338,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\jquery.rwdImageMaps.min.js"
-    },
-    {
-      "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\keep-collapse.js",
-      "SourceId": "prenotazione-postazioni-mvc",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
-      "BasePath": "_content/prenotazione-postazioni-mvc",
-      "RelativePath": "js/keep-collapse.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\keep-collapse.js"
     },
     {
       "Identity": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\selecter.js",
