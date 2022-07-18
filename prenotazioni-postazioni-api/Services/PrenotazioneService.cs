@@ -73,13 +73,13 @@ using prenotazioni_postazioni_api.Exceptions;
          /// <param name="prenotazioneDto">La prenotazione da salvare</param>
          public int Save(PrenotazioneDto prenotazioneDto)
          {
-            Stanza stanza = _stanzaService.GetStanzaById(prenotazioneDto.IdStanza);
+            Stanza stanza = _stanzaService.GetStanzaById(prenotazioneDto.Stanza.IdStanza);
             if (stanza == null)
             {
                 throw new ArgumentException("Stanza e' null");
             }
             int MAX_STANZA = _impostazioneService.GetImpostazioneEmergenza() ? stanza.PostiMaxEmergenza : stanza.PostiMax;
-            Prenotazione newPrenotazione = new Prenotazione(prenotazioneDto.StartDate, prenotazioneDto.EndDate, prenotazioneDto.IdStanza, prenotazioneDto.IdUtente);
+            Prenotazione newPrenotazione = new Prenotazione(prenotazioneDto.StartDate, prenotazioneDto.EndDate, prenotazioneDto.Stanza.IdStanza, prenotazioneDto.Utente.IdUtente);
             List<Prenotazione> prenotazioni = _prenotazioneRepository.FindAllByIdStanzaAndDate(newPrenotazione.IdStanza,newPrenotazione.StartDate,newPrenotazione.EndDate);
             int resultOreOverlap = ControlloPrenotazioneOrePiena(newPrenotazione, prenotazioni, MAX_STANZA);
             if(resultOreOverlap == 0)

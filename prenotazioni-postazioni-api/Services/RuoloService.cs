@@ -64,7 +64,7 @@ namespace prenotazioni_postazioni_api.Services
             }
             if (ruoloUtente.AccessoImpostazioni)
             {
-                _ruoloRepository.UpdateRuolo(utente.IdUtente, RuoloEnum.Utente);
+                _ruoloRepository.UpdateRuolo (utente.IdUtente, RuoloEnum.Utente);
             }
             else
             {
