@@ -1,4 +1,5 @@
 
+using prenotazione_postazioni_libs.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,15 @@ namespace prenotazione_postazioni_libs.Dto
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int IdStanza { get; set; }
-        public int IdUtente { get; set; }
+        public Stanza Stanza { get; set; }
+        public Utente Utente { get; set; }
 
-        public PrenotazioneDto(DateTime startDate, DateTime endDate, int idStanza, int idUtente)
+        public PrenotazioneDto(DateTime startDate, DateTime endDate, Stanza stanza, Utente utente)
         {
             StartDate = startDate;
             EndDate = endDate;
-            IdStanza = idStanza;
-            IdUtente = idUtente;
+            Stanza = stanza;
+            Utente = utente;
         }
 
         public PrenotazioneDto()
