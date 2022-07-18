@@ -47,12 +47,12 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch(PrenotazionePostazioniApiException ex)
             {
-                logger.LogError(ex.Message + " Return Bad Request");
+                logger.LogError("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex.Message + " Errore Interno, Return 500");
+                logger.LogCritical("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message+"\nStack Trace:"+ex.StackTrace);
             }
             
@@ -79,12 +79,12 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                logger.LogError(ex.Message + "PrenotazionePostazioniApiException, BadRequest");
+                logger.LogError("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex.Message + "Errore Interno, 500");
+                logger.LogCritical("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -102,12 +102,12 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch(PrenotazionePostazioniApiException ex)
             {
-                logger.LogError(ex.Message + " PrenotazionePostazioniApiException, bad request");
+                logger.LogError("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex.Message + " errore interno, 500");
+                logger.LogCritical("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
