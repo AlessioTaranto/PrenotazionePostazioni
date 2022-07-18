@@ -1,26 +1,13 @@
 // noinspection JSJQueryEfficiency
 
-let roomSelected = null;
 let daySelected = new Date();
-
 let dayIdSelected = null;
-
-function selectRoom(room) {
-    roomSelected = room;
-    $('#room-sel').text(roomSelected);
-}
 
 function selectDay(date) {
     daySelected = date;
-    $('#day-sel').text("Giorno selezionato: " + date.getDate() + "/" + date.getMonth() + "/" +  date.getFullYear());
 }
 
 //Link api google https://developers.google.com/people/api/rest/v1/people/get
-
-function defaultSelecter() {
-    //$('#room-sel').text("Seleziona una Stanza");
-    clickCalendar(getIdDay(daySelected.getDate())); //Auto day select
-}
 
 function getIdDay(number) {
     for (let i = 0; i < 6; i++) {
@@ -52,6 +39,13 @@ function clickCalendar(id) {
     selector.css("font-weight","bold");
 
     selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
+}
+
+function isValidDay(id) {
+    let selector = $('#'.concat(id));
+    if (selector.css("color") !== "rgb(0, 0, 0)")
+        return false;
+    return true;
 }
 
 function goDate(newDate) {

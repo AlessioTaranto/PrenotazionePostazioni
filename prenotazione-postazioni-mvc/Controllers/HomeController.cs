@@ -30,8 +30,10 @@ public class HomeController : Controller
     {
 
         ViewModel.Date = new DateTime(year, month, day);
+        ViewModel.Start = new DateTime(year, month, day, ViewModel.Start.Hour, 0, 0);
+        ViewModel.End = new DateTime(year, month, day, ViewModel.End.Hour, 0, 0);
 
-        return Ok("Success");
+        return RedirectToAction("Index");
     }
 
     [HttpPost]
@@ -41,5 +43,32 @@ public class HomeController : Controller
         ViewModel.Stanza = room;
 
         return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ActionName("ReloadStart")]
+    public IActionResult ReloadStart(int hour)
+    {
+
+        ViewModel.Start = new DateTime(ViewModel.Date.Year, ViewModel.Date.Month, ViewModel.Date.Day, hour, 0, 0);
+
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ActionName("ReloadFinish")]
+    public IActionResult ReloadFinish(int hour)
+    {
+
+        ViewModel.End = new DateTime(ViewModel.Date.Year, ViewModel.Date.Month, ViewModel.Date.Day, hour, 0, 0);
+
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ActionName("CollapseHour")]
+    public void CollapseHour(int collapse)
+    {
+        ViewModel.CollapsedHour = collapse;
     }
 }
