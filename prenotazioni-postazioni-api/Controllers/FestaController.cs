@@ -12,10 +12,11 @@ namespace prenotazioni_postazioni_api.Controllers
     public class FestaController : ControllerBase
     {
         private readonly ILogger<FestaController> logger;
-        private FestaService _festaService = new FestaService();
+        private FestaService _festaService;
 
-        public FestaController(ILogger<FestaController> logger)
+        public FestaController(ILogger<FestaController> logger, FestaService festaService)
         {
+            _festaService = festaService;
             this.logger = logger;
         }
 

@@ -7,7 +7,16 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class ImpostazioneRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private DatabaseManager _databaseManager;
+        private readonly ILogger<ImpostazioneRepository> logger;
+
+        public ImpostazioneRepository(DatabaseManager databaseManager, ILogger<ImpostazioneRepository> logger)
+        {
+            _databaseManager = databaseManager;
+            this.logger = logger;
+        }
+
+
 
         /// <summary>
         /// Query al db per restituire il campo Impostazione Emergenza

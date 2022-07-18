@@ -7,7 +7,15 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class FestaService
     {
-        private FestaRepository _festaRepository = new FestaRepository();
+        private FestaRepository _festaRepository;
+        private readonly ILogger<FestaService> logger;
+
+        public FestaService(ILogger<FestaService> logger, FestaRepository festaRepository)
+        {
+            _festaRepository = festaRepository;
+            this.logger = logger;
+        }
+
 
         /// <summary>
         /// Restituisce tutte le feste in una data
@@ -16,6 +24,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>lista di date</returns>
         internal Festa GetByDate(DateTime date)
         {
+            logger.LogInformation("Chiedendo a FestaRepository di trovare una festa mediante una data...");
             return _festaRepository.FindByDate(date);
         }
 
@@ -26,6 +35,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Lista di feste</returns>
         internal List<Festa> GetAll()
         {
+            logger.LogInformation("Chiedendo a FestaRepository di trovare tutte le feste");
             return _festaRepository.FindAll();
         }
 
@@ -36,10 +46,13 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException">throw nel caso in cui la data e' gia esistenze</exception>
         internal void Save(FestaDto festaDto)
         {
+            logger.LogInformation("Controllando se festaDto e' valida...");
             if(_festaRepository.FindByDate(festaDto.Date) != null)
             {
+                logger.LogWarning("FestaDto non e' valida, ho lanciato una PrenotazionePostazioniApiException!");
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
+            logger.LogWarning("FestaDto e' valida. Cercando di salvare Festa nel database...");
             _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc));
         }
     }

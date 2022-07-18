@@ -10,11 +10,12 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/voti")]
     public class VotoController : ControllerBase
     {
-        private VotoService _votoService = new VotoService();
+        private VotoService _votoService;
         private readonly ILogger<VotoController> _logger;
 
-        public VotoController(ILogger<VotoController> logger)
+        public VotoController(ILogger<VotoController> logger, VotoService votoService)
         {
+            this._votoService = votoService;
             this._logger = logger;
         }
         /// <summary>

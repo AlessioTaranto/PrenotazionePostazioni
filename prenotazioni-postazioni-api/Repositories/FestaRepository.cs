@@ -6,7 +6,16 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class FestaRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private DatabaseManager _databaseManager;
+        private readonly ILogger<FestaRepository> logger;
+
+        public FestaRepository(DatabaseManager databaseManager, ILogger<FestaRepository> logger)
+        {
+            _databaseManager = databaseManager;
+            this.logger = logger;
+        }
+
+
 
         /// <summary>
         /// query al db, restituisce tutte le festa in una data

@@ -6,7 +6,14 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class ImpostazioneService
     {
-        private ImpostazioneRepository _impostazioneRepository = new ImpostazioneRepository();
+        private ImpostazioneRepository _impostazioneRepository;
+        private readonly ILogger<ImpostazioneService> logger;
+
+        public ImpostazioneService(ILogger<ImpostazioneService> logger, ImpostazioneRepository impostazioneRepository)
+        {
+            this._impostazioneRepository = impostazioneRepository;
+            this.logger = logger;
+        }
 
         /// <summary>
         /// Restituisce il valore Impostazione Emergenza situato nella tabella Impostazioni nel database.
@@ -15,9 +22,20 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         public bool GetImpostazioneEmergenza()
         {
-            Impostazioni impostazioni= _impostazioneRepository.FindImpostazioneEmergenza();
-            if (impostazioni == null) throw new PrenotazionePostazioniApiException("Impostazione di emergenza non trovata");
-            else return impostazioni.ModEmergenza;
+            logger.LogInformation("Chiamando FindImpostazioneEmergenza() per trovare l'impostazione di emergenza...");
+            Impostazioni impostazioni = _impostazioneRepository.FindImpostazioneEmergenza();
+            logger.LogInformation("Controllando se impostazioni (Risultato trovato) e' valida...");
+            if (impostazioni == null)
+            {
+                logger.LogWarning("Impostazioni non e' valida! Ho lanciato una PrenotazionePostazioniApiException!");
+                throw new PrenotazionePostazioniApiException("Impostazione di emergenza non trovata");
+            }
+            else
+            {
+                logger.LogInformation("Impostazioni e' valida!");
+                return impostazioni.ModEmergenza;
+
+            }
         }
 
         /// <summary>
@@ -27,15 +45,18 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
         public void ChangeImpostazioniEmergenza()
         {
-            if(GetImpostazioneEmergenza() == true)
+            logger.LogInformation("Controllando se Impostazioni Emergenza e' a true...");
+            if (GetImpostazioneEmergenza() == true)
             {
+                logger.LogInformation("Impostazione emergenza e' a true! L'ho cambiato a false!");
                 _impostazioneRepository.UpdateImpostazioneEmergenza(false);
             }
             else
             {
+                logger.LogInformation("Impostazione emergenza e' a false! L'ho cambiato a true!");
                 _impostazioneRepository.UpdateImpostazioneEmergenza(true);
             }
-            
         }
+        
     }
 }

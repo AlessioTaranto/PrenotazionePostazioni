@@ -8,7 +8,16 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class RuoloRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private DatabaseManager _databaseManager;
+        private readonly ILogger<RuoloRepository> logger;
+
+        public RuoloRepository(DatabaseManager databaseManager, ILogger<RuoloRepository> logger)
+        {
+            _databaseManager = databaseManager;
+            this.logger = logger;
+        }
+
+
         /// <summary>
         /// Query al db, restituisce il ruolo dell'utente associato usando il suo ID
         /// </summary>

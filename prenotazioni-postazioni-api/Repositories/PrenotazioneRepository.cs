@@ -6,7 +6,15 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class PrenotazioneRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private DatabaseManager _databaseManager;
+        private readonly ILogger<PrenotazioneRepository> logger;
+        public PrenotazioneRepository(DatabaseManager databaseManager, ILogger<PrenotazioneRepository> logger)
+        {
+            _databaseManager = databaseManager;
+            this.logger = logger;
+        }
+
+
         /// <summary>
         /// Query al db per restitire una Prenotazione in base al suo Id
         /// </summary>

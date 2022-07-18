@@ -12,13 +12,16 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/ruoli")]
     public class RuoloController : ControllerBase
     {
-        private RuoloService _ruoloService = new RuoloService();
+        private RuoloService _ruoloService;
         private readonly ILogger<RuoloService> _logger;
 
-        public RuoloController(ILogger<RuoloService> logger)
+        public RuoloController(RuoloService ruoloService, ILogger<RuoloService> logger)
         {
+            _ruoloService = ruoloService;
             _logger = logger;
         }
+
+
 
 
         /// <summary>

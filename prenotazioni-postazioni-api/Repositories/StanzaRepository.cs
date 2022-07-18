@@ -7,7 +7,16 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class StanzaRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private DatabaseManager _databaseManager;
+        private readonly ILogger<StanzaRepository> logger;
+
+        public StanzaRepository(DatabaseManager databaseManager, ILogger<StanzaRepository> logger)
+        {
+            _databaseManager = databaseManager;
+            this.logger = logger;
+        }
+
+
         /// <summary>
         /// Query al db, restituisce tutte le stanze presente nel database
         /// </summary>
