@@ -14,8 +14,6 @@ namespace prenotazioni_postazioni_api.Repositories
         public ImpostazioneRepository()
         {
         }
-        public ImpostazioneRepository() { }
-
 
         /// <summary>
         /// Query al db per restituire il campo Impostazione Emergenza

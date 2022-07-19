@@ -15,9 +15,6 @@ namespace prenotazioni_postazioni_api.Repositories
         {
         }
 
-        public RuoloRepository() { }
-
-
         /// <summary>
         /// Query al db, restituisce il ruolo dell'utente associato usando il suo ID
         /// </summary>
