@@ -68,8 +68,6 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-
-
         /// <summary>
         /// Aggiunge una lista di utenti votati da un altro utente
         /// </summary>

@@ -7,15 +7,15 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class FestaService
     {
-        private FestaRepository _festaRepository;
+        private FestaRepository _festaRepository = new FestaRepository();
         private readonly ILogger<FestaService> logger;
 
-        public FestaService(ILogger<FestaService> logger, FestaRepository festaRepository)
+        public FestaService(ILogger<FestaService> logger)
         {
-            _festaRepository = festaRepository;
             this.logger = logger;
         }
 
+        public FestaService() { }
 
         /// <summary>
         /// Restituisce tutte le feste in una data

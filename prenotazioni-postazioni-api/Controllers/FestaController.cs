@@ -11,13 +11,12 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/festivita")]
     public class FestaController : ControllerBase
     {
-        private readonly ILogger<FestaController> logger;
+        private readonly ILogger<FestaController> logger = new 
         private FestaService _festaService;
 
-        public FestaController(ILogger<FestaController> logger, FestaService festaService)
+        public FestaController(FestaService festaService)
         {
-            _festaService = festaService;
-            this.logger = logger;
+            this._festaService = festaService;
         }
 
 

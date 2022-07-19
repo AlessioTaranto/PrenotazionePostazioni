@@ -3018,6 +3018,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Microsoft.Data.SqlClient >= 4.1.0",
+      "Microsoft.Extensions.DependencyInjection >= 6.0.0",
       "Microsoft.Extensions.Logging.Log4Net.AspNetCore >= 6.1.0",
       "Newtonsoft.Json >= 13.0.1",
       "Swashbuckle.AspNetCore >= 6.2.3",
@@ -3070,6 +3071,10 @@
           "Microsoft.Data.SqlClient": {
             "target": "Package",
             "version": "[4.1.0, )"
+          },
+          "Microsoft.Extensions.DependencyInjection": {
+            "target": "Package",
+            "version": "[6.0.0, )"
           },
           "Microsoft.Extensions.Logging.Log4Net.AspNetCore": {
             "target": "Package",

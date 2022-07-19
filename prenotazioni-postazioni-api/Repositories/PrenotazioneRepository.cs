@@ -11,7 +11,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             this.logger = logger;
         }
-
+        public PrenotazioneRepository() { }
 
         /// <summary>
         /// Query al db per restitire una Prenotazione in base al suo Id

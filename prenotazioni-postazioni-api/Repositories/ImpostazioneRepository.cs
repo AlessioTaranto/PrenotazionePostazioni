@@ -13,7 +13,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             this.logger = logger;
         }
-
+        public ImpostazioneRepository() { }
 
 
         /// <summary>
