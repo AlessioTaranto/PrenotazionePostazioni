@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.LogInformation("Trovando tutti i voti effettuati di un utente...");
                 List<Voto> voti = _votoService.GetVotiFromUtente(idUtente);
                 _logger.LogInformation("Voti dell'utente trovati con successo!");
-                return Ok();
+                return Ok(voti);
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.LogInformation("Trovando tutti i voti che sono stati effettuati su un utente...");
                 List<Voto> voti = _votoService.GetVotiToUtente(idUtente);
                 _logger.LogInformation("Voti trovati con successo!");
-                return Ok();
+                return Ok(voti);
             }
             catch (Exception ex)
             {
