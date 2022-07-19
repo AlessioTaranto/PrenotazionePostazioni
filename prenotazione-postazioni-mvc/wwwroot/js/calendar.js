@@ -35,7 +35,7 @@ function loadCalendar() {
 }
 
 function loadFeste() {
-    for (let i = 0; i < nFestivita; i++) {
+    for (let i = 0; i < festivita.length; i++) {
         let month_temp = month + 1; let yr_temp = date.getFullYear();
         if (month_temp === 12) {
             month_temp = 0;
@@ -57,7 +57,7 @@ function loadCalendar1() {
             $('#'.concat(i).concat('-').concat(j).concat('1')).css("color", "black");
         }
 
-    let firstLineLoad = true
+    let firstLineLoad = true;
 
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 7; j++) {

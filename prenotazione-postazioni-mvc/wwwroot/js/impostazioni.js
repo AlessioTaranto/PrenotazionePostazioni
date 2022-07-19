@@ -1,6 +1,5 @@
 let presenti = 10;
-var festivita = [];
-var nFestivita = 0;
+let festivita = [];
 
 function loadPresenti() {
     document.getElementById('lista-presenti').innerHTML = "";
@@ -22,7 +21,6 @@ function impostaFesta(date, dateId) {
         date: date,
         id: festaId
     });
-    nFestivita++;
     let festa = document.createElement('li');
     festa.setAttribute("id", festaId);
     festa.setAttribute("style", "list-style-type:none; margin: 0px 0px 10px 0px");
@@ -36,7 +34,6 @@ function rimuoviFesta(date, dateId) {
     for(let i=0; i<nFestivita; i++) {
         if(festivita[i].id === festaId) {
             festivita.splice(i, 1);
-            nFestivita--;
             document.getElementById(festaId).remove();
             $('#'.concat(dateId)).css("color", "black");
             $('#'.concat(dateId).concat('1')).css("color", "black");
