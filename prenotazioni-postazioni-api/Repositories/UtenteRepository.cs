@@ -2,16 +2,16 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class UtenteRepository
     {
-        private readonly ILogger<UtenteRepository> logger;
+        private readonly ILogger<UtenteRepository> logger = Log4NetManager<UtenteRepository>.GetLogger();
 
-        public UtenteRepository(ILogger<UtenteRepository> logger)
+        public UtenteRepository()
         {
-            this.logger = logger;
         }
 
 

@@ -2,15 +2,14 @@
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
+using prenotazioni_postazioni_api.Utilities;
+
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class PrenotazioneRepository
     {
-        private readonly ILogger<PrenotazioneRepository> logger;
-        public PrenotazioneRepository(ILogger<PrenotazioneRepository> logger)
-        {
-            this.logger = logger;
-        }
+        private readonly ILogger<PrenotazioneRepository> logger = Log4NetManager<PrenotazioneRepository>.GetLogger();
+
         public PrenotazioneRepository() { }
 
         /// <summary>

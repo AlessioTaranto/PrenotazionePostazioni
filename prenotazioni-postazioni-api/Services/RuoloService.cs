@@ -2,6 +2,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -9,13 +10,12 @@ namespace prenotazioni_postazioni_api.Services
     {
         private RuoloRepository _ruoloRepository;
         private UtenteRepository _utenteRepository;
-        private readonly ILogger<RuoloService> _logger;
+        private readonly ILogger<RuoloService> _logger = Log4NetManager<RuoloService>.GetLogger();
 
-        public RuoloService(RuoloRepository ruoloRepository, UtenteRepository utenteRepository, ILogger<RuoloService> logger)
+        public RuoloService(RuoloRepository ruoloRepository, UtenteRepository utenteRepository)
         {
             _ruoloRepository = ruoloRepository;
             _utenteRepository = utenteRepository;
-            _logger = logger;
         }
 
 

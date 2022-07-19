@@ -3,15 +3,16 @@ using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Repositories.Database;
+using prenotazioni_postazioni_api.Utilities;
+
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class ImpostazioneRepository
     {
-        private readonly ILogger<ImpostazioneRepository> logger;
+        private readonly ILogger<ImpostazioneRepository> logger = Log4NetManager<ImpostazioneRepository>.GetLogger();
 
-        public ImpostazioneRepository(ILogger<ImpostazioneRepository> logger)
+        public ImpostazioneRepository()
         {
-            this.logger = logger;
         }
         public ImpostazioneRepository() { }
 
