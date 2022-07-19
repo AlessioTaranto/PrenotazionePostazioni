@@ -7,12 +7,10 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class VotoRepository
     {
-        private DatabaseManager _databaseManager;
         private readonly ILogger<VotoRepository> logger;
 
-        public VotoRepository(DatabaseManager databaseManager, ILogger<VotoRepository> logger)
+        public VotoRepository(ILogger<VotoRepository> logger)
         {
-            _databaseManager = databaseManager;
             this.logger = logger;
         }
 
@@ -26,10 +24,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal List<Voto> FindAllByIdUtenteFrom(int idUtente)
         {
             string query = $"SELECT * FROM Voti WHERE idUtente = {idUtente};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Voto> voti = JsonConvert.DeserializeObject<List<Voto>>(_databaseManager.GetAllResults(query));
-            _databaseManager.DeleteConnection();
-            return voti;
+            return DatabaseManager<List<Voto>>.GetInstance().MakeQueryMoreResults(query);
         }
 
         /// <summary>
@@ -40,10 +35,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal List<Voto> FindAllByIdUtenteTo(int idUtente)
         {
             string query = $"SELECT * FROM voti WHERE idUtenteVotato = {idUtente};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Voto> voti = JsonConvert.DeserializeObject<List<Voto>>(_databaseManager.GetAllResults(query));
-            _databaseManager.DeleteConnection();
-            return voti;
+            return DatabaseManager<List<Voto>>.GetInstance().MakeQueryMoreResults(query);
         }
 
         /// <summary>
@@ -53,9 +45,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal void Save(Voto voto)
         {
             string query = $"INSERT INTO Voti (idUtente, idUtenteVotato, voto) VALUES ({voto.IdUtente}, {voto.IdUtenteVotato}, {voto.VotoEffettuato});";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            _databaseManager.GetNoneResult(query);
-            _databaseManager.DeleteConnection();
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
         /// <summary>
         /// query al db, restituisce il voto che un utente ha effettuato ad un altro utente
@@ -66,10 +56,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal Voto? FindByIdUtenteToAndIdUtenteFrom(int idUtente, int idUtenteVotato)
         {
             string query = $"SELECT * FROM Voti WHERE idUtente = {idUtente} AND idUtenteVotato = {idUtenteVotato};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Voto voto = JsonConvert.DeserializeObject<Voto>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return voto;
+            return DatabaseManager<Voto>.GetInstance().MakeQueryOneResult(query);
         }
 
         /// <summary>
@@ -79,9 +66,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal void UpdateVoto(Voto voto)
         {
             string query = $"UPDATE Voti SET voto = 1 ^ voto WHERE idUtente = {voto.IdUtente} AND idUtenteVotato = {voto.IdUtenteVotato};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            _databaseManager.GetNoneResult(query);
-            _databaseManager.DeleteConnection();
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
     }
 }

@@ -7,12 +7,10 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class ImpostazioneRepository
     {
-        private DatabaseManager _databaseManager;
         private readonly ILogger<ImpostazioneRepository> logger;
 
-        public ImpostazioneRepository(DatabaseManager databaseManager, ILogger<ImpostazioneRepository> logger)
+        public ImpostazioneRepository(ILogger<ImpostazioneRepository> logger)
         {
-            _databaseManager = databaseManager;
             this.logger = logger;
         }
 
@@ -25,10 +23,7 @@ namespace prenotazioni_postazioni_api.Repositories
         public Impostazioni FindImpostazioneEmergenza()
         {
             string query = "SELECT * FROM Impostazioni;";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Impostazioni impostazione = JsonConvert.DeserializeObject<Impostazioni>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return impostazione;
+            return DatabaseManager<Impostazioni>.GetInstance().MakeQueryOneResult(query);
         }
 
         /// <summary>
@@ -39,9 +34,7 @@ namespace prenotazioni_postazioni_api.Repositories
         public void UpdateImpostazioneEmergenza(bool userValue)
         {
             string query = "UPDATE Impostazioni SET modEmergenza = 1 ^ modEmergenza;";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            _databaseManager.GetNoneResult(query);
-            _databaseManager.DeleteConnection();
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
     }
 }

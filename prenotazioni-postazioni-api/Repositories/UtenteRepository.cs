@@ -7,12 +7,10 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class UtenteRepository
     {
-        private DatabaseManager _databaseManager;
         private readonly ILogger<UtenteRepository> logger;
 
-        public UtenteRepository(DatabaseManager databaseManager, ILogger<UtenteRepository> logger)
+        public UtenteRepository(ILogger<UtenteRepository> logger)
         {
-            _databaseManager = databaseManager;
             this.logger = logger;
         }
 

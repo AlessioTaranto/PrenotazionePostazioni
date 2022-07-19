@@ -7,7 +7,7 @@ using prenotazioni_postazioni_api.Exceptions;
 
 namespace prenotazioni_postazioni_api.Repositories.Database
 {
-    public class DatabaseManager
+    public class DatabaseManager<T>
     {
         public static string DatabaseName { get; } = "[prenotazioni-impostazioni].dbo";
         public static string DefaultInitialCatalog { get; } = "prenotazioni-impostazioni";
@@ -15,6 +15,59 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         public readonly static string DEFAULT_DATABASE_NAME_STRING = "[prenotazioni - impostazioni].dbo";
 
         private SqlConnection? _conn;
+        private ILogger<DatabaseManager<T>> logger;
+
+        /// <summary>
+        /// Costruttore vuoto per creare istanze
+        /// </summary>
+        private DatabaseManager()
+        {
+
+        }
+        public DatabaseManager(ILogger<DatabaseManager<T>> logger)
+        {
+            this.logger = logger;
+        }
+
+        public T MakeQueryOneResult(string query)
+        {
+            logger.LogInformation("Mi connetto al database...");
+            CreateConnectionToDatabase(null, null, true);
+            logger.LogInformation("faccio una query al db");
+            T value = JsonConvert.DeserializeObject<T>(GetAllResults(query));
+            logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
+            logger.LogInformation("mi disconnetto dal db");
+            DeleteConnection();
+            return value;
+        }
+
+        public T MakeQueryMoreResults(string query)
+        {
+            logger.LogInformation("Mi connetto al database...");
+            CreateConnectionToDatabase(null, null, true);
+            logger.LogInformation("faccio una query al db");
+            T value = JsonConvert.DeserializeObject<T>(GetOneResult(query));
+            logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
+            logger.LogInformation("mi disconnetto dal db");
+            DeleteConnection();
+            return value;
+        }
+
+        public void MakeQueryNoResult(string query)
+        {
+            logger.LogInformation("Mi connetto al database...");
+            CreateConnectionToDatabase(null, null, true);
+            logger.LogInformation("faccio una query al db");
+            GetNoneResult(query);
+            logger.LogInformation("mi disconnetto dal db");
+            DeleteConnection();
+        }
+
+
+        public static DatabaseManager<T> GetInstance()
+        {
+            return new DatabaseManager<T>();
+        }
 
         /// <summary>
         /// Instaura una connesione al database
@@ -22,7 +75,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// <param name="initialCatalog">Nome del database</param>
         /// <param name="datasource">Nome del server sql</param>
         /// <param name="integratedSecurity">integrated security</param>
-        public void CreateConnectionToDatabase(string? initialCatalog, string? datasource, bool integratedSecurity)
+        private void CreateConnectionToDatabase(string? initialCatalog, string? datasource, bool integratedSecurity)
         {
             //significa che _conn ha gia un'istanza di SqlConnection
             if(checkConnectionDatabase())
@@ -37,7 +90,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             _conn = new SqlConnection(connBuilder.ToString());
         }
 
-        public void DeleteConnection()
+        private void DeleteConnection()
         {
             _conn = null;
         }
@@ -47,7 +100,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// </summary>
         /// <param name="query">la query al db</param>
         /// <returns>Json con il dato trovato</returns>
-        public string? GetOneResult(string query)
+        private string? GetOneResult(string query)
         {
             if (!checkConnectionDatabase())
             {
@@ -68,7 +121,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             }
         }
 
-        public IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
+        protected IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
         {
             var results = new List<Dictionary<string, object>>();
             var cols = new List<string>();
@@ -80,7 +133,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 
             return results;
         }
-        private Dictionary<string, object> SerializeRow(IEnumerable<string> cols,
+        protected Dictionary<string, object> SerializeRow(IEnumerable<string> cols,
                                                         SqlDataReader reader)
         {
             var result = new Dictionary<string, object>();
@@ -94,7 +147,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// </summary>
         /// <param name="query">La query al db</param>
         /// <returns></returns>
-        public string? GetAllResults(string query)
+        private string? GetAllResults(string query)
         {
             if (!checkConnectionDatabase())
             {
@@ -132,7 +185,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// Viene usato quando la query non prevede nessun dato in ritorno
         /// </summary>
         /// <param name="query">La query al db</param>
-        public void GetNoneResult(string query)
+        private void GetNoneResult(string query)
         {
             if (!checkConnectionDatabase())
             {

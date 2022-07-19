@@ -8,12 +8,10 @@ namespace prenotazioni_postazioni_api.Repositories
 {
     public class RuoloRepository
     {
-        private DatabaseManager _databaseManager;
         private readonly ILogger<RuoloRepository> logger;
 
-        public RuoloRepository(DatabaseManager databaseManager, ILogger<RuoloRepository> logger)
+        public RuoloRepository(ILogger<RuoloRepository> logger)
         {
-            _databaseManager = databaseManager;
             this.logger = logger;
         }
 
@@ -26,10 +24,7 @@ namespace prenotazioni_postazioni_api.Repositories
         public Ruolo? FindById(int idRuolo)
         {
             string query = $"SELECT * FROM Ruoli WHERE idRuolo = {idRuolo};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return ruolo;
+            return DatabaseManager<Ruolo>.GetInstance().MakeQueryOneResult(query);
         }
 
         /// <summary>
@@ -40,18 +35,13 @@ namespace prenotazioni_postazioni_api.Repositories
         public Ruolo? FindByIdUtente(int idUtente)
         {
             string query = $"SELECT * FROM Utenti WHERE idUtente = {idUtente};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
+            Utente utente = DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(query);
             if(utente == null)
             {
                 throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             }
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
             query = $"SELECT * FROM Ruoli WHERE idRuolo = {utente.IdRuolo};";
-            Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return ruolo;
+            return DatabaseManager<Ruolo>.GetInstance().MakeQueryOneResult(query);
         }
         /// <summary>
         /// Query al db, switch il ruolo accesso impostazioni dell'utente
@@ -61,9 +51,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal void UpdateRuolo(int idUtente, RuoloEnum ruoloEnum)
         {
             string query = $"UPDATE Utenti SET idRuolo = '{ruoloEnum.ToString()}' WHERE idUtente = '{idUtente}';";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            _databaseManager.GetNoneResult(query);
-            _databaseManager.DeleteConnection();
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
     }
 }
