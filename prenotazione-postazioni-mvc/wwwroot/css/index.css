@@ -49,6 +49,10 @@ body {
     margin-left: 25% !important;
 }
 
+.ml-50 {
+    margin-left: 55% !important;
+}
+
 .calendar-div {
     width: 20vw;
     height: 50vh;
