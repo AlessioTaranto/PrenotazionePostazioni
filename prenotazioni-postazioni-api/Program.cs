@@ -6,12 +6,6 @@ using prenotazioni_postazioni_api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Logging
-using var loggerFactory = LoggerFactory.Create(loggingBuilding => loggingBuilding.SetMinimumLevel(LogLevel.Trace).AddConsole());
-
-ILogger<FestaController> logger = loggerFactory.CreateLogger<FestaController>();
-
-
 // Add logging Log4Net
 builder.Logging.AddLog4Net();
 
@@ -23,8 +17,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<FestaRepository, FestaRepository>();
+builder.Services.AddSingleton<FestaController, FestaController>();
 builder.Services.AddSingleton<FestaService, FestaService>();
+builder.Services.AddSingleton<FestaRepository, FestaRepository>();
 
 var app = builder.Build();
 

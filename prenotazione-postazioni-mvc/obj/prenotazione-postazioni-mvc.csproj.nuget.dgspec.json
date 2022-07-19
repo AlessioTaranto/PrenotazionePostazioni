@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {}
+    "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {
+    "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
+        "projectUniqueName": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
         "projectName": "prenotazione-postazioni-mvc",
-        "projectPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\c#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\",
+        "projectPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\VisualStudio\\C#\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

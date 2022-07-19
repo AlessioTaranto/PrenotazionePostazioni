@@ -4,6 +4,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Services;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -11,7 +12,7 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/festivita")]
     public class FestaController : ControllerBase
     {
-        private readonly ILogger<FestaController> logger = new 
+        private readonly ILogger<FestaController> logger = Log4NetManager<FestaController>.GetLogger();
         private FestaService _festaService;
 
         public FestaController(FestaService festaService)
@@ -65,6 +66,8 @@ namespace prenotazioni_postazioni_api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            ILogger<FestaController> l = Log4NetManager<FestaController>.GetLogger();
+            Console.WriteLine(l);
             try
             {
                 logger.LogInformation("Trovando tutte le feste...");
