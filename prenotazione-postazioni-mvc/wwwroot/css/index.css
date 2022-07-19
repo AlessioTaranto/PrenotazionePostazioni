@@ -41,6 +41,21 @@ body {
     color: black !important;
 }
 
+.nav-link-1 {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: black;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+.nav-pills .nav-link-1.active, .nav-pills .show > .nav-link-1 {
+    color: #fff !important;
+    background-color: darkorange !important;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
 .ml-21 {
     margin-left: 21% !important;
 }
@@ -114,6 +129,7 @@ area {
     cursor: pointer;
 }
 
-.nav-link:hover {
+.nav-link-1:hover {
     color: darkorange;
+    text-decoration: none;
 }

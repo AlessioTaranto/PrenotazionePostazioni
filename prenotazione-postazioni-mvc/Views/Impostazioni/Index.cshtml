@@ -3,11 +3,11 @@
 
 }
 
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 280px; height: 100%; border: 0.1px solid darkorange !important">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 17vw; height: 100%; border: 0.1px solid darkorange !important">
         <div class="nav flex-column mb-auto nav-pills darkorange" id="options-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="true">Covid</a>
-            <a class="nav-link" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false">Festività</a>
-            <a class="nav-link" id="options-pills-presenze-tab" data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false">Presenze</a>
+            <a class="nav-link-1 active" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="true">Covid</a>
+            <a class="nav-link-1" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false">Festività</a>
+            <a class="nav-link-1" id="options-pills-presenze-tab" data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false">Presenze</a>
         </div>
     </div>
         <div class="tab-content" id="options-pills-tabContent">
@@ -59,6 +59,7 @@
                                 <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
                             </ul>
                         </div>
+                    
                         <div class="body">
                             <table>
                                 <tr>
@@ -125,9 +126,9 @@
                                     <td id="6-5"  onclick="clickCalendarFest('6-5')">4</td>
                                 </tr>
                             </table>
-                        </div>
+                        </div> 
                     </div>
-                </div>
+                    </div>
                 <script>
                     loadCalendar();
                 </script>
@@ -241,12 +242,3 @@
                 </div>
             </div>
         </div>
-        <script src="js/jquery.rwdImageMaps.min.js"></script>
-    <script>
-
-        /*$(document).ready(function(e) {
-            $('area').on('click', function () {
-                selectRoom($(this).attr('alt'));
-            });
-        });*/
-    </script>
