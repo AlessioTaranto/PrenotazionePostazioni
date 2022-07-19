@@ -2,7 +2,6 @@
 using System;
 using System.Text;
 using Microsoft.Data.SqlClient;
-using prenotazioni_postazioni_api.Utilities;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
@@ -27,13 +26,12 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 
         }
 
-
         public T MakeQueryOneResult(string query)
         {
             logger.LogInformation("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
             logger.LogInformation("faccio una query al db");
-            T value = GetOneResult(query);
+            T value = JsonConvert.DeserializeObject<T>(GetOneResult(query));
             logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
             logger.LogInformation("mi disconnetto dal db");
             DeleteConnection();
@@ -42,15 +40,14 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 
         public T MakeQueryMoreResults(string query)
         {
-            //logger.LogInformation("Mi connetto al database...");
-            //CreateConnectionToDatabase(null, null, true);
-            //logger.LogInformation("faccio una query al db");
-            //T value = JsonConvert.DeserializeObject<T>(GetOneResult(query));
-            //logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
-            //logger.LogInformation("mi disconnetto dal db");
-            //DeleteConnection();
-            //return value;
-            throw new NotImplementedException();
+            logger.LogInformation("Mi connetto al database...");
+            CreateConnectionToDatabase(null, null, true);
+            logger.LogInformation("faccio una query al db");
+            T value = JsonConvert.DeserializeObject<T>(GetAllResults(query));
+            logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
+            logger.LogInformation("mi disconnetto dal db");
+            DeleteConnection();
+            return value;
         }
 
         public void MakeQueryNoResult(string query)
@@ -78,7 +75,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         private void CreateConnectionToDatabase(string? initialCatalog, string? datasource, bool integratedSecurity)
         {
             //significa che _conn ha gia un'istanza di SqlConnection
-            if(checkConnectionDatabase())
+            if (checkConnectionDatabase())
             {
                 return;
             }
@@ -100,7 +97,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// </summary>
         /// <param name="query">la query al db</param>
         /// <returns>Json con il dato trovato</returns>
-        private T GetOneResult(string query)
+        private string? GetOneResult(string query)
         {
             if (!checkConnectionDatabase())
             {
@@ -111,29 +108,14 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 SqlCommand cmd = new SqlCommand(query, conn);
                 conn.Open();
                 var reader = cmd.ExecuteReader();
-                Dictionary<string, object> result = new Dictionary<string, object>();
-                int i = 0;
-                while (reader.Read())
-                {
-                    result.Add(reader.GetName(i), reader[i]);
-                    i++;
-                }
+                IEnumerable<Dictionary<string, object>> result = Serialize(reader);
+                Console.WriteLine(result);
+                string jsonResult = JsonConvert.SerializeObject(result);
                 conn.Close();
-                T value = GetObject<T>(result);
-                return value;
+                jsonResult = jsonResult.Replace("[", "").Replace("]", "");
+                Console.WriteLine("JsonResult: " + jsonResult);
+                return jsonResult;
             }
-        }
-
-        Y GetObject<Y>(Dictionary<string, object> dict)
-        {
-            Type type = typeof(T);
-            var obj = Activator.CreateInstance(type);
-
-            foreach (var kv in dict)
-            {
-                type.GetProperty(kv.Key).SetValue(obj, kv.Value);
-            }
-            return (Y)obj;
         }
 
         protected IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
@@ -179,7 +161,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                     {
                         while (reader.Read())
                         {
-                            var fieldValues = new Dictionary<string, object>();              
+                            var fieldValues = new Dictionary<string, object>();
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
                                 fieldValues.Add(reader.GetName(i), reader[i]);
@@ -192,7 +174,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 var json = JsonConvert.SerializeObject(values);
                 Console.WriteLine(json);
                 return json;
-               
+
             }
         }
 
@@ -216,7 +198,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         }
         private bool checkConnectionDatabase()
         {
-            if(_conn == null)
+            if (_conn == null)
             {
                 return false;
             }
