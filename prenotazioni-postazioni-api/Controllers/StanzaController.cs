@@ -5,6 +5,7 @@ using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
 using Microsoft.AspNetCore.Cors;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -13,12 +14,11 @@ namespace prenotazioni_postazioni_api.Controllers
     public class StanzaController : ControllerBase
     {
         private StanzaService _stanzaService;
-        private ILogger<StanzaController> _logger;
+        private ILogger<StanzaController> _logger = Log4NetManager<StanzaController>.GetLogger();
 
-        public StanzaController(ILogger<StanzaController> logger, StanzaService serviceService)
+        public StanzaController(StanzaService serviceService)
         {
             _stanzaService = serviceService;
-            this._logger = logger;
         }
         /// <summary>
         /// Restituisce tutte le stanze

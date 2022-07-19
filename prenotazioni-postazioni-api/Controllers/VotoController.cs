@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -11,12 +12,11 @@ namespace prenotazioni_postazioni_api.Controllers
     public class VotoController : ControllerBase
     {
         private VotoService _votoService;
-        private readonly ILogger<VotoController> _logger;
+        private readonly ILogger<VotoController> _logger = Log4NetManager<VotoController>.GetLogger();
 
-        public VotoController(ILogger<VotoController> logger, VotoService votoService)
+        public VotoController(VotoService votoService)
         {
             this._votoService = votoService;
-            this._logger = logger;
         }
         /// <summary>
         /// Serve per ottenere l'elenco di votazioni effettuate da un utente verso gli altri

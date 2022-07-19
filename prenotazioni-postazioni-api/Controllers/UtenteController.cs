@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -11,12 +12,11 @@ namespace prenotazioni_postazioni_api.Controllers
     public class UtenteController : ControllerBase
     {
         private UtenteService _utenteService;
-        private readonly ILogger<UtenteController> _logger;
+        private readonly ILogger<UtenteController> _logger = Log4NetManager<UtenteController>.GetLogger();
 
-        public UtenteController( ILogger<UtenteController> logger, UtenteService utenteService)
+        public UtenteController( UtenteService utenteService)
         {
             _utenteService = utenteService;
-            _logger = logger;
         }
 
         [HttpGet]

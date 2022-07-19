@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Repositories.Database
 {
@@ -15,7 +16,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         public readonly static string DEFAULT_DATABASE_NAME_STRING = "[prenotazioni - impostazioni].dbo";
 
         private SqlConnection? _conn;
-        private ILogger<DatabaseManager<T>> logger;
+        private ILogger<DatabaseManager<T>> logger = Log4NetManager<DatabaseManager<T>>.GetLogger();
 
         /// <summary>
         /// Costruttore vuoto per creare istanze
@@ -23,10 +24,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         private DatabaseManager()
         {
 
-        }
-        public DatabaseManager(ILogger<DatabaseManager<T>> logger)
-        {
-            this.logger = logger;
         }
 
         public T MakeQueryOneResult(string query)
