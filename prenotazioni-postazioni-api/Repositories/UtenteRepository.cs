@@ -23,10 +23,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal List<Utente> FindAll()
         {
             string query = "SELECT * FROM Utenti;";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            List<Utente> utenti = JsonConvert.DeserializeObject<List<Utente>>(_databaseManager.GetAllResults(query));
-            _databaseManager.DeleteConnection();
-            return utenti;
+            return DatabaseManager<List<Utente>>.GetInstance().MakeQueryMoreResults(query);
         }
         
 
@@ -38,10 +35,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal Utente FindById(int idUtente)
         {
             string query = $"SELECT * FROM Utenti WHERE idUtente = {idUtente};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return utente;
+            return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(query);
         }
 
         /// <summary>
@@ -52,10 +46,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal Utente FindByEmail(string email)
         {
             string query = $"SELECT * FROM Utenti WHERE email = '{email}';";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return utente;
+            return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(query);
         }
 
 
@@ -66,9 +57,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal void Save(Utente utente)
         {
             string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ('{utente.Nome}', '{utente.Cognome}', '{utente.Image}', '{utente.Email}', {utente.IdRuolo});";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            _databaseManager.GetNoneResult(query);
-            _databaseManager.DeleteConnection();
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
     }
 }
