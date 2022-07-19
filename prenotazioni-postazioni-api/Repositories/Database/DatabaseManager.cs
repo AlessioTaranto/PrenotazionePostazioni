@@ -119,9 +119,21 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                     i++;
                 }
                 conn.Close();
-                T value = result.ToObject<dynamic>();
+                T value = GetObject<T>(result);
                 return value;
             }
+        }
+
+        Y GetObject<Y>(Dictionary<string, object> dict)
+        {
+            Type type = typeof(T);
+            var obj = Activator.CreateInstance(type);
+
+            foreach (var kv in dict)
+            {
+                type.GetProperty(kv.Key).SetValue(obj, kv.Value);
+            }
+            return (Y)obj;
         }
 
         protected IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
