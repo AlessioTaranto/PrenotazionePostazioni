@@ -77,7 +77,7 @@ function loadCalendar1() {
 }
 
 function loadFeste1() {
-    for (let i = 0; i < festivita.length; i++) {
+    for (let i = 0; i < nFestivita; i++) {
         let month_temp = month1 + 1; let yr_temp = date1.getFullYear();
         if (month_temp === 12) {
             month_temp = 0;

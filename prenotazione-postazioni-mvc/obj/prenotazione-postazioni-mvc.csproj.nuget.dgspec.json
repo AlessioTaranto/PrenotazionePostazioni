@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {}
+    "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {
+    "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
+        "projectUniqueName": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
         "projectName": "prenotazione-postazioni-mvc",
-        "projectPath": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
-        "packagesPath": "C:\\Users\\redeg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\",
+        "projectPath": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\prenotazione-postazioni-mvc.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\redeg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
