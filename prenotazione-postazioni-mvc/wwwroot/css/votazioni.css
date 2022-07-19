@@ -1,15 +1,15 @@
-input[type="radio"] {
+input[type="checkbox"] {
     position: absolute;
     left: -9999px;
-  }
-  
- input[type="radio"]+label {
-    position: relative;
-    padding: 3px 0 0 40px;
-    cursor: pointer;
-  }
-  
-input[type="radio"]+label:before {
+}
+
+input[type="checkbox"]+label {
+    position: relative !important;
+    padding: 3px 0 0 40px !important;
+    cursor: pointer !important;
+}
+
+input[type="checkbox"]+label:before {
     content: '';
     background: #fff;
     border: 2px solid darkorange;
@@ -19,9 +19,9 @@ input[type="radio"]+label:before {
     position: absolute;
     top: 0;
     left: 0;
-  }
-  
-input[type="radio"]+label:after {
+}
+
+input[type="checkbox"]+label:after {
     content: '';
     background: darkorange;
     width: 15px;
@@ -33,14 +33,16 @@ input[type="radio"]+label:after {
     opacity: 0;
     transform: scale(2);
     transition: transform 0.3s linear, opacity 0.3s linear;
-  }
-  
-  input[type="radio"]:checked+label:after {
+}
+
+input[type="checkbox"]:checked+label:after {
     opacity: 1;
     transform: scale(1);
-  }
+}
 
-  * {box-sizing: border-box;}
+* {
+    box-sizing: border-box;
+}
 
 body {
   margin: 0;

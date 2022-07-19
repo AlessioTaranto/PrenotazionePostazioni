@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "y6qgkWkTlH0ZCaqa0E9bEKN8DyfRXAixWDDNc60U1RfE+NYa1Fni2HGpuFhM9GXfSvS+YhwgFkMoINdwPI663g==",
+  "dgSpecHash": "APnP5g3M8iN7LoIK32LiqDsoL65o1dVlY1zh7bhqlRtyh0fP3zymYaN2dYHuY2CPYJKOinMB3iF6VCG7TItwQg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
+  "projectFilePath": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-libs\\prenotazione-postazioni-libs.csproj",
   "expectedPackageFiles": [],
+<<<<<<< develop
   "logs": [
     {
       "code": "Undefined",
@@ -12,5 +13,7 @@
       "message": "Si è verificato un problema durante la lettura del file di cache C:\\Users\\redeg\\Documents\\prenotazione-postazioni\\prenotazione-postazioni-libs\\obj\\project.nuget.cache: Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
     }
   ]
+=======
+>>>>>>> no message
   "logs": []
 }
