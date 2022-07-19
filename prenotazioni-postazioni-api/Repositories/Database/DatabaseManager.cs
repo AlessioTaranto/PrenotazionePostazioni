@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             logger.LogInformation("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
             logger.LogInformation("faccio una query al db");
-            T value = JsonConvert.DeserializeObject<T>(GetAllResults(query));
+            T value = GetOneResult(query);
             logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
             logger.LogInformation("mi disconnetto dal db");
             DeleteConnection();
@@ -42,14 +42,15 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 
         public T MakeQueryMoreResults(string query)
         {
-            logger.LogInformation("Mi connetto al database...");
-            CreateConnectionToDatabase(null, null, true);
-            logger.LogInformation("faccio una query al db");
-            T value = JsonConvert.DeserializeObject<T>(GetOneResult(query));
-            logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
-            logger.LogInformation("mi disconnetto dal db");
-            DeleteConnection();
-            return value;
+            //logger.LogInformation("Mi connetto al database...");
+            //CreateConnectionToDatabase(null, null, true);
+            //logger.LogInformation("faccio una query al db");
+            //T value = JsonConvert.DeserializeObject<T>(GetOneResult(query));
+            //logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
+            //logger.LogInformation("mi disconnetto dal db");
+            //DeleteConnection();
+            //return value;
+            throw new NotImplementedException();
         }
 
         public void MakeQueryNoResult(string query)
