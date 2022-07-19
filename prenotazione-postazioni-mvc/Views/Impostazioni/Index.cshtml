@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Impostazioni";
 
+    ImpostazioniViewModel ViewModel = (ImpostazioniViewModel) Model;
+
 }
 
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 280px; height: 100%; border: 0.1px solid darkorange !important">
@@ -40,10 +42,10 @@
                 </div>
             
                 <div class="container mt-4 ml-70 position-fixed room-info-div">
-                    <h1 id="room-sel"></h1>
+                    <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
                     <br>
                     <h5>Capienza</h5>
-                    <input type="number" id="capienza" name="capienza" min="1" max="10" style="width:17vw">
+                    <input type="number" id="capienza" name="capienza" min="1" max="10" style="width:17vw" value="@ViewModel.CapienzaViewModel.Capienza">
                     <br><br>
                     <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma"></input>
                 </div>
@@ -244,9 +246,17 @@
         <script src="js/jquery.rwdImageMaps.min.js"></script>
     <script>
 
-        /*$(document).ready(function(e) {
-            $('area').on('click', function () {
-                selectRoom($(this).attr('alt'));
+        $(document).ready(function(e) {
+            $('area').on('click', function (event) {
+                
+                $.ajax({
+                    type: "POST",
+                    url: "Impostazioni/SelectRoom",
+                    data: { "stanza": event.target.alt }
+                }).done(function() {
+                    window.location.reload();
+                });
+
             });
-        });*/
+        });
     </script>
