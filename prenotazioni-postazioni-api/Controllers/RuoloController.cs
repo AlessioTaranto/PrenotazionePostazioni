@@ -4,6 +4,7 @@ using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -13,12 +14,11 @@ namespace prenotazioni_postazioni_api.Controllers
     public class RuoloController : ControllerBase
     {
         private RuoloService _ruoloService;
-        private readonly ILogger<RuoloService> _logger;
+        private readonly ILogger<RuoloController> _logger = Log4NetManager<RuoloController>.GetLogger();
 
-        public RuoloController(RuoloService ruoloService, ILogger<RuoloService> logger)
+        public RuoloController(RuoloService ruoloService)
         {
             _ruoloService = ruoloService;
-            _logger = logger;
         }
 
 

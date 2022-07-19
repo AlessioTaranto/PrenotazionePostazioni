@@ -21,6 +21,31 @@ builder.Services.AddSingleton<FestaController, FestaController>();
 builder.Services.AddSingleton<FestaService, FestaService>();
 builder.Services.AddSingleton<FestaRepository, FestaRepository>();
 
+builder.Services.AddSingleton<ImpostazioneController, ImpostazioneController>();
+builder.Services.AddSingleton<ImpostazioneRepository, ImpostazioneRepository>();
+builder.Services.AddSingleton<ImpostazioneService, ImpostazioneService>();
+
+builder.Services.AddSingleton<PrenotazioneController, PrenotazioneController>();
+builder.Services.AddSingleton<PrenotazioneService, PrenotazioneService>();
+builder.Services.AddSingleton<PrenotazioneRepository, PrenotazioneRepository>();
+
+builder.Services.AddSingleton<RuoloController, RuoloController>();
+builder.Services.AddSingleton<RuoloService, RuoloService>();
+builder.Services.AddSingleton<RuoloRepository, RuoloRepository>();
+
+builder.Services.AddSingleton<StanzaController, StanzaController>();
+builder.Services.AddSingleton<StanzaService, StanzaService>();
+builder.Services.AddSingleton<StanzaRepository, StanzaRepository>();
+
+builder.Services.AddSingleton<UtenteController, UtenteController>();
+builder.Services.AddSingleton<UtenteService, UtenteService>();
+builder.Services.AddSingleton<UtenteRepository, UtenteRepository>();
+
+builder.Services.AddSingleton<VotoController, VotoController>();
+builder.Services.AddSingleton<VotoService, VotoService>();
+builder.Services.AddSingleton<VotoRepository, VotoRepository>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

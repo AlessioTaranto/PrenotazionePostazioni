@@ -3,22 +3,22 @@
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 
- namespace prenotazioni_postazioni_api.Services
+namespace prenotazioni_postazioni_api.Services
  {
      public class PrenotazioneService
      {
         private PrenotazioneRepository _prenotazioneRepository;
         private StanzaService _stanzaService;
         private ImpostazioneService _impostazioneService;
-        private readonly ILogger<PrenotazioneService> logger;
+        private readonly ILogger<PrenotazioneService> logger = Log4NetManager<PrenotazioneService>.GetLogger();
 
-        public PrenotazioneService (PrenotazioneRepository prenotazioneRepository, StanzaService stanzaService, ImpostazioneService impostazioneService, ILogger<PrenotazioneService> logger)
+        public PrenotazioneService (PrenotazioneRepository prenotazioneRepository, StanzaService stanzaService, ImpostazioneService impostazioneService)
         {
             _prenotazioneRepository = prenotazioneRepository;
             _stanzaService = stanzaService;
             _impostazioneService = impostazioneService;
-            this.logger = logger;
         }
 
 

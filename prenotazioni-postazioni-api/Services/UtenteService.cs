@@ -2,18 +2,18 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Services
 {
     public class UtenteService
     {
         private UtenteRepository _utenteRepository;
-        private readonly ILogger<UtenteService> logger;
+        private readonly ILogger<UtenteService> logger = Log4NetManager<UtenteService>.GetLogger();
 
-        public UtenteService(UtenteRepository utenteRepository, ILogger<UtenteService> logger)
+        public UtenteService(UtenteRepository utenteRepository)
         {
             _utenteRepository = utenteRepository;
-            this.logger = logger;
         }
 
 
