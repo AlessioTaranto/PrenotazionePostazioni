@@ -2,6 +2,7 @@
 using System;
 using System.Text;
 using Microsoft.Data.SqlClient;
+using prenotazioni_postazioni_api.Utilities;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 
@@ -28,6 +29,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         {
             this.logger = logger;
         }
+
 
         public T MakeQueryOneResult(string query)
         {
@@ -100,7 +102,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// </summary>
         /// <param name="query">la query al db</param>
         /// <returns>Json con il dato trovato</returns>
-        private string? GetOneResult(string query)
+        private T GetOneResult(string query)
         {
             if (!checkConnectionDatabase())
             {
@@ -111,13 +113,16 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 SqlCommand cmd = new SqlCommand(query, conn);
                 conn.Open();
                 var reader = cmd.ExecuteReader();
-                IEnumerable<Dictionary<string, object>> result = Serialize(reader);
-                Console.WriteLine(result);
-                string jsonResult = JsonConvert.SerializeObject(result);
+                Dictionary<string, object> result = new Dictionary<string, object>();
+                int i = 0;
+                while (reader.Read())
+                {
+                    result.Add(reader.GetName(i), reader[i]);
+                    i++;
+                }
                 conn.Close();
-                jsonResult = jsonResult.Replace("[", "").Replace("]", "");
-                Console.WriteLine("JsonResult: "+jsonResult);
-                return jsonResult;
+                T value = result.ToObject<dynamic>();
+                return value;
             }
         }
 
