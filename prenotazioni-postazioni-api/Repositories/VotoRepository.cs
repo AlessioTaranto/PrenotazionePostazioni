@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Repositories.Database;
 using log4net;
-using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 
 namespace prenotazioni_postazioni_api.Repositories

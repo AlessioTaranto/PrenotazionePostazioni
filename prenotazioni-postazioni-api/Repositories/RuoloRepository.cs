@@ -2,7 +2,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
-using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
 using prenotazioni_postazioni_api.Exceptions;
 using log4net;
 
