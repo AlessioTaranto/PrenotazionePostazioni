@@ -44,7 +44,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="festa">la festa da salvare</param>
         internal void Save(Festa festa)
         {
-            string query = $"INSERT INTO Festa (giorno, descrizione) VALUES ('{festa.Giorno.ToString("yyyy-MM-dd hh:mm:ss:fff")}', '{festa.Descrizione})';";
+            string query = $"INSERT INTO Feste (giorno, descrizione) VALUES ('{festa.Giorno.ToString("yyyy-MM-dd HH:mm:ss")}', '{festa.Descrizione}');";
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
     }
