@@ -91,7 +91,7 @@ namespace prenotazioni_postazioni_api.Controllers
         }
 
         [Route("addFesta")]
-        [HttpGet]
+        [HttpPost]
         public IActionResult AddFestaByDate([FromBody] FestaDto festaDto)
         {
             try
