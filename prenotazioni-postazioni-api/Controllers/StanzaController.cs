@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Trovando tutte le stanze...");
                 List<Stanza> stanze = _stanzaService.GetAllStanze();
                 _logger.Info("Stanze trovate con successo!");
-                return Ok();
+                return Ok(stanze);
             }
             catch (Exception ex)
             {

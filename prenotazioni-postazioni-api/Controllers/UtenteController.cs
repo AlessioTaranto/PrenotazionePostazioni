@@ -29,7 +29,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 List<Utente> utenti = _utenteService.getAllUtenti();
                 _logger.Info("Prelevato tutti gli utenti con successo!");
 
-                return Ok();
+                return Ok(utenti);
             }
             catch (Exception ex)
             {

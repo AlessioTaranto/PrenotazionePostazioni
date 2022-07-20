@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories
         internal Prenotazione FindById(int idPrenotazione)
         {
 
-            string query = $"SELECT * FROM Prenotazioni WHERE idPrenotazione = {idPrenotazione};";
+            string query = $"SELECT * FROM Prenotazioni WHERE idPrenotazioni = {idPrenotazione};";
             return DatabaseManager<Prenotazione>.GetInstance().MakeQueryOneResult(query);
         }
         /// <summary>
