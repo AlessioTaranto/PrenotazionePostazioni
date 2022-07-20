@@ -14,6 +14,10 @@
             Votazioni = new List<int>();
         }
 
+        /// <summary>
+        /// converte la lista delle votazioni in una stringa json così
+        /// da poterla passare in javascript
+        /// </summary>
         public string VotazioniJson()
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(Votazioni);
