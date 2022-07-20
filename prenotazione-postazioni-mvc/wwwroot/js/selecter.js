@@ -20,6 +20,17 @@ function getIdDay(number) {
     return "null";
 }
 
+function getIdDay1(number) {
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 7; j++) {
+            if ($('#'.concat(j).concat('-').concat(i).concat(1)).css("color") === "rgb(0, 0, 0)" &&
+                $('#'.concat(j).concat('-').concat(i).concat(1)).text() == number)
+                return j + '-' + i + "" + 1;
+        }
+    }
+    return "null";
+}
+
 function clickCalendar(id) {
     let selector = $('#'.concat(id));
 
@@ -53,9 +64,13 @@ function goDate(newDate) {
     loadCalendar();
 }
 
+function goDate1(newDate) {
+    date1 = newDate;
+    loadCalendar1();
+}
+
 function selectDayFest(date) {
     daySelected = date;
-    $('#day-sel-1').text("Giorno selezionato: " + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
 }
 
 function clickCalendarFest(id) {

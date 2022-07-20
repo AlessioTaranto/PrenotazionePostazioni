@@ -7,6 +7,8 @@
         public FestivitaImpostazioniViewModel FestivitaViewModel { get; set; }
         public PresenzeImpostazioniViewModel PresenzeViewModel { get; set; }
 
+        public int StateTab { get; set; } = 0;
+
         public ImpostazioniViewModel(CapienzaImpostazioniViewModel capienzaViewModel, FestivitaImpostazioniViewModel festivitaViewModel, PresenzeImpostazioniViewModel presenzeViewModel)
         {
             CapienzaViewModel = capienzaViewModel;
