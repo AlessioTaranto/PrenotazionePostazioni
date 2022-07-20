@@ -2,16 +2,16 @@
 {
     public class VotazioniViewModel
     {
-        public List<bool?> Votazioni { get; set; }
+        public List<int> Votazioni { get; set; }
 
-        public VotazioniViewModel(List<bool?> votazioni)
+        public VotazioniViewModel(List<int> votazioni)
         {
             Votazioni = votazioni;
         }
 
         public VotazioniViewModel()
         {
-            Votazioni = new List<bool?>();
+            Votazioni = new List<int>();
         }
 
         public string VotazioniJson()

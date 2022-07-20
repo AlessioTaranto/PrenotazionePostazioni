@@ -18,7 +18,7 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         [HttpPost]
         [ActionName("VoteUser")]
-        public IActionResult VoteUser(bool? voto, int i)
+        public IActionResult VoteUser(int voto, int i)
         {
             try
             {
