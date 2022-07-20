@@ -51,9 +51,9 @@
         let voti = JSON.parse(votiStr);
 
         for (let i = 0; i < countVotazioni; i++ ) {
-            if (voti[i] == true) {
+            if (voti[i] == 1) {
                 $('#rumoroso' + (i+1)).prop("checked", true);
-            } else if (voti[i] == false) {
+            } else if (voti[i] == -1) {
                 $('#non_rumoroso' + (i+1)).prop("checked", true);
             }
         }
@@ -75,13 +75,13 @@
                       $.ajax({
                           type: "POST",
                           url: "Votazioni/VoteUser",
-                          data: { "voto": false, "i": i }
+                          data: { "voto": -1, "i": i }
                       })
                   } else {
                       $.ajax({
                           type: "POST",
                           url: "Votazioni/VoteUser",
-                          data: { "voto": true, "i": i }
+                          data: { "voto": 1, "i": i }
                       })
                   }
               } else {
@@ -89,7 +89,7 @@
                   $.ajax({
                        type: "POST",
                        url: "Votazioni/VoteUser",
-                       data: { "voto": null, "i": i }
+                       data: { "voto": 0, "i": i }
                   })
               }
         });
