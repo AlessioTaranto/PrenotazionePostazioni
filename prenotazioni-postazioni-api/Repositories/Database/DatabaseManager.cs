@@ -2,7 +2,7 @@
 using System;
 using System.Text;
 using log4net;
-using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 

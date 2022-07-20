@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Repositories.Database;
 using log4net;
-using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
