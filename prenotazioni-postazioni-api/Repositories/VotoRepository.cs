@@ -3,12 +3,13 @@ using Newtonsoft.Json;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class VotoRepository
     {
-        private readonly ILogger<VotoRepository> logger = Log4NetManager<VotoRepository>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(VotoRepository));
 
         public VotoRepository()
         {

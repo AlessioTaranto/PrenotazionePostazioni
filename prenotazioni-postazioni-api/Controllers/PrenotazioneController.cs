@@ -5,6 +5,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -13,7 +14,7 @@ namespace prenotazioni_postazioni_api.Controllers
     public class PrenotazioneController : ControllerBase
     {
         private PrenotazioneService _prenotazioneService;
-        private readonly ILogger<PrenotazioneController> _logger = Log4NetManager<PrenotazioneController>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(PrenotazioneController));
 
         public PrenotazioneController(PrenotazioneService prenotazioneService)
         {

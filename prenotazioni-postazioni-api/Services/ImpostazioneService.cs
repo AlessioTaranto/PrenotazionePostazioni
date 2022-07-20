@@ -2,13 +2,14 @@
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Services
 {
     public class ImpostazioneService
     {
         private ImpostazioneRepository _impostazioneRepository;
-        private readonly ILogger<ImpostazioneService> logger = Log4NetManager<ImpostazioneService>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(ImpostazioneService));
 
         public ImpostazioneService(ImpostazioneRepository impostazioneRepository)
         {

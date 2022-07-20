@@ -6,6 +6,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
 using Microsoft.AspNetCore.Cors;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -14,7 +15,7 @@ namespace prenotazioni_postazioni_api.Controllers
     public class StanzaController : ControllerBase
     {
         private StanzaService _stanzaService;
-        private ILogger<StanzaController> _logger = Log4NetManager<StanzaController>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(StanzaController));
 
         public StanzaController(StanzaService serviceService)
         {

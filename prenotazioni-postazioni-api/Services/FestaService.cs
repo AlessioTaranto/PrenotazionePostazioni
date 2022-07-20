@@ -3,14 +3,14 @@ using prenotazioni_postazioni_api.Repositories;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Services
 {
     public class FestaService
     {
         private FestaRepository _festaRepository = new FestaRepository();
-        private readonly ILogger<FestaService> logger = Log4NetManager<FestaService>.GetLogger();
-
+        private readonly ILog logger = LogManager.GetLogger(typeof(FestaService));
  
 
         /// <summary>

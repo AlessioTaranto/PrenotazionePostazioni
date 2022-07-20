@@ -3,6 +3,7 @@ using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Services
 {
@@ -10,7 +11,7 @@ namespace prenotazioni_postazioni_api.Services
     {
         private RuoloRepository _ruoloRepository;
         private UtenteRepository _utenteRepository;
-        private readonly ILogger<RuoloService> _logger = Log4NetManager<RuoloService>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(RuoloService));
 
         public RuoloService(RuoloRepository ruoloRepository, UtenteRepository utenteRepository)
         {

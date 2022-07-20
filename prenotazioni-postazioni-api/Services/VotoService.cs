@@ -3,13 +3,14 @@ using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Services
 {
     public class VotoService
     {
         private VotoRepository _votoRepository;
-        private readonly ILogger<VotoService> logger = Log4NetManager<VotoService>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(VotoService));
         public VotoService(VotoRepository votoRepository)
         {
             _votoRepository = votoRepository;

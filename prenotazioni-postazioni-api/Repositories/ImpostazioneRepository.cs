@@ -4,12 +4,13 @@ using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class ImpostazioneRepository
     {
-        private readonly ILogger<ImpostazioneRepository> logger = Log4NetManager<ImpostazioneRepository>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(ImpostazioneRepository));
 
         public ImpostazioneRepository()
         {

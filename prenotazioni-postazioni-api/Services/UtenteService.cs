@@ -3,13 +3,14 @@ using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Services
 {
     public class UtenteService
     {
         private UtenteRepository _utenteRepository;
-        private readonly ILogger<UtenteService> logger = Log4NetManager<UtenteService>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(UtenteService));
 
         public UtenteService(UtenteRepository utenteRepository)
         {

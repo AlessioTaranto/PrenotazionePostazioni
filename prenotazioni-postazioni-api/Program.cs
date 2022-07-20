@@ -7,7 +7,7 @@ using prenotazioni_postazioni_api.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add logging Log4Net
-builder.Logging.AddLog4Net();
+builder.Logging.AddLog4Net("log4net.config");
 
 
 // Add services to the container.

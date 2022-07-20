@@ -4,12 +4,13 @@ using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class RuoloRepository
     {
-        private readonly ILogger<RuoloRepository> logger = Log4NetManager<RuoloRepository>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(RuoloRepository));
 
         public RuoloRepository()
         {

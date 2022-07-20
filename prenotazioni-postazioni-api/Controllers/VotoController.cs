@@ -4,6 +4,7 @@ using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Utilities;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -12,7 +13,7 @@ namespace prenotazioni_postazioni_api.Controllers
     public class VotoController : ControllerBase
     {
         private VotoService _votoService;
-        private readonly ILogger<VotoController> _logger = Log4NetManager<VotoController>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(VotoController));
 
         public VotoController(VotoService votoService)
         {

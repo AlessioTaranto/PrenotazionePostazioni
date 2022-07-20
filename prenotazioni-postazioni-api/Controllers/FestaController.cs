@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using log4net;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
@@ -12,7 +13,7 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/festivita")]
     public class FestaController : ControllerBase
     {
-        private readonly ILogger<FestaController> logger = Log4NetManager<FestaController>.GetLogger();
+        private readonly ILog logger = LogManager.GetLogger(typeof(FestaController));
         private FestaService _festaService;
 
         public FestaController(FestaService festaService)
@@ -36,24 +37,24 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                logger.LogInformation("Trovando una festa mediante date...");
+                logger.Info("Trovando una festa mediante date...");
                 Festa festa = _festaService.GetByDate(new DateTime(year, month, day));
                 if(festa == null)
                 {
-                    logger.LogWarning("Festa e' null, return NotFound");
+                    logger.Warn("Festa e' null, return NotFound");
                     return NotFound("Festa è null");
                 }
-                logger.LogInformation("Festa trovato. Return OK");
+                logger.Info("Festa trovato. Return OK");
                 return Ok(festa);
             }
             catch(PrenotazionePostazioniApiException ex)
             {
-                logger.LogError("Bad request: " + ex.Message);
+                logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical("Errore interno: " + ex.Message);
+                logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message+"\nStack Trace:"+ex.StackTrace);
             }
             
@@ -66,28 +67,26 @@ namespace prenotazioni_postazioni_api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            ILogger<FestaController> l = Log4NetManager<FestaController>.GetLogger();
-            Console.WriteLine(l);
             try
             {
-                logger.LogInformation("Trovando tutte le feste...");
+                logger.Info("Trovando tutte le feste...");
                 List<Festa> feste = _festaService.GetAll();
                 if(feste == null)
                 {
-                    logger.LogWarning("Nessuna festa trovata, NotFound");
+                    logger.Warn("Nessuna festa trovata, NotFound");
                     return NotFound("feste e' null");
                 }
-                logger.LogInformation("Feste trovate, Ok");
+                logger.Info("Feste trovate, Ok");
                 return Ok(feste);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                logger.LogError("Bad request: " + ex.Message);
+                logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical("Errore Interno: " + ex.Message);
+                logger.Fatal("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -98,19 +97,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                logger.LogInformation("Salvando una festaDto del database...");
+                logger.Info("Salvando una festaDto del database...");
                 _festaService.Save(festaDto);
-                logger.LogInformation("FestaDto salvato con successo, Ok");
+                logger.Info("FestaDto salvato con successo, Ok");
                 return Ok();
             }
             catch(PrenotazionePostazioniApiException ex)
             {
-                logger.LogError("Bad request: " + ex.Message);
+                logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical("Errore Interno: " + ex.Message);
+                logger.Fatal("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
