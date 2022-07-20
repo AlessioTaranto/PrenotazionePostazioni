@@ -30,6 +30,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id Prenotazione: " + idPrenotazione);
                 _logger.Info("Trovando una prenotazione mediante l'id...");
                 _logger.Info("Id: " + idPrenotazione);
                 Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
@@ -79,6 +80,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id stanza: " + idStanza);
                 _logger.Info("Trovando tutte le prenotazioni di una stanza...");
                 List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByStanza(idStanza);
                 _logger.Info("Prenotazioni della stanza ID: " + idStanza + " trovate!");
@@ -107,6 +109,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id utente: " + idUtente);
                 _logger.Info("Trovando tutte le prenotazioni di un utente");
                 List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByUtente(idUtente);
                 _logger.Info("Prenotazioni dell'id utente: " + idUtente + " trovate con successo!");
@@ -166,6 +169,10 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Utente: " + prenotazioneDto.Utente.Nome);
+                _logger.Info("Inizio data: " + prenotazioneDto.StartDate.ToString());
+                _logger.Info("Fine data: " + prenotazioneDto.EndDate.ToString());
+                _logger.Info("Stanza: " + prenotazioneDto.Stanza.Nome);
                 _logger.Info("Aggiungendo una prenotazioneDto nel database...");
                 _prenotazioneService.Save(prenotazioneDto);
                 _logger.Info("PrenotazioneDto aggiunto con successo!");

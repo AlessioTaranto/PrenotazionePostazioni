@@ -49,6 +49,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id utente: " + id);
                 _logger.Info("Prelevando un utente mediante il suo id: " + id + "...");
                 Utente utente = _utenteService.GetUtenteById(id);
                 _logger.Info("Utente trovato con successo!");
@@ -71,6 +72,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Nome: " + nome);
+                _logger.Info("Cognome: " + cognome);
                 _logger.Info($"Trovando l'utente mediante il suo nome {nome} {cognome}...");
                 Utente utente = _utenteService.GetUtenteByName(nome, cognome);
                 _logger.Info($"utente trovato mediante il suo nome con successo!");
@@ -99,6 +102,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Email: " + email);
                 _logger.Info($"Trovando l'utente mediante la sua email:{email}...");
                 Utente utente = _utenteService.GetUtenteByEmail(email);
                 _logger.Info("Utente trovato mediante il suo email con successo!");
@@ -127,6 +131,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Nome utente: " + utenteDto.Nome);
+                _logger.Info("Cognome utente: " + utenteDto.Cognome);
                 _logger.Info("Salvando un utente nel database...");
                 _utenteService.Save(utenteDto);
                 _logger.Info("Utente salvato nel database con successo!");

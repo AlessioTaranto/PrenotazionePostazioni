@@ -53,6 +53,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id stanza: " + id);
                 _logger.Info("Trovando la stanza mediante il suo id: " + id + "...");
                 Stanza stanza = _stanzaService.GetStanzaById(id);
                 _logger.Info("Stanza trovata con successo!");
@@ -81,6 +82,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Nome della stanza: " + stanzaName);
                 _logger.Info("Trovando la stanza mediante il suo nome: " + stanzaName + "...");
                 Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
                 _logger.Info("Stanza trovata con successo!");
@@ -110,6 +112,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Nome della stanza: " + stanzaDto.Nome);
                 _logger.Info("Salvando una stanzaDto nel database...");
                 _stanzaService.Save(stanzaDto);
                 _logger.Info("StanzaDto salvato nel database con successo!");

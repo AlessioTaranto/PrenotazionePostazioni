@@ -31,6 +31,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id utente: " + idUtente);
                 _logger.Info("Trovando tutti i voti effettuati di un utente...");
                 List<Voto> voti = _votoService.GetVotiFromUtente(idUtente);
                 _logger.Info("Voti dell'utente trovati con successo!");
@@ -56,6 +57,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id utente: " + idUtente);
                 _logger.Info("Trovando tutti i voti che sono stati effettuati su un utente...");
                 List<Voto> voti = _votoService.GetVotiToUtente(idUtente);
                 _logger.Info("Voti trovati con successo!");
@@ -79,6 +81,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Voto utente: " + votoDto.Utente.Nome);
+                _logger.Info("Voto utente votato: " + votoDto.UtenteVotato.Nome);
                 _logger.Info("Effettuando un voto su un utente...");
                 _votoService.MakeVotoToUtente(votoDto);
                 _logger.Info("Voto effettuato con successo!");
@@ -103,6 +107,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Id utente :" + idUtente);
+                _logger.Info("Id utente votato: " + idUtenteVotato);
                 _logger.Info($"Eliminazione voto di {idUtente} verso {idUtenteVotato}");
                 _votoService.DeleteVoto(idUtente, idUtenteVotato);
                 return Ok();
