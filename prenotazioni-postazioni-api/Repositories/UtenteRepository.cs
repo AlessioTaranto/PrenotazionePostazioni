@@ -59,5 +59,11 @@ namespace prenotazioni_postazioni_api.Repositories
             string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES ('{utente.Nome}', '{utente.Cognome}', '{utente.Image}', '{utente.Email}', {utente.IdRuolo});";
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
+
+        internal Utente FindByName(string nome, string cognome)
+        {
+            string query = $"SELECT * FROM Utenti WHERE (nome = '{nome}' AND cognome = '{cognome}')";
+            return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(query);
+        }
     }
 }

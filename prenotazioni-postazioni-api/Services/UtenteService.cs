@@ -73,6 +73,21 @@ namespace prenotazioni_postazioni_api.Services
             return utente;
         }
 
+        internal Utente GetUtenteByName(string nome, string cognome)
+        {
+            logger.Info($"Trovando l'utente mediante il suo nome: {nome} {cognome}");
+            Utente utente = _utenteRepository.FindByName(nome, cognome);
+            logger.Info("Controllando se l'utente e' null...");
+            if (utente == null)
+            {
+                logger.Error("L'utente non e' valido");
+                throw new PrenotazionePostazioniApiException("Nome utente non trovato");
+
+            }
+            logger.Info("L'utente e' valido!");
+            return utente;
+        }
+
 
         /// <summary>
         /// Serve per salvare nel database un utente
