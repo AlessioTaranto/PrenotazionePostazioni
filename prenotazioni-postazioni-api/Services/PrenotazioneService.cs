@@ -12,13 +12,15 @@ namespace prenotazioni_postazioni_api.Services
         private PrenotazioneRepository _prenotazioneRepository;
         private StanzaService _stanzaService;
         private ImpostazioneService _impostazioneService;
+        private UtenteService _utenteService;
         private readonly ILog logger = LogManager.GetLogger(typeof(PrenotazioneService));
 
-        public PrenotazioneService (PrenotazioneRepository prenotazioneRepository, StanzaService stanzaService, ImpostazioneService impostazioneService)
+        public PrenotazioneService (PrenotazioneRepository prenotazioneRepository, StanzaService stanzaService, ImpostazioneService impostazioneService, UtenteService utenteService)
         {
             _prenotazioneRepository = prenotazioneRepository;
             _stanzaService = stanzaService;
             _impostazioneService = impostazioneService;
+            _utenteService = utenteService;
         }
 
 
@@ -47,14 +49,17 @@ namespace prenotazioni_postazioni_api.Services
         }
 
 
-            /// <summary>
-            /// Trova tutte le prenotazioni dall'ID stanza nel Database
-            /// </summary>
-            /// <param name="idStanza">ID della stanza associata alla Prenotazione da trovare</param>
-            /// <returns>Prenotazione trovata, altrimenti null</returns>
-            /// <exception cref="PrenotazionePostazioniApiException"></exception>
-            public List<Prenotazione> GetPrenotazioniByStanza(int idStanza)
+         /// <summary>
+         /// Trova tutte le prenotazioni dall'ID stanza nel Database
+         /// </summary>
+         /// <param name="idStanza">ID della stanza associata alla Prenotazione da trovare</param>
+         /// <returns>Prenotazione trovata, altrimenti null</returns>
+         /// <exception cref="PrenotazionePostazioniApiException"></exception>
+         public List<Prenotazione> GetPrenotazioniByStanza(int idStanza)
          {
+            logger.Info($"Verifico che l'id {idStanza} corrisponda a una stanza valida...");
+            Stanza stanzaApp = _stanzaService.GetStanzaById(idStanza);
+
             logger.Info($"Cercando una prenotazione mediante l'id stanza {idStanza}");
             return _prenotazioneRepository.FindByStanza(idStanza); ;
         }
@@ -71,6 +76,9 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info($"Id Stanza: {idStanza}");
             logger.Info("StartDate: " + startDate.ToString());
             logger.Info("EndDate: " + endDate.ToString());
+            logger.Info($"Verifico che l'idStanza {idStanza} sia associato a una stanza valida");
+            Stanza stanzaApp = _stanzaService.GetStanzaById(idStanza);
+
             logger.Info("Chiamando il metodo FindAllByIdStanzaAndDate()");
             return _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, startDate, endDate);
         }
@@ -93,6 +101,9 @@ namespace prenotazioni_postazioni_api.Services
          internal List<Prenotazione> GetPrenotazioniByUtente(int idUtente)
         {
             logger.Info("Trovando tutte le prenotazioni di un utente, id utente: " + idUtente);
+            logger.Info($"Verifico che l'id {idUtente} sia associato ad un utente valido");
+            Utente utenteApp = _utenteService.GetUtenteById(idUtente);
+
             logger.Info("Chiamando il metodo FindByUtente()");
             return _prenotazioneRepository.FindByUtente(idUtente);
          }
