@@ -2,7 +2,6 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
-using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Services
@@ -25,7 +24,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>List di Utente trovati, null altrimenti</returns>
         internal List<Utente> getAllUtenti()
         {
-            logger.LogInformation("Trovando tutti gli utenti nel database...");
+            logger.Info("Trovando tutti gli utenti nel database...");
             return _utenteRepository.FindAll();
         }
 
@@ -37,17 +36,17 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Utente GetUtenteById(int id)
         {
-            logger.LogInformation("Trovando l'utente mediante il suo id: " + id);
+            logger.Info("Trovando l'utente mediante il suo id: " + id);
             Utente utente = _utenteRepository.FindById(id);
-            logger.LogInformation("Controllando se l'utente trovato e' valido...");
+            logger.Info("Controllando se l'utente trovato e' valido...");
             if (utente == null)
             {
-                logger.LogError("L'utente trovato NON e' valido");
+                logger.Error("L'utente trovato NON e' valido");
                 throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             }
             else
             {
-                logger.LogInformation("L'utente trovato e' valido");
+                logger.Info("L'utente trovato e' valido");
                 return utente;
 
             }
@@ -61,16 +60,16 @@ namespace prenotazioni_postazioni_api.Services
             /// <exception cref="PrenotazionePostazioniApiException"></exception>
             internal Utente GetUtenteByEmail(string email)
         {
-            logger.LogInformation("Trovando l'utente mediante il suo email: " + email);
+            logger.Info("Trovando l'utente mediante il suo email: " + email);
             Utente utente = _utenteRepository.FindByEmail(email);
-            logger.LogInformation("Controllando se l'utente e' null...");
+            logger.Info("Controllando se l'utente e' null...");
             if (utente == null)
             {
-                logger.LogError("L'utente non e' valido");
+                logger.Error("L'utente non e' valido");
                 throw new PrenotazionePostazioniApiException("IdUtente non trovato");
 
             }
-            logger.LogInformation("L'utente e' valido!");
+            logger.Info("L'utente e' valido!");
             return utente;
         }
 
@@ -82,9 +81,9 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal void Save(UtenteDto utenteDto)
         {
-            logger.LogInformation("Convertendo utenteDto in Utente...");
+            logger.Info("Convertendo utenteDto in Utente...");
             Utente utente = new Utente(utenteDto.Nome, utenteDto.Cognome, utenteDto.Image, utenteDto.Email, utenteDto.Ruolo.IdRuolo);
-            logger.LogInformation("Procedo con il salvataggio dell'utente nel database");
+            logger.Info("Procedo con il salvataggio dell'utente nel database");
             _utenteRepository.Save(utente);
         }
 

@@ -2,7 +2,6 @@
 using prenotazioni_postazioni_api.Repositories;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazione_postazioni_libs.Dto;
-using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Services
@@ -20,7 +19,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>lista di date</returns>
         internal Festa GetByDate(DateTime date)
         {
-            logger.LogInformation("Chiedendo a FestaRepository di trovare una festa mediante una data...");
+            logger.Info("Chiedendo a FestaRepository di trovare una festa mediante una data...");
             return _festaRepository.FindByDate(date);
         }
 
@@ -31,7 +30,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Lista di feste</returns>
         internal List<Festa> GetAll()
         {
-            logger.LogInformation("Chiedendo a FestaRepository di trovare tutte le feste");
+            logger.Info("Chiedendo a FestaRepository di trovare tutte le feste");
             return _festaRepository.FindAll();
         }
 
@@ -42,13 +41,13 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException">throw nel caso in cui la data e' gia esistenze</exception>
         internal void Save(FestaDto festaDto)
         {
-            logger.LogInformation("Controllando se festaDto e' valida...");
+            logger.Info("Controllando se festaDto e' valida...");
             if(_festaRepository.FindByDate(festaDto.Date) != null)
             {
-                logger.LogWarning("FestaDto non e' valida, ho lanciato una PrenotazionePostazioniApiException!");
+                logger.Warn("FestaDto non e' valida, ho lanciato una PrenotazionePostazioniApiException!");
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
-            logger.LogWarning("FestaDto e' valida. Cercando di salvare Festa nel database...");
+            logger.Info("FestaDto e' valida. Cercando di salvare Festa nel database...");
             _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc));
         }
     }

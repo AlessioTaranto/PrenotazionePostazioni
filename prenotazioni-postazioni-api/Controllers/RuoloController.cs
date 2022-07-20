@@ -15,7 +15,7 @@ namespace prenotazioni_postazioni_api.Controllers
     public class RuoloController : ControllerBase
     {
         private RuoloService _ruoloService;
-        private readonly ILog logger = LogManager.GetLogger(typeof(RuoloController));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(RuoloController));
 
         public RuoloController(RuoloService ruoloService)
         {
@@ -36,19 +36,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Prelevando un ruolo mediante Ruolo Id...");
+                _logger.Info("Prelevando un ruolo mediante Ruolo Id...");
                 Ruolo ruolo = _ruoloService.GetRuoloById(idRuolo);
-                _logger.LogInformation("Ruolo prelevato con successo!");
+                _logger.Info("Ruolo prelevato con successo!");
                 return Ok(ruolo);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                _logger.LogWarning("Ruolo non trovato: " + ex.Message);
+                _logger.Warn("Ruolo non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -64,19 +64,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Trovando un ruolo mediante l'id dell'utente...");
+                _logger.Info("Trovando un ruolo mediante l'id dell'utente...");
                 Ruolo ruolo = _ruoloService.GetRuoloByIdUtente(idUtente);
-                _logger.LogInformation("Ruolo dell'id utente: " + idUtente + " trovato con successo!");
+                _logger.Info("Ruolo dell'id utente: " + idUtente + " trovato con successo!");
                 return Ok(ruolo);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                _logger.LogWarning("Ruolo non trovato: " + ex.Message);
+                _logger.Warn("Ruolo non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -93,28 +93,28 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Aggiornando il ruolo di un utente...");
+                _logger.Info("Aggiornando il ruolo di un utente...");
                 bool ok = _ruoloService.UpdateRuoloUtenteByAdminUtenteId(idUtente, idAdmin);
                 _logger.LogInformation("Controllando se l'autorizzazione e' valida...");
                 if (ok)
                 {
-                    _logger.LogInformation("Autorizzazione riconosciuta!");
+                    _logger.Info("Autorizzazione riconosciuta!");
                     return Ok();
                 }
                 else
                 {
-                    _logger.LogError("Autorizzazione NON riconosciuta");
+                    _logger.Error("Autorizzazione NON riconosciuta");
                     return Forbid("Non autorizzato");
                 }
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                _logger.LogError("Bad request: " + ex.Message);
+                _logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

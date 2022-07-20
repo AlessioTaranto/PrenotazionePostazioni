@@ -15,7 +15,7 @@ namespace prenotazioni_postazioni_api.Controllers
     public class StanzaController : ControllerBase
     {
         private StanzaService _stanzaService;
-        private readonly ILog logger = LogManager.GetLogger(typeof(StanzaController));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(StanzaController));
 
         public StanzaController(StanzaService serviceService)
         {
@@ -31,14 +31,14 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Trovando tutte le stanze...");
+                _logger.Info("Trovando tutte le stanze...");
                 List<Stanza> stanze = _stanzaService.GetAllStanze();
-                _logger.LogInformation("Stanze trovate con successo!");
+                _logger.Info("Stanze trovate con successo!");
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -54,18 +54,18 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Trovando la stanza mediante il suo id: " + id + "...");
+                _logger.Info("Trovando la stanza mediante il suo id: " + id + "...");
                 Stanza stanza = _stanzaService.GetStanzaById(id);
-                _logger.LogInformation("Stanza trovata con successo!");
+                _logger.Info("Stanza trovata con successo!");
                 return Ok(stanza);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                _logger.LogWarning("Stanza non trovata: " + ex.Message);
+                _logger.Warn("Stanza non trovata: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch(Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return BadRequest();
             }
             
@@ -82,20 +82,20 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Trovando la stanza mediante il suo nome: " + stanzaName + "...");
+                _logger.Info("Trovando la stanza mediante il suo nome: " + stanzaName + "...");
                 Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
-                _logger.LogInformation("Stanza trovata con successo!");
+                _logger.Info("Stanza trovata con successo!");
                 return Ok(stanza);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
 
-                _logger.LogWarning("stanza non trovata: " + ex.Message);
+                _logger.Warn("stanza non trovata: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -111,18 +111,18 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Salvando una stanzaDto nel database...");
+                _logger.Info("Salvando una stanzaDto nel database...");
                 _stanzaService.Save(stanzaDto);
-                _logger.LogInformation("StanzaDto salvato nel database con successo!");
+                _logger.Info("StanzaDto salvato nel database con successo!");
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
             {
-                _logger.LogWarning("bad request: " + ex.Message);
+                _logger.Warn("bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

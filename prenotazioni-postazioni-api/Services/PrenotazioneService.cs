@@ -3,7 +3,6 @@
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
-using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Services
@@ -32,16 +31,16 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         public Prenotazione GetPrenotazioneById(int idPrenotazione)
         {
-            logger.LogInformation("Cercando una prenotazione mediante il suo id " + idPrenotazione);
+            logger.Info("Cercando una prenotazione mediante il suo id " + idPrenotazione);
             Prenotazione prenotazione = _prenotazioneRepository.FindById(idPrenotazione);
-            logger.LogInformation("Controllando se e' una prenotazione valida...");
+            logger.Info("Controllando se e' una prenotazione valida...");
             if (prenotazione == null){
-                logger.LogWarning("Prenotazione e' null, non e' valida!");
+                logger.Warn("Prenotazione e' null, non e' valida!");
                 throw new PrenotazionePostazioniApiException("Prenotazione non trovata");
             }
             else
             {
-                logger.LogInformation("Prenotazione valida!");
+                logger.Info("Prenotazione valida!");
                 return prenotazione;
 
             }
@@ -56,7 +55,7 @@ namespace prenotazioni_postazioni_api.Services
             /// <exception cref="PrenotazionePostazioniApiException"></exception>
             public List<Prenotazione> GetPrenotazioniByStanza(int idStanza)
          {
-            logger.LogInformation($"Cercando una prenotazione mediante l'id stanza {idStanza}");
+            logger.Info($"Cercando una prenotazione mediante l'id stanza {idStanza}");
             return _prenotazioneRepository.FindByStanza(idStanza); ;
         }
 
@@ -68,11 +67,11 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns></returns>
         internal List<Prenotazione> GetAllPrenotazioniByIdStanzaAndDate(int idStanza, DateTime startDate, DateTime endDate)
         {
-            logger.LogInformation($"Cercando tutte le prenotazione di una stanza mediante una data di inizio e fine");
-            logger.LogInformation($"Id Stanza: {idStanza}");
-            logger.LogInformation("StartDate: " + startDate.ToString());
-            logger.LogInformation("EndDate: " + endDate.ToString());
-            logger.LogInformation("Chiamando il metodo FindAllByIdStanzaAndDate()");
+            logger.Info($"Cercando tutte le prenotazione di una stanza mediante una data di inizio e fine");
+            logger.Info($"Id Stanza: {idStanza}");
+            logger.Info("StartDate: " + startDate.ToString());
+            logger.Info("EndDate: " + endDate.ToString());
+            logger.Info("Chiamando il metodo FindAllByIdStanzaAndDate()");
             return _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, startDate, endDate);
         }
         
@@ -82,7 +81,7 @@ namespace prenotazioni_postazioni_api.Services
          /// <returns>Lista di Prenotazioni trovate nel Database</returns>
          internal List<Prenotazione> GetAllPrenotazioni()
          {
-            logger.LogInformation("Chiamando il metodo FindAll per trovare tutte le stanze");
+            logger.Info("Chiamando il metodo FindAll per trovare tutte le stanze");
              return _prenotazioneRepository.FindAll();
          }
 
@@ -93,8 +92,8 @@ namespace prenotazioni_postazioni_api.Services
          /// <returns>Prenotazione trovata, altrimenti null</returns
          internal List<Prenotazione> GetPrenotazioniByUtente(int idUtente)
         {
-            logger.LogInformation("Trovando tutte le prenotazioni di un utente, id utente: " + idUtente);
-            logger.LogInformation("Chiamando il metodo FindByUtente()");
+            logger.Info("Trovando tutte le prenotazioni di un utente, id utente: " + idUtente);
+            logger.Info("Chiamando il metodo FindByUtente()");
             return _prenotazioneRepository.FindByUtente(idUtente);
          }
 
@@ -104,29 +103,29 @@ namespace prenotazioni_postazioni_api.Services
          /// <param name="prenotazioneDto">La prenotazione da salvare</param>
          public int Save(PrenotazioneDto prenotazioneDto)
          {
-            logger.LogInformation("Controllando se la stanza della prenotazione e' valida...");
+            logger.Info("Controllando se la stanza della prenotazione e' valida...");
             Stanza stanza = _stanzaService.GetStanzaById(prenotazioneDto.Stanza.IdStanza);
             if (stanza == null)
             {
-                logger.LogError("la stanza non e' valida!");
+                logger.Error("la stanza non e' valida!");
                 throw new ArgumentException("IdStanza e' null");
             }
-            logger.LogInformation("La stanza e' valida");
-            logger.LogInformation("Controllando se siamo in stato di emergenza...");
+            logger.Info("La stanza e' valida");
+            logger.Info("Controllando se siamo in stato di emergenza...");
             int MAX_STANZA = _impostazioneService.GetImpostazioneEmergenza() ? stanza.PostiMaxEmergenza : stanza.PostiMax;
-            logger.LogInformation("Creando una nuova prenotazione...");
+            logger.Info("Creando una nuova prenotazione...");
             Prenotazione newPrenotazione = new Prenotazione(prenotazioneDto.StartDate, prenotazioneDto.EndDate, prenotazioneDto.Stanza.IdStanza, prenotazioneDto.Utente.IdUtente);
-            logger.LogInformation("Cercando tutte le prenotazioni che sovrappongono l'orario della prenotazione che si vuole salvare...");
+            logger.Info("Cercando tutte le prenotazioni che sovrappongono l'orario della prenotazione che si vuole salvare...");
             List<Prenotazione> prenotazioni = _prenotazioneRepository.FindAllByIdStanzaAndDate(newPrenotazione.IdStanza, newPrenotazione.StartDate, newPrenotazione.EndDate);
-            logger.LogInformation("Controllando se l'orario della prenotazione e' valida...");
+            logger.Info("Controllando se l'orario della prenotazione e' valida...");
             int resultOreOverlap = ControlloPrenotazioneOrePiena(newPrenotazione, prenotazioni, MAX_STANZA);
             if(resultOreOverlap == 0)
             {
-                logger.LogInformation("Prenotazione valida! Procedo con il salvataggio nel database!");
+                logger.Info("Prenotazione valida! Procedo con il salvataggio nel database!");
                 _prenotazioneRepository.Save(newPrenotazione);
                 return 0;
             }
-            logger.LogWarning("L'orario della prenotazione non e' valida, troppe prenotazione nello stesso orario!");
+            logger.Warn("L'orario della prenotazione non e' valida, troppe prenotazione nello stesso orario!");
             return resultOreOverlap;
         }
 

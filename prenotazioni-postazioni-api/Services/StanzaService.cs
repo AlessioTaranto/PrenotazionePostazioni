@@ -2,7 +2,6 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
-using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Services
@@ -25,7 +24,7 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>una lista di stanza</returns>
         internal List<Stanza> GetAllStanze()
         {
-            logger.LogInformation("trovando tutte le stanze... chiamando il metodo FindAll...");
+            logger.Info("trovando tutte le stanze... chiamando il metodo FindAll...");
             return _stanzaRepository.FindAll();
         }
 
@@ -37,15 +36,15 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Stanza GetStanzaById(int id)
         {
-            logger.LogInformation("Troovando una stanza mediante il suo id: " + id);
+            logger.Info("Troovando una stanza mediante il suo id: " + id);
             Stanza stanza = _stanzaRepository.FindById(id);
-            logger.LogInformation("Controllando se la stanza trovata e' valida...");
+            logger.Info("Controllando se la stanza trovata e' valida...");
             if (stanza == null)
             {
-                logger.LogError("La stanza NON e' valida!");
+                logger.Error("La stanza NON e' valida!");
                 throw new PrenotazionePostazioniApiException("IdStanza non trovata");
             }
-            logger.LogInformation("La stanza e' valida!");
+            logger.Info("La stanza e' valida!");
             return stanza;
         }
 
@@ -57,17 +56,17 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal Stanza GetStanzaByName(string stanzaName)
         {
-            logger.LogInformation("Trovando la stanza mediante il suo nome: " + stanzaName);
+            logger.Info("Trovando la stanza mediante il suo nome: " + stanzaName);
             Stanza stanza = _stanzaRepository.FindByName(stanzaName);
-            logger.LogInformation("Controllando se la stanza trovata e' valida...");
+            logger.Info("Controllando se la stanza trovata e' valida...");
             if (stanza == null)
             {
-                logger.LogError("la stanza NON e' valida...");
+                logger.Error("la stanza NON e' valida...");
                 throw new PrenotazionePostazioniApiException("IdStanza non trovata");
             }
             else
             {
-                logger.LogInformation("La stanza e' valida!");
+                logger.Info("La stanza e' valida!");
                 return stanza;
             }
         }
@@ -79,18 +78,18 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         internal void Save(StanzaDto stanzaDto)
         {
-            logger.LogInformation("Controllando se stanzaDto e' valida...");
+            logger.Info("Controllando se stanzaDto e' valida...");
             if (CheckStanza(stanzaDto))
             {
-                logger.LogInformation("stanzaDto e' valida!");
-                logger.LogInformation("Convertendo la stanzaDto in Stanza...");
+                logger.Info("stanzaDto e' valida!");
+                logger.Info("Convertendo la stanzaDto in Stanza...");
                 Stanza stanza = new Stanza(stanzaDto.Nome, stanzaDto.PostiMax, stanzaDto.PostiMaxEmergenza);
-                logger.LogInformation("Procedo con il salvataggio della stanza nel database...");
+                logger.Info("Procedo con il salvataggio della stanza nel database...");
                 _stanzaRepository.Save(stanza);
             }
             else
             {
-                logger.LogError("La stanza NON e' valida!");
+                logger.Error("La stanza NON e' valida!");
                 throw new PrenotazionePostazioniApiException("IdStanza da salvare non valida");
 
 

@@ -13,7 +13,7 @@ namespace prenotazioni_postazioni_api.Controllers
     public class UtenteController : ControllerBase
     {
         private UtenteService _utenteService;
-        private readonly ILog logger = LogManager.GetLogger(typeof(UtenteController));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(UtenteController));
 
         public UtenteController( UtenteService utenteService)
         {
@@ -26,15 +26,15 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Prelevando tutti gli utenti...");
+                _logger.Info("Prelevando tutti gli utenti...");
                 List<Utente> utenti = _utenteService.getAllUtenti();
-                _logger.LogInformation("Prelevato tutti gli utenti con successo!");
+                _logger.Info("Prelevato tutti gli utenti con successo!");
 
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -50,18 +50,18 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Prelevando un utente mediante il suo id: " + id + "...");
+                _logger.Info("Prelevando un utente mediante il suo id: " + id + "...");
                 Utente utente = _utenteService.GetUtenteById(id);
-                _logger.LogInformation("Utente trovato con successo!");
+                _logger.Info("Utente trovato con successo!");
                 return Ok(utente);
             }catch(PrenotazionePostazioniApiException ex)
             {
-                _logger.LogWarning("Utente non trovato: " + ex.Message);
+                _logger.Warn("Utente non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -77,19 +77,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation($"Trovando l'utente mediante il suo email{email}...");
+                _logger.Info($"Trovando l'utente mediante il suo email{email}...");
                 Utente utente = _utenteService.GetUtenteByEmail(email);
-                _logger.LogInformation("Utente trovato mediante il suo email con successo!");
+                _logger.Info("Utente trovato mediante il suo email con successo!");
                 return Ok(utente);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                _logger.LogWarning("Utente non trovato: " + ex.Message);
+                _logger.Warn("Utente non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch (Exception ex) 
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message); 
             }
         }
@@ -105,18 +105,18 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Salvando un utente nel database...");
+                _logger.Info("Salvando un utente nel database...");
                 _utenteService.Save(utenteDto);
-                _logger.LogInformation("Utente salvato nel database con successo!");
+                _logger.Info("Utente salvato nel database con successo!");
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
             {
-                _logger.LogError("Bad request: " + ex.Message);
+                _logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Errore interno: " + ex.Message);
+                _logger.Fatal("Errore interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

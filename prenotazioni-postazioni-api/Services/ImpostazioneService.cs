@@ -1,7 +1,6 @@
 ﻿using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
-using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Services
@@ -23,17 +22,17 @@ namespace prenotazioni_postazioni_api.Services
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
         public bool GetImpostazioneEmergenza()
         {
-            logger.LogInformation("Chiamando FindImpostazioneEmergenza() per trovare l'impostazione di emergenza...");
+            logger.Info("Chiamando FindImpostazioneEmergenza() per trovare l'impostazione di emergenza...");
             Impostazioni impostazioni = _impostazioneRepository.FindImpostazioneEmergenza();
-            logger.LogInformation("Controllando se impostazioni (Risultato trovato) e' valida...");
+            logger.Info("Controllando se impostazioni (Risultato trovato) e' valida...");
             if (impostazioni == null)
             {
-                logger.LogWarning("Impostazioni non e' valida! Ho lanciato una PrenotazionePostazioniApiException!");
+                logger.Warn("Impostazioni non e' valida! Ho lanciato una PrenotazionePostazioniApiException!");
                 throw new PrenotazionePostazioniApiException("Impostazione di emergenza non trovata");
             }
             else
             {
-                logger.LogInformation("Impostazioni e' valida!");
+                logger.Info("Impostazioni e' valida!");
                 return impostazioni.ModEmergenza;
 
             }
@@ -46,15 +45,15 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
         public void ChangeImpostazioniEmergenza()
         {
-            logger.LogInformation("Controllando se Impostazioni Emergenza e' a true...");
+            logger.Info("Controllando se Impostazioni Emergenza e' a true...");
             if (GetImpostazioneEmergenza() == true)
             {
-                logger.LogInformation("Impostazione emergenza e' a true! L'ho cambiato a false!");
+                logger.Info("Impostazione emergenza e' a true! L'ho cambiato a false!");
                 _impostazioneRepository.UpdateImpostazioneEmergenza(false);
             }
             else
             {
-                logger.LogInformation("Impostazione emergenza e' a false! L'ho cambiato a true!");
+                logger.Info("Impostazione emergenza e' a false! L'ho cambiato a true!");
                 _impostazioneRepository.UpdateImpostazioneEmergenza(true);
             }
         }

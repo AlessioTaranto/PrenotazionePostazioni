@@ -2,14 +2,13 @@
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Services;
-using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class FestaRepository
     {
-        private readonly ILog logger = LogManager.GetLogger(typeof(FestaRepository));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(FestaRepository));
 
         public FestaRepository()
         {
