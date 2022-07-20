@@ -31,6 +31,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Trovando una prenotazione mediante l'id...");
+                _logger.Info("Id: " + idPrenotazione);
                 Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
                 _logger.Info("Trovato una prenotazione con id: " + prenotazione.IdPrenotazioni + " con successo");
                 return Ok(prenotazione);

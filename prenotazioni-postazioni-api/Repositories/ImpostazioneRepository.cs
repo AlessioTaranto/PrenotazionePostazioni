@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Repositories.Database;
 using log4net;
+using Microsoft.Data.SqlClient;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -22,7 +23,8 @@ namespace prenotazioni_postazioni_api.Repositories
         public Impostazioni FindImpostazioneEmergenza()
         {
             string query = "SELECT * FROM Impostazioni;";
-            return DatabaseManager<Impostazioni>.GetInstance().MakeQueryOneResult(query);
+            SqlCommand sqlCommand = new SqlCommand(query);
+            return DatabaseManager<Impostazioni>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>
@@ -33,7 +35,8 @@ namespace prenotazioni_postazioni_api.Repositories
         public void UpdateImpostazioneEmergenza(bool userValue)
         {
             string query = "UPDATE Impostazioni SET modEmergenza = 1 ^ modEmergenza;";
-            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
+            SqlCommand sqlCommand = new SqlCommand(query);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }
 }

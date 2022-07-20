@@ -12,7 +12,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
     {
         public static string DatabaseName { get; } = "[prenotazioni-impostazioni].dbo";
         public static string DefaultInitialCatalog { get; } = "prenotazioni-impostazioni";
-        public static string DefaultDataSource { get; } = "LTP036";
+        public static string DefaultDataSource { get; } = "LTP040";
         public readonly static string DEFAULT_DATABASE_NAME_STRING = "[prenotazioni - impostazioni].dbo";
 
         private SqlConnection? _conn;
@@ -26,36 +26,37 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 
         }
 
-        public T MakeQueryOneResult(string query)
+
+        public T MakeQueryOneResult(SqlCommand sqlCommand)
         {
             logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
             logger.Info("faccio una query al db");
-            T value = JsonConvert.DeserializeObject<T>(GetOneResult(query));
+            T value = JsonConvert.DeserializeObject<T>(GetOneResult(sqlCommand));
             logger.Info("Ho prelevato tutte le informazioni dal db con successo!");
             logger.Info("mi disconnetto dal db");
             DeleteConnection();
             return value;
         }
 
-        public T MakeQueryMoreResults(string query)
+        public T MakeQueryMoreResults(SqlCommand sqlCommand)
         {
             logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
             logger.Info("faccio una query al db");
-            T value = JsonConvert.DeserializeObject<T>(GetAllResults(query));
+            T value = JsonConvert.DeserializeObject<T>(GetAllResults(sqlCommand));
             logger.Info("Ho prelevato tutte le informazioni dal db con successo!");
             logger.Info("mi disconnetto dal db");
             DeleteConnection();
             return value;
         }
 
-        public void MakeQueryNoResult(string query)
+        public void MakeQueryNoResult(SqlCommand sqlCommand)
         {
             logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
             logger.Info("faccio una query al db");
-            GetNoneResult(query);
+            GetNoneResult(sqlCommand);
             logger.Info("mi disconnetto dal db");
             DeleteConnection();
         }
@@ -97,7 +98,8 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// </summary>
         /// <param name="query">la query al db</param>
         /// <returns>Json con il dato trovato</returns>
-        private string? GetOneResult(string query)
+
+        private string? GetOneResult(SqlCommand cmd)
         {
             if (!checkConnectionDatabase())
             {
@@ -105,20 +107,20 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             }
             using (var conn = _conn)
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Connection = conn;
                 conn.Open();
                 var reader = cmd.ExecuteReader();
                 IEnumerable<Dictionary<string, object>> result = Serialize(reader);
                 Console.WriteLine(result);
                 string jsonResult = JsonConvert.SerializeObject(result);
-                logger.Info("Json Result della query: " + jsonResult);
                 conn.Close();
                 jsonResult = jsonResult.Replace("[", "").Replace("]", "");
-                Console.WriteLine("JsonResult: " + jsonResult);
                 return jsonResult;
             }
         }
 
+
+        
         protected IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
         {
             var results = new List<Dictionary<string, object>>();
@@ -145,7 +147,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// </summary>
         /// <param name="query">La query al db</param>
         /// <returns></returns>
-        private string? GetAllResults(string query)
+        private string? GetAllResults(SqlCommand cmd)
         {
             if (!checkConnectionDatabase())
             {
@@ -153,7 +155,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             }
             using (var conn = _conn)
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Connection = conn;
                 conn.Open();
                 var values = new List<Dictionary<string, object>>();
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -173,7 +175,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 }
                 conn.Close();
                 var json = JsonConvert.SerializeObject(values);
-                logger.Info("Json result della query: " + json);
                 return json;
 
             }
@@ -183,7 +184,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// Viene usato quando la query non prevede nessun dato in ritorno
         /// </summary>
         /// <param name="query">La query al db</param>
-        private void GetNoneResult(string query)
+        private void GetNoneResult(SqlCommand cmd)
         {
             if (!checkConnectionDatabase())
             {
@@ -191,7 +192,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
             }
             using (var conn = _conn)
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Connection = conn;
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();

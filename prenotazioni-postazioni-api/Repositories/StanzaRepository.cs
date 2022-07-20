@@ -3,6 +3,7 @@ using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 using log4net;
+using Microsoft.Data.SqlClient;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -22,7 +23,8 @@ namespace prenotazioni_postazioni_api.Repositories
         internal List<Stanza> FindAll()
         {
             string query = $"SELECT * FROM Stanze";
-            return DatabaseManager<List<Stanza>>.GetInstance().MakeQueryMoreResults(query);
+            SqlCommand sqlCommand = new SqlCommand(query);
+            return DatabaseManager<List<Stanza>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
 
@@ -33,8 +35,10 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>La stanza trovata, null altrimenti</returns>
         internal Stanza FindById(int idStanza)
         {
-            string query = $"SELECT * FROM Stanze WHERE idStanza = {idStanza};";
-            return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(query);
+            string query = $"SELECT * FROM Stanze WHERE idStanza = @id_stanza;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@id_stanza", idStanza);
+            return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>
@@ -44,8 +48,10 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>La stanza trovata, null altrimenti</returns>
         internal Stanza FindByName(string stanzaName)
         {
-            string query = $"SELECT * FROM Stanze WHERE UPPER(Stanze.nome) = UPPER('{stanzaName}');";
-            return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(query);
+            string query = $"SELECT * FROM Stanze WHERE UPPER(Stanze.nome) = UPPER(@stanza_name);";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@stanza_name", stanzaName);
+            return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
         /// Query al db, aggiunge una nuova stanza alla tabella Stanze
@@ -53,8 +59,12 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="stanza">La stanza da aggiungere al db</param>
         internal void Save(Stanza stanza)
         {
-            string query = $"INSERT INTO Stanze (nome, postiMax, postiMaxEmergenza) VALUES ('{stanza.Nome}', {stanza.PostiMax}, {stanza.PostiMaxEmergenza});";
-            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
+            string query = $"INSERT INTO Stanze (nome, postiMax, postiMaxEmergenza) VALUES (@nome_stanza, @stanza_posti_max, @stanza_posti_max_emergenza);";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@nome_stanza", stanza.Nome);
+            sqlCommand.Parameters.AddWithValue("@stanza_posti_max", stanza.PostiMax);
+            sqlCommand.Parameters.AddWithValue("@stanza_posti_max_emergenza", stanza.PostiMaxEmergenza);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }
 }
