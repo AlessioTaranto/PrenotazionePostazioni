@@ -1,5 +1,6 @@
 {
   "Version": 1,
+<<<<<<< HEAD
 <<<<<<< develop
 <<<<<<< develop
   "Hash": "x6qV7ARQvvSU+XXS15Vhl+TqC5ruGYDZdIaQFPLWt3Q=",
@@ -9,6 +10,9 @@
 =======
   "Hash": "WtfiF6Aju/uA3QMuzj2Oxu2m1aWlqcHW5T6fM/tfI2I=",
 >>>>>>> no message
+=======
+  "Hash": "WtfiF6Aju/uA3QMuzj2Oxu2m1aWlqcHW5T6fM/tfI2I=",
+>>>>>>> client
   "Source": "prenotazione-postazioni-mvc",
   "BasePath": "_content/prenotazione-postazioni-mvc",
   "Mode": "Default",
@@ -18,17 +22,22 @@
     {
       "Name": "prenotazione-postazioni-mvc\\wwwroot",
       "Source": "prenotazione-postazioni-mvc",
+<<<<<<< HEAD
 <<<<<<< develop
       "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 =======
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\prenotazione-postazioni-mvc.styles.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -40,6 +49,12 @@
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\prenotazione-postazioni-mvc.styles.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "prenotazione-postazioni-mvc.styles.css",
       "AssetKind": "All",
@@ -50,13 +65,18 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
+<<<<<<< HEAD
 <<<<<<< develop
       "OriginalItemSpec": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\prenotazione-postazioni-mvc.styles.css"
+=======
+      "OriginalItemSpec": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\prenotazione-postazioni-mvc.styles.css"
+>>>>>>> client
     },
     {
-      "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\prenotazione-postazioni-mvc.bundle.scp.css",
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\prenotazione-postazioni-mvc.bundle.scp.css",
       "SourceId": "prenotazione-postazioni-mvc",
       "SourceType": "Computed",
+<<<<<<< HEAD
       "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
 =======
       "OriginalItemSpec": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\bundle\\prenotazione-postazioni-mvc.styles.css"
@@ -67,6 +87,9 @@
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
 >>>>>>> no message
+=======
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "prenotazione-postazioni-mvc.bundle.scp.css",
       "AssetKind": "All",
@@ -77,13 +100,18 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
+<<<<<<< HEAD
 <<<<<<< develop
       "OriginalItemSpec": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\prenotazione-postazioni-mvc.bundle.scp.css"
+=======
+      "OriginalItemSpec": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\prenotazione-postazioni-mvc.bundle.scp.css"
+>>>>>>> client
     },
     {
-      "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\calendar.css",
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\calendar.css",
       "SourceId": "prenotazione-postazioni-mvc",
       "SourceType": "Discovered",
+<<<<<<< HEAD
       "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 =======
       "OriginalItemSpec": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\prenotazione-postazioni-mvc.bundle.scp.css"
@@ -94,6 +122,9 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "css/calendar.css",
       "AssetKind": "All",
@@ -107,6 +138,7 @@
       "OriginalItemSpec": "wwwroot\\css\\calendar.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\impostazioni.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -118,6 +150,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\impostazioni.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "css/impostazioni.css",
       "AssetKind": "All",
@@ -131,6 +169,7 @@
       "OriginalItemSpec": "wwwroot\\css\\impostazioni.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\index.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -142,6 +181,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\index.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "css/index.css",
       "AssetKind": "All",
@@ -155,6 +200,7 @@
       "OriginalItemSpec": "wwwroot\\css\\index.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\site.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -166,6 +212,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\site.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -179,6 +231,7 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\favicon.ico",
@@ -210,11 +263,33 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 =======
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\css\\votazioni.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+      "BasePath": "_content/prenotazione-postazioni-mvc",
+      "RelativePath": "css/votazioni.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\votazioni.css"
+    },
+    {
+>>>>>>> client
       "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\favicon.ico",
       "SourceId": "prenotazione-postazioni-mvc",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+<<<<<<< HEAD
 >>>>>>> no message
+=======
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -228,6 +303,7 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\example\\example-1.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -239,6 +315,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\example\\example-1.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/example/example-1.png",
       "AssetKind": "All",
@@ -252,6 +334,7 @@
       "OriginalItemSpec": "wwwroot\\img\\example\\example-1.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\example\\example-2.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -263,6 +346,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\example\\example-2.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/example/example-2.png",
       "AssetKind": "All",
@@ -276,6 +365,7 @@
       "OriginalItemSpec": "wwwroot\\img\\example\\example-2.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\example\\example-3.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -287,6 +377,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\example\\example-3.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/example/example-3.png",
       "AssetKind": "All",
@@ -300,6 +396,7 @@
       "OriginalItemSpec": "wwwroot\\img\\example\\example-3.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\left.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -311,6 +408,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\left.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/left.png",
       "AssetKind": "All",
@@ -324,6 +427,7 @@
       "OriginalItemSpec": "wwwroot\\img\\left.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\logo.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -335,6 +439,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\logo.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/logo.png",
       "AssetKind": "All",
@@ -348,6 +458,7 @@
       "OriginalItemSpec": "wwwroot\\img\\logo.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\piantina.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -359,6 +470,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\piantina.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/piantina.png",
       "AssetKind": "All",
@@ -372,6 +489,7 @@
       "OriginalItemSpec": "wwwroot\\img\\piantina.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\right.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -383,6 +501,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\right.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/right.png",
       "AssetKind": "All",
@@ -396,6 +520,7 @@
       "OriginalItemSpec": "wwwroot\\img\\right.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\user_icon.png",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -407,6 +532,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\img\\user_icon.png",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "img/user_icon.png",
       "AssetKind": "All",
@@ -420,6 +551,7 @@
       "OriginalItemSpec": "wwwroot\\img\\user_icon.png"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\calendar.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -431,6 +563,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\calendar.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "js/calendar.js",
       "AssetKind": "All",
@@ -444,6 +582,7 @@
       "OriginalItemSpec": "wwwroot\\js\\calendar.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\jquery.rwdImageMaps.min.js",
@@ -459,6 +598,11 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\impostazioni.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "js/impostazioni.js",
       "AssetKind": "All",
@@ -472,6 +616,25 @@
       "OriginalItemSpec": "wwwroot\\js\\impostazioni.js"
     },
     {
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\jquery.rwdImageMaps.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
+      "BasePath": "_content/prenotazione-postazioni-mvc",
+      "RelativePath": "js/impostazioni.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\impostazioni.js"
+    },
+    {
+<<<<<<< HEAD
 <<<<<<< develop
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\selecter.js",
@@ -508,6 +671,12 @@
 =======
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\selecter.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "js/selecter.js",
       "AssetKind": "All",
@@ -521,6 +690,7 @@
       "OriginalItemSpec": "wwwroot\\js\\selecter.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\site.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -532,6 +702,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\site.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -545,6 +721,7 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\vote.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -556,6 +733,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\js\\vote.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "js/vote.js",
       "AssetKind": "All",
@@ -569,6 +752,7 @@
       "OriginalItemSpec": "wwwroot\\js\\vote.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -580,6 +764,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css",
       "AssetKind": "All",
@@ -593,6 +783,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -604,6 +795,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css.map",
       "AssetKind": "All",
@@ -617,6 +814,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -628,6 +826,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css",
       "AssetKind": "All",
@@ -641,6 +845,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -652,6 +857,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -665,6 +876,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -676,6 +888,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css",
       "AssetKind": "All",
@@ -689,6 +907,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -700,6 +919,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css.map",
       "AssetKind": "All",
@@ -713,6 +938,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -724,6 +950,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css",
       "AssetKind": "All",
@@ -737,6 +969,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -748,6 +981,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
       "AssetKind": "All",
@@ -761,6 +1000,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -772,6 +1012,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css",
       "AssetKind": "All",
@@ -785,6 +1031,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -796,6 +1043,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "AssetKind": "All",
@@ -809,6 +1062,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -820,6 +1074,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "AssetKind": "All",
@@ -833,6 +1093,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -844,6 +1105,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "AssetKind": "All",
@@ -857,6 +1124,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -868,6 +1136,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
       "AssetKind": "All",
@@ -881,6 +1155,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -892,6 +1167,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
       "AssetKind": "All",
@@ -905,6 +1186,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -916,6 +1198,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
       "AssetKind": "All",
@@ -929,6 +1217,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -940,6 +1229,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
       "AssetKind": "All",
@@ -953,6 +1248,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -964,6 +1260,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css",
       "AssetKind": "All",
@@ -977,6 +1279,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -988,6 +1291,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "AssetKind": "All",
@@ -1001,6 +1310,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1012,6 +1322,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "AssetKind": "All",
@@ -1025,6 +1341,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1036,6 +1353,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "AssetKind": "All",
@@ -1049,6 +1372,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1060,6 +1384,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
       "AssetKind": "All",
@@ -1073,6 +1403,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1084,6 +1415,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
       "AssetKind": "All",
@@ -1097,6 +1434,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1108,6 +1446,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
       "AssetKind": "All",
@@ -1121,6 +1465,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1132,6 +1477,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
       "AssetKind": "All",
@@ -1145,6 +1496,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1156,6 +1508,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css",
       "AssetKind": "All",
@@ -1169,6 +1527,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1180,6 +1539,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css.map",
       "AssetKind": "All",
@@ -1193,6 +1558,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1204,6 +1570,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css",
       "AssetKind": "All",
@@ -1217,6 +1589,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1228,6 +1601,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
       "AssetKind": "All",
@@ -1241,6 +1620,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1252,6 +1632,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
       "AssetKind": "All",
@@ -1265,6 +1651,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1276,6 +1663,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
       "AssetKind": "All",
@@ -1289,6 +1682,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1300,6 +1694,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
       "AssetKind": "All",
@@ -1313,6 +1713,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1324,6 +1725,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
       "AssetKind": "All",
@@ -1337,6 +1744,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1348,6 +1756,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js",
       "AssetKind": "All",
@@ -1361,6 +1775,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1372,6 +1787,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "AssetKind": "All",
@@ -1385,6 +1806,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1396,6 +1818,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -1409,6 +1837,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1420,6 +1849,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "AssetKind": "All",
@@ -1433,6 +1868,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1444,6 +1880,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js",
       "AssetKind": "All",
@@ -1457,6 +1899,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1468,6 +1911,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js.map",
       "AssetKind": "All",
@@ -1481,6 +1930,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1492,6 +1942,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js",
       "AssetKind": "All",
@@ -1505,6 +1961,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1516,6 +1973,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
       "AssetKind": "All",
@@ -1529,6 +1992,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1540,6 +2004,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js",
       "AssetKind": "All",
@@ -1553,6 +2023,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1564,6 +2035,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js.map",
       "AssetKind": "All",
@@ -1577,6 +2054,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1588,6 +2066,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js",
       "AssetKind": "All",
@@ -1601,6 +2085,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1612,6 +2097,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js.map",
       "AssetKind": "All",
@@ -1625,6 +2116,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\LICENSE",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1636,6 +2128,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/bootstrap/LICENSE",
       "AssetKind": "All",
@@ -1649,6 +2147,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\LICENSE"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1660,6 +2159,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -1673,6 +2178,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1684,6 +2190,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -1697,6 +2209,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1708,6 +2221,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -1721,6 +2240,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1732,6 +2252,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",
@@ -1745,6 +2271,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1756,6 +2283,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -1769,6 +2302,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1780,6 +2314,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -1793,6 +2333,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1804,6 +2345,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -1817,6 +2364,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1828,6 +2376,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -1841,6 +2395,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1852,6 +2407,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -1865,6 +2426,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1876,6 +2438,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -1889,6 +2457,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1900,6 +2469,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -1913,6 +2488,7 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
+<<<<<<< HEAD
 <<<<<<< develop
       "Identity": "C:\\Users\\redeg\\source\\repos\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "prenotazione-postazioni-mvc",
@@ -1924,6 +2500,12 @@
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
 >>>>>>> no message
+=======
+      "Identity": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "SourceId": "prenotazione-postazioni-mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\OneDrive\\Documenti\\prenotazione-postazioni\\prenotazione-postazioni-mvc\\wwwroot\\",
+>>>>>>> client
       "BasePath": "_content/prenotazione-postazioni-mvc",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",

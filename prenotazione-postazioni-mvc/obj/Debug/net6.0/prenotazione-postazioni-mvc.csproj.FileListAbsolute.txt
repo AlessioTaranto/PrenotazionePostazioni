@@ -24,6 +24,7 @@ C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\
 C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.pdb
 C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.genruntimeconfig.cache
 C:\Users\redeg\source\repos\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\ref\prenotazione-postazioni-mvc.dll
+<<<<<<< HEAD
 <<<<<<< develop
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.csproj.AssemblyReference.cache
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.GeneratedMSBuildEditorConfig.editorconfig
@@ -34,6 +35,8 @@ C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.RazorAssemblyInfo.cache
 C:\Users\User\Desktop\c#\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.RazorAssemblyInfo.cs
 =======
+=======
+>>>>>>> client
 C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.csproj.AssemblyReference.cache
 C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.AssemblyInfoInputs.cache
@@ -63,9 +66,12 @@ C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj
 C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.csproj.CopyComplete
 C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.genruntimeconfig.cache
 C:\Users\redeg\Documents\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\ref\prenotazione-postazioni-mvc.dll
+<<<<<<< HEAD
 <<<<<<< develop
 >>>>>>> Terminata la pagina postazioni.
 =======
+=======
+>>>>>>> client
 C:\Users\User\OneDrive\Documenti\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\User\OneDrive\Documenti\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\appsettings.json
 C:\Users\User\OneDrive\Documenti\prenotazione-postazioni\prenotazione-postazioni-mvc\bin\Debug\net6.0\prenotazione-postazioni-mvc.staticwebassets.runtime.json
@@ -95,4 +101,7 @@ C:\Users\User\OneDrive\Documenti\prenotazione-postazioni\prenotazione-postazioni
 C:\Users\User\OneDrive\Documenti\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.pdb
 C:\Users\User\OneDrive\Documenti\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\prenotazione-postazioni-mvc.genruntimeconfig.cache
 C:\Users\User\OneDrive\Documenti\prenotazione-postazioni\prenotazione-postazioni-mvc\obj\Debug\net6.0\ref\prenotazione-postazioni-mvc.dll
+<<<<<<< HEAD
 >>>>>>> no message
+=======
+>>>>>>> client
