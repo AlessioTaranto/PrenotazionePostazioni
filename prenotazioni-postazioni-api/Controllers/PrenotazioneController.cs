@@ -135,7 +135,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.LogInformation("Date inserite: ");
+                _logger.LogInformation("Giorno inserite: ");
                 _logger.LogInformation("Id Stanza: " + idStanza);
                 _logger.LogInformation("StartDate: " + startDate.ToString());
                 _logger.LogInformation("EndDate: " + endDate.ToString());

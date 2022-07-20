@@ -8,9 +8,9 @@ namespace prenotazione_postazioni_libs.Models
 {
     public class Festa
     {
-        public int IdFestivita { get; set; }
-        public DateTime Date { get; set; }
-        public string? Desc { get; set; }
+        public int IdFesta { get; set; }
+        public DateTime Giorno { get; set; }
+        public string? Descrizione { get; set; }
 
         public Exception ModelException;
         public bool IsValid { get; set; } = false;
@@ -21,20 +21,20 @@ namespace prenotazione_postazioni_libs.Models
         }
         public Festa(DateTime date, string? desc)
         {
-            this.Date = date;
-            this.Desc = desc;
+            this.Giorno = date;
+            this.Descrizione = desc;
             this.Validate();
         }
         public Festa(int idFestivita, DateTime date, string? desc)
         {
-            IdFestivita = idFestivita;
-            Date = date;
-            Desc = desc;
+            IdFesta = idFestivita;
+            Giorno = date;
+            Descrizione = desc;
             this.Validate();
         }
         public Festa(DateTime date)
         {
-            this.Date = date;
+            this.Giorno = date;
             this.Validate();
         }
 
@@ -43,8 +43,8 @@ namespace prenotazione_postazioni_libs.Models
         {
             try
             {
-                if (this.Date == null)
-                    throw new Exception("Date non puo essere null");
+                if (this.Giorno == null)
+                    throw new Exception("Giorno non puo essere null");
                 this.IsValid = true;
             }
             catch (Exception ex)
