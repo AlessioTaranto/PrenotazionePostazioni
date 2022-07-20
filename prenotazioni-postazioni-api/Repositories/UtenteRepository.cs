@@ -24,7 +24,8 @@ namespace prenotazioni_postazioni_api.Repositories
         internal List<Utente> FindAll()
         {
             string query = "SELECT * FROM Utenti;";
-            return DatabaseManager<List<Utente>>.GetInstance().MakeQueryMoreResults(query);
+            SqlCommand sqlCommand = new SqlCommand(query);
+            return DatabaseManager<List<Utente>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
         
 
@@ -73,8 +74,11 @@ namespace prenotazioni_postazioni_api.Repositories
 
         internal Utente FindByName(string nome, string cognome)
         {
-            string query = $"SELECT * FROM Utenti WHERE (nome = '{nome}' AND cognome = '{cognome}')";
-            return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(query);
+            string query = $"SELECT * FROM Utenti WHERE (nome = @nome AND cognome = @cognome)";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@nome", nome);
+            sqlCommand.Parameters.AddWithValue("@cognome", cognome);
+            return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
     }
 }

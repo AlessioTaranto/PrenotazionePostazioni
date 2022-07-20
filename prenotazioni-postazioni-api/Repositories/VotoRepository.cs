@@ -87,8 +87,10 @@ namespace prenotazioni_postazioni_api.Repositories
 
         internal void DeleteVoto(int idVoto)
         {
-            string query = $"DELETE FROM Voti WHERE idVoto = {idVoto};";
-            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
+            string query = $"DELETE FROM Voti WHERE idVoto = @id_voto;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@id_voto", idVoto);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }
 }
