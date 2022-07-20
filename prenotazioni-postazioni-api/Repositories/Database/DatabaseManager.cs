@@ -111,6 +111,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 IEnumerable<Dictionary<string, object>> result = Serialize(reader);
                 Console.WriteLine(result);
                 string jsonResult = JsonConvert.SerializeObject(result);
+                logger.Info("Json Result della query: " + jsonResult);
                 conn.Close();
                 jsonResult = jsonResult.Replace("[", "").Replace("]", "");
                 Console.WriteLine("JsonResult: " + jsonResult);
@@ -172,7 +173,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 }
                 conn.Close();
                 var json = JsonConvert.SerializeObject(values);
-                Console.WriteLine(json);
+                logger.Info("Json result della query: " + json);
                 return json;
 
             }
