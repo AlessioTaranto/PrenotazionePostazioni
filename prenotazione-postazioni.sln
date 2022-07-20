@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazioni-postazioni-api
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni-libs", "prenotazione-postazioni-libs\prenotazione-postazioni-libs.csproj", "{37463ED7-6FC6-4EA3-B379-C47B8F390854}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni", "prenotazione-postazioni\prenotazione-postazioni.csproj", "{D5A06D2E-5257-4E17-B980-8729332C8E88}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{37463ED7-6FC6-4EA3-B379-C47B8F390854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37463ED7-6FC6-4EA3-B379-C47B8F390854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37463ED7-6FC6-4EA3-B379-C47B8F390854}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5A06D2E-5257-4E17-B980-8729332C8E88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,6 +36,9 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                logger.Info($"Year: {year}");
+                logger.Info("Month: " + month);
+                logger.Info("Day: " + day);
                 logger.Info("Trovando una festa mediante date...");
                 Festa festa = _festaService.GetByDate(new DateTime(year, month, day));
                 if(festa == null)
@@ -96,6 +99,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                logger.Info("Giorno della festa: " + festaDto.Date);
+                logger.Info("Descrizione della festa: " + festaDto.Desc);
                 logger.Info("Salvando una festaDto del database...");
                 _festaService.Save(festaDto);
                 logger.Info("FestaDto salvato con successo, Ok");
