@@ -68,5 +68,32 @@ namespace prenotazioni_postazioni_api.Services
             //switch il valore del voto
             _votoRepository.UpdateVoto(voto);
         }
+
+        internal void DeleteVoto(int idUtente, int idUtenteVotato)
+        {
+            bool ok = false;
+            int id = 0;
+            logger.Info($"Eliminazione voto di {idUtente} verso {idUtenteVotato}");
+            logger.Info($"Ricerco esistenza voto");
+            List<Voto> votiApp = GetVotiFromUtente(idUtente);
+            foreach(Voto voto in votiApp) if (!ok)
+            {
+                if(voto.IdUtenteVotato == idUtenteVotato)
+                {
+                    ok = true;
+                    id = voto.IdVoto;
+                }
+            }
+            if(ok == true)
+            {
+                logger.Info("Voto da eliminare trovato!");
+                logger.Info("Elimino il voto...");
+                _votoRepository.DeleteVoto(id);
+            }else
+            {
+                logger.Fatal("ERRORE: Voto da elimare non valido!");
+                throw new PrenotazionePostazioniApiException("Voto da eliminare non esistente");
+            }
+        }
     }
 }

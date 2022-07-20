@@ -95,6 +95,30 @@ namespace prenotazioni_postazioni_api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+
+        [HttpDelete]
+        [Route("deleteVoto")]
+        public IActionResult DeleteVoto(int idUtente, int idUtenteVotato)
+        {
+            try
+            {
+                _logger.Info($"Eliminazione voto di {idUtente} verso {idUtenteVotato}");
+                _votoService.DeleteVoto(idUtente, idUtenteVotato);
+                return Ok();
+            }
+            catch(PrenotazionePostazioniApiException ex)
+            {
+                _logger.Info("Voto not found: " + ex.Message);
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
 

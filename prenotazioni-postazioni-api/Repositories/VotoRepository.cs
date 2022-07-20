@@ -68,5 +68,11 @@ namespace prenotazioni_postazioni_api.Repositories
             string query = $"UPDATE Voti SET votoEffettuato = 1 ^ voto WHERE idUtente = {voto.IdUtente} AND idUtenteVotato = {voto.IdUtenteVotato};";
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
+
+        internal void DeleteVoto(int idVoto)
+        {
+            string query = $"DELETE FROM Voti WHERE idVoto = {idVoto};";
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
+        }
     }
 }
