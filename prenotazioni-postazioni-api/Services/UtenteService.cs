@@ -2,6 +2,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
+using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Services
@@ -102,14 +103,22 @@ namespace prenotazioni_postazioni_api.Services
             _utenteRepository.Save(utente);
         }
 
+        /// <summary>
+        /// Dato un giorno restituisce un elenco di utenti che hanno effettuato tale prenotazione quel giorno
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>List di Utente senza duplicati</returns>
         internal List<Utente> GetUtentiPrenotatiByDay(DateTime date)
         {
             List<Utente> utentiWithDupes = _utenteRepository.FindUtentiByDate(date);
-            for(int i = 0; i < utentiWithDupes.Count; i++)
+            List<Utente> utentiWithoutDupes = utentiWithDupes.Distinct(new UtenteEqualityComparer()).ToList();
+            List<Utente> utenti = new List<Utente>();
+            foreach(Utente utente in utentiWithoutDupes)
             {
-                utentiWithDupes[i] = _utenteRepository.FindById(utentiWithDupes[i].IdUtente);
+                utenti.Add(_utenteRepository.FindById(utente.IdUtente));
             }
-            return utentiWithDupes.Distinct().ToList();
+            return utenti;
+
         }
 
     }

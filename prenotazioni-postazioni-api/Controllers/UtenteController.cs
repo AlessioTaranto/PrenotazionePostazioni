@@ -120,6 +120,11 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        /// <summary>
+        /// Dato un giorno trova l'elenco di persone che hanno effettuato una prenotazione in tale giorno
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>Lista di utenti</returns>
         [HttpGet]
         [Route("getUtentiPrenotatiByDay")]
         public IActionResult GetUtentiPrenotatiByDay(DateTime date)

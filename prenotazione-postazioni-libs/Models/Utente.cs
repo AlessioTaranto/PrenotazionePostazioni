@@ -77,12 +77,8 @@ namespace prenotazione_postazioni_libs.Models
             }
         }
 
-        public override bool Equals(object? obj)
-        {
-            return obj is Utente utente &&
-                   IdUtente == utente.IdUtente &&
-                   Email == utente.Email;
-        }
+        
+
     }
 
 

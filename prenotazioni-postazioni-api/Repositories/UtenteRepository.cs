@@ -81,6 +81,11 @@ namespace prenotazioni_postazioni_api.Repositories
             return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
+        /// <summary>
+        /// Query al Db, restituisce gli id degli utenti che hanno prenotato una postazione in un dato giorno
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>List di Utente contenenti solo gli Id</returns>
         internal List<Utente> FindUtentiByDate(DateTime date)
         {
             string query = $"SELECT idUtente FROM Prenotazioni WHERE YEAR(startDate) = @year AND MONTH(startDate) = @month AND DAY(startDate) = {date.Day};";
