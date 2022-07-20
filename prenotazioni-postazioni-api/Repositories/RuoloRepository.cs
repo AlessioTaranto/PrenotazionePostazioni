@@ -49,7 +49,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="ruoloEnum">Il ruolo con cui verra aggiornato l'utente</param>
         internal void UpdateRuolo(int idUtente, RuoloEnum ruoloEnum)
         {
-            string query = $"UPDATE Utenti SET idRuolo = '{ruoloEnum.ToString()}' WHERE idUtente = '{idUtente}';";
+            string query = $"UPDATE Utenti SET idRuolo = {((int)ruoloEnum)} WHERE idUtente = {idUtente};";
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(query);
         }
     }

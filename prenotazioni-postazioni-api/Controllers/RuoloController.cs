@@ -88,7 +88,7 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpPost]
         [Route("updateRuoloUtenteByUtenteId")]
-        public IActionResult UpdateRuoloUtenteByAdminUtenteId([FromRouteAttribute] int idUtente,[FromRouteAttribute] int idAdmin)
+        public IActionResult UpdateRuoloUtenteByAdminUtenteId(int idUtente,int idAdmin)
         {
             try
             {
