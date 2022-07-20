@@ -120,6 +120,22 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("getUtentiPrenotatiByDay")]
+        public IActionResult GetUtentiPrenotatiByDay(DateTime date)
+        {
+            try
+            {
+                List<Utente> utenti = _utenteService.GetUtentiPrenotatiByDay(date);
+                return Ok(utenti);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno. " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         /// <summary>
         /// Aggiunge un utente al database
         /// </summary>

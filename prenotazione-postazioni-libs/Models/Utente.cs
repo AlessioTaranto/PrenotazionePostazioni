@@ -32,6 +32,8 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+
+
         public Utente(string nome, string cognome, string image, string email, int idRuolo)
         {
             Nome = nome;
@@ -75,6 +77,12 @@ namespace prenotazione_postazioni_libs.Models
             }
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is Utente utente &&
+                   IdUtente == utente.IdUtente &&
+                   Email == utente.Email;
+        }
     }
 
 

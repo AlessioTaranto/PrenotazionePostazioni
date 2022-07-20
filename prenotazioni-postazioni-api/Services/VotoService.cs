@@ -9,10 +9,12 @@ namespace prenotazioni_postazioni_api.Services
     public class VotoService
     {
         private VotoRepository _votoRepository;
+        private UtenteService _utenteService;
         private readonly ILog logger = LogManager.GetLogger(typeof(VotoService));
-        public VotoService(VotoRepository votoRepository)
+        public VotoService(VotoRepository votoRepository, UtenteService utenteService)
         {
             _votoRepository = votoRepository;
+            _utenteService = utenteService;
         }
 
 
@@ -25,6 +27,8 @@ namespace prenotazioni_postazioni_api.Services
         internal List<Voto> GetVotiFromUtente(int idUtente)
         {
             logger.Info("Trovando tutti i voti effettuati da un utente...");
+            logger.Info($"Verifico che l'idUtente {idUtente} sia associato a un utente valido");
+            Utente utenteApp = _utenteService.GetUtenteById(idUtente);
             return _votoRepository.FindAllByIdUtenteFrom(idUtente);
         }
 
@@ -36,6 +40,8 @@ namespace prenotazioni_postazioni_api.Services
         internal List<Voto> GetVotiToUtente(int idUtente)
         {
             logger.Info("Trovando tutti  i voti effettuati verso un determinato utente...");
+            logger.Info($"Verifico che l'idUtente {idUtente} sia associato a un utente valido");
+            Utente utenteApp = _utenteService.GetUtenteById(idUtente);
             return _votoRepository.FindAllByIdUtenteTo(idUtente);
         }
 

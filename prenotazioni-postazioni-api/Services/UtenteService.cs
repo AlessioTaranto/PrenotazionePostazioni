@@ -102,5 +102,15 @@ namespace prenotazioni_postazioni_api.Services
             _utenteRepository.Save(utente);
         }
 
+        internal List<Utente> GetUtentiPrenotatiByDay(DateTime date)
+        {
+            List<Utente> utentiWithDupes = _utenteRepository.FindUtentiByDate(date);
+            for(int i = 0; i < utentiWithDupes.Count; i++)
+            {
+                utentiWithDupes[i] = _utenteRepository.FindById(utentiWithDupes[i].IdUtente);
+            }
+            return utentiWithDupes.Distinct().ToList();
+        }
+
     }
 }

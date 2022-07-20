@@ -158,6 +158,8 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        
+
         /// <summary>
         /// Salva una prenotazione nel database
         /// </summary>

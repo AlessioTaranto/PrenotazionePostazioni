@@ -80,5 +80,15 @@ namespace prenotazioni_postazioni_api.Repositories
             sqlCommand.Parameters.AddWithValue("@cognome", cognome);
             return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
+
+        internal List<Utente> FindUtentiByDate(DateTime date)
+        {
+            string query = $"SELECT idUtente FROM Prenotazioni WHERE YEAR(startDate) = @year AND MONTH(startDate) = @month AND DAY(startDate) = {date.Day};";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@year", date.Year);
+            sqlCommand.Parameters.AddWithValue("@month",date.Month);
+            sqlCommand.Parameters.AddWithValue("@day", date.Day);
+            return DatabaseManager<List<Utente>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+        }
     }
 }
