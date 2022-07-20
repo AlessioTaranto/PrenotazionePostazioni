@@ -4,7 +4,6 @@ using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
-using prenotazioni_postazioni_api.Utilities;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Controllers
@@ -95,7 +94,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Aggiornando il ruolo di un utente...");
                 bool ok = _ruoloService.UpdateRuoloUtenteByAdminUtenteId(idUtente, idAdmin);
-                _logger.LogInformation("Controllando se l'autorizzazione e' valida...");
+                _logger.Info("Controllando se l'autorizzazione e' valida...");
                 if (ok)
                 {
                     _logger.Info("Autorizzazione riconosciuta!");

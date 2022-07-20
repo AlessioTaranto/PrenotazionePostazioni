@@ -1,10 +1,10 @@
 ﻿
 using System;
 using System.Text;
+using log4net;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
-using prenotazioni_postazioni_api.Utilities;
 
 namespace prenotazioni_postazioni_api.Repositories.Database
 {
@@ -16,7 +16,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         public readonly static string DEFAULT_DATABASE_NAME_STRING = "[prenotazioni - impostazioni].dbo";
 
         private SqlConnection? _conn;
-        private ILogger<DatabaseManager<T>> logger = Log4NetManager<DatabaseManager<T>>.GetLogger();
+        private ILog logger = LogManager.GetLogger(typeof(DatabaseManager<T>));
 
         /// <summary>
         /// Costruttore vuoto per creare istanze
@@ -28,35 +28,35 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 
         public T MakeQueryOneResult(string query)
         {
-            logger.LogInformation("Mi connetto al database...");
+            logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
-            logger.LogInformation("faccio una query al db");
+            logger.Info("faccio una query al db");
             T value = JsonConvert.DeserializeObject<T>(GetOneResult(query));
-            logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
-            logger.LogInformation("mi disconnetto dal db");
+            logger.Info("Ho prelevato tutte le informazioni dal db con successo!");
+            logger.Info("mi disconnetto dal db");
             DeleteConnection();
             return value;
         }
 
         public T MakeQueryMoreResults(string query)
         {
-            logger.LogInformation("Mi connetto al database...");
+            logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
-            logger.LogInformation("faccio una query al db");
+            logger.Info("faccio una query al db");
             T value = JsonConvert.DeserializeObject<T>(GetAllResults(query));
-            logger.LogInformation("Ho prelevato tutte le informazioni dal db con successo!");
-            logger.LogInformation("mi disconnetto dal db");
+            logger.Info("Ho prelevato tutte le informazioni dal db con successo!");
+            logger.Info("mi disconnetto dal db");
             DeleteConnection();
             return value;
         }
 
         public void MakeQueryNoResult(string query)
         {
-            logger.LogInformation("Mi connetto al database...");
+            logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
-            logger.LogInformation("faccio una query al db");
+            logger.Info("faccio una query al db");
             GetNoneResult(query);
-            logger.LogInformation("mi disconnetto dal db");
+            logger.Info("mi disconnetto dal db");
             DeleteConnection();
         }
 
