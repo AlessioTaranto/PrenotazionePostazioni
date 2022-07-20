@@ -3,11 +3,18 @@ using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Exceptions;
 using prenotazioni_postazioni_api.Repositories.Database;
+using log4net;
+using System.Data.SqlClient;
+
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class ImpostazioneRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private readonly ILog logger = LogManager.GetLogger(typeof(ImpostazioneRepository));
+
+        public ImpostazioneRepository()
+        {
+        }
 
         /// <summary>
         /// Query al db per restituire il campo Impostazione Emergenza
@@ -16,10 +23,8 @@ namespace prenotazioni_postazioni_api.Repositories
         public Impostazioni FindImpostazioneEmergenza()
         {
             string query = "SELECT * FROM Impostazioni;";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Impostazioni impostazione = JsonConvert.DeserializeObject<Impostazioni>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return impostazione;
+            SqlCommand sqlCommand = new SqlCommand(query);
+            return DatabaseManager<Impostazioni>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>
@@ -30,9 +35,8 @@ namespace prenotazioni_postazioni_api.Repositories
         public void UpdateImpostazioneEmergenza(bool userValue)
         {
             string query = "UPDATE Impostazioni SET modEmergenza = 1 ^ modEmergenza;";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            _databaseManager.GetNoneResult(query);
-            _databaseManager.DeleteConnection();
+            SqlCommand sqlCommand = new SqlCommand(query);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }
 }

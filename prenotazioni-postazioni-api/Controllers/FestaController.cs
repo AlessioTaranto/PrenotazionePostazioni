@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using log4net;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
@@ -10,7 +12,18 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/festivita")]
     public class FestaController : ControllerBase
     {
-        private FestaService _festaService = new FestaService();
+        private readonly ILog logger = LogManager.GetLogger(typeof(FestaController));
+        private FestaService _festaService;
+
+        public FestaController(FestaService festaService)
+        {
+            this._festaService = festaService;
+        }
+
+
+
+
+
         /// <summary>
         /// Restituisce tutte le feste di un giorno
         /// </summary>
@@ -23,20 +36,28 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                List<Festa> feste = _festaService.GetByDate(new DateOnly(year, month, day));
-                if(feste == null)
+                logger.Info($"Year: {year}");
+                logger.Info("Month: " + month);
+                logger.Info("Day: " + day);
+                logger.Info("Trovando una festa mediante date...");
+                Festa festa = _festaService.GetByDate(new DateTime(year, month, day));
+                if(festa == null)
                 {
-                    return NotFound("Festa e' null");
+                    logger.Warn("Festa e' null, return NotFound");
+                    return NotFound("Festa è null");
                 }
-                return Ok(feste);
+                logger.Info("Festa trovato. Return OK");
+                return Ok(festa);
             }
             catch(PrenotazionePostazioniApiException ex)
             {
+                logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message+"\nStack Trace:"+ex.StackTrace);
             }
             
         }
@@ -50,38 +71,49 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                logger.Info("Trovando tutte le feste...");
                 List<Festa> feste = _festaService.GetAll();
                 if(feste == null)
                 {
+                    logger.Warn("Nessuna festa trovata, NotFound");
                     return NotFound("feste e' null");
                 }
+                logger.Info("Feste trovate, Ok");
                 return Ok(feste);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
+                logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
+                logger.Fatal("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
 
         [Route("addFesta")]
-        [HttpGet]
+        [HttpPost]
         public IActionResult AddFestaByDate([FromBody] FestaDto festaDto)
         {
             try
             {
+                logger.Info("Giorno della festa: " + festaDto.Date);
+                logger.Info("Descrizione della festa: " + festaDto.Desc);
+                logger.Info("Salvando una festaDto del database...");
                 _festaService.Save(festaDto);
+                logger.Info("FestaDto salvato con successo, Ok");
                 return Ok();
             }
             catch(PrenotazionePostazioniApiException ex)
             {
+                logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
+                logger.Fatal("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

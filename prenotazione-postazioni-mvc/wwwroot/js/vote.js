@@ -1,0 +1,1 @@
+let dipendenti=30;

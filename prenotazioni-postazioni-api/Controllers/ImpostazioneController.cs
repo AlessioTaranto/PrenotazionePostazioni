@@ -4,6 +4,7 @@ using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -11,7 +12,14 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/impostazioni")]
     public class ImpostazioneController : ControllerBase
     {
-        private ImpostazioneService _impostazioneService = new ImpostazioneService();
+        private ImpostazioneService _impostazioneService;
+        private readonly ILog _logger = LogManager.GetLogger(typeof(ImpostazioneController));
+
+        public ImpostazioneController(ImpostazioneService impostazioneService)
+        {
+            _impostazioneService = impostazioneService;
+        }
+
 
 
         /// <summary>
@@ -24,14 +32,19 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                return Ok(_impostazioneService.GetImpostazioneEmergenza());
+                _logger.Info("Prelevando l'impostazione di emergenza...");
+                bool impostazineEmergenza = _impostazioneService.GetImpostazioneEmergenza();
+                _logger.Info("Trovato impostazione di emergenza con successo!");
+                return Ok(impostazineEmergenza);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
+                _logger.Warn("Impostazione non trovato: " + ex.Message);
                 return NotFound(ex.Message);
             }
             catch(Exception ex)
             {
+                _logger.Fatal("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
             
@@ -49,11 +62,14 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
+                _logger.Info("Cambiando l'impostazione di emergenza...");
                 _impostazioneService.ChangeImpostazioniEmergenza();
+                _logger.Info("Impostazione di emergenza cambiato con successo");
                 return Ok();
             }
             catch (Exception ex)
             {
+                _logger.Fatal("Errore Interno: " + ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

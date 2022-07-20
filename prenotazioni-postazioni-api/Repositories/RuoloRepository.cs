@@ -2,13 +2,20 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
+using System.Data.SqlClient;
 using prenotazioni_postazioni_api.Exceptions;
+using log4net;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class RuoloRepository
     {
-        private DatabaseManager _databaseManager = new DatabaseManager();
+        private readonly ILog logger = LogManager.GetLogger(typeof(RuoloRepository));
+
+        public RuoloRepository()
+        {
+        }
+
         /// <summary>
         /// Query al db, restituisce il ruolo dell'utente associato usando il suo ID
         /// </summary>
@@ -17,10 +24,8 @@ namespace prenotazioni_postazioni_api.Repositories
         public Ruolo? FindById(int idRuolo)
         {
             string query = $"SELECT * FROM Ruoli WHERE idRuolo = {idRuolo};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return ruolo;
+            SqlCommand sqlCommand = new SqlCommand(query);
+            return DatabaseManager<Ruolo>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>
@@ -30,19 +35,18 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Ruolo dell'utente, null altrimenti</returns>
         public Ruolo? FindByIdUtente(int idUtente)
         {
-            string query = $"SELECT * FROM Utenti WHERE idUtente = {idUtente};";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            Utente utente = JsonConvert.DeserializeObject<Utente>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
+            string query = $"SELECT * FROM Utenti WHERE idUtente = @id_utente;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@id_utente", idUtente);
+            Utente utente = DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
             if(utente == null)
             {
-                throw new PrenotazionePostazioniApiException("Utente non trovato");
+                throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             }
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            query = $"SELECT * FROM Ruoli WHERE idRuolo = {utente.Ruolo};";
-            Ruolo ruolo = JsonConvert.DeserializeObject<Ruolo>(_databaseManager.GetOneResult(query));
-            _databaseManager.DeleteConnection();
-            return ruolo;
+            query = $"SELECT * FROM Ruoli WHERE idRuolo = @id_ruolo;";
+            sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@id_ruolo", utente.IdRuolo);
+            return DatabaseManager<Ruolo>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
         /// Query al db, switch il ruolo accesso impostazioni dell'utente
@@ -51,10 +55,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="ruoloEnum">Il ruolo con cui verra aggiornato l'utente</param>
         internal void UpdateRuolo(int idUtente, RuoloEnum ruoloEnum)
         {
-            string query = $"UPDATE Utenti SET idRuolo = '{ruoloEnum.ToString()}' WHERE idUtente = '{idUtente}';";
-            _databaseManager.CreateConnectionToDatabase(null, null, true);
-            _databaseManager.GetNoneResult(query);
-            _databaseManager.DeleteConnection();
+            string query = $"UPDATE Utenti SET idRuolo = @ruolo_enum WHERE idUtente = @id_utente;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@ruolo_enum", ruoloEnum.ToString());
+            sqlCommand.Parameters.AddWithValue("@id_utente", idUtente);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }
 }
