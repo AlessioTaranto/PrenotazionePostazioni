@@ -25,8 +25,10 @@ namespace prenotazione_postazioni_mvc.Controllers
                 ViewModel.Votazioni[i] = voto;
             } catch(Exception)
             {
+                ///controllo se sono presenti elementi prima della posizione in cui si vuole inserire il voto
                 if (i != ViewModel.Votazioni.Count)
                 {
+                    ///il numero di cicli rappresenta il numero di posizioni da riempire (con un voto nullo)
                     int cicli = i - ViewModel.Votazioni.Count;
                     for (int j = 0; j < cicli; j++)
                     {
