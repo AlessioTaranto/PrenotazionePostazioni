@@ -92,6 +92,7 @@ namespace prenotazioni_postazioni_api.Services
             _logger.Info("Trovando il ruolo dell'utente...");
             Ruolo ruoloUtente = _ruoloRepository.FindById(utente.IdRuolo);
             _logger.Info("Trovando il ruolo dell'admin...");
+            Console.WriteLine("Ruolo admin: " + admin.IdRuolo);
             Ruolo ruoloAdmin = _ruoloRepository.FindById(admin.IdRuolo);
             _logger.Info("Controllando se il ruolo admin e' valido...");
             if (ruoloAdmin == null)

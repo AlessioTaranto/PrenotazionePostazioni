@@ -65,6 +65,29 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("getUtenteByName")]
+        public IActionResult GetUtenteByName(string nome, string cognome)
+        {
+            try
+            {
+                _logger.Info($"Trovando l'utente mediante il suo nome {nome} {cognome}...");
+                Utente utente = _utenteService.GetUtenteByName(nome, cognome);
+                _logger.Info($"utente trovato mediante il suo nome con successo!");
+                return Ok(utente);
+            }
+            catch(PrenotazionePostazioniApiException ex)
+            {
+                _logger.Warn("Utente non trovato: " + ex.Message);
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         /// <summary>
         /// Restituisce un utente mediante il suo email
         /// </summary>
@@ -76,7 +99,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.Info($"Trovando l'utente mediante il suo email{email}...");
+                _logger.Info($"Trovando l'utente mediante la sua email:{email}...");
                 Utente utente = _utenteService.GetUtenteByEmail(email);
                 _logger.Info("Utente trovato mediante il suo email con successo!");
                 return Ok(utente);

@@ -70,5 +70,11 @@ namespace prenotazioni_postazioni_api.Repositories
             sqlCommand.Parameters.AddWithValue("@id_ruolo", utente.IdRuolo);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
+
+        internal Utente FindByName(string nome, string cognome)
+        {
+            string query = $"SELECT * FROM Utenti WHERE (nome = '{nome}' AND cognome = '{cognome}')";
+            return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(query);
+        }
     }
 }
