@@ -32,6 +32,13 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("SelectFesta")]
         public IActionResult SelectFesta(int year, int month, int day)
         {
+
+            if (month == 0)
+            {
+                month = 12;
+                year--;
+            }
+
             ViewModel.FestivitaViewModel.GiornoSelezionato = new DateTime(year, month, day);
 
             return RedirectToAction("Index");
@@ -64,6 +71,29 @@ namespace prenotazione_postazioni_mvc.Controllers
             return Ok("Tab changed");
         }
 
+        [HttpPost]
+        [ActionName("CollapsePresenze")]
+        public IActionResult CollapsePresenze()
+        {
+            ViewModel.PresenzeViewModel.ToggleCollapseList();
+
+            return Ok("Collapse changed");
+        }
+
+        [HttpPost]
+        [ActionName("SelectPresenza")]
+        public IActionResult SelectPresenza(int year, int month, int day)
+        {
+            if (month == 0)
+            {
+                month = 12;
+                year--;
+            }
+
+            ViewModel.PresenzeViewModel.PresenzaSelezionata = new DateTime(year, month, day);
+
+            return RedirectToAction("Index");
+        }
 
     }
 }

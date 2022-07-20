@@ -6,20 +6,21 @@
 }
 
 <script>
-    function changeState(number) {
+    function changeStateTab(number) {
         $.ajax({
             type: "POST",
             url: "Impostazioni/ChangeStateTab",
             data: { "number": number }
         });
     }
+
 </script>
 
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 280px; height: 100%; border: 0.1px solid darkorange !important">
         <div class="nav flex-column mb-auto nav-pills darkorange" id="options-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link-1" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="false" onclick="changeState(0)">Covid</a>
-            <a class="nav-link-1" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false" onclick="changeState(1)">Festività</a>
-            <a class="nav-link-1" id="options-pills-presenze-tab" data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false" onclick="changeState(2)">Presenze</a>
+            <a class="nav-link-1" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="false" onclick="changeStateTab(0)">Covid</a>
+            <a class="nav-link-1" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false" onclick="changeStateTab(1)">Festività</a>
+            <a class="nav-link-1" id="options-pills-presenze-tab" data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false" onclick="changeStateTab(2)">Presenze</a>
         </div>
     </div>
 <div class="tab-content" id="options-pills-tabContent">
@@ -239,7 +240,7 @@
         <h1 id="day-sel-2">Seleziona una data</h1>
         <br>
         <div class="btn-collapse">
-            <a data-toggle="collapse" href="#presenti" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a data-toggle="collapse" id="presenti-btn" href="#presenti" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Persone presenti
             </a>
         </div>
@@ -276,13 +277,19 @@
         <script src="js/jquery.rwdImageMaps.min.js"></script>
 <script>
 
-    let festaSelezionata = new Date(@ViewModel.FestivitaViewModel.GiornoSelezionato.Year,(@ViewModel.FestivitaViewModel.GiornoSelezionato.Month-1),@ViewModel.FestivitaViewModel.GiornoSelezionato.Day)
-    //let PSelezionata = new Date(@ViewModel.FestivitaViewModel.GiornoSelezionato.Year,(@ViewModel.FestivitaViewModel.GiornoSelezionato.Month-1),@ViewModel.FestivitaViewModel.GiornoSelezionato.Day)
+    let festaSelezionata = new Date(@ViewModel.FestivitaViewModel.GiornoSelezionato.Year, (@ViewModel.FestivitaViewModel.GiornoSelezionato.Month - 1), @ViewModel.FestivitaViewModel.GiornoSelezionato.Day);
+    let presenzaSelezionata = new Date(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Year, (@ViewModel.PresenzeViewModel.PresenzaSelezionata.Month - 1), @ViewModel.PresenzeViewModel.PresenzaSelezionata.Day);
 
     if (festaSelezionata.getFullYear() !== 1901) {
         goDate(festaSelezionata);
-        clickCalendarFest(getIdDay(@ViewModel.FestivitaViewModel.GiornoSelezionato.Day));
-        selectDayFest(festaSelezionata);
+        if ((month === 11 ? 0 : (month+1)) === festaSelezionata.getMonth())
+            clickCalendarFest(getIdDay(@ViewModel.FestivitaViewModel.GiornoSelezionato.Day));
+    }
+
+    if (presenzaSelezionata.getFullYear() !== 1901) {
+        goDate1(presenzaSelezionata);
+        if ((month1 === 11 ? 0 : (month1+1)) === presenzaSelezionata.getMonth())
+            clickCalendarPres(getIdDay1(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Day));
     }
         
 
@@ -300,7 +307,6 @@
         });
 
         $('td').on('click', function (event) {
-                
             if (isValidDay(event.target.id))
                 if (event.target.id.length === 3) //L'id feste è lungo 3 caratteri
                     $.ajax({
@@ -310,10 +316,40 @@
                     }).done(function() {
                         window.location.reload();
                     });
+                else 
+                    $.ajax({
+                        type: "POST",
+                        url: "Impostazioni/SelectPresenza",
+                        data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() }
+                    }).done(function() {
+                        window.location.reload();
+                    });
 
         });
 
-        
+        let presenzeBtn = $('#presenti-btn');
+        let presenzeDiv = $('#presenti');
+
+        let statePresenzeCollapse = @ViewModel.PresenzeViewModel.CollapsedList;
+
+        if (statePresenzeCollapse === 1) {
+            presenzeBtn.removeClass('collapsed');
+            presenzeDiv.addClass('show');
+        }
+
+        let clickedPresenze = false;
+
+        $('#presenti-btn').on('click', function() {
+            if (clickedPresenze === false) {
+                clickedPresenze = true;
+                $.ajax({
+                    type: "POST",
+                    url: "Impostazioni/CollapsePresenze"
+                }).done(function() {
+                    clickedPresenze = false;
+                });
+            }
+        });
 
     });
 </script>

@@ -11,7 +11,8 @@ namespace prenotazione_postazioni_mvc.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
 
-        public int CollapsedHour { get; set; }
+        public int CollapsedHour { get; set; } = 0;
+        public int CollapsedList { get; set; } = 0;
 
         public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end)
         {
@@ -53,6 +54,16 @@ namespace prenotazione_postazioni_mvc.Models
         public string FormatHour(int number)
         {
             return number.ToString().Length == 1 ? ("0" + number.ToString()) : number.ToString();
+        }
+
+        public void ToggleCollapseHour()
+        {
+            _ = CollapsedHour == 0 ? CollapsedHour = 1 : CollapsedHour = 0;
+        }
+
+        public void ToggleCollapseList()
+        {
+            _ = CollapsedList == 0 ? CollapsedList = 1 : CollapsedList = 0;
         }
     }
 }

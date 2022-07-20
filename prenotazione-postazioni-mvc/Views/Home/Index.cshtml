@@ -112,8 +112,6 @@
         </map>
     </div>
 
-    <script src="js/selecter.js"></script>
-
 <div class="container mt-4 ml-70 position-fixed room-info-div">
     <h1>@ViewModel.GetStanza()</h1>
     <br>
@@ -133,22 +131,10 @@
                        min="07:00" max="22:00" required>
             </div>
         </div>
-        <script>
-            //Problemi collapse orario
-            let openCollapse = @ViewModel.CollapsedHour;
-
-            if (openCollapse === 0) {
-                $('#orario').addClass("collapse");
-                $('#orario').removeClass("collapsed");
-            } else{
-                $('#orario').addClass("collapsed");
-                $('#orario').removeClass("collapse");
-            }
-        </script>
     </div>
     <br>
     <div class="btn-collapse">
-        <a data-toggle="collapse" id="list-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <a data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
             Persone prenotate
         </a>
     </div>
@@ -170,17 +156,14 @@
 
 </div>
 
-    <script>
-        loadCalendar();
-    </script>
-    <script src="js/selecter.js"></script>
 <script>
-
+    
     let daySel = new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month - 1), @ViewModel.Date.Day);
 
     goDate(daySel);
-    clickCalendar(getIdDay(@ViewModel.Date.Day));
-    selectDay(daySel);
+    
+    if ((month === 11 ? 0 : (month+1)) === daySel.getMonth())
+        clickCalendar(getIdDay(@ViewModel.Date.Day));
 
     $('area').on('click', function () {
         let nameStanza = event.target.alt;
@@ -234,17 +217,53 @@
 </script>
 <script>
 
-    //Da problemi (Collapse orario)
-
     $(document).ready(function() {
-        $('#orario-btn').on('click',
-            function(event) {
-                $.ajax({
-                    type: "POST",
-                    url: "Home/CollapseHour",
-                    data: { "collapse": (event.target.classList.contains("collapsed") ? 1 : 0) }
-                }).done(function() {
-                });
+
+        let orarioBtn = $('#orario-btn');
+        let orarioDiv = $('#orario');
+
+        let prenotazioniBtn = $('#prenotazioni-btn');
+        let prenotazioniDiv = $('#prenotazioni');
+
+        let stateCollapseHour = @ViewModel.CollapsedHour;
+        let stateCollapseList = @ViewModel.CollapsedList;
+
+        if (stateCollapseHour === 1) {
+            orarioBtn.removeClass('collapsed');
+            orarioDiv.addClass('show');
+        }
+
+        if (stateCollapseList === 1) {
+            prenotazioniBtn.removeClass('collapsed');
+            prenotazioniDiv.addClass('show');
+        }
+
+        let clickedOrarioBtn = false;
+        let clickedPrenotazioniBtn = false;
+
+        orarioBtn.on('click', function(event) {
+                if (clickedOrarioBtn === false) {
+                    clickedOrarioBtn = true;
+                    $.ajax({
+                        type: "POST",
+                        url: "Home/CollapseHour"
+                    }).done(function() {
+                        clickedOrarioBtn = false;
+                    });
+                }
+            }
+        );
+
+        prenotazioniBtn.on('click', function(event) {
+                if (clickedPrenotazioniBtn === false) {
+                    clickedPrenotazioniBtn = true;
+                    $.ajax({
+                        type: "POST",
+                        url: "Home/CollapseList"
+                    }).done(function() {
+                        clickedPrenotazioniBtn = false;
+                    });
+                }
             }
         );
     });

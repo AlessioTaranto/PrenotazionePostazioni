@@ -29,6 +29,12 @@ public class HomeController : Controller
     public IActionResult ReloadDay(int year, int month, int day)
     {
 
+        if (month == 0)
+        {
+            month = 12;
+            year--;
+        }
+
         ViewModel.Date = new DateTime(year, month, day);
         ViewModel.Start = new DateTime(year, month, day, ViewModel.Start.Hour, 0, 0);
         ViewModel.End = new DateTime(year, month, day, ViewModel.End.Hour, 0, 0);
@@ -67,8 +73,19 @@ public class HomeController : Controller
 
     [HttpPost]
     [ActionName("CollapseHour")]
-    public void CollapseHour(int collapse)
+    public IActionResult CollapseHour()
     {
-        ViewModel.CollapsedHour = collapse;
+        ViewModel.ToggleCollapseHour();
+
+        return Ok("Collapse change");
+    }
+
+    [HttpPost]
+    [ActionName("CollapseList")]
+    public IActionResult CollapseList()
+    {
+        ViewModel.ToggleCollapseList();
+
+        return Ok("Collapse change");
     }
 }
