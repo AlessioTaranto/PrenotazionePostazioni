@@ -25,6 +25,14 @@ namespace prenotazione_postazioni_mvc.Controllers
                 ViewModel.Votazioni[i] = voto;
             } catch(Exception)
             {
+                if (i != ViewModel.Votazioni.Count)
+                {
+                    int cicli = i - ViewModel.Votazioni.Count;
+                    for (int j = 0; j < cicli; j++)
+                    {
+                        ViewModel.Votazioni.Add(0);
+                    }
+                }
                 ViewModel.Votazioni.Add(voto);
             }
 
