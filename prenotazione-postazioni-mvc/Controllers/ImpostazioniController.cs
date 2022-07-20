@@ -28,6 +28,42 @@ namespace prenotazione_postazioni_mvc.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ActionName("SelectFesta")]
+        public IActionResult SelectFesta(int year, int month, int day)
+        {
+            ViewModel.FestivitaViewModel.GiornoSelezionato = new DateTime(year, month, day);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ActionName("AggiungiFesta")]
+        public IActionResult AggiungiFesta(int year, int month, int day)
+        {
+            ViewModel.FestivitaViewModel.AddFesta(new DateTime(year, month, day));
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ActionName("RimuoviFesta")]
+        public IActionResult RimuoviFesta(int year, int month, int day)
+        {
+            ViewModel.FestivitaViewModel.RemoveFesta(new DateTime(year, month, day));
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ActionName("ChangeStateTab")]
+        public IActionResult ChangeStateTab(int number)
+        {
+            ViewModel.StateTab = number;
+
+            return Ok("Tab changed");
+        }
+
 
     }
 }
