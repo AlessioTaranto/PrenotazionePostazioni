@@ -53,7 +53,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel.FestivitaViewModel.GiornoSelezionato = new DateTime(year, month, day);
+            ViewModel.FestivitaViewModel.selectFesta(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -70,7 +70,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("AggiungiFesta")]
         public IActionResult AggiungiFesta(int year, int month, int day)
         {
-            ViewModel.FestivitaViewModel.AddFesta(new DateTime(year, month, day));
+            ViewModel.FestivitaViewModel.AddFesta(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -87,7 +87,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("RimuoviFesta")]
         public IActionResult RimuoviFesta(int year, int month, int day)
         {
-            ViewModel.FestivitaViewModel.RemoveFesta(new DateTime(year, month, day));
+            ViewModel.FestivitaViewModel.RemoveFesta(year, month, day);
 
             return RedirectToAction("Index");
         }

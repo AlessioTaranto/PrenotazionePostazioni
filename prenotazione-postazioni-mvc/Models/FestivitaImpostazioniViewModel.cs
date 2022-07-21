@@ -31,11 +31,20 @@
         /// <param name="year">Anno selezionato</param>
         /// <param name="month">Mese selezionato</param>
         /// <param name="day">Giorno selezionato</param>
-        /// <exception cref="Exception">Festività già inserita</exception>
+        /// <exception cref="Exception">Giorno non valido, Festività già inserita</exception>
 
         public void AddFesta(int year, int month, int day)
         {
-            DateTime date = new DateTime(year, month, day);
+            DateTime date;
+
+            try
+            {
+                date = new DateTime(year, month, day);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new Exception("Giorno non valido");
+            }
 
             if (Festivita.Contains(date))
                 throw new Exception("Festività già inserita");
@@ -49,11 +58,20 @@
         /// <param name="year">Anno selezionato</param>
         /// <param name="month">Mese selezionato</param>
         /// <param name="day">Giorno selezionato</param>
-        /// <exception cref="Exception">Festività non inserita</exception>
+        /// <exception cref="Exception">Giorno non valido, Festività non inserita</exception>
 
         public void RemoveFesta(int year, int month, int day)
         {
-            DateTime date = new DateTime(year, month, day);
+            DateTime date;
+
+            try
+            {
+                date = new DateTime(year, month, day);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new Exception("Giorno non valido");
+            }
 
             if (Festivita.Contains(date))
                 throw new Exception("Festività non presente");
@@ -70,6 +88,26 @@
         {
             //  Se l'anno del giorno selezionato è 1, allora non è stato selezionato
             return GiornoSelezionato.Year == 1 ? "Seleziona un giorno" : "Giorno selezionato: "+GiornoSelezionato.Day+"/"+GiornoSelezionato.Month+"/"+GiornoSelezionato.Year;
+        }
+
+        /// <summary>
+        ///     Seleziona un giorno nel Calendar del tab "Festività"
+        /// </summary>
+        /// <param name="year">Anno selezionato</param>
+        /// <param name="month">Mese selezionato</param>
+        /// <param name="day">Giorno selezionato</param>
+        /// <exception cref="Exception">Giorno non valido</exception>
+
+        public void selectFesta(int year, int month, int day)
+        {
+            try
+            {
+                GiornoSelezionato = new DateTime(year, month, day);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new Exception("Giorno non valido");
+            }
         }
     }
 }
