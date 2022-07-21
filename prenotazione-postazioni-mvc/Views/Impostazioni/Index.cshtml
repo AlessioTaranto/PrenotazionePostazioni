@@ -371,7 +371,11 @@
                     $.ajax({
                         type: "POST",
                         url: "Impostazioni/SelectFesta",
-                        data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() }
+                        data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                        error: function(xhr) {
+                            alert(xhr.responseText);
+                            event.preventDefault();
+                        }
                     }).done(function() {
                         window.location.reload();
                     });
@@ -379,7 +383,11 @@
                     $.ajax({
                         type: "POST",
                         url: "Impostazioni/SelectPresenza",
-                        data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() }
+                        data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                        error: function(xhr) {
+                            alert(xhr.responseText);
+                            event.preventDefault();
+                        }
                     }).done(function() {
                         window.location.reload();
                     });

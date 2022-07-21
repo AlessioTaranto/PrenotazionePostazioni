@@ -269,9 +269,9 @@
                 data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                 error: function(xhr) {
                     alert(xhr.responseText);
+                    event.preventDefault();
                 }
             }).done(function(data) {
-                alert(data);
                 window.location.reload();
             });
     });
@@ -282,13 +282,15 @@
      */
 
     $('#start').on('change', function(event) {
-        let hourSel = (event.target.value).split(":")[0];
-
-        if (hourSel >= 8 && hourSel <= 22)
-            $.ajax({
+        $.ajax({
                 type: "POST",
                 url: "Home/ReloadStart",
-                data: { "hour": hourSel }
+                data: { "hour": (event.target.value).split(":")[0] },
+                error: function(xhr) {
+                    alert(xhr.responseText);
+                    event.preventDefault();
+                    event.target.value = "@ViewModel.FormatHour(@ViewModel.Start.Hour):00";
+                }
             }).done(function() {
                 window.location.reload();
             });
@@ -300,13 +302,16 @@
      */
 
     $('#finish').on('change', function(event) {
-        let hourSel = (event.target.value).split(":")[0];
 
-        if (hourSel >= 8 && hourSel <= 22)
-            $.ajax({
+        $.ajax({
                 type: "POST",
                 url: "Home/ReloadFinish",
-                data: { "hour": hourSel }
+                data: { "hour": (event.target.value).split(":")[0] },
+                error: function(xhr) {
+                    alert(xhr.responseText);
+                    event.preventDefault();
+                    event.target.value = "@ViewModel.FormatHour(@ViewModel.End.Hour):00";
+                }
             }).done(function() {
                 window.location.reload();
             });
