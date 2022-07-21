@@ -19,7 +19,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="date">la data</param>
         /// <returns>Lista di Feste</returns>
-        internal Festa FindByDate(DateTime date)
+        internal Festa? FindByDate(DateTime date)
         {
             string query = "SELECT * FROM Feste WHERE giorno = @giorno;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -30,7 +30,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// query al db, restituisce tutte le festa
         /// </summary>
         /// <returns>Lista di festa</returns>
-        internal List<Festa> FindAll()
+        internal List<Festa>? FindAll()
         {
             string query = $"SELECT * FROM Feste";
             SqlCommand sqlCommand = new SqlCommand(query);

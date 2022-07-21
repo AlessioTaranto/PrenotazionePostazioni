@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto> FindAllByIdUtenteFrom(int idUtente)
+        internal List<Voto>? FindAllByIdUtenteFrom(int idUtente)
         {
             string query = $"SELECT * FROM Voti WHERE idUtente = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -36,7 +36,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto> FindAllByIdUtenteTo(int idUtente)
+        internal List<Voto>? FindAllByIdUtenteTo(int idUtente)
         {
             string query = $"SELECT * FROM voti WHERE idUtenteVotato = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);

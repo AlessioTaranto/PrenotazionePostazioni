@@ -10,11 +10,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 {
     public class DatabaseManager<T>
     {
-        public static string DatabaseName { get; } = "[prenotazioni-impostazioni].dbo";
-        public static string DefaultInitialCatalog { get; } = "prenotazioni-impostazioni";
-        public static string DefaultDataSource { get; } = "LTP040";
-        public readonly static string DEFAULT_DATABASE_NAME_STRING = "[prenotazioni - impostazioni].dbo";
-
         private SqlConnection? _conn;
         private ILog logger = LogManager.GetLogger(typeof(DatabaseManager<T>));
 

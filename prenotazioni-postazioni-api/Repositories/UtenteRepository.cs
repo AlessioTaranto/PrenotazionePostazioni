@@ -21,7 +21,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Serve per ottenere una lista completa di tutti gli utenti
         /// </summary>
         /// <returns>Lista di Utente trovati, null altrimenti</returns>
-        internal List<Utente> FindAll()
+        internal List<Utente>? FindAll()
         {
             string query = "SELECT * FROM Utenti;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente FindById(int idUtente)
+        internal Utente? FindById(int idUtente)
         {
             string query = $"SELECT * FROM Utenti WHERE idUtente = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -47,7 +47,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="email">L'email dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente FindByEmail(string email)
+        internal Utente? FindByEmail(string email)
         {
             string query = $"SELECT * FROM Utenti WHERE email = @email;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -72,7 +72,7 @@ namespace prenotazioni_postazioni_api.Repositories
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal Utente FindByName(string nome, string cognome)
+        internal Utente? FindByName(string nome, string cognome)
         {
             string query = $"SELECT * FROM Utenti WHERE (nome = @nome AND cognome = @cognome)";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -86,7 +86,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="date"></param>
         /// <returns>List di Utente contenenti solo gli Id</returns>
-        internal List<Utente> FindUtentiByDate(DateTime date)
+        internal List<Utente>? FindUtentiByDate(DateTime date)
         {
             string query = $"SELECT idUtente FROM Prenotazioni WHERE YEAR(startDate) = @year AND MONTH(startDate) = @month AND DAY(startDate) = {date.Day};";
             SqlCommand sqlCommand = new SqlCommand(query);

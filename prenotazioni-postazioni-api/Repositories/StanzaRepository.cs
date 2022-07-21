@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza FindById(int idStanza)
+        internal Stanza? FindById(int idStanza)
         {
             string query = $"SELECT * FROM Stanze WHERE idStanza = @id_stanza;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -46,7 +46,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="stanzaName">Il nome della stanza da trovare</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza FindByName(string stanzaName)
+        internal Stanza? FindByName(string stanzaName)
         {
             string query = $"SELECT * FROM Stanze WHERE UPPER(Stanze.nome) = UPPER(@stanza_name);";
             SqlCommand sqlCommand = new SqlCommand(query);

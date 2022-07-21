@@ -31,5 +31,9 @@ namespace prenotazione_postazioni_libs.Models
             this.Giorno = date;
         }
 
+        public Festa()
+        {
+
+        }
     }
 }

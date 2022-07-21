@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db per restituire il campo Impostazione Emergenza
         /// </summary>
         /// <returns>Lo stato dell'Impostazione Emergenza</returns>
-        public Impostazioni FindImpostazioneEmergenza()
+        public Impostazioni? FindImpostazioneEmergenza()
         {
             string query = "SELECT * FROM Impostazioni;";
             SqlCommand sqlCommand = new SqlCommand(query);
