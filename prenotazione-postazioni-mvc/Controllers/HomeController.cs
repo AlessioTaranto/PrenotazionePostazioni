@@ -24,10 +24,19 @@ public class HomeController : Controller
         return View(ViewModel);
     }
 
+    /// <summary>
+    ///     Cambia il giorno selezionato del Calendar.
+    /// </summary>
+    /// <param name="year">Anno selezionato</param>
+    /// <param name="month">Mese selezionato</param>
+    /// <param name="day">Giorno selezionato</param>
+    /// <returns>RedirectToAction -> Index()</returns>
+
     [HttpPost]
     [ActionName("ReloadDay")]
     public IActionResult ReloadDay(int year, int month, int day)
     {
+        //Dicembre
 
         if (month == 0)
         {
@@ -42,6 +51,12 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+    /// <summary>
+    ///     Cambia la stanza selezionata dalla Map.
+    /// </summary>
+    /// <param name="room">Nome della Stanza selezionata</param>
+    /// <returns>RedirectToAction -> Index()</returns>
+
     [HttpPost]
     [ActionName("ReloadRoom")]
     public IActionResult ReloadRoom(string room)
@@ -50,6 +65,12 @@ public class HomeController : Controller
 
         return RedirectToAction("Index");
     }
+
+    /// <summary>
+    ///     Cambia il l'orario di inzio di una prenotazione.
+    /// </summary>
+    /// <param name="hour">Inizio selezionato</param>
+    /// <returns>RedirectToAction -> Index()</returns>
 
     [HttpPost]
     [ActionName("ReloadStart")]
@@ -61,6 +82,12 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+    /// <summary>
+    ///     Cambia il l'orario di termine di una prenotazione.
+    /// </summary>
+    /// <param name="hour">Termine selezionato</param>
+    /// <returns>RedirectToAction -> Index()</returns>
+
     [HttpPost]
     [ActionName("ReloadFinish")]
     public IActionResult ReloadFinish(int hour)
@@ -71,6 +98,11 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+    /// <summary>
+    ///     Cambia lo stato del Collapse "#orario"
+    /// </summary>
+    /// <returns>Ok -> Collapse aggiornato</returns>
+
     [HttpPost]
     [ActionName("CollapseHour")]
     public IActionResult CollapseHour()
@@ -79,6 +111,11 @@ public class HomeController : Controller
 
         return Ok("Collapse change");
     }
+
+    /// <summary>
+    ///     Cambia lo stato del Collapse "#prenotazioni"
+    /// </summary>
+    /// <returns>Ok -> Collapse aggiornato</returns>
 
     [HttpPost]
     [ActionName("CollapseList")]
