@@ -17,7 +17,7 @@ namespace prenotazione_postazioni_libs.Models
         public int IdRuolo { get; set; }
 
 
-        private Exception ModelException { get; set; }
+        private Exception ModelException { get; set; } = new Exception();
         public bool IsValid { get; set; } = false;
 
         public Utente(int idUtente, string nome, string cognome, string image, string email, int idRuolo)
@@ -42,10 +42,6 @@ namespace prenotazione_postazioni_libs.Models
             Email = email;
             IdRuolo = idRuolo;
             this.Validate();
-        }
-
-        public Utente()
-        {
         }
 
         public void Validate()

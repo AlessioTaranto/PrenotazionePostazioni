@@ -52,7 +52,7 @@ namespace prenotazioni_postazioni_api.Services
         internal void MakeVotoToUtente(VotoDto votoDto)
         {
             logger.Info("Trovando il voto mediante l'id dell'utente " + votoDto.Utente.IdUtente + " che ha votato e l'id dell'utente " + votoDto.UtenteVotato.IdUtente + " che ha ricevuto il voto");
-            Voto voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente);
+            Voto? voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente);
             logger.Info("Controllando se il voto e' null..");
             if (voto == null)
             {

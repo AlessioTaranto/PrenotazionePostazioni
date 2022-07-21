@@ -27,24 +27,24 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         }
 
 
-        public T MakeQueryOneResult(SqlCommand sqlCommand)
+        public T? MakeQueryOneResult(SqlCommand sqlCommand)
         {
             logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
             logger.Info("faccio una query al db");
-            T value = JsonConvert.DeserializeObject<T>(GetOneResult(sqlCommand));
+            T? value = JsonConvert.DeserializeObject<T>(GetOneResult(sqlCommand));
             logger.Info("Ho prelevato tutte le informazioni dal db con successo!");
             logger.Info("mi disconnetto dal db");
             DeleteConnection();
             return value;
         }
 
-        public T MakeQueryMoreResults(SqlCommand sqlCommand)
+        public T? MakeQueryMoreResults(SqlCommand sqlCommand)
         {
             logger.Info("Mi connetto al database...");
             CreateConnectionToDatabase(null, null, true);
             logger.Info("faccio una query al db");
-            T value = JsonConvert.DeserializeObject<T>(GetAllResults(sqlCommand));
+            T? value = JsonConvert.DeserializeObject<T>(GetAllResults(sqlCommand));
             logger.Info("Ho prelevato tutte le informazioni dal db con successo!");
             logger.Info("mi disconnetto dal db");
             DeleteConnection();
@@ -99,7 +99,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// <param name="query">la query al db</param>
         /// <returns>Json con il dato trovato</returns>
 
-        private string? GetOneResult(SqlCommand cmd)
+        private string GetOneResult(SqlCommand cmd)
         {
             if (!checkConnectionDatabase())
             {
@@ -147,7 +147,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// </summary>
         /// <param name="query">La query al db</param>
         /// <returns></returns>
-        private string? GetAllResults(SqlCommand cmd)
+        private string GetAllResults(SqlCommand cmd)
         {
             if (!checkConnectionDatabase())
             {
