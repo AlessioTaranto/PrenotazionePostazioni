@@ -1,4 +1,5 @@
 ﻿using System.Xml.Schema;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace prenotazione_postazioni_mvc.Models
 {
@@ -19,6 +20,11 @@ namespace prenotazione_postazioni_mvc.Models
         public int CollapsedHour { get; set; } = 0;
         // Stato Collapse (List)
         public int CollapsedList { get; set; } = 0;
+
+        // Costante: Minima ora selezionabile
+        public const int HourStart = 7;
+        // Costante: Massima ora selezionabile
+        public const int HourEnd = 22;
 
         public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end)
         {
@@ -90,5 +96,92 @@ namespace prenotazione_postazioni_mvc.Models
         {
             _ = CollapsedList == 0 ? CollapsedList = 1 : CollapsedList = 0;
         }
+
+        /// <summary>
+        ///     Cambia il giorno selezionato e valida il nuovo giorno
+        /// </summary>
+        /// <param name="year">Anno selezionato</param>
+        /// <param name="month">Mese selezionato</param>
+        /// <param name="day">Giorno selezionato</param>
+        /// <exception cref="Exception">Giorno precedente a quello odierno, Giorno non valido</exception>
+
+        public void changeSelectedDay(int year, int month, int day)
+        {
+
+            DateTime nowDate = DateTime.Now;
+
+            if ((year < nowDate.Year) || (month < nowDate.Month && year == nowDate.Year) || (day < nowDate.Day && month == nowDate.Month && year == nowDate.Year))
+                throw new Exception("Non puoi selezionare una data precedente alla data corrente");
+
+            try
+            {
+                Date = new DateTime(year, month, day);
+                Start = new DateTime(year, month, day, Start.Hour, 0, 0);
+                End = new DateTime(year, month, day, End.Hour, 0, 0);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new Exception("La data selezionata non è valida");
+            } 
+
+        }
+
+        /// <summary>
+        ///     Cambia l'orario di inizio, e valida il nuovo orario
+        /// </summary>
+        /// <param name="hour">Orario selezionato</param>
+        /// <exception cref="Exception">Ora precedente minore del minimo, Ora maggiore del massimo, Orario successivo al termine, Orario non valido</exception>
+
+        public void changeSelectedStartHour(int hour)
+        {
+            if (hour < HourStart)
+                throw new Exception("Non puoi selezionare un orario prima delle " + HourStart);
+
+            if (hour > HourEnd)
+                throw new Exception("Non puoi selezionare un orario dopo delle " + HourEnd);
+
+            if (hour > End.Hour)
+                throw new Exception("Non puoi selezionare un orario d'inizio successivo a quello di termine");
+
+            try
+            {
+                Start = new DateTime(Date.Year, Date.Month, Date.Day, hour, 0, 0);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new Exception("L'orario selezionato non è valido");
+            }
+
+        }
+
+        /// <summary>
+        ///     Cambia l'orario di termine, e valida il nuovo orario
+        /// </summary>
+        /// <param name="hour">Orario selezionato</param>
+        /// <exception cref="Exception">Ora precedente minore del minimo, Ora maggiore del massimo, Orario precedente all'inizio, Orario non valido</exception>
+
+
+        public void changeSelectedEndHour(int hour)
+        {
+            if (hour < HourStart)
+                throw new Exception("Non puoi selezionare un orario prima delle " + HourStart);
+
+            if (hour > HourEnd)
+                throw new Exception("Non puoi selezionare un orario dopo delle " + HourEnd);
+
+            if (hour < Start.Hour)
+                throw new Exception("Non puoi selezionare un orario di termine precedente a quello d'inizio");
+
+            try
+            {
+                End = new DateTime(Date.Year, Date.Month, Date.Day, hour, 0, 0);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new Exception("L'orario selezionato non è valido");
+            }
+
+        }
+
     }
 }

@@ -44,9 +44,7 @@ public class HomeController : Controller
             year--;
         }
 
-        ViewModel.Date = new DateTime(year, month, day);
-        ViewModel.Start = new DateTime(year, month, day, ViewModel.Start.Hour, 0, 0);
-        ViewModel.End = new DateTime(year, month, day, ViewModel.End.Hour, 0, 0);
+        ViewModel.changeSelectedDay(year, month, day);
 
         return RedirectToAction("Index");
     }
@@ -76,8 +74,7 @@ public class HomeController : Controller
     [ActionName("ReloadStart")]
     public IActionResult ReloadStart(int hour)
     {
-
-        ViewModel.Start = new DateTime(ViewModel.Date.Year, ViewModel.Date.Month, ViewModel.Date.Day, hour, 0, 0);
+        ViewModel.changeSelectedStartHour(hour);
 
         return RedirectToAction("Index");
     }
@@ -92,8 +89,7 @@ public class HomeController : Controller
     [ActionName("ReloadFinish")]
     public IActionResult ReloadFinish(int hour)
     {
-
-        ViewModel.End = new DateTime(ViewModel.Date.Year, ViewModel.Date.Month, ViewModel.Date.Day, hour, 0, 0);
+        ViewModel.changeSelectedEndHour(hour);
 
         return RedirectToAction("Index");
     }
