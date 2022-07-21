@@ -18,7 +18,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idPrenotazione">Id della Prenotazione</param>
         /// <returns>Prenotazione</returns>
-        internal Prenotazione FindById(int idPrenotazione)
+        internal Prenotazione? FindById(int idPrenotazione)
         {
 
             string query = "SELECT * FROM Prenotazioni WHERE idPrenotazioni = @id_prenotazione;";
@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idStanza">L'Id della stanza associata alla Prenotazione</param>
         /// <returns>Lista di Prenotazione</returns>
-        internal List<Prenotazione> FindByStanza(int idStanza)
+        internal List<Prenotazione>? FindByStanza(int idStanza)
         {
             string query = $"SELECT * FROM Prenotazioni WHERE idStanza = @id_stanza;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -43,7 +43,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db, per trovare tutte le prenotazioni esistenti al database
         /// </summary>
         /// <returns>Lista di Prenotazione</returns>
-        internal List<Prenotazione> FindAll()
+        internal List<Prenotazione>? FindAll()
         {
             string query = "SELECT * FROM Prenotazioni;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -54,7 +54,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente associata alla Prenotazione</param>
         /// <returns>Prenotazione</returns>
-        internal List<Prenotazione> FindByUtente(int idUtente)
+        internal List<Prenotazione>? FindByUtente(int idUtente)
         {
             string query = $"SELECT * FROM Prenotazioni WHERE idUtente = @id_utente;";
             SqlCommand cmd = new SqlCommand(query);
@@ -85,7 +85,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idStanza">L'id della stanza dove sono effettuate delle prenotazioni</param>
         /// <param name="date">La data delle prenotazioni</param>
         /// <returns></returns>
-        internal List<Prenotazione> FindAllByIdStanzaAndDate(int idStanza, DateTime startDate, DateTime endDate)
+        internal List<Prenotazione>? FindAllByIdStanzaAndDate(int idStanza, DateTime startDate, DateTime endDate)
         {
             string start = startDate.ToString("yyyy-MM-ddTHH:mm:ss");
             string end = endDate.ToString("yyyy-MM-ddTHH:mm:ss");

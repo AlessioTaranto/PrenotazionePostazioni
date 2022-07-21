@@ -9,11 +9,11 @@ namespace prenotazione_postazioni_libs.Models
     public class Utente
     {
         public int IdUtente { get; set; }
-        public string Nome { get; set; }
-        public string Cognome { get; set; }
-        public string Image { get; set; }
+        public string Nome { get; set; } = "";
+        public string Cognome { get; set; } = "";
+        public string? Image { get; set; }
         //Base 64x converter (https://stackoverflow.com/questions/69303512/converting-an-sql-Image-to-base64-in-c-sharp)
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
         public int IdRuolo { get; set; }
 
 
@@ -44,6 +44,7 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+        public Utente() { }
         public void Validate()
         {
             try

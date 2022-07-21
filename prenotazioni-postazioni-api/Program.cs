@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Log4Net.AspNetCore;
 using prenotazioni_postazioni_api.Controllers;
 using prenotazioni_postazioni_api.Repositories;
+using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Services;
 
 
@@ -46,6 +47,8 @@ builder.Services.AddSingleton<VotoController, VotoController>();
 builder.Services.AddSingleton<VotoService, VotoService>();
 builder.Services.AddSingleton<VotoRepository, VotoRepository>();
 
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
+DatabaseInfo.DefaultConnectionString = connectionString;
 
 var app = builder.Build();
 

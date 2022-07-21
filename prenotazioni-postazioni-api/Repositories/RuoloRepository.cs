@@ -38,7 +38,7 @@ namespace prenotazioni_postazioni_api.Repositories
             string query = $"SELECT * FROM Utenti WHERE idUtente = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@id_utente", idUtente);
-            Utente utente = DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
+            Utente? utente = DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
             if(utente == null)
             {
                 throw new PrenotazionePostazioniApiException("IdUtente non trovato");

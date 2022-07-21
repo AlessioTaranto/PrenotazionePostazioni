@@ -10,11 +10,6 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 {
     public class DatabaseManager<T>
     {
-        public static string DatabaseName { get; } = "[prenotazioni-impostazioni].dbo";
-        public static string DefaultInitialCatalog { get; } = "prenotazioni-impostazioni";
-        public static string DefaultDataSource { get; } = "LTP040";
-        public readonly static string DEFAULT_DATABASE_NAME_STRING = "[prenotazioni - impostazioni].dbo";
-
         private SqlConnection? _conn;
         private ILog logger = LogManager.GetLogger(typeof(DatabaseManager<T>));
 
@@ -76,20 +71,24 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         private void CreateConnectionToDatabase(string? initialCatalog, string? datasource, bool integratedSecurity)
         {
             //significa che _conn ha gia un'istanza di SqlConnection
+            logger.Info("Controllo se la connessione e' gia esistente...");
             if (checkConnectionDatabase())
             {
-                return;
+                logger.Fatal("Connessione gia esistente. [Forse ti sei dimenticato di chiuderla?]");
+                throw new Exception("Errore interno. Connessione gia aperta.");
             }
+            logger.Info("Connessione non esistente");
             SqlConnectionStringBuilder connBuilder = new SqlConnectionStringBuilder();
-            connBuilder.TrustServerCertificate = true;
-            connBuilder.InitialCatalog = initialCatalog ?? DefaultInitialCatalog;
-            connBuilder.DataSource = datasource ?? DefaultDataSource;
-            connBuilder.IntegratedSecurity = true;
+            logger.Info("Inizializzo la connection string...");
+            connBuilder.ConnectionString = DatabaseInfo.DefaultConnectionString;
+            logger.Info("Creo una nuova connessione...");
             _conn = new SqlConnection(connBuilder.ToString());
+            logger.Info("Creazione della connessione fatta con successo!");
         }
 
         private void DeleteConnection()
         {
+            logger.Info("Elimino la connessione");
             _conn = null;
         }
 
@@ -101,19 +100,27 @@ namespace prenotazioni_postazioni_api.Repositories.Database
 
         private string GetOneResult(SqlCommand cmd)
         {
+            logger.Info("Controllo se la connessione con il database e' stata stabilita...");
             if (!checkConnectionDatabase())
             {
+                logger.Fatal("La connessione con il database NON e' stata stabilita!");
                 throw new DatabaseException("Database connection not set");
             }
+            logger.Info("La connessione con il database e' stabilita con successo");
             using (var conn = _conn)
             {
                 cmd.Connection = conn;
+                logger.Info("Apro una connessione");
                 conn.Open();
                 var reader = cmd.ExecuteReader();
+                logger.Info("Eseguisco la query al db...");
                 IEnumerable<Dictionary<string, object>> result = Serialize(reader);
-                Console.WriteLine(result);
+                logger.Info("Serializzo il risultato in json...");
                 string jsonResult = JsonConvert.SerializeObject(result);
+                logger.Info("Serializzazione in json completata con successo!");
+                logger.Info("Disconnessione dal database...");
                 conn.Close();
+                logger.Info("Disconnessione dal database fatto con successo!");
                 jsonResult = jsonResult.Replace("[", "").Replace("]", "");
                 return jsonResult;
             }
@@ -149,15 +156,20 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// <returns></returns>
         private string GetAllResults(SqlCommand cmd)
         {
+            logger.Info("Controllo se la connessione e' gia esistente...");
             if (!checkConnectionDatabase())
             {
+                logger.Fatal("La connessione e' gia esistente. [Forse ti sei dimenticato di chiuderla?]");
                 throw new DatabaseException("Database connection not set");
             }
             using (var conn = _conn)
             {
                 cmd.Connection = conn;
+                logger.Info("Apro una connessione al database...");
                 conn.Open();
+                logger.Info("Connessione aperta.");
                 var values = new List<Dictionary<string, object>>();
+                logger.Info("Eseguisco la query...");
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     do
@@ -173,8 +185,13 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                         }
                     } while (reader.NextResult());
                 }
+                logger.Info("Query eseguita con successo!");
+                logger.Info("Mi disconnetto dal database...");
                 conn.Close();
+                logger.Info("Disconnessione dal database effettuata con successo!");
+                logger.Info("Conversione il risultato della query in json...");
                 var json = JsonConvert.SerializeObject(values);
+                logger.Info("Conversione in json effettuata con successo!");
                 return json;
 
             }
@@ -186,16 +203,24 @@ namespace prenotazioni_postazioni_api.Repositories.Database
         /// <param name="query">La query al db</param>
         private void GetNoneResult(SqlCommand cmd)
         {
+            logger.Info("Controllo se la connessione e' gia esistente...");
             if (!checkConnectionDatabase())
             {
+                logger.Fatal("La connessione e' gia esistente. [Forse ti sei dimenticato di chiuderla?]");
                 throw new DatabaseException("Database connection not set");
             }
+            logger.Info("Connessione non esistente");
             using (var conn = _conn)
             {
                 cmd.Connection = conn;
+                logger.Info("Stabilisco una connessione al database...");
                 conn.Open();
+                logger.Info("Eseguisco la query...");
                 cmd.ExecuteNonQuery();
+                logger.Info("Query eseguita con successo!");
+                logger.Info("Chiudo la connessione...");
                 conn.Close();
+                logger.Info("Connessione chiusa con successo!");
             }
         }
         private bool checkConnectionDatabase()
