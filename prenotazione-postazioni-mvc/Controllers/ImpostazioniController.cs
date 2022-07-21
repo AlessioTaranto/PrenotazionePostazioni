@@ -146,5 +146,64 @@ namespace prenotazione_postazioni_mvc.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        ///     Abilita / Disabilita la modalità covid
+        /// </summary>
+        /// <returns>Ok -> Modalità cambiata</returns>
+
+        [HttpPost]
+        [ActionName("ToggleCovidMode")]
+        public IActionResult ToggleCovidMode()
+        {
+            ViewModel?.CapienzaViewModel.ToggleCovidMode();
+
+            return Ok("Modalità cambiata");
+        }
+
+        /// <summary>
+        ///     Imposta la capienza normale di una stanza 
+        /// </summary>
+        /// <param name="stanza">Stanza selezionata</param>
+        /// <param name="capienza">Capienza selezionata</param>
+        /// <returns>Ok -> Capienza aggiornata</returns>
+
+        [HttpPost]
+        [ActionName("ReloadCapienzaNormale")]
+        public IActionResult ReloadCapienzaNormale(string stanza, int capienza)
+        {
+            try
+            {
+                ViewModel.CapienzaViewModel.SetCapienzaNormale(stanza, capienza);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
+            return Ok("Capienza aggiornata");
+        }
+
+        /// <summary>
+        ///     Imposta la capienza covid di una stanza
+        /// </summary>
+        /// <param name="stanza">Stanza selezionata</param>
+        /// <param name="capienza">Capienza selezionata</param>
+        /// <returns>Ok -> Capienza aggiornata</returns>
+
+        [HttpPost]
+        [ActionName("ReloadCapienzaCovid")]
+        public IActionResult ReloadCapienzaCovid(string stanza, int capienza)
+        {
+            try
+            {
+                ViewModel.CapienzaViewModel.SetCapienzaCovid(stanza, capienza);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
+            return Ok("Capienza aggiornata");
+        }
     }
 }

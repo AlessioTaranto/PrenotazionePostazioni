@@ -45,15 +45,39 @@
             <area alt="Meeting" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
         </map>
     </div>
+    
+    <link rel="stylesheet" href="css/switch.css">
 
     <div class="container mt-4 ml-70 position-fixed room-info-div">
+        <br>
+        <h5>Modalità Covid</h5>
+        <label class="switch">
+            @if (ViewModel.CapienzaViewModel.CovidMode)
+            {
+                <input type="checkbox" id="covid-switch-btn" checked>
+            }
+            else
+            {
+                <input type="checkbox" id="covid-switch-btn">
+            }
+            <span class="slider"></span>
+        </label>
+        <br>
+        <br>
         <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
         <br>
-        <h5>Capienza</h5>
-        <input type="number" id="capienza" name="capienza" min="1" max="10" style="width: 17vw" value="@ViewModel.CapienzaViewModel.Capienza">
-        <br>
-        <br>
-        <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma"></input>
+        @if (ViewModel.CapienzaViewModel.Stanza != "null")
+        {
+            <h5>Capienza Normale</h5>
+            <input type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)">
+            <br>
+            <br>
+            <h5>Capienza Covid</h5>
+            <input type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)">
+            <br>
+            <br>
+            <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma"></input>
+        }
     </div>
 </div>
 
@@ -434,4 +458,49 @@
         });
 
     });
+</script>
+<script>
+
+    $('#covid-switch-btn').on('click',
+        function() {
+            $.ajax({
+                type: "POST",
+                url: "Impostazioni/ToggleCovidMode"
+            }).done(function() {
+                window.location.reload();
+            });
+        });
+
+    $('#capienzaNormale').on('change',
+        function(event) {
+            $.ajax({
+                type: "POST",
+                url: "Impostazioni/ReloadCapienzaNormale",
+                data: { "stanza": "@ViewModel.CapienzaViewModel.Stanza", "capienza": event.target.value },
+                error: function(xhr) {
+                    alertBox(xhr.responseText);
+                    event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaNormaleDefault(@ViewModel.CapienzaViewModel.Stanza);
+                    event.preventDefault();
+                }
+            }).done(function() {
+                window.location.reload();
+            });
+        });
+
+    $('#capienzaCovid').on('change',
+        function(event) {
+            $.ajax({
+                type: "POST",
+                url: "Impostazioni/ReloadCapienzaCovid",
+                data: { "stanza": "@ViewModel.CapienzaViewModel.Stanza", "capienza": event.target.value },
+                error: function(xhr) {
+                    alertBox(xhr.responseText);
+                    event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaCovidDefault(@ViewModel.CapienzaViewModel.Stanza);
+                    event.preventDefault();
+                }
+            }).done(function() {
+                window.location.reload();
+            });
+        });
+
 </script>
