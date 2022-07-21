@@ -9,10 +9,10 @@ namespace prenotazione_postazioni_libs.Models
     public class Festa
     {
         public int IdFesta { get; set; }
-        public DateTime Giorno { get; set; }
+        public DateTime? Giorno { get; set; }
         public string? Descrizione { get; set; }
 
-        public Exception ModelException;
+        public Exception? ModelException;
         public bool IsValid { get; set; } = false;
 
         public Festa()
