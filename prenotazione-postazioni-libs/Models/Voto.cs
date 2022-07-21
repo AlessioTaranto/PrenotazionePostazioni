@@ -12,7 +12,7 @@ namespace prenotazione_postazioni_libs.Models
         public int IdVoto { get; set; }
         public int IdUtente { get; set; }
         public int IdUtenteVotato { get; set; }
-        public bool VotoEffettuato { get; set; }
+        public bool? VotoEffettuato { get; set; }
 
         private Exception ModelException { get; set; } = new Exception();
         public bool IsValid { get; set; } = false;
@@ -34,6 +34,8 @@ namespace prenotazione_postazioni_libs.Models
             VotoEffettuato = votoEffettuato;
             this.Validate();
         }
+
+        public Voto() { }
 
 
         public void Validate()

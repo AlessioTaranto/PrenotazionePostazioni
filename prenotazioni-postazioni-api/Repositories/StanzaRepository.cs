@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db, restituisce tutte le stanze presente nel database
         /// </summary>
         /// <returns>Lista di Stanza</returns>
-        internal List<Stanza> FindAll()
+        internal List<Stanza>? FindAll()
         {
             string query = $"SELECT * FROM Stanze";
             SqlCommand sqlCommand = new SqlCommand(query);

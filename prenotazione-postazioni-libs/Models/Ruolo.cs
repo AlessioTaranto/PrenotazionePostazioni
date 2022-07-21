@@ -16,12 +16,13 @@ namespace prenotazione_postazioni_libs.Models
     {
 
         public int IdRuolo { get; set; }
-        public string DescRuolo { get; set; }
+        public string? DescRuolo { get; set; }
         public bool AccessoImpostazioni { get; set; }
 
         private Exception ModelException { get; set; } = new Exception();
         public bool IsValid { get; set; } = false;
 
+        public Ruolo() { }
         public Ruolo(int idRuolo, string descRuolo, bool accessoImpostazioni)
         {
             this.IdRuolo = idRuolo;

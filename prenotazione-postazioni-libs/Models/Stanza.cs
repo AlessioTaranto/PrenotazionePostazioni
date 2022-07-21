@@ -11,9 +11,9 @@ namespace prenotazione_postazioni_libs.Models
     {
 
         public int IdStanza { get; set; }
-        public string Nome { get; set; }
-        public int PostiMax { get; set; }
-        public int PostiMaxEmergenza { get; set; }
+        public string Nome { get; set; } = "";
+        public int PostiMax { get; set; } = 0;
+        public int PostiMaxEmergenza { get; set; } = 0;
 
 
         private Exception ModelException { get; set; } = new Exception();
@@ -37,6 +37,7 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+        public Stanza() { }
         public void Validate()
         {
             try
