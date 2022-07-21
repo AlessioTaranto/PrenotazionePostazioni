@@ -11,6 +11,7 @@
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService
+@inject VotoHttpService _votoHttpService
 
     <style>
         .icon-img {
@@ -18,28 +19,47 @@
         }
     </style>    
 
+
 @{
-    HttpResponseMessage? getAllUtentiResult = await _utenteHttpService.OnGetAllUtenti();
+    int idUtente = 1; //esempio
+    HttpResponseMessage? getAllUtentiResult = await _utenteHttpService.OnGetAllUtenti(); 
+    HttpResponseMessage? getAllVotiResult = await _votoHttpService.OnGetVotiFromUtente(idUtente); 
     List<Utente>? utenti = null;
-    if(getAllUtentiResult != null && getAllUtentiResult.StatusCode == HttpStatusCode.OK)
+    List<Voto>? voti = null;
+    if(getAllUtentiResult != null && getAllUtentiResult.StatusCode == HttpStatusCode.OK && getAllVotiResult.StatusCode == HttpStatusCode.OK)
     {
         utenti = await getAllUtentiResult.Content.ReadFromJsonAsync<List<Utente>?>();
-       
+        voti = await getAllVotiResult.Content.ReadFromJsonAsync<List<Voto>?>();
+
         for(int i = 0; i < utenti.Count; i++)
         {
-            string fullName = utenti[i].Nome + " " + utenti[i].Cognome;
-            string rumorosita = "rumorosita" + (i+1);
-            string rumoroso = "rumoroso" + (i+1);
-            string non_rumoroso = "non_rumoroso" + (i+1);
+            if (utenti[i].IdUtente != idUtente)
+            {
+                string fullName = utenti[i].Nome + " " + utenti[i].Cognome;
+                string rumorosita = "rumorosita" + (i + 1);
+                string rumoroso = "rumoroso" + (i + 1);
+                string non_rumoroso = "non_rumoroso" + (i + 1);
+                int voto = 0;
 
-            <div class="container-fluid mt-4">
-            <div class="p-3 border bg-light"><div class="row">
-                <div class="col-sm-1 ml-3 align-self-center"><img class="item icon-img" src="img/user_icon.png" alt="user_icon"></div>
-                <div class="col-sm-8 align-self-center">@fullName</div>
-                <div class="col-sm-1 align-self-center"><input type="checkbox" name="@rumorosita" id="@rumoroso" value="rumoroso"><label for="@rumoroso">Rumoroso</label></div>
-                <div class="col align-self-center"><input type="checkbox" name="@rumorosita" id="@non_rumoroso" value="non_rumoroso"><label for="@non_rumoroso">Non rumoroso</label></div>
-            </div></div>
-        </div>
+                for (int j = 0; j < voti.Count; j++)
+                {
+                    if (voti[j].IdUtenteVotato == utenti[i].IdUtente)
+                    {
+                        voto = voti[j].VotoEffettuato == true ? 1 : -1;
+                    }
+                }
+                <div class="container-fluid mt-4">
+                    <div class="p-3 border bg-light"><div class="row">
+                    <div class="col-sm-1 ml-3 align-self-center"><img class="item icon-img" src="img/user_icon.png" alt="user_icon"></div>
+                    <div class="col-sm-8 align-self-center" id=@($"{utenti[i].IdUtente}")>@fullName</div>
+                    <div class="col-sm-1 align-self-center"><input type="checkbox" name="@rumorosita" id="@rumoroso" value="rumoroso" @(
+                        voto == 1 ? "checked='checked'" : "")><label for="@rumoroso">Rumoroso</label></div>
+                    <div class="col align-self-center"><input type="checkbox" name="@rumorosita" id="@non_rumoroso" value="non_rumoroso" @(
+                        voto == -1 ? "checked='checked'" : "")><label for="@non_rumoroso">Non rumoroso</label></div>
+                </div></div>
+            </div>
+            }
+            
         }
     }
 
@@ -126,7 +146,7 @@
                       $.ajax({
                           type: "POST",
                           url: "Votazioni/VoteUser",
-                          data: { "voto": -1, "i": i }
+                          data: { "voto": -1, "idUtente" : @idUtente , "idUtenteVotato" : }
                       })
                   ///se l'utente è stato votato come rumoroso
                   } else {
