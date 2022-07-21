@@ -6,12 +6,6 @@ namespace prenotazione_postazioni_mvc.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
 
     public static PrenotazioneViewModel ViewModel { get; set; }
 
@@ -42,6 +36,7 @@ public class HomeController : Controller
     {
         ViewModel.Stanza = room;
 
+
         return RedirectToAction("Index");
     }
 
@@ -70,5 +65,12 @@ public class HomeController : Controller
     public void CollapseHour(int collapse)
     {
         ViewModel.CollapsedHour = collapse;
+    }
+
+    [HttpPost]
+    [ActionName("GetAllUtentiPrenotazione")]
+    public IActionResult GetAllPersonePrenotate(int inizio, int fine)
+    {
+        throw new NotImplementedException();
     }
 }

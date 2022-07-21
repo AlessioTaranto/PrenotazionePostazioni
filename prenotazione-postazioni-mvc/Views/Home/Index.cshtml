@@ -182,6 +182,8 @@
     clickCalendar(getIdDay(@ViewModel.Date.Day));
     selectDay(daySel);
 
+
+
     $('area').on('click', function () {
         let nameStanza = event.target.alt;
 
@@ -212,7 +214,10 @@
             $.ajax({
                 type: "POST",
                 url: "Home/ReloadStart",
-                data: { "hour": hourSel }
+                data: { "hour": hourSel },
+                success: function() {
+                    getAllPersonePrenotateOrario(@ViewModel.Start.Hour, @ViewModel.End.Hour)
+                }
             }).done(function() {
                 window.location.reload();
             });
@@ -225,7 +230,10 @@
             $.ajax({
                 type: "POST",
                 url: "Home/ReloadFinish",
-                data: { "hour": hourSel }
+                data: { "hour": hourSel },
+                success: function() {
+                    getAllPersonePrenotateOrario(@ViewModel.Start.Hour, @ViewModel.End.Hour)
+                }
             }).done(function() {
                 window.location.reload();
             });
@@ -244,8 +252,24 @@
                     url: "Home/CollapseHour",
                     data: { "collapse": (event.target.classList.contains("collapsed") ? 1 : 0) }
                 }).done(function() {
+                    getAllPersonePrenotateOrario(@ViewModel.FormatHour(@ViewModel.Start.Hour), @ViewModel.FormatHour(@ViewModel.End.Hour))
                 });
             }
         );
     });
+
+function getAllPersonePrenotateOrario(inizio, fine) {
+    $.ajax({
+        type:"POST",
+        url: "Home/GetAllPersonePrenotate",
+        data: {
+            inizio: inizio,
+            fine: fine
+        },
+        success: function(data) {
+            console.log(data);
+            //da mettere tutte le persone nella sezione "Persone Prenotate";
+        }
+    })
+}
 </script>
