@@ -1,7 +1,4 @@
-﻿using System.Xml.Schema;
-using Microsoft.AspNetCore.Server.IIS.Core;
-
-namespace prenotazione_postazioni_mvc.Models
+﻿namespace prenotazione_postazioni_mvc.Models
 {
     public class PrenotazioneViewModel
     {
@@ -17,9 +14,9 @@ namespace prenotazione_postazioni_mvc.Models
         public DateTime End { get; set; }
 
         // Stato Collapse (Hour)
-        public int CollapsedHour { get; set; } = 0;
+        public int CollapsedHour { get; set; }
         // Stato Collapse (List)
-        public int CollapsedList { get; set; } = 0;
+        public int CollapsedList { get; set; }
 
         // Costante: Minima ora selezionabile
         public const int HourStart = 7;
@@ -52,6 +49,7 @@ namespace prenotazione_postazioni_mvc.Models
 
         public PrenotazioneViewModel()
         {
+            Stanza = "null";
             Date = DateTime.Now;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
@@ -64,7 +62,7 @@ namespace prenotazione_postazioni_mvc.Models
         
         public string GetStanza()
         {
-            return this.Stanza == null ? "Seleziona una stanza" : this.Stanza;
+            return this.Stanza == "null" ? "Seleziona una stanza" : this.Stanza;
         }
 
         /// <summary>

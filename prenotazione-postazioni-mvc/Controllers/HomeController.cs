@@ -1,19 +1,12 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using prenotazione_postazioni_mvc.Models;
 
 namespace prenotazione_postazioni_mvc.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
-    public static PrenotazioneViewModel ViewModel { get; set; }
+    public static PrenotazioneViewModel? ViewModel { get; set; }
 
     public IActionResult Index()
     {
@@ -44,7 +37,7 @@ public class HomeController : Controller
             year--;
         }
 
-        ViewModel.ChangeSelectedDay(year, month, day);
+        ViewModel?.ChangeSelectedDay(year, month, day);
 
         return RedirectToAction("Index");
     }
@@ -59,7 +52,8 @@ public class HomeController : Controller
     [ActionName("ReloadRoom")]
     public IActionResult ReloadRoom(string room)
     {
-        ViewModel.Stanza = room;
+        if (ViewModel != null)
+            ViewModel.Stanza = room;
 
         return RedirectToAction("Index");
     }
@@ -74,7 +68,7 @@ public class HomeController : Controller
     [ActionName("ReloadStart")]
     public IActionResult ReloadStart(int hour)
     {
-        ViewModel.ChangeSelectedStartHour(hour);
+        ViewModel?.ChangeSelectedStartHour(hour);
 
         return RedirectToAction("Index");
     }
@@ -89,7 +83,7 @@ public class HomeController : Controller
     [ActionName("ReloadFinish")]
     public IActionResult ReloadFinish(int hour)
     {
-        ViewModel.ChangeSelectedEndHour(hour);
+        ViewModel?.ChangeSelectedEndHour(hour);
 
         return RedirectToAction("Index");
     }
@@ -103,7 +97,7 @@ public class HomeController : Controller
     [ActionName("CollapseHour")]
     public IActionResult CollapseHour()
     {
-        ViewModel.ToggleCollapseHour();
+        ViewModel?.ToggleCollapseHour();
 
         return Ok("Collapse change");
     }
@@ -117,7 +111,7 @@ public class HomeController : Controller
     [ActionName("CollapseList")]
     public IActionResult CollapseList()
     {
-        ViewModel.ToggleCollapseList();
+        ViewModel?.ToggleCollapseList();
 
         return Ok("Collapse change");
     }

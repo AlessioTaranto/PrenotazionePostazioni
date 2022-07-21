@@ -6,7 +6,7 @@
         public DateTime PresenzaSelezionata { get; set; }
 
         // Stato del Collapse (List)
-        public int CollapsedList { get; set; } = 0;
+        public int CollapsedList { get; set; }
 
         public PresenzeImpostazioniViewModel()
         {

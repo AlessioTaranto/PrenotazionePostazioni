@@ -23,6 +23,7 @@
 
         public CapienzaImpostazioniViewModel()
         {
+            Stanza = "null";
             Capienza = 5;
         }
 
@@ -45,7 +46,7 @@
         /// <returns>Se è stata selezionata una stanza, ritorna la stanza, altrimenti "Seleziona una stanzas"</returns>
         public string GetStanza()
         {
-            return Stanza == null ? "Seleziona una stanza" : Stanza;
+            return Stanza == "null" ? "Seleziona una stanza" : Stanza;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             return View(ViewModel);
         }
 
-        public static ImpostazioniViewModel ViewModel;
+        public static ImpostazioniViewModel? ViewModel { get; set; }
 
         /// <summary>
         ///     Cambia la stanza selezionata nel tab "Covid / Capienza"
@@ -29,7 +29,8 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("SelectRoom")]
         public IActionResult SelectRoom(string stanza)
         {
-            ViewModel.CapienzaViewModel.Stanza = stanza;
+            if (ViewModel != null)
+                ViewModel.CapienzaViewModel.Stanza = stanza;
 
             return RedirectToAction("Index");
         }
@@ -53,7 +54,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel.FestivitaViewModel.SelectFesta(year, month, day);
+            ViewModel?.FestivitaViewModel.SelectFesta(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -70,7 +71,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("AggiungiFesta")]
         public IActionResult AggiungiFesta(int year, int month, int day)
         {
-            ViewModel.FestivitaViewModel.AddFesta(year, month, day);
+            ViewModel?.FestivitaViewModel.AddFesta(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -87,7 +88,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("RimuoviFesta")]
         public IActionResult RimuoviFesta(int year, int month, int day)
         {
-            ViewModel.FestivitaViewModel.RemoveFesta(year, month, day);
+            ViewModel?.FestivitaViewModel.RemoveFesta(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -102,7 +103,8 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("ChangeStateTab")]
         public IActionResult ChangeStateTab(int number)
         {
-            ViewModel.StateTab = number;
+            if (ViewModel != null)
+                ViewModel.StateTab = number;
 
             return Ok("Tab changed");
         }
@@ -116,7 +118,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("CollapsePresenze")]
         public IActionResult CollapsePresenze()
         {
-            ViewModel.PresenzeViewModel.ToggleCollapseList();
+            ViewModel?.PresenzeViewModel.ToggleCollapseList();
 
             return Ok("Collapse changed");
         }
@@ -139,7 +141,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel.PresenzeViewModel.SelectPresenza(year, month, day);
+            ViewModel?.PresenzeViewModel.SelectPresenza(year, month, day);
 
             return RedirectToAction("Index");
         }
