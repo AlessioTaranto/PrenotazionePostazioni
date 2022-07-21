@@ -1,4 +1,5 @@
-﻿function getFeste(month, year) {
+﻿// Ottieni una lista con tutte le date delle feste presenti in un mese e anno
+function getFeste(month, year) {
     let festeInMonth = [];
 
     festivita.forEach(festa => {
@@ -9,6 +10,7 @@
     return festeInMonth;
 }
 
+// Ottieni l'oggetto della festività, quindi anche id associato. Null se la data non è una festa
 function getFesta(dateFesta) {
     festivita.forEach(festa => {
         if (festa.date === dateFesta)
@@ -17,6 +19,7 @@ function getFesta(dateFesta) {
     return null;
 }
 
+// Aggiorna il pulsante per impostare una festività
 function festaButton() {
     if (dayIdSelected !== null) {
         let selector = $('#'.concat(dayIdSelected));
@@ -41,12 +44,14 @@ function festaButton() {
     }
 }
 
+// Duplicato del clickCalendar in calendar.js, ma con controlli diversi, adatti al caendario delle Festività 
 function clickCalendarFest(id) {
     let selector = $('#'.concat(id));
 
     if (selector.css("color") !== "rgb(255, 255, 255)") {
         checkSelectedCell(dayIdSelected);
         dayIdSelected = id;
+        // In base al colore della casella cliccata (se è nero non è una festa), cambia il testo del pulsante #festabutton
         $('#festabutton').text(selector.css("color") === "rgb(0, 0, 0)" ? "Imposta come festività" : "Rimuovi festività");
         selectCell(id);
         selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
