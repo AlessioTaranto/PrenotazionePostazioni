@@ -139,7 +139,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel.PresenzeViewModel.PresenzaSelezionata = new DateTime(year, month, day);
+            ViewModel.PresenzeViewModel.SelectPresenza(year, month, day);
 
             return RedirectToAction("Index");
         }
