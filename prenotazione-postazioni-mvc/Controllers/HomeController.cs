@@ -37,9 +37,16 @@ public class HomeController : Controller
             year--;
         }
 
-        ViewModel?.ChangeSelectedDay(year, month, day);
+        try
+        {
+            ViewModel?.ChangeSelectedDay(year, month, day);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
 
-        return RedirectToAction("Index");
+        return Ok("Giorno selezionato");
     }
 
     /// <summary>

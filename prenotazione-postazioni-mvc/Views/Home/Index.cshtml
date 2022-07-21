@@ -266,8 +266,12 @@
             $.ajax({
                 type: "POST",
                 url: "Home/ReloadDay",
-                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() }
-            }).done(function() {
+                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                error: function(xhr) {
+                    alert(xhr.responseText);
+                }
+            }).done(function(data) {
+                alert(data);
                 window.location.reload();
             });
     });
