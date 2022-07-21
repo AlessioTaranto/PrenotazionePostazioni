@@ -157,6 +157,45 @@
 
 </div>
 
+<div class="alert-box">
+    <div class="alert-box-view" style="opacity: 0" id="error-box">
+        <!-- Qui dentro viene inserito il codice di errore -->
+    </div>
+</div>
+
+<script>
+
+    let usingAlertBox = false;
+
+    function alertBox(message) {
+        let alertBox = $('#error-box');
+
+        alertBox.text(message);
+
+        if (usingAlertBox === false) {
+            usingAlertBox = true;
+            alertBox.animate({ opacity: 0 }, 0);
+            alertBox.animate({ opacity: 1 },
+                750,
+                "swing",
+                function() {
+                    setTimeout(function() {
+                            alertBox.animate({ opacity: 0 },
+                                750,
+                                "swing",
+                                function() {
+                                    usingAlertBox = false;
+                                    alertBox.text("");
+                                });
+                        },
+                        3000);
+                });
+        } 
+
+    }
+
+</script>
+
 <script>
 
     $(document).ready(function() {
@@ -268,7 +307,7 @@
                 url: "Home/ReloadDay",
                 data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                 error: function(xhr) {
-                    alert(xhr.responseText);
+                    alertBox(xhr.responseText);
                     event.preventDefault();
                 }
             }).done(function(data) {
@@ -283,17 +322,17 @@
 
     $('#start').on('change', function(event) {
         $.ajax({
-                type: "POST",
-                url: "Home/ReloadStart",
-                data: { "hour": (event.target.value).split(":")[0] },
-                error: function(xhr) {
-                    alert(xhr.responseText);
-                    event.preventDefault();
-                    event.target.value = "@ViewModel.FormatHour(@ViewModel.Start.Hour):00";
-                }
-            }).done(function() {
-                window.location.reload();
-            });
+            type: "POST",
+            url: "Home/ReloadStart",
+            data: { "hour": (event.target.value).split(":")[0] },
+            error: function(xhr) {
+                alertBox(xhr.responseText);
+                event.preventDefault();
+                event.target.value = "@ViewModel.FormatHour(@ViewModel.Start.Hour):00";
+            }
+        }).done(function() {
+            window.location.reload();
+        });
     });
 
     /**
@@ -304,17 +343,17 @@
     $('#finish').on('change', function(event) {
 
         $.ajax({
-                type: "POST",
-                url: "Home/ReloadFinish",
-                data: { "hour": (event.target.value).split(":")[0] },
-                error: function(xhr) {
-                    alert(xhr.responseText);
-                    event.preventDefault();
-                    event.target.value = "@ViewModel.FormatHour(@ViewModel.End.Hour):00";
-                }
-            }).done(function() {
-                window.location.reload();
-            });
+            type: "POST",
+            url: "Home/ReloadFinish",
+            data: { "hour": (event.target.value).split(":")[0] },
+            error: function(xhr) {
+                alertBox(xhr.responseText);
+                event.preventDefault();
+                event.target.value = "@ViewModel.FormatHour(@ViewModel.End.Hour):00";
+            }
+        }).done(function() {
+            window.location.reload();
+        });
     });
 
 </script>
