@@ -98,7 +98,7 @@
         /// <param name="day">Giorno selezionato</param>
         /// <exception cref="Exception">Giorno non valido</exception>
 
-        public void selectFesta(int year, int month, int day)
+        public void SelectFesta(int year, int month, int day)
         {
             try
             {

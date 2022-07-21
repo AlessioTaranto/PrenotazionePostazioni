@@ -105,7 +105,7 @@ namespace prenotazione_postazioni_mvc.Models
         /// <param name="day">Giorno selezionato</param>
         /// <exception cref="Exception">Giorno precedente a quello odierno, Giorno non valido</exception>
 
-        public void changeSelectedDay(int year, int month, int day)
+        public void ChangeSelectedDay(int year, int month, int day)
         {
 
             DateTime nowDate = DateTime.Now;
@@ -132,7 +132,7 @@ namespace prenotazione_postazioni_mvc.Models
         /// <param name="hour">Orario selezionato</param>
         /// <exception cref="Exception">Ora precedente minore del minimo, Ora maggiore del massimo, Orario successivo al termine, Orario non valido</exception>
 
-        public void changeSelectedStartHour(int hour)
+        public void ChangeSelectedStartHour(int hour)
         {
             if (hour < HourStart)
                 throw new Exception("Non puoi selezionare un orario prima delle " + HourStart);
@@ -161,7 +161,7 @@ namespace prenotazione_postazioni_mvc.Models
         /// <exception cref="Exception">Ora precedente minore del minimo, Ora maggiore del massimo, Orario precedente all'inizio, Orario non valido</exception>
 
 
-        public void changeSelectedEndHour(int hour)
+        public void ChangeSelectedEndHour(int hour)
         {
             if (hour < HourStart)
                 throw new Exception("Non puoi selezionare un orario prima delle " + HourStart);

@@ -53,7 +53,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel.FestivitaViewModel.selectFesta(year, month, day);
+            ViewModel.FestivitaViewModel.SelectFesta(year, month, day);
 
             return RedirectToAction("Index");
         }

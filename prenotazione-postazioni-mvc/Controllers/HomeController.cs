@@ -44,7 +44,7 @@ public class HomeController : Controller
             year--;
         }
 
-        ViewModel.changeSelectedDay(year, month, day);
+        ViewModel.ChangeSelectedDay(year, month, day);
 
         return RedirectToAction("Index");
     }
@@ -74,7 +74,7 @@ public class HomeController : Controller
     [ActionName("ReloadStart")]
     public IActionResult ReloadStart(int hour)
     {
-        ViewModel.changeSelectedStartHour(hour);
+        ViewModel.ChangeSelectedStartHour(hour);
 
         return RedirectToAction("Index");
     }
@@ -89,7 +89,7 @@ public class HomeController : Controller
     [ActionName("ReloadFinish")]
     public IActionResult ReloadFinish(int hour)
     {
-        ViewModel.changeSelectedEndHour(hour);
+        ViewModel.ChangeSelectedEndHour(hour);
 
         return RedirectToAction("Index");
     }
