@@ -1,12 +1,19 @@
+// Data utilizzata dal calendario per caricare i giorni (è un mese avanti)
 let date = new Date;
-let date1 = new Date;
+// Mese corrente del calendario 
 let month = date.getMonth();
-let month1 = date1.getMonth();
+// Giorno selezionato
+let daySelected = new Date();
+// Id del giorno selezionato, utilizzato per rendere nella visualizzazione il background arancione
+let dayIdSelected = null;
 
+
+// Ricarica il calendario con i dati correnti
 function loadCalendar() {
     date.setDate(1);
 
     $('#month-year').text(translateMonth(date.getMonth()) + " " + date.getFullYear());
+
     month = date.getMonth();
 
     for (let i = 0; i<7; i++)
@@ -15,10 +22,11 @@ function loadCalendar() {
             $('#'.concat(i).concat('-').concat(j)).css("color", "black");
         }
 
+    // Imposta il primo giorno del mese alla casella corretta e sposta l'index tot posizioni indietro
     let firstLineLoad = true;
 
-    for (let i = 0; i<6; i++) {
-        for (let j = 0; j<7; j++) {
+    for (let i = 0; i<6; i++)
+        for (let j = 0; j < 7; j++) {
             if (firstLineLoad === true) {
                 date.setDate(date.getDate()-((date.getDay() === 0 ? +6 : date.getDay()-1)));
                 firstLineLoad = false;
@@ -26,88 +34,29 @@ function loadCalendar() {
             $('#'.concat(j).concat('-').concat(i)).text(date.getDate());
             if (date.getMonth() !== month)
                 $('#'.concat(j).concat('-').concat(i)).css("color", "#a6a6a6");
-            date.setDate(date.getDate()+1);
+            else if (getFesta(date))
+                $('#'.concat(getFesta(date).id.replace('f', ''))).css("color", "darkorange");
+            
+            date.setDate(date.getDate() + 1);
         }
-    }
 
-    loadFeste();
     checkSelected();
 }
 
-function loadFeste() {
-    for (let i = 0; i < festivita.length; i++) {
-        let month_temp = month + 1; let yr_temp = date.getFullYear();
-        if (month_temp === 12) {
-            month_temp = 0;
-        }
-        if (festivita[i].date.getMonth() === month_temp && festivita[i].date.getFullYear() === yr_temp)
-            $('#'.concat(festivita[i].id.replace('f', ''))).css("color", "darkorange");
-    }
-}
-
-function loadCalendar1() {
-    date1.setDate(1);
-
-    $('#month-year-1').text(translateMonth(date1.getMonth()) + " " + date1.getFullYear());
-    month1 = date1.getMonth();
-
-    for (let i = 0; i < 7; i++)
-        for (let j = 0; j < 6; j++) {
-            $('#'.concat(i).concat('-').concat(j).concat('1')).text("");
-            $('#'.concat(i).concat('-').concat(j).concat('1')).css("color", "black");
-        }
-
-    let firstLineLoad = true;
-
-    for (let i = 0; i < 6; i++) {
-        for (let j = 0; j < 7; j++) {
-            if (firstLineLoad === true) {
-                date1.setDate(date1.getDate() - ((date1.getDay() === 0 ? +6 : date1.getDay() - 1)));
-                firstLineLoad = false;
-            }
-            $('#'.concat(j).concat('-').concat(i).concat('1')).text(date1.getDate());
-            if (date1.getMonth() !== month1)
-                $('#'.concat(j).concat('-').concat(i).concat('1')).css("color", "#a6a6a6");
-            date1.setDate(date1.getDate() + 1);
-        }
-    }
-
-    loadFeste1();
-    checkSelected1()
-}
-
-function loadFeste1() {
-    for (let i = 0; i < festivita.length; i++) {
-        let month_temp = month1 + 1; let yr_temp = date1.getFullYear();
-        if (month_temp === 12) {
-            month_temp = 0;
-        }
-        if ((festivita[i].date.getMonth()) === month_temp && festivita[i].date.getFullYear() === yr_temp) {
-            $('#'.concat(festivita[i].id.replace('f', '')).concat('1')).css("color", "darkorange");
-        }
-    }
-}
-
+// Naviga al mese precedente
 function prevMonth() {
+    // Il mese della data è sempre un mese avanti, quindi vengono tolti due mesi
     date.setMonth(date.getMonth() - 2);
     loadCalendar();
 }
 
-function prevMonth1() {
-    date1.setMonth(date1.getMonth() - 2);
-    loadCalendar1();
-}
-
+// naviga al mese successivo
 function nextMonth() {
-    date.setMonth(date.getMonth());
+    // Siccome il mese salvato è un mese avanti, basta aggiornare il calendario
     loadCalendar();
 }
 
-function nextMonth1() {
-    date1.setMonth(date1.getMonth());
-    loadCalendar1();
-}
-
+// Questa funzione serve per convertire il numero restituito dalla data javascript in mese string
 function translateMonth(number) {
     switch (number) {
         case 0:
@@ -138,28 +87,75 @@ function translateMonth(number) {
     return "";
 }
 
-function daysInMonth (month) {
-    return new Date(1970, month, 0).getDate();
+// Controlla se nel calendario, al mese selezionato, è presente un giorno selezionato e lo evidenzia
+function checkSelected() {
+    if (daySelected.getMonth() !== date.getMonth() || daySelected.getFullYear() !== date.getFullYear())
+        deselectCell(dayIdSelected);
+    else
+        selectCell(dayIdSelected);
 }
 
-function checkSelected() {
-    if (daySelected.getMonth() !== date.getMonth() || daySelected.getFullYear() !== date.getFullYear()) {
-        $('#'.concat(dayIdSelected)).css("color","black");
-        $('#'.concat(dayIdSelected)).css("background-color","transparent");
-        $('#'.concat(dayIdSelected)).css("font-weight","normal");
-    } else {
-        $('#'.concat(dayIdSelected)).css("color","white");
-        $('#'.concat(dayIdSelected)).css("background-color","darkorange");
-        $('#'.concat(dayIdSelected)).css("font-weight","bold");
+// Sposta il giorno selezionato
+function selectDay(date) {
+    daySelected = date;
+}
+
+// Ottiene l'id della casella di un giorno, passato come parametro. Null se il giorno non è presente nel calendario
+function getIdDay(number) {
+    for (let i = 0; i < 6; i++)
+        for (let j = 0; j < 7; j++)
+            if ($('#'.concat(j).concat('-').concat(i)).css("color") === "rgb(0, 0, 0)" &&
+                $('#'.concat(j).concat('-').concat(i)).text() == number)
+                return j + '-' + i;
+    return null;
+}
+
+// Clicca il calendario ad una casella passata come paramentro e cambia il giorno selezionato
+function clickCalendar(id) {
+    let selector = $('#'.concat(id));
+
+    if (selector.css("color") === "rgb(0, 0, 0)") {
+        checkSelectedCell(dayIdSelected);
+        dayIdSelected = id;
+        selectCell(id);
+        selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
     }
 }
 
-function checkSelected1() {
-    if (daySelected.getMonth() !== date1.getMonth()) {
-        $('#'.concat(dayIdSelected)).css("color", "black");
-        $('#'.concat(dayIdSelected)).css("background-color", "transparent");
-    } else {
-        $('#'.concat(dayIdSelected)).css("color", "white");
-        $('#'.concat(dayIdSelected)).css("background-color", "darkorange");
+// Se la casella ha l'attributo css "color" === "black", allora è un giorno appartente al mese corrente
+function isValidDay(id) {
+    return $('#'.concat(id)).css("color") === "rgb(0, 0, 0)";
+}
+
+// Sposta il calendario a una data selezionata
+function goDate(newDate) {
+    date = newDate;
+    loadCalendar();
+}
+
+// Controlla se una casella è selezionata, utilizzato solo con dayIdSelected
+function checkSelectedCell(id) {
+    if (id !== null) {
+        $('#'.concat(id)).css("color", "black");
+        $('#'.concat(id)).css("background-color", "transparent");
+        $('#'.concat(id)).css("font-weight", "normal");
+    }
+}
+
+// Seleziona la casella, utilizzato solo con dayIdSelected
+function selectCell(id) {
+    if (id !== null) {
+        $('#'.concat(id)).css("font-weight", "bold");
+        $('#'.concat(id)).css("color", "white");
+        $('#'.concat(id)).css("background-color", "darkorange");
+    }
+}
+
+// Deseleziona o non selezionare la casella, utilizzato solo con dayIdSelected
+function deselectCell(id) {
+    if (id !== null) {
+        $('#'.concat(id)).css("color", "black");
+        $('#'.concat(id)).css("background-color", "transparent");
+        $('#'.concat(id)).css("font-weight", "normal");
     }
 }
