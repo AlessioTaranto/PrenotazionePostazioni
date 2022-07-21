@@ -1,4 +1,5 @@
-﻿using System.Xml.Schema;
+﻿using prenotazione_postazioni_libs.Models;
+using System.Xml.Schema;
 
 namespace prenotazione_postazioni_mvc.Models
 {
@@ -11,14 +12,17 @@ namespace prenotazione_postazioni_mvc.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
 
+        public List<Utente> Presenti { get; set; }
+
         public int CollapsedHour { get; set; }
 
-        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end)
+        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti)
         {
             Date = date;
             Stanza = stanza;
             Start = start;
             End = end;
+            Presenti = presenti;
         }
 
         public PrenotazioneViewModel(DateTime date, string stanza)
@@ -27,6 +31,7 @@ namespace prenotazione_postazioni_mvc.Models
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
+            Presenti = new List<Utente>();
         }
 
         public PrenotazioneViewModel(string stanza)
@@ -35,6 +40,7 @@ namespace prenotazione_postazioni_mvc.Models
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
+            Presenti = new List<Utente>();
         }
 
         public PrenotazioneViewModel()
@@ -42,6 +48,7 @@ namespace prenotazione_postazioni_mvc.Models
             Date = DateTime.Now;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
+            Presenti = new List<Utente>();
         }
 
 

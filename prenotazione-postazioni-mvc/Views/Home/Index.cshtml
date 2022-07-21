@@ -5,6 +5,13 @@
 
 }
 
+@using System.Net
+@using prenotazione_postazioni_libs.Models;
+@using prenotazione_postazioni_libs.Dto;
+@using prenotazione_postazioni_mvc.HttpServices;
+@using Newtonsoft.Json;
+@inject ImpostazioniHttpService _impostazioniHttpService;
+
 
     <div class="container mt-4 ml-3 position-fixed calendar-div">
         <div class="calendar">
@@ -156,9 +163,21 @@
         <div class="collapse" id="prenotazioni">
             <div class="card card-body person-div">
                 <ul>
-                    <!--
-                    <li><img src="img/" alt=""></li>
-                    -->
+                    @{
+                        HttpResponseMessage? getUtentiPrenotatiByDayResult = await _impostazioniHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
+                        List<Utente>? presenti = null;
+                        if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                        {
+                            presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
+
+                            for(int i=0; i<presenti.Count; i++)
+                            {
+                                    <li>
+                                        <img src="img/example/example-2.png">@presenti[@i].Nome+" "+@presenti[@i].Cognome;
+                                    </li>
+                            }
+                        }
+                    }
                 </ul>
             </div>
         </div>
