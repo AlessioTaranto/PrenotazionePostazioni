@@ -1,8 +1,14 @@
+// Data utilizzata dal calendario per caricare i giorni (è un mese avanti)
 let date = new Date;
+// Mese corrente del calendario 
 let month = date.getMonth();
+// Giorno selezionato
 let daySelected = new Date();
+// Id del giorno selezionato, utilizzato per rendere nella visualizzazione il background arancione
 let dayIdSelected = null;
 
+
+// Ricarica il calendario con i dati correnti
 function loadCalendar() {
     date.setDate(1);
 
@@ -16,6 +22,7 @@ function loadCalendar() {
             $('#'.concat(i).concat('-').concat(j)).css("color", "black");
         }
 
+    // Imposta il primo giorno del mese alla casella corretta e sposta l'index tot posizioni indietro
     let firstLineLoad = true;
 
     for (let i = 0; i<6; i++)
@@ -36,16 +43,20 @@ function loadCalendar() {
     checkSelected();
 }
 
+// Naviga al mese precedente
 function prevMonth() {
+    // Il mese della data è sempre un mese avanti, quindi vengono tolti due mesi
     date.setMonth(date.getMonth() - 2);
     loadCalendar();
 }
 
+// naviga al mese successivo
 function nextMonth() {
-    date.setMonth(date.getMonth());
+    // Siccome il mese salvato è un mese avanti, basta aggiornare il calendario
     loadCalendar();
 }
 
+// Questa funzione serve per convertire il numero restituito dalla data javascript in mese string
 function translateMonth(number) {
     switch (number) {
         case 0:
@@ -76,10 +87,7 @@ function translateMonth(number) {
     return "";
 }
 
-function daysInMonth (month) {
-    return new Date(1970, month, 0).getDate();
-}
-
+// Controlla se nel calendario, al mese selezionato, è presente un giorno selezionato e lo evidenzia
 function checkSelected() {
     if (daySelected.getMonth() !== date.getMonth() || daySelected.getFullYear() !== date.getFullYear())
         deselectCell(dayIdSelected);
@@ -87,10 +95,12 @@ function checkSelected() {
         selectCell(dayIdSelected);
 }
 
+// Sposta il giorno selezionato
 function selectDay(date) {
     daySelected = date;
 }
 
+// Ottiene l'id della casella di un giorno, passato come parametro. Null se il giorno non è presente nel calendario
 function getIdDay(number) {
     for (let i = 0; i < 6; i++)
         for (let j = 0; j < 7; j++)
@@ -100,6 +110,7 @@ function getIdDay(number) {
     return null;
 }
 
+// Clicca il calendario ad una casella passata come paramentro e cambia il giorno selezionato
 function clickCalendar(id) {
     let selector = $('#'.concat(id));
 
@@ -111,15 +122,18 @@ function clickCalendar(id) {
     }
 }
 
+// Se la casella ha l'attributo css "color" === "black", allora è un giorno appartente al mese corrente
 function isValidDay(id) {
     return $('#'.concat(id)).css("color") === "rgb(0, 0, 0)";
 }
 
+// Sposta il calendario a una data selezionata
 function goDate(newDate) {
     date = newDate;
     loadCalendar();
 }
 
+// Controlla se una casella è selezionata, utilizzato solo con dayIdSelected
 function checkSelectedCell(id) {
     if (id !== null) {
         $('#'.concat(id)).css("color", "black");
@@ -128,6 +142,7 @@ function checkSelectedCell(id) {
     }
 }
 
+// Seleziona la casella, utilizzato solo con dayIdSelected
 function selectCell(id) {
     if (id !== null) {
         $('#'.concat(id)).css("font-weight", "bold");
@@ -136,6 +151,7 @@ function selectCell(id) {
     }
 }
 
+// Deseleziona o non selezionare la casella, utilizzato solo con dayIdSelected
 function deselectCell(id) {
     if (id !== null) {
         $('#'.concat(id)).css("color", "black");

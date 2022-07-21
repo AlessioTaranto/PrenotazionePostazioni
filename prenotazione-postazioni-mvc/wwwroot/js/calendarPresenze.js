@@ -1,4 +1,7 @@
-﻿let date1 = new Date;
+﻿// Duplicato di calendar.js, stesso sistema di calendario. L'id utilizzato ha una lunghezza di 4 caratteri.
+// E' stato utilizzato questo sistema per risolvere conflitti con Id
+
+let date1 = new Date;
 let month1 = date1.getMonth();
 let daySelected1 = new Date();
 let dayIdSelected1 = null;
