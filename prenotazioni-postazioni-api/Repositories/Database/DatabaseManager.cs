@@ -81,10 +81,7 @@ namespace prenotazioni_postazioni_api.Repositories.Database
                 return;
             }
             SqlConnectionStringBuilder connBuilder = new SqlConnectionStringBuilder();
-            connBuilder.TrustServerCertificate = true;
-            connBuilder.InitialCatalog = initialCatalog ?? DefaultInitialCatalog;
-            connBuilder.DataSource = datasource ?? DefaultDataSource;
-            connBuilder.IntegratedSecurity = true;
+            connBuilder.ConnectionString = DatabaseInfo.DefaultConnectionString;
             _conn = new SqlConnection(connBuilder.ToString());
         }
 
