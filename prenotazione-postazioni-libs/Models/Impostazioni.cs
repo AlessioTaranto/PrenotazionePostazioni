@@ -9,7 +9,7 @@ namespace prenotazione_postazioni_libs.Models
 {
     public class Impostazioni
     {
-        private static Impostazioni _instance;
+        private static Impostazioni? _instance;
         private Impostazioni()
         {
 

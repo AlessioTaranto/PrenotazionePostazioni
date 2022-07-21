@@ -24,9 +24,7 @@ namespace prenotazione_postazioni_libs.Dto
             this.Ruolo = ruolo;
         }
 
-        public UtenteDto()
-        {
-        }
+   
     }
 
 

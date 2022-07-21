@@ -28,7 +28,7 @@ namespace prenotazioni_postazioni_api.Services
         public Ruolo GetRuoloById(int idRuolo)
         {
             _logger.Info("Trovando il ruolo mediante il suo id: " + idRuolo);
-            Ruolo ruolo = _ruoloRepository.FindById(idRuolo);
+            Ruolo? ruolo = _ruoloRepository.FindById(idRuolo);
             if (ruolo == null)
             {
                 _logger.Warn("Ruolo non trovato! Lancio una PrenotazionePrenotazioniApiException!");
@@ -51,7 +51,7 @@ namespace prenotazioni_postazioni_api.Services
         public Ruolo GetRuoloByIdUtente(int idUtente)
         {
             _logger.Info("Trovando un utente mediante il suo id utente: " + idUtente);
-            Ruolo ruolo = _ruoloRepository.FindByIdUtente(idUtente);
+            Ruolo? ruolo = _ruoloRepository.FindByIdUtente(idUtente);
             _logger.Info("Controllando se l'utente e' valido...");
             if (ruolo == null)
             {
@@ -90,10 +90,10 @@ namespace prenotazioni_postazioni_api.Services
             }
             _logger.Info("Admin e Utente validi!");
             _logger.Info("Trovando il ruolo dell'utente...");
-            Ruolo ruoloUtente = _ruoloRepository.FindById(utente.IdRuolo);
+            Ruolo? ruoloUtente = _ruoloRepository.FindById(utente.IdRuolo);
             _logger.Info("Trovando il ruolo dell'admin...");
             Console.WriteLine("Ruolo admin: " + admin.IdRuolo);
-            Ruolo ruoloAdmin = _ruoloRepository.FindById(admin.IdRuolo);
+            Ruolo? ruoloAdmin = _ruoloRepository.FindById(admin.IdRuolo);
             _logger.Info("Controllando se il ruolo admin e' valido...");
             if (ruoloAdmin == null)
             {

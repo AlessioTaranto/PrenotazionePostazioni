@@ -20,8 +20,6 @@ namespace prenotazione_postazioni_libs.Dto
             this.PostiMaxEmergenza = postiMaxEmergenza;
         }
 
-        public StanzaDto()
-        {
-        }
+ 
     }
 }

@@ -15,7 +15,7 @@ namespace prenotazione_postazioni_libs.Models
         public DateTime EndDate { get; set; }
         public int IdStanza { get; set; }
         public int IdUtente { get; set; }
-        private Exception ModelException { get; set; }
+        private Exception ModelException { get; set; } = new Exception();
         public bool IsValid { get; set; } = false;
 
         public Prenotazione(int idPrenotazioni, DateTime startDate, DateTime endDate, int idStanza, int idUtente)

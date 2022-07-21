@@ -16,7 +16,7 @@ namespace prenotazione_postazioni_libs.Models
         public int PostiMaxEmergenza { get; set; }
 
 
-        private Exception ModelException { get; set; }
+        private Exception ModelException { get; set; } = new Exception();
         public bool IsValid { get; set; } = false;
 
         public Stanza(int idStanza, string nome, int postiMax, int postiMaxEmergenza)
@@ -35,10 +35,6 @@ namespace prenotazione_postazioni_libs.Models
             PostiMax = postiMax;
             PostiMaxEmergenza = postiMaxEmergenza;
             this.Validate();
-        }
-
-        public Stanza()
-        {
         }
 
         public void Validate()

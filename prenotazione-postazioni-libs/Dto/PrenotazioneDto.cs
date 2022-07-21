@@ -23,8 +23,6 @@ namespace prenotazione_postazioni_libs.Dto
             Utente = utente;
         }
 
-        public PrenotazioneDto()
-        {
-        }
+    
     }
 }
