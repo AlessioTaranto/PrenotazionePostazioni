@@ -131,11 +131,12 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpPost]
         [Route("changePostiMax")]
-        public IActionResult ChangePostiMax(int postiMax, int id)
+        public IActionResult ChangePostiMax(int postiMax, string nome)
         {
             try
             {
-                _stanzaService.ChangePostiMax(postiMax, id);
+                Stanza stanza = _stanzaService.GetStanzaByName(nome);
+                _stanzaService.ChangePostiMax(postiMax, stanza.IdStanza);
                 return Ok("Posti massimi cambiati");
             }
             catch (PrenotazionePostazioniApiException ex)
@@ -149,11 +150,12 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpPost]
         [Route("changePostiMaxEmergenza")]
-        public IActionResult ChangePostiMaxEmergenza(int postiMax, int id)
+        public IActionResult ChangePostiMaxEmergenza(int postiMax, string nome)
         {
             try
             {
-                _stanzaService.ChangePostiMaxEmergenza(postiMax, id);
+                Stanza stanza = _stanzaService.GetStanzaByName(nome);
+                _stanzaService.ChangePostiMax(postiMax, stanza.IdStanza);
                 return Ok("Posti massimi cambiati");
             }
             catch (PrenotazionePostazioniApiException ex)

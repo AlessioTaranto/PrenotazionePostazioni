@@ -114,7 +114,6 @@ namespace prenotazioni_postazioni_api.Services
 
         internal void ChangePostiMax(int postiMax, int id)
         {
-            Stanza stanza = GetStanzaById(id);
             if (postiMax < 1)
             {
                 throw new PrenotazionePostazioniApiException("Posti massimi non validi");
@@ -125,7 +124,6 @@ namespace prenotazioni_postazioni_api.Services
 
         internal void ChangePostiMaxEmergenza(int postiMax, int id)
         {
-            Stanza stanza = GetStanzaById(id);
             if (postiMax < 1)
             {
                 throw new PrenotazionePostazioniApiException("Posti massimi non validi");
