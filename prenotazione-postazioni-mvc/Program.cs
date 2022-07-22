@@ -1,3 +1,6 @@
+using Microsoft.Net.Http.Headers;
+using prenotazione_postazioni_mvc.HttpServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +14,25 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-Impostazioni", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://localhost:7126/api/impostazioni/");
+
+    httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-Utente", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/impostazioni/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+
+
+builder.Services.AddSingleton<ImpostazioniHttpService>();
+builder.Services.AddSingleton<UtenteHttpService>();
 
 var app = builder.Build();
 

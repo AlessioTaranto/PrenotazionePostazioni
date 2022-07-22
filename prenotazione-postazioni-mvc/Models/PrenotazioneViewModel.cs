@@ -1,4 +1,5 @@
-﻿namespace prenotazione_postazioni_mvc.Models
+﻿using prenotazione_postazioni_libs.Models;
+using System.Xml.Schema;
 {
     public class PrenotazioneViewModel
     {
@@ -13,7 +14,8 @@
         // Termine selezionato
         public DateTime End { get; set; }
 
-        // Stato Collapse (Hour)
+        public List<Utente> Presenti { get; set; }
+
         public int CollapsedHour { get; set; }
         // Stato Collapse (List)
         public int CollapsedList { get; set; }
@@ -23,12 +25,13 @@
         // Costante: Massima ora selezionabile
         public const int HourEnd = 22;
 
-        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end)
+        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti)
         {
             Date = date;
             Stanza = stanza;
             Start = start;
             End = end;
+            Presenti = presenti;
         }
 
         public PrenotazioneViewModel(DateTime date, string stanza)
@@ -37,6 +40,7 @@
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
+            Presenti = new List<Utente>();
         }
 
         public PrenotazioneViewModel(string stanza)
@@ -45,6 +49,7 @@
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
+            Presenti = new List<Utente>();
         }
 
         public PrenotazioneViewModel()
@@ -53,6 +58,7 @@
             Date = DateTime.Now;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
+            Presenti = new List<Utente>();
         }
 
         /// <summary>
