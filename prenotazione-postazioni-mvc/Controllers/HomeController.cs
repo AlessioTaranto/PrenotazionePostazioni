@@ -23,7 +23,7 @@ public class HomeController : Controller
     /// <param name="year">Anno selezionato</param>
     /// <param name="month">Mese selezionato</param>
     /// <param name="day">Giorno selezionato</param>
-    /// <returns>RedirectToAction -> Index()</returns>
+    /// <returns>Giorno aggiornato</returns>
 
     [HttpPost]
     [ActionName("ReloadDay")]
@@ -37,16 +37,23 @@ public class HomeController : Controller
             year--;
         }
 
-        ViewModel?.ChangeSelectedDay(year, month, day);
+        try
+        {
+            ViewModel?.ChangeSelectedDay(year, month, day);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
 
-        return RedirectToAction("Index");
+        return Ok("Giorno selezionato");
     }
 
     /// <summary>
     ///     Cambia la stanza selezionata dalla Map.
     /// </summary>
     /// <param name="room">Nome della Stanza selezionata</param>
-    /// <returns>RedirectToAction -> Index()</returns>
+    /// <returns>Stanza aggiornata</returns>
 
     [HttpPost]
     [ActionName("ReloadRoom")]
@@ -55,37 +62,51 @@ public class HomeController : Controller
         if (ViewModel != null)
             ViewModel.Stanza = room;
 
-        return RedirectToAction("Index");
+        return Ok("Stanza selezionata");
     }
 
     /// <summary>
     ///     Cambia il l'orario di inzio di una prenotazione.
     /// </summary>
     /// <param name="hour">Inizio selezionato</param>
-    /// <returns>RedirectToAction -> Index()</returns>
+    /// <returns>Aggiorna orario di inizio</returns>
 
     [HttpPost]
     [ActionName("ReloadStart")]
     public IActionResult ReloadStart(int hour)
     {
-        ViewModel?.ChangeSelectedStartHour(hour);
+        try
+        {
+            ViewModel?.ChangeSelectedStartHour(hour);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
 
-        return RedirectToAction("Index");
+        return Ok("Orario d'inizio aggiornato");
     }
 
     /// <summary>
     ///     Cambia il l'orario di termine di una prenotazione.
     /// </summary>
     /// <param name="hour">Termine selezionato</param>
-    /// <returns>RedirectToAction -> Index()</returns>
+    /// <returns>Orario di termine aggiornato</returns>
 
     [HttpPost]
     [ActionName("ReloadFinish")]
     public IActionResult ReloadFinish(int hour)
     {
-        ViewModel?.ChangeSelectedEndHour(hour);
+        try
+        {
+            ViewModel?.ChangeSelectedEndHour(hour);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
 
-        return RedirectToAction("Index");
+        return Ok("Orario di termine aggiornato");
     }
 
     /// <summary>
