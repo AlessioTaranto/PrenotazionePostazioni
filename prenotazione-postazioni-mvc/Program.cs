@@ -36,10 +36,18 @@ builder.Services.AddHttpClient("PrenotazionePostazioni-Utente", HttpClient =>
     HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
 
+builder.Services.AddHttpClient("PrenotazionePostazioni-Voti", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/impostazioni/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
 
 
 builder.Services.AddSingleton<ImpostazioniHttpService>();
 builder.Services.AddSingleton<UtenteHttpService>();
+builder.Services.AddSingleton<VotoHttpService>();
 
 var app = builder.Build();
 
