@@ -220,8 +220,7 @@
             <div class="card card-body person-div">
                 <ul>
                     @{
-                        HttpResponseMessage? getUtentiPrenotatiByDayResult = await _impostazioniHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
-                        List<Utente>? presenti = null;
+                        
                         if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
                         {
                             presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
