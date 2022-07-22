@@ -15,37 +15,44 @@ VALUES ('Arianna','Bustone','arianna.bustone@gmail.com',2);
 INSERT INTO Utenti (nome,cognome,email,idRuolo)
 VALUES ('Andrea','Redegalli','reedegalli03@gmail.com',2);
 
-INSERT INTO Stanze (nome,postiMax,postiMaxEmergenza)
-VALUES ('Meeting',12,8);
-INSERT INTO Stanze (nome,postiMax,postiMaxEmergenza)
-VALUES ('Open space 1',10,6);
-INSERT INTO Stanze (nome,postiMax,postiMaxEmergenza)
-VALUES ('Open space 2',10,6);
-INSERT INTO Stanze (nome,postiMax,postiMaxEmergenza)
-VALUES ('Helpdesk',10,6);
-INSERT INTO Stanze (nome,postiMax,postiMaxEmergenza)
-VALUES ('Development',14,8);
+
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES ('Contabilità', 4, 2);
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES('Bansky', 2, 1);
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES('OpenSpace #1', 10, 5);
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES('OpenSpace #2', 10, 5);
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES('Sviluppo',  10, 5);
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES('Assistenza', 10, 5);
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES('Commerciale', 4, 2);
+INSERT INTO Stanze(nome, postiMax, postiMaxEmergenza)
+VALUES('Meeting', 12, 6);
 
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T09:00:00','2022-07-14T12:00:00',1,1);
+VALUES ('2022-07-22T09:00:00','2022-07-22T12:00:00',1,1);
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T12:00:00','2022-07-14T13:00:00',2,1);
+VALUES ('2022-07-22T12:00:00','2022-07-22T13:00:00',2,1);
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T14:00:00','2022-07-14T17:00:00',5,1);
+VALUES ('2022-07-22T14:00:00','2022-07-22T17:00:00',5,1);
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T17:00:00','2022-07-14T18:00:00',3,1);
+VALUES ('2022-07-22T17:00:00','2022-07-22T18:00:00',3,1);
 
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T09:00:00','2022-07-14T13:00:00',5,2);
+VALUES ('2022-07-22T09:00:00','2022-07-22T13:00:00',5,2);
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T14:00:00','2022-07-14T18:00:00',5,2);
+VALUES ('2022-07-22T14:00:00','2022-07-22T18:00:00',5,2);
 
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T09:00:00','2022-07-14T10:00:00',1,3);
+VALUES ('2022-07-22T09:00:00','2022-07-22T10:00:00',1,3);
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T10:00:00','2022-07-14T13:00:00',5,3);
+VALUES ('2022-07-22T10:00:00','2022-07-22T13:00:00',5,3);
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T14:00:00','2022-07-14T18:00:00',3,3);
+VALUES ('2022-07-22T14:00:00','2022-07-22T18:00:00',3,3);
 
 INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
 VALUES ('2022-07-14T09:00:00','2022-07-14T13:00:00',2,4);

@@ -197,5 +197,24 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("removePrenotazione")]
+        public IActionResult RemovePrenotazione(int idPrenotazione)
+        {
+            try
+            {
+                _prenotazioneService.RemovePrenotazione(idPrenotazione);
+                return Ok("Prenotazione eliminata");
+            }
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
     }
 }
