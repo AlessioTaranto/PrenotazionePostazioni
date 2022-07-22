@@ -128,5 +128,42 @@ namespace prenotazioni_postazioni_api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("changePostiMax")]
+        public IActionResult ChangePostiMax(int postiMax, int id)
+        {
+            try
+            {
+                _stanzaService.ChangePostiMax(postiMax, id);
+                return Ok("Posti massimi cambiati");
+            }
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("changePostiMaxEmergenza")]
+        public IActionResult ChangePostiMaxEmergenza(int postiMax, int id)
+        {
+            try
+            {
+                _stanzaService.ChangePostiMaxEmergenza(postiMax, id);
+                return Ok("Posti massimi cambiati");
+            }
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
