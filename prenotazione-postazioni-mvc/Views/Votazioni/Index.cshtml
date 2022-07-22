@@ -51,10 +51,10 @@
                 <div class="container-fluid mt-4">
                     <div class="p-3 border bg-light"><div class="row">
                     <div class="col-sm-1 ml-3 align-self-center"><img class="item icon-img" src="img/user_icon.png" alt="user_icon"></div>
-                    <div class="col-sm-8 align-self-center" id=@($"{utenti[i].IdUtente}")>@fullName</div>
-                    <div class="col-sm-1 align-self-center"><input type="checkbox" name="@rumorosita" id="@rumoroso" value="rumoroso" @(
+                    <div class="col-sm-8 align-self-center">@fullName</div>
+                    <div class="col-sm-1 align-self-center"><input type="checkbox" name="@rumorosita" id="@rumoroso" alt=@($"{utenti[i].IdUtente}") value="rumoroso" @(
                         voto == 1 ? "checked='checked'" : "")><label for="@rumoroso">Rumoroso</label></div>
-                    <div class="col align-self-center"><input type="checkbox" name="@rumorosita" id="@non_rumoroso" value="non_rumoroso" @(
+                    <div class="col align-self-center"><input type="checkbox" name="@rumorosita" id="@non_rumoroso" alt=@($"{utenti[i].IdUtente}") value="non_rumoroso" @(
                         voto == -1 ? "checked='checked'" : "")><label for="@non_rumoroso">Non rumoroso</label></div>
                 </div></div>
             </div>
