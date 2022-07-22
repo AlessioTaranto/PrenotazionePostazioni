@@ -1,10 +1,15 @@
-﻿using prenotazione_postazioni_libs.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_mvc.HttpServices;
 using System.Xml.Schema;
 
 namespace prenotazione_postazioni_mvc.Models
 {
     public class PrenotazioneViewModel
     {
+        private UtenteHttpService utenteHttpService;
+        private PrenotazioniHttpService prenotazioniHttpService;
+        private StanzeHttpService stanzeHttpService;
 
         // Giorno selezionato
         public DateTime Date { get; set; }
@@ -27,47 +32,122 @@ namespace prenotazione_postazioni_mvc.Models
         // Costante: Massima ora selezionabile
         public const int HourEnd = 22;
 
-        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti)
+        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti, StanzeHttpService stanzeHttpService, UtenteHttpService utenteHttpService, PrenotazioniHttpService prenotazioniHttpService)
         {
+            this.stanzeHttpService = stanzeHttpService;
+            this.utenteHttpService = utenteHttpService;
+            this.prenotazioniHttpService = prenotazioniHttpService;
             Date = date;
             Stanza = stanza;
             Start = start;
             End = end;
             Presenti = presenti;
+            UpdateListaPersoneOrario();
         }
 
-        public PrenotazioneViewModel(DateTime date, string stanza)
+        public PrenotazioneViewModel(DateTime date, string stanza, UtenteHttpService utenteHttpService, PrenotazioniHttpService prenotazioniHttpService, StanzeHttpService stanzeHttpService)
         {
+            this.utenteHttpService = utenteHttpService;
+            this.prenotazioniHttpService = prenotazioniHttpService;
+            this.stanzeHttpService = stanzeHttpService;
             Date = date;
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
+            UpdateListaPersoneOrario();
         }
 
-        public PrenotazioneViewModel(string stanza)
+        public PrenotazioneViewModel(string stanza, UtenteHttpService utenteHttpService, PrenotazioniHttpService prenotazioniHttpService, StanzeHttpService stanzeHttpService)
         {
             Date = DateTime.Now;
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
+            this.utenteHttpService = utenteHttpService;
+            this.prenotazioniHttpService = prenotazioniHttpService;
+            this.stanzeHttpService = stanzeHttpService;
+            UpdateListaPersoneOrario();
         }
 
-        public PrenotazioneViewModel()
+        public PrenotazioneViewModel(StanzeHttpService stanzeHttpService, PrenotazioniHttpService prenotazioniHttpService, UtenteHttpService utenteHttpService)
         {
+            this.utenteHttpService = utenteHttpService;
+            this.prenotazioniHttpService = prenotazioniHttpService;
+            this.stanzeHttpService = stanzeHttpService;
+
             Stanza = "null";
             Date = DateTime.Now;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
+            UpdateListaPersoneOrario();
         }
 
+        public async Task<object> UpdateListaPersoneOrario()
+        {
+            if (Stanza == null)
+                return null;
+                //return BadRequest("Nessuna stanza selezionata");
+            Stanza? stanza = null;
+            try
+            {
+                stanza = await stanzeHttpService.OnGetStanzaByName(Stanza);
+            }
+            catch (HttpRequestException ex)
+            {
+                return null;
+                //return BadRequest(ex.Message);
+            }
+
+            if (stanza == null)
+                return null;
+                //return BadRequest("Stanza non trovata!");
+            List<Prenotazione>? prenotazioni = await prenotazioniHttpService.OnGetAllPrenotazioniByDate(stanza.IdStanza, Start, End);
+            if (prenotazioni == null)
+                return null;
+                //return Ok("Nessuna prenotazione fatta");
+            List<Utente> utentiWithDupes = new List<Utente>();
+            foreach (var prenotazione in prenotazioni)
+            {
+                Utente? utente = await utenteHttpService.OnGetUtenteById(prenotazione.IdUtente);
+                if (utente != null)
+                    utentiWithDupes.Add(utente);
+            }
+            List<Utente> utentiWithoutDupes = utentiWithDupes.Distinct(new UtenteEqualityComparer()).ToList();
+            List<Utente> utenti = new List<Utente>();
+            foreach (Utente utente in utentiWithoutDupes)
+            {
+                Utente? utenteWithoutDupe = await utenteHttpService.OnGetUtenteById(utente.IdUtente);
+                if (utenteWithoutDupe != null)
+                    utenti.Add(utenteWithoutDupe);
+            }
+            Presenti = utenti;
+            return null;
+            //return Ok("Utenti distinti copiati in ViewModel.Presenti!");
+        }
+        internal class UtenteEqualityComparer : IEqualityComparer<Utente>
+        {
+            public bool Equals(Utente? x, Utente? y)
+            {
+                if (x == null || y == null)
+                {
+                    return false;
+                }
+                return x.IdUtente == y.IdUtente;
+            }
+
+            public int GetHashCode(Utente obj)
+            {
+                return obj.IdUtente.GetHashCode();
+            }
+        }
         /// <summary>
         ///     Ottieni il nome della stanza, se nullo restituisci "Seleziona una stanza"
         /// </summary>
         /// <returns>Stanza != null -> Stanza</returns>
-        
+
         public string GetStanza()
         {
             return this.Stanza == "null" ? "Seleziona una stanza" : this.Stanza;

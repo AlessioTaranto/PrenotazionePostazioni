@@ -8,9 +8,9 @@
 @using System.Net
 @using prenotazione_postazioni_libs.Models;
 @using prenotazione_postazioni_libs.Dto;
+@using prenotazione_postazioni_mvc.Controllers
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
-@inject ImpostazioniHttpService _impostazioniHttpService;
 
 
     <div class="container mt-4 ml-3 position-fixed calendar-div">
@@ -220,17 +220,17 @@
             <div class="card card-body person-div">
                 <ul>
                     @{
-                        
-                        if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                        List<Utente> utenti = ViewModel.Presenti;
+                        if(utenti != null || utenti.Count != 0)
                         {
-                            presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
-
-                            for(int i=0; i<presenti.Count; i++)
+                            foreach (var utente in utenti)
                             {
-                                    <li>
-                                        <img src="img/example/example-2.png">@presenti[@i].Nome+" "+@presenti[@i].Cognome;
-                                    </li>
+                                <li> <img src="~/img/example/example-2.png">utente.Nome utente.Cognome</li>
                             }
+                        }
+                        else
+                        {
+                            <li>Nessuna prenotazione trovata!</li>
                         }
                     }
                 </ul>
@@ -350,6 +350,16 @@
                 }
             }
         );
+
+        prenota.on('click', function(event) {
+            $.ajax({
+                type: "POST",
+                url: "Home/MakePrenotazione",
+                data: { "idUtente": 1, "startYear": @ViewModel.Date.Year, "startMonth": @ViewModel.Date.Month, "startDay": @ViewModel.Date.Day, "endYear": @ViewModel. }
+            }).done(function() {
+                window.location.reload();
+            })
+        })
     });
 </script>
 <script>

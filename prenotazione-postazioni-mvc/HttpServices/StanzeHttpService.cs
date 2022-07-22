@@ -21,23 +21,29 @@ namespace prenotazione_postazioni_mvc.HttpServices
             {
                 return await httpResponseMessage.Content.ReadFromJsonAsync<List<Stanza>>();
             }
-            throw new HttpRequestException("Error code: " + httpResponseMessage.StatusCode);
+            throw new HttpRequestException("Errore code: " + httpResponseMessage.StatusCode + " Messaggio: " + httpResponseMessage.RequestMessage);
         }
 
-        public async Task<List<Stanza>> OnGetStanzaById(int id)
+        public async Task<Stanza?> OnGetStanzaById(int id)
         {
-            throw new NotImplementedException();
+            var httpResponseMessage = await httpClient.GetAsync("https://localhost:7126/api/stanze/getStanzaById?id=" + id);
+            if (httpResponseMessage.IsSuccessStatusCode)
+                return await httpResponseMessage.Content.ReadFromJsonAsync<Stanza>();
+            throw new HttpRequestException("Errore code: " + httpResponseMessage.StatusCode + " Messaggio: " + httpResponseMessage.RequestMessage);
         }
 
 
 
-        public async Task<Stanza> OnGetStanzaByName(string name)
+        public async Task<Stanza?> OnGetStanzaByName(string name)
         {
-            throw new NotImplementedException();
+            var httpResponseMessage = await httpClient.GetAsync("https://localhost:7126/api/stanze/getStanzaByName?stanzaName=" + name);
+            if (httpResponseMessage.IsSuccessStatusCode)
+                return await httpResponseMessage.Content.ReadFromJsonAsync<Stanza>();
+            throw new HttpRequestException("Errore code: " + httpResponseMessage.StatusCode + " Messaggio: " + httpResponseMessage.RequestMessage);
         }
-        public async Task OnPostStanza(StanzaDto stanzaDto)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task OnPostStanza(StanzaDto stanzaDto)
+        //{
+        //    return 
+        //}
     }
 }
