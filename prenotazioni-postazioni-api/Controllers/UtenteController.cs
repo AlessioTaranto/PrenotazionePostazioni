@@ -127,8 +127,9 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>Lista di utenti</returns>
         [HttpGet]
         [Route("getUtentiPrenotatiByDay")]
-        public IActionResult GetUtentiPrenotatiByDay(DateTime date)
+        public IActionResult GetUtentiPrenotatiByDay(int year, int month, int day)
         {
+            DateTime date = new DateTime(year, month, day);
             try
             {
                 List<Utente> utenti = _utenteService.GetUtentiPrenotatiByDay(date);
