@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics.Contracts;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using prenotazione_postazioni_mvc.HttpServices;
+using prenotazione_postazioni_libs.Models;
 
 namespace prenotazione_postazioni_mvc.Models
 {
@@ -15,33 +18,36 @@ namespace prenotazione_postazioni_mvc.Models
         // Lista capienza covid di tutte le stanze
         public Dictionary<string, int>? CapienzaCovid { get; set; }
 
-        public CapienzaImpostazioniViewModel(string? stanza, bool covidMode, Dictionary<string, int>? capienzaNormale, Dictionary<string, int>? capienzaCovid)
+        //Http service
+        public CapienzaHttpService service { get; set; }
+
+        public CapienzaImpostazioniViewModel(string? stanza, bool covidMode, Dictionary<string, int>? capienzaNormale, Dictionary<string, int>? capienzaCovid, CapienzaHttpService service)
         {
             Stanza = stanza;
             CapienzaNormale = capienzaNormale;
             CapienzaCovid = capienzaCovid;
+            this.service = service;
         }
 
-        public CapienzaImpostazioniViewModel(string? stanza, bool covidMode)
+        public CapienzaImpostazioniViewModel(string? stanza, bool covidMode, CapienzaHttpService service)
         {
             Stanza = stanza;
-            LoadCapienzaCovid();
-            LoadCapienzaNormale();
+            this.service = service;
+            LoadCapienze();
         }
 
-        public CapienzaImpostazioniViewModel(bool covidMode)
+        public CapienzaImpostazioniViewModel(bool covidMode, CapienzaHttpService service)
         {
             Stanza = "null";
-            LoadCapienzaCovid();
-            LoadCapienzaNormale();
+            this.service = service;
+            LoadCapienze();
         }
 
-        public CapienzaImpostazioniViewModel()
+        public CapienzaImpostazioniViewModel(CapienzaHttpService service)
         {
             Stanza = "null";
-            //Carica da API
-            LoadCapienzaCovid();
-            LoadCapienzaNormale();
+            this.service = service;
+            LoadCapienze();
         }
 
 
@@ -55,39 +61,24 @@ namespace prenotazione_postazioni_mvc.Models
         }
 
         /// <summary>
-        ///     Carica il Dizionario di CapienzaNormale con valori
+        ///     Carica il Dizionario delle Capienze con valori
         /// </summary>
-        private void LoadCapienzaNormale()
+        private async void LoadCapienze()
         {
-            //Carica da API
             CapienzaNormale = new Dictionary<string, int>();
-            
-            CapienzaNormale.Add("Commerciale", 4);
-            CapienzaNormale.Add("Assistenza", 10);
-            CapienzaNormale.Add("Sviluppo", 10);
-            CapienzaNormale.Add("OpenSpace #1", 10);
-            CapienzaNormale.Add("OpenSpace #2", 10);
-            CapienzaNormale.Add("Meeting", 12);
-            CapienzaNormale.Add("Bansky", 2);
-            CapienzaNormale.Add("Contabilità", 4);
-        }
-
-        /// <summary>
-        ///     Carica il Dizionario di CapienzaCovid con valori
-        /// </summary>
-        private void LoadCapienzaCovid()
-        {
-            //Carica da API
             CapienzaCovid = new Dictionary<string, int>();
 
-            CapienzaCovid.Add("Commerciale", 2);
-            CapienzaCovid.Add("Assistenza", 5);
-            CapienzaCovid.Add("Sviluppo", 5);
-            CapienzaCovid.Add("OpenSpace #1", 5);
-            CapienzaCovid.Add("OpenSpace #2", 5);
-            CapienzaCovid.Add("Meeting", 6);
-            CapienzaCovid.Add("Bansky", 1);
-            CapienzaCovid.Add("Contabilità", 2);
+            HttpResponseMessage? getAllStance = await service.getAllStanze();
+            if (getAllStance == null || getAllStance.StatusCode != HttpStatusCode.OK)
+                return;
+
+            List<Stanza>? Stanze = await getAllStance.Content.ReadFromJsonAsync<List<Stanza>?>();
+
+            foreach (var Stanza in Stanze)
+            {
+                CapienzaNormale.Add(Stanza.Nome, Stanza.PostiMax);
+                CapienzaCovid.Add(Stanza.Nome, Stanza.PostiMaxEmergenza);
+            }
         }
 
         /// <summary>
@@ -124,14 +115,18 @@ namespace prenotazione_postazioni_mvc.Models
         /// <param name="stanza">Stanza selzionata</param>
         /// <param name="capienza">Capienza selezionata</param>
 
-        public void SetCapienzaNormale(string stanza, int capienza)
+        public async void SetCapienzaNormale(string stanza, int capienza)
         {
             if (capienza <= 0)
                 throw new Exception("Capienza non valida");
             if (stanza == null || !CapienzaNormale.ContainsKey(stanza))
                 throw new Exception("Stanza non valida");
 
-            CapienzaNormale[stanza] = capienza;
+            HttpResponseMessage? setCapienza = await service.setCapienzaStanza(stanza, capienza);
+            if (setCapienza == null || setCapienza.StatusCode != HttpStatusCode.OK)
+                return;
+
+            LoadCapienze();
         }
 
         /// <summary>
@@ -140,14 +135,18 @@ namespace prenotazione_postazioni_mvc.Models
         /// <param name="stanza">Stanza selzionata</param>
         /// <param name="capienza">Capienza selezionata</param>
 
-        public void SetCapienzaCovid(string stanza, int capienza)
+        public async void SetCapienzaCovid(string stanza, int capienza)
         {
             if (capienza <= 0)
                 throw new Exception("Capienza non valida");
             if (stanza == null || !CapienzaCovid.ContainsKey(stanza))
                 throw new Exception("Stanza non valida");
 
-            CapienzaCovid[stanza] = capienza;
+            HttpResponseMessage? setCapienza = await service.setCapienzaCovidStanza(stanza, capienza);
+            if (setCapienza == null || setCapienza.StatusCode != HttpStatusCode.OK)
+                return;
+
+            LoadCapienze();
         }
 
         /// <summary>

@@ -155,7 +155,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 Stanza stanza = _stanzaService.GetStanzaByName(nome);
-                _stanzaService.ChangePostiMax(postiMax, stanza.IdStanza);
+                _stanzaService.ChangePostiMaxEmergenza(postiMax, stanza.IdStanza);
                 return Ok("Posti massimi cambiati");
             }
             catch (PrenotazionePostazioniApiException ex)

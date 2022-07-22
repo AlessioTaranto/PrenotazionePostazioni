@@ -18,7 +18,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         {
             if (ViewModel == null)
                 ViewModel = new ImpostazioniViewModel(
-                    new CapienzaImpostazioniViewModel(), 
+                    new CapienzaImpostazioniViewModel(_capienzaHttpService), 
                     new FestivitaImpostazioniViewModel(), 
                     new PresenzeImpostazioniViewModel()
                 );

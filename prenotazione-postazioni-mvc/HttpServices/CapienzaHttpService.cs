@@ -25,5 +25,32 @@
             return httpResponseMessage;
         }
 
+        public async Task<HttpResponseMessage> getAllStanze()
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capienza");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/stanze/getAllStanze");
+
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> setCapienzaStanza(string stanza, int posti)
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capienza");
+
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/stanze/changePostiMax?postiMax=" + posti + "&nome=" + stanza, null);
+
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> setCapienzaCovidStanza(string stanza, int posti)
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capienza");
+
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/stanze/changePostiMaxEmergenza?postiMax=" + posti + "&nome=" + stanza, null);
+
+            return httpResponseMessage;
+        }
+
     }
 }
