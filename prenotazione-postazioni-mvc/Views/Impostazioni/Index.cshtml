@@ -18,6 +18,9 @@
             data: { "number": number }
         });
     }
+
+    // Importa le date
+    //deserializeFeste(@ViewModel.FestivitaViewModel.SerializeFeste());
 </script>
 
 <!-- Sidebar tab (Sinistra) -->
@@ -358,6 +361,9 @@
         presenzeBtn.removeClass('collapsed');
         presenzeDiv.addClass('show');
     }
+    
+
+
     // ---------------------------------------
 
     /*
@@ -506,6 +512,21 @@
                     event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaCovidDefault(@ViewModel.CapienzaViewModel.Stanza);
                     event.preventDefault();
                 }
+            });
+        });
+
+    $('#festabutton').on('click',
+        function(event) {
+            $.ajax({
+                type: "POST",
+                url: "Impostazioni/AggiungiFesta",
+                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day" },
+                error: function(xhr) {
+                    alertBox(xhr.responseText);
+                    event.preventDefault();
+                }
+            }).done(function() {
+                window.location.reload();
             });
         });
 

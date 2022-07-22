@@ -8,10 +8,13 @@ namespace prenotazione_postazioni_mvc.Controllers
     {
         //HTTP Client Factory -> Capienza
         public readonly CapienzaHttpService _capienzaHttpService;
+        //HTTP Client Factory -> Festa
+        public readonly FestaHttpService _festaHttpService;
 
-        public ImpostazioniController(CapienzaHttpService capienzaHttpService)
+        public ImpostazioniController(CapienzaHttpService capienzaHttpService, FestaHttpService festaHttpService)
         {
             _capienzaHttpService = capienzaHttpService;
+            _festaHttpService = festaHttpService;
         }
 
         public IActionResult Index()
@@ -19,7 +22,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             if (ViewModel == null)
                 ViewModel = new ImpostazioniViewModel(
                     new CapienzaImpostazioniViewModel(_capienzaHttpService), 
-                    new FestivitaImpostazioniViewModel(), 
+                    new FestivitaImpostazioniViewModel(_festaHttpService), 
                     new PresenzeImpostazioniViewModel()
                 );
 

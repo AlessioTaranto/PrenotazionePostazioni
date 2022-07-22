@@ -49,6 +49,7 @@ builder.Services.AddSingleton<ImpostazioniHttpService>();
 builder.Services.AddSingleton<UtenteHttpService>();
 builder.Services.AddSingleton<VotoHttpService>();
 builder.Services.AddSingleton<CapienzaHttpService>();
+builder.Services.AddSingleton<FestaHttpService>();
 
 var app = builder.Build();
 
