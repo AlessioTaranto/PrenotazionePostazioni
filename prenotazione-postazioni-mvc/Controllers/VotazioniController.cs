@@ -4,6 +4,7 @@ using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
+using System.Net;
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
@@ -12,10 +13,12 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         public static VotazioniViewModel ViewModel { get; set; }
         public readonly VotoHttpService _votoHttpService;
+        public readonly UtenteHttpService _utenteHttpService;
 
-        public VotazioniController(VotoHttpService votoHttpService)
+        public VotazioniController(VotoHttpService votoHttpService, UtenteHttpService utenteHttpService)
         {
             _votoHttpService = votoHttpService;
+            _utenteHttpService = utenteHttpService;
         }
 
         public IActionResult Index()
@@ -25,7 +28,7 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         [HttpPost]
         [ActionName("VoteUser")]
-        public IActionResult VoteUser(int voto, Utente UtenteVotato, Utente Utente)
+        public async Task<IActionResult> VoteUser(int voto, int idUtente, int idUtenteVotato)
         {
             /*try
             {
@@ -44,18 +47,27 @@ namespace prenotazione_postazioni_mvc.Controllers
                 }
                 ViewModel.Votazioni.Add(voto);
             }*/
-            if(voto == 0)
-            {
+            HttpResponseMessage? response = null;
+            //if (utenteResponse.StatusCode == HttpStatusCode.OK && utenteVotatoResponse.StatusCode == HttpStatusCode.OK)
+            //{
 
-            }else if(voto == 1)
+            Utente utente = new Utente(idUtente, null, null, null, null, 0);//await utenteResponse.Content.ReadFromJsonAsync<Utente>();
+            Utente utenteVotato = new Utente(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
+            if (voto == 0)
             {
-                _votoHttpService.OnMakeVoto(new VotoDto(Utente, UtenteVotato, true));
-            }else if(voto == -1)
-            {
-                _votoHttpService.OnMakeVoto(new VotoDto(Utente, UtenteVotato, false));
+                  response = await _votoHttpService.OnDeleteVoto(idUtente, idUtenteVotato);
             }
-
-            return Ok("Votazionr effettuata");
+            else if (voto == 1)
+            {
+                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, true));
+            }
+            else if (voto == -1)
+            {
+                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, false));
+            }
+            return Ok("Votazione effettuata");
+            //}
+            //else return NotFound("Utente non trovato");
         }
     }
 }

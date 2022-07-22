@@ -20,13 +20,13 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
-        public async Task<object> OnGetUtenteById()
+        public async Task<HttpResponseMessage> OnGetUtenteById(int id)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Utente");
 
-            var httpResponseMessage = await httpClient.GetAsync("https://localhost:7126/api/utenti/getUtenteById");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/impostazioni/getUtenteById?id={id}");
 
-            return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK ? httpResponseMessage.Content : httpResponseMessage.StatusCode;
+            return httpResponseMessage;
         }
 
         public async Task<HttpResponseMessage> OnGetUtentiPrenotatiByDay(DateTime date)

@@ -101,7 +101,7 @@ namespace prenotazioni_postazioni_api.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpPost]
         [Route("deleteVoto")]
         public IActionResult DeleteVoto(int idUtente, int idUtenteVotato)
         {
