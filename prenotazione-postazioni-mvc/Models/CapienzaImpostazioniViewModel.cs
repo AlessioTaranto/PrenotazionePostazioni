@@ -9,9 +9,6 @@ namespace prenotazione_postazioni_mvc.Models
         // Stanza selezionata
         public string? Stanza { get; set; }
 
-        // Modalità Covid
-        public bool CovidMode { get; set; }
-
         // Lista capienza normale di tutte le stanze
         public Dictionary<string, int>? CapienzaNormale { get; set; }
 
@@ -21,7 +18,6 @@ namespace prenotazione_postazioni_mvc.Models
         public CapienzaImpostazioniViewModel(string? stanza, bool covidMode, Dictionary<string, int>? capienzaNormale, Dictionary<string, int>? capienzaCovid)
         {
             Stanza = stanza;
-            CovidMode = covidMode;
             CapienzaNormale = capienzaNormale;
             CapienzaCovid = capienzaCovid;
         }
@@ -29,7 +25,6 @@ namespace prenotazione_postazioni_mvc.Models
         public CapienzaImpostazioniViewModel(string? stanza, bool covidMode)
         {
             Stanza = stanza;
-            CovidMode = covidMode;
             LoadCapienzaCovid();
             LoadCapienzaNormale();
         }
@@ -37,7 +32,6 @@ namespace prenotazione_postazioni_mvc.Models
         public CapienzaImpostazioniViewModel(bool covidMode)
         {
             Stanza = "null";
-            CovidMode = covidMode;
             LoadCapienzaCovid();
             LoadCapienzaNormale();
         }
@@ -46,7 +40,6 @@ namespace prenotazione_postazioni_mvc.Models
         {
             Stanza = "null";
             //Carica da API
-            CovidMode = false;
             LoadCapienzaCovid();
             LoadCapienzaNormale();
         }
@@ -59,14 +52,6 @@ namespace prenotazione_postazioni_mvc.Models
         public string GetStanza()
         {
             return Stanza == "null" ? "Seleziona una stanza" : Stanza;
-        }
-
-        /// <summary>
-        ///     Abilita / Disabilita la modalità Covid
-        /// </summary>
-        public void ToggleCovidMode()
-        {
-            CovidMode = !CovidMode;
         }
 
         /// <summary>
