@@ -4,6 +4,10 @@
     ImpostazioniViewModel ViewModel = (ImpostazioniViewModel) Model;
 }
 
+@using System.Net
+@using prenotazione_postazioni_mvc.HttpServices;
+@inject CapienzaHttpService _capienzaHttpService;
+
 <script>
     // Questa funziona cambia lo stato del tab Sidebar. Chiamata ogni volta che un utente vuole passare ad un'altra tab
 
@@ -52,13 +56,22 @@
         <br>
         <h5>Modalità Covid</h5>
         <label class="switch">
-            @if (ViewModel.CapienzaViewModel.CovidMode)
-            {
-                <input type="checkbox" id="covid-switch-btn" checked>
-            }
-            else
-            {
-                <input type="checkbox" id="covid-switch-btn">
+            @{
+                HttpResponseMessage? getCovidMode = await _capienzaHttpService.getCovidMode();
+                bool Covid = false;
+                if (getCovidMode.StatusCode == HttpStatusCode.OK)
+                {
+                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
+
+                    if (Covid)
+                    {
+                        <input type="checkbox" id="covid-switch-btn" checked>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="covid-switch-btn">
+                    }
+                }
             }
             <span class="slider"></span>
         </label>
@@ -324,8 +337,7 @@
 
     let selecPillsTab = [
         '#options-pills-covid-tab', '#options-pills-festivita-tab', '#options-pills-presenze-tab',
-        '#options-pills-covid', '#options-pills-festivita', '#options-pills-presenze'
-    ];
+        '#options-pills-covid', '#options-pills-festivita', '#options-pills-presenze'];
 
     for (let i = 0; i < selecPillsTab.length; i++) {
         if (i > 2)
@@ -407,7 +419,7 @@
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
     */
 
-    $(document).ready(function(e) {
+    $(document).ready(function() {
         $('area').on('click', function (event) {
                 
             $.ajax({
@@ -466,8 +478,6 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/ToggleCovidMode"
-            }).done(function() {
-                window.location.reload();
             });
         });
 
@@ -482,8 +492,6 @@
                     event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaNormaleDefault(@ViewModel.CapienzaViewModel.Stanza);
                     event.preventDefault();
                 }
-            }).done(function() {
-                window.location.reload();
             });
         });
 
@@ -498,8 +506,6 @@
                     event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaCovidDefault(@ViewModel.CapienzaViewModel.Stanza);
                     event.preventDefault();
                 }
-            }).done(function() {
-                window.location.reload();
             });
         });
 
