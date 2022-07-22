@@ -56,5 +56,8 @@ function clickCalendarFest(id) {
         selectCell(id);
         selectDay(new Date(date.getFullYear(), date.getMonth(), selector.text()));
     }
+}
 
+function deserializeFeste(jsonFeste) {
+    festivita = JSON.parse(jsonFeste);
 }

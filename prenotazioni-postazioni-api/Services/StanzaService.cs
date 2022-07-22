@@ -111,5 +111,24 @@ namespace prenotazioni_postazioni_api.Services
             }
             return true;
         }
+
+        internal void ChangePostiMax(int postiMax, int id)
+        {
+            if (postiMax < 1)
+            {
+                throw new PrenotazionePostazioniApiException("Posti massimi non validi");
+            }
+            _stanzaRepository.ChangePostiMax(postiMax, id);
+            
+        }
+
+        internal void ChangePostiMaxEmergenza(int postiMax, int id)
+        {
+            if (postiMax < 1)
+            {
+                throw new PrenotazionePostazioniApiException("Posti massimi non validi");
+            }
+            _stanzaRepository.ChangePostiMaxEmergenza(postiMax, id);
+        }
     }
 }

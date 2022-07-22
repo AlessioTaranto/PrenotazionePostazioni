@@ -1,16 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
     public class ImpostazioniController : Controller
     {
+        //HTTP Client Factory -> Capienza
+        public readonly CapienzaHttpService _capienzaHttpService;
+        //HTTP Client Factory -> Festa
+        public readonly FestaHttpService _festaHttpService;
+
+        public ImpostazioniController(CapienzaHttpService capienzaHttpService, FestaHttpService festaHttpService)
+        {
+            _capienzaHttpService = capienzaHttpService;
+            _festaHttpService = festaHttpService;
+        }
+
         public IActionResult Index()
         {
             if (ViewModel == null)
                 ViewModel = new ImpostazioniViewModel(
-                    new CapienzaImpostazioniViewModel(), 
-                    new FestivitaImpostazioniViewModel(), 
+                    new CapienzaImpostazioniViewModel(_capienzaHttpService), 
+                    new FestivitaImpostazioniViewModel(_festaHttpService), 
                     new PresenzeImpostazioniViewModel()
                 );
 
@@ -155,7 +167,11 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("ToggleCovidMode")]
         public IActionResult ToggleCovidMode()
         {
-            ViewModel?.CapienzaViewModel.ToggleCovidMode();
+
+            if (_capienzaHttpService == null)
+                return BadRequest("Errore generico");
+
+            _capienzaHttpService.ToggleCovidMode();
 
             return Ok("Modalità cambiata");
         }

@@ -55,7 +55,7 @@
 
     <nav class="navbar navbar-expand-sm bg-light">
         <div class="order-0">
-            <a class="navbar-brand mx-auto black" href="#">@ViewData["Title"]</a>
+            <a class="navbar-brand mx-auto black" href="#" style="font-size: 2vw">@ViewData["Title"]</a>
         </div>
         <div class="navbar-collapse collapse order-3">
             <ul class="navbar-nav ml-2-nav">
@@ -69,6 +69,7 @@
     </nav>
 
     <script>
+
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.

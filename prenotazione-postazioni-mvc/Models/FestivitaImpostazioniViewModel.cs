@@ -1,4 +1,9 @@
-﻿namespace prenotazione_postazioni_mvc.Models
+﻿using System.Net;
+using Newtonsoft.Json;
+using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_mvc.HttpServices;
+
+namespace prenotazione_postazioni_mvc.Models
 {
     public class FestivitaImpostazioniViewModel
     {
@@ -7,22 +12,45 @@
         public DateTime GiornoSelezionato { get; set; }
         // Lista di tutte le festività
         public List<DateTime> Festivita { get; set; }
+        // Http service
+        public FestaHttpService service { get; set; }
 
-        public FestivitaImpostazioniViewModel(DateTime giornoSelezionato, List<DateTime> festivita)
+        public FestivitaImpostazioniViewModel(DateTime giornoSelezionato, List<DateTime> festivita, FestaHttpService service)
         {
             GiornoSelezionato = giornoSelezionato;
             Festivita = festivita;
+            this.service = service;
+            LoadFeste();
         }
 
-        public FestivitaImpostazioniViewModel(List<DateTime> festivita)
+        public FestivitaImpostazioniViewModel(List<DateTime> festivita, FestaHttpService service)
         {
             Festivita = festivita;
+            this.service = service;
+            LoadFeste();
         }
 
-        public FestivitaImpostazioniViewModel()
+        public FestivitaImpostazioniViewModel(FestaHttpService service)
         {
             Festivita = new List<DateTime>();
-            //Query API che prende le feste dal db
+            this.service = service;
+            LoadFeste();
+        }
+
+        public async void LoadFeste()
+        {
+            Festivita.Clear();
+
+            HttpResponseMessage getAllFeste = await service.getAllFeste();
+            if (getAllFeste == null || getAllFeste.StatusCode != HttpStatusCode.OK)
+                return;
+
+            List<Festa>? festeList = await getAllFeste.Content.ReadFromJsonAsync<List<Festa>?>();
+
+            foreach (var festa in festeList)
+            {
+                Festivita.Add(festa.Giorno);
+            }
         }
 
         /// <summary>
@@ -33,7 +61,7 @@
         /// <param name="day">Giorno selezionato</param>
         /// <exception cref="Exception">Giorno non valido, Festività già inserita</exception>
 
-        public void AddFesta(int year, int month, int day)
+        public async void AddFesta(int year, int month, int day)
         {
             DateTime date;
 
@@ -49,7 +77,11 @@
             if (Festivita.Contains(date))
                 throw new Exception("Festività già inserita");
 
-            Festivita.Add(date);
+            HttpResponseMessage addFesta = await service.AddFesta(date);
+            if (addFesta == null || addFesta.StatusCode != HttpStatusCode.OK)
+                return;
+
+            LoadFeste();
         }
 
         /// <summary>
@@ -63,6 +95,8 @@
         public void RemoveFesta(int year, int month, int day)
         {
             DateTime date;
+
+            //Manca sql
 
             try
             {
@@ -108,6 +142,11 @@
             {
                 throw new Exception("Giorno non valido");
             }
+        }
+
+        public string SerializeFeste()
+        {
+            return JsonConvert.SerializeObject(Festivita);
         }
     }
 }

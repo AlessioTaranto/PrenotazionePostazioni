@@ -66,5 +66,23 @@ namespace prenotazioni_postazioni_api.Repositories
             sqlCommand.Parameters.AddWithValue("@stanza_posti_max_emergenza", stanza.PostiMaxEmergenza);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
+
+        internal void ChangePostiMax(int postiMax, int id)
+        {
+            string query = "UPDATE Stanze SET postiMax = @postiMax WHERE idStanza = @idStanza;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@postiMax", postiMax);
+            sqlCommand.Parameters.AddWithValue("@idStanza", id);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
+        }
+
+        internal void ChangePostiMaxEmergenza(int postiMaxEmergenza, int id)
+        {
+            string query = "UPDATE Stanze SET postiMaxEmergenza = @postiMax WHERE idStanza = @idStanza;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@postiMax", postiMaxEmergenza);
+            sqlCommand.Parameters.AddWithValue("@idStanza", id);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
+        }
     }
 }

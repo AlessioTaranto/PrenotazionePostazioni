@@ -11,6 +11,7 @@
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
 
+@inject CapienzaHttpService _capienzaHttpService;
 <script>
     // Questa funziona cambia lo stato del tab Sidebar. Chiamata ogni volta che un utente vuole passare ad un'altra tab
 
@@ -21,10 +22,13 @@
             data: { "number": number }
         });
     }
+
+    // Importa le date
+    //deserializeFeste(@ViewModel.FestivitaViewModel.SerializeFeste());
 </script>
 
 <!-- Sidebar tab (Sinistra) -->
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 280px; height: 100%; border: 0.1px solid darkorange !important">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 20vw; height: 100%; border: 0.1px solid darkorange !important">
     <div class="nav flex-column mb-auto nav-pills darkorange" id="options-pills-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link-1" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="false" onclick="changeStateTab(0)">Covid</a>
         <a class="nav-link-1" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false" onclick="changeStateTab(1)">Festività</a>
@@ -59,13 +63,22 @@
         <br>
         <h5>Modalità Covid</h5>
         <label class="switch">
-            @if (ViewModel.CapienzaViewModel.CovidMode)
-            {
-                <input type="checkbox" id="covid-switch-btn" checked>
-            }
-            else
-            {
-                <input type="checkbox" id="covid-switch-btn">
+            @{
+                HttpResponseMessage? getCovidMode = await _capienzaHttpService.getCovidMode();
+                bool Covid = false;
+                if (getCovidMode.StatusCode == HttpStatusCode.OK)
+                {
+                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
+
+                    if (Covid)
+                    {
+                        <input type="checkbox" id="covid-switch-btn" checked>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="covid-switch-btn">
+                    }
+                }
             }
             <span class="slider"></span>
         </label>
@@ -346,8 +359,7 @@
 
     let selecPillsTab = [
         '#options-pills-covid-tab', '#options-pills-festivita-tab', '#options-pills-presenze-tab',
-        '#options-pills-covid', '#options-pills-festivita', '#options-pills-presenze'
-    ];
+        '#options-pills-covid', '#options-pills-festivita', '#options-pills-presenze'];
 
     for (let i = 0; i < selecPillsTab.length; i++) {
         if (i > 2)
@@ -368,6 +380,9 @@
         presenzeBtn.removeClass('collapsed');
         presenzeDiv.addClass('show');
     }
+    
+
+
     // ---------------------------------------
 
     /*
@@ -429,7 +444,7 @@
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
     */
 
-    $(document).ready(function(e) {
+    $(document).ready(function() {
         $('area').on('click', function (event) {
                 
             $.ajax({
@@ -488,8 +503,6 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/ToggleCovidMode"
-            }).done(function() {
-                window.location.reload();
             });
         });
 
@@ -504,8 +517,6 @@
                     event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaNormaleDefault(@ViewModel.CapienzaViewModel.Stanza);
                     event.preventDefault();
                 }
-            }).done(function() {
-                window.location.reload();
             });
         });
 
@@ -518,6 +529,19 @@
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaCovidDefault(@ViewModel.CapienzaViewModel.Stanza);
+                    event.preventDefault();
+                }
+            });
+        });
+
+    $('#festabutton').on('click',
+        function(event) {
+            $.ajax({
+                type: "POST",
+                url: "Impostazioni/AggiungiFesta",
+                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day" },
+                error: function(xhr) {
+                    alertBox(xhr.responseText);
                     event.preventDefault();
                 }
             }).done(function() {
