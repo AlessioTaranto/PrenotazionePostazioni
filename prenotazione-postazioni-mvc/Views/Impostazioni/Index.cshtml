@@ -4,6 +4,13 @@
     ImpostazioniViewModel ViewModel = (ImpostazioniViewModel) Model;
 }
 
+@using System.Net
+@using prenotazione_postazioni_libs.Models;
+@using prenotazione_postazioni_libs.Dto;
+@using prenotazione_postazioni_mvc.HttpServices;
+@using Newtonsoft.Json;
+@inject UtenteHttpService _utenteHttpService;
+
 <script>
     // Questa funziona cambia lo stato del tab Sidebar. Chiamata ogni volta che un utente vuole passare ad un'altra tab
 
@@ -261,7 +268,22 @@
             </a>
             <div class="collapse" id="presenti">
                 <div class="card card-body person-div">
-                    <ul id="lista-presenti"></ul>
+                    <ul id="lista-presenti">
+                        @{
+                        HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.PresenzeViewModel.PresenzaSelezionata);
+                        List<Utente>? presenti = null;
+                        if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                        {
+                            presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
+                            for(int i=0; i<presenti.Count; i++)
+                            {
+                                    <li>
+                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome
+                                    </li>
+                            }
+                        }
+                    }
+                    </ul>
                 </div>
             </div>
         </div>
