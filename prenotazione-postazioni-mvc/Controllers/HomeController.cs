@@ -6,7 +6,7 @@ namespace prenotazione_postazioni_mvc.Controllers;
 public class HomeController : Controller
 {
 
-    public static PrenotazioneViewModel? ViewModel { get; set; }
+    public static PrenotazioneViewModel ViewModel { get; set; }
 
     public IActionResult Index()
     {
@@ -135,5 +135,12 @@ public class HomeController : Controller
         ViewModel?.ToggleCollapseList();
 
         return Ok("Collapse change");
+    }
+
+    [HttpPost]
+    [ActionName("GetAllUtentiPrenotazione")]
+    public IActionResult GetAllPersonePrenotate(int inizio, int fine)
+    {
+        throw new NotImplementedException();
     }
 }

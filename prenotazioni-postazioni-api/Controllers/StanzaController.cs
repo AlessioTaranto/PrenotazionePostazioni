@@ -48,7 +48,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="id">L'id della stanza</param>
         /// <returns>La stanza trovata con 200, 404 altrimenti</returns>
         [HttpGet]
-        [Route("getStanzeById")]
+        [Route("getStanzaById")]
         public IActionResult GetStanzaById(int id)
         {
             try

@@ -15,6 +15,13 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddHttpClient("PrenotazionePostazioni-Stanze", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://localhost:7126/api/stanze/");
+
+    httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
 builder.Services.AddHttpClient("PrenotazionePostazioni-Impostazioni", httpClient =>
 {
     httpClient.BaseAddress = new Uri("https://localhost:7126/api/impostazioni/");

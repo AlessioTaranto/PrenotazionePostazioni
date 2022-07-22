@@ -1,5 +1,7 @@
 ﻿using prenotazione_postazioni_libs.Models;
 using System.Xml.Schema;
+
+namespace prenotazione_postazioni_mvc.Models
 {
     public class PrenotazioneViewModel
     {
