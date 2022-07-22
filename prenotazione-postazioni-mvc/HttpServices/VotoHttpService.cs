@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 using prenotazione_postazioni_libs.Dto;
+using System.Text;
 
 namespace prenotazione_postazioni_mvc.HttpServices
 {
@@ -23,11 +25,16 @@ namespace prenotazione_postazioni_mvc.HttpServices
         public async Task<HttpResponseMessage> OnMakeVoto(VotoDto voto)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Voti");
+            httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            
 
             string json = JsonConvert.SerializeObject(voto); 
-            var content = new StringContent(json);
+            //var content = new StringContent(json);
 
-            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/voti/MakeVotoToUtente",content);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7126/api/voti/MakeVotoToUtente");
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var httpResponseMessage = await httpClient.SendAsync(request);
             
             return httpResponseMessage;
         }
@@ -36,7 +43,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Voti");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/voti/deleteVoto?idUtente={idUtente}&idUtenteVotato={idUtenteVotato}");
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/voti/deleteVoto?idUtente={idUtente}&idUtenteVotato={idUtenteVotato}", null);
 
             return httpResponseMessage;
         }

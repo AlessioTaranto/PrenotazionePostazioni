@@ -78,7 +78,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="voto">Il voto da aggiornare</param>
         internal void UpdateVoto(Voto voto)
         {
-            string query = $"UPDATE Voti SET votoEffettuato = 1 ^ voto WHERE idUtente = @id_utente AND idUtenteVotato = @id_utente_votato;";
+            string query = $"UPDATE Voti SET votoEffettuato = 1 ^ votoEffettuato WHERE idUtente = @id_utente AND idUtenteVotato = @id_utente_votato;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@id_utente", voto.IdUtente);
             sqlCommand.Parameters.AddWithValue("@id_utente_votato", voto.IdUtenteVotato);

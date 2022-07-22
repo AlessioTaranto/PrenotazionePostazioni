@@ -47,27 +47,25 @@ namespace prenotazione_postazioni_mvc.Controllers
                 }
                 ViewModel.Votazioni.Add(voto);
             }*/
-            HttpResponseMessage utenteResponse = await _utenteHttpService.OnGetUtenteById(idUtente);
-            HttpResponseMessage utenteVotatoResponse = await _utenteHttpService.OnGetUtenteById(idUtenteVotato);
             HttpResponseMessage? response = null;
             //if (utenteResponse.StatusCode == HttpStatusCode.OK && utenteVotatoResponse.StatusCode == HttpStatusCode.OK)
             //{
 
-                Utente utente = new Utente(idUtente, null, null, null, null, 0);//await utenteResponse.Content.ReadFromJsonAsync<Utente>();
-                Utente utenteVotato = new Utente(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
-                if (voto == 0)
-                {
-                    response = await _votoHttpService.OnDeleteVoto(idUtente, idUtenteVotato);
-                }
-                else if (voto == 1)
-                {
-                    response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, true));
-                }
-                else if (voto == -1)
-                {
-                    response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, false));
-                }
-                return Ok("Votazione effettuata");
+            Utente utente = new Utente(idUtente, null, null, null, null, 0);//await utenteResponse.Content.ReadFromJsonAsync<Utente>();
+            Utente utenteVotato = new Utente(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
+            if (voto == 0)
+            {
+                  response = await _votoHttpService.OnDeleteVoto(idUtente, idUtenteVotato);
+            }
+            else if (voto == 1)
+            {
+                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, true));
+            }
+            else if (voto == -1)
+            {
+                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, false));
+            }
+            return Ok("Votazione effettuata");
             //}
             //else return NotFound("Utente non trovato");
         }
