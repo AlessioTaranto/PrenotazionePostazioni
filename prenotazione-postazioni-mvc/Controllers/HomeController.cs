@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using prenotazione_postazioni_libs.Models;
-using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
 
 namespace prenotazione_postazioni_mvc.Controllers;
@@ -9,22 +7,12 @@ public class HomeController : Controller
 {
 
     public static PrenotazioneViewModel ViewModel { get; set; }
-    private StanzeHttpService stanzeHttpService;
-    private UtenteHttpService utenteHttpService;
-    private PrenotazioniHttpService prenotazioniHttpService;
-
-    public HomeController(StanzeHttpService stanzeHttpService, UtenteHttpService utenteHttpService, PrenotazioniHttpService prenotazioniHttpService)
-    {
-        this.stanzeHttpService = stanzeHttpService;
-        this.utenteHttpService = utenteHttpService;
-        this.prenotazioniHttpService = prenotazioniHttpService;
-    }
 
     public IActionResult Index()
     {
 
         if (ViewModel == null)
-            ViewModel = new PrenotazioneViewModel(stanzeHttpService, prenotazioniHttpService, utenteHttpService);
+            ViewModel = new PrenotazioneViewModel();
 
         return View(ViewModel);
     }
@@ -149,6 +137,10 @@ public class HomeController : Controller
         return Ok("Collapse change");
     }
 
-    
+    [HttpPost]
+    [ActionName("GetAllUtentiPrenotazione")]
+    public IActionResult GetAllPersonePrenotate(int inizio, int fine)
+    {
+        throw new NotImplementedException();
+    }
 }
-

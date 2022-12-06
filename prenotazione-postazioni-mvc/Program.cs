@@ -48,13 +48,8 @@ builder.Services.AddHttpClient("PrenotazionePostazioni-Voti", HttpClient =>
 builder.Services.AddSingleton<ImpostazioniHttpService>();
 builder.Services.AddSingleton<UtenteHttpService>();
 builder.Services.AddSingleton<VotoHttpService>();
-<<<<<<< HEAD
 builder.Services.AddSingleton<CapienzaHttpService>();
 builder.Services.AddSingleton<FestaHttpService>();
-=======
-builder.Services.AddSingleton<StanzeHttpService>();
-builder.Services.AddSingleton<PrenotazioniHttpService>();
->>>>>>> origin/feature/prenotazioni
 
 var app = builder.Build();
 

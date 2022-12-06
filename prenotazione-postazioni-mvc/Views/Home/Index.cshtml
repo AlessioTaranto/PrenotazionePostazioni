@@ -7,18 +7,11 @@
 
 @using System.Net
 @using prenotazione_postazioni_libs.Models;
-<<<<<<< HEAD
 @using prenotazione_postazioni_mvc.HttpServices;
 
 @inject ImpostazioniHttpService _impostazioniHttpService;
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
-=======
-@using prenotazione_postazioni_libs.Dto;
-@using prenotazione_postazioni_mvc.Controllers
-@using prenotazione_postazioni_mvc.HttpServices;
-@using Newtonsoft.Json;
->>>>>>> origin/feature/prenotazioni
 
 
 <div class="container mt-4 ml-3 position-fixed calendar-div">
@@ -92,7 +85,6 @@
             <div class="card card-body person-div">
                 <ul id="lista-prenotazioni">
                     @{
-<<<<<<< HEAD
                         HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
                         List<Utente>? presenti = null;
                         if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
@@ -103,19 +95,7 @@
                                     <li>
                                         <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome
                                     </li>
-=======
-                        List<Utente> utenti = ViewModel.Presenti;
-                        if(utenti != null || utenti.Count != 0)
-                        {
-                            foreach (var utente in utenti)
-                            {
-                                <li> <img src="~/img/example/example-2.png">utente.Nome utente.Cognome</li>
->>>>>>> origin/feature/prenotazioni
                             }
-                        }
-                        else
-                        {
-                            <li>Nessuna prenotazione trovata!</li>
                         }
                     }
                 </ul>
@@ -235,16 +215,6 @@
                 }
             }
         );
-
-        prenota.on('click', function(event) {
-            $.ajax({
-                type: "POST",
-                url: "Home/MakePrenotazione",
-                data: { "idUtente": 1, "startYear": @ViewModel.Date.Year, "startMonth": @ViewModel.Date.Month, "startDay": @ViewModel.Date.Day, "endYear": @ViewModel. }
-            }).done(function() {
-                window.location.reload();
-            })
-        })
     });
 </script>
 <script>
