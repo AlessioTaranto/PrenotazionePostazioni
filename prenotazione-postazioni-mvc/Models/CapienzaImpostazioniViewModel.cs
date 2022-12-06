@@ -89,6 +89,13 @@ namespace prenotazione_postazioni_mvc.Models
 
         public int GetCapienzaNormale(string stanza)
         {
+
+            foreach (var item in CapienzaNormale)
+            {
+                var x = item.Key;
+                var y = item.Value;
+            }
+
             if (stanza == null || !CapienzaNormale.ContainsKey(stanza))
                 throw new Exception("Stanza non valida");
 
