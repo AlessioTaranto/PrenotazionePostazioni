@@ -177,5 +177,15 @@ namespace prenotazioni_postazioni_api.Services
             }
             return 0;
         }
+
+        internal void RemovePrenotazione(int idPrenotazione)
+        {
+            Prenotazione prenotazione = GetPrenotazioneById(idPrenotazione);
+            if (prenotazione != null)
+            {
+                _prenotazioneRepository.Remove(idPrenotazione);
+            }
+            else throw new PrenotazionePostazioniApiException("Stanza non esistente");
+        }
     }
  }
