@@ -65,29 +65,6 @@
 
         <div class="container mt-4 ml-70 position-fixed room-info-div">
             <br>
-            <h5>Modalità Covid</h5>
-            <label class="switch">
-                @{
-                    HttpResponseMessage? getCovidMode = await _capienzaHttpService.getCovidMode();
-                    bool Covid = false;
-                    if (getCovidMode.StatusCode == HttpStatusCode.OK)
-                    {
-                        Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
-
-                        if (Covid)
-                        {
-                            <input type="checkbox" id="covid-switch-btn" checked>
-                        }
-                        else
-                        {
-                            <input type="checkbox" id="covid-switch-btn">
-                        }
-                    }
-                }
-                <span class="slider"></span>
-            </label>
-            <br>
-            <br>
             <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
             <br>
             @if (ViewModel.CapienzaViewModel.Stanza != "null" && ViewModel.CapienzaViewModel.Stanza != null)
@@ -310,12 +287,36 @@
 
     <!-- Users selector -->
     <div class="tab-pane fade" id="options-pills-users" role="tabpanel" aria-labelledby="options-pills-users-tab">
-
+       
     </div>
 
     <!-- Admin selector -->
     <div class="tab-pane fade" id="options-pills-admin" role="tabpanel" aria-labelledby="options-pills-admin-tab">
+        <div class="container mt-4 ml-21 position-fixed admin-body-div">
+            <br>
+            <h5>Modalità Covid</h5>
+            <label class="switch">
+                @{
+                    HttpResponseMessage? getCovidMode = await _capienzaHttpService.getCovidMode();
+                    bool Covid = false;
+                    if (getCovidMode.StatusCode == HttpStatusCode.OK)
+                    {
+                        Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
 
+                        if (Covid)
+                        {
+                            <input type="checkbox" id="covid-switch-btn" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="covid-switch-btn">
+                        }
+                    }
+                }
+                <span class="slider"></span>
+            </label>
+            <br>
+        </div>
     </div>
 
 </div>
