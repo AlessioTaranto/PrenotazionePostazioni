@@ -28,6 +28,7 @@
 </script>
 
 <!-- Sidebar tab (Sinistra) -->
+
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 20vw; height: 100%; border: 0.1px solid darkorange !important">
     <div class="nav flex-column mb-auto nav-pills darkorange" id="options-pills-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link-1" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="false" onclick="changeStateTab(0)">Covid</a>
@@ -45,15 +46,15 @@
     <div class="container mt-4 ml-21 position-fixed piantina-div">
         <img src="img/piantina.png" usemap="#image-map">
         <map name="image-map">
-            <area alt="Contabilità" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
-            <!--<area alt="Finanze" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
-            <area alt="Bansky" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
-            <area alt="OpenSpace #1" title="OpenSpace #1" coords="491,40,706,64,708,145,492,123" shape="poly">
-            <area alt="OpenSpace #2" title="OpenSpace #2" coords="492,207,704,231,704,147,492,126" shape="poly">
-            <area alt="Sviluppo" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
-            <area alt="Assistenza" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
-            <area alt="Commerciale" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
-            <area alt="Meeting" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
+            <area alt="Contabilità" href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
+            <!--<area alt="Finanze" href="" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
+            <area alt="Bansky" href="" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
+            <area alt="OpenSpace #1" href="" title="OpenSpace #1" coords="491,40,706,64,708,145,492,123" shape="poly">
+            <area alt="OpenSpace #2" href="" title="OpenSpace #2" coords="492,207,704,231,704,147,492,126" shape="poly">
+            <area alt="Sviluppo" href="" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
+            <area alt="Assistenza" href="" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
+            <area alt="Commerciale" href="" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
+            <area alt="Meeting" href="" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
         </map>
     </div>
     
@@ -86,7 +87,7 @@
         <br>
         <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
         <br>
-        @if (ViewModel.CapienzaViewModel.Stanza != "null")
+        @if (ViewModel.CapienzaViewModel.Stanza != "null" && ViewModel.CapienzaViewModel.Stanza != null)
         {
             <h5>Capienza Normale</h5>
             <input type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)">
@@ -96,7 +97,7 @@
             <input type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)">
             <br>
             <br>
-            <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma"></input>
+            <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
         }
     </div>
 </div>
