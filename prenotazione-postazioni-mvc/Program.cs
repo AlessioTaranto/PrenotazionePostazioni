@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Net.Http.Headers;
 using prenotazione_postazioni_mvc.HttpServices;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -13,6 +17,17 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromSeconds(10);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+}).AddCookie().AddGoogle(GoogleDefaults.AuthenticationScheme, options => 
+{
+    options.ClientId = "989509766036-m7kb2is391d96vcs669p9t808ij9kjlp.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
 });
 
 builder.Services.AddHttpClient("PrenotazionePostazioni-Stanze", httpClient =>
