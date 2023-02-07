@@ -1,10 +1,39 @@
-﻿<!DOCTYPE html>
+﻿@using System.Net;
+@using prenotazione_postazioni_libs.Models;
+
+@inject prenotazione_postazioni_mvc.HttpServices.UtenteHttpService _utenteHttpService;
+@{
+
+    Utente? LoggedUser = new Utente(
+        "Andrea",
+        "Redegalli",
+        "",
+        "redegalli03@gmail.com",
+        1
+    );
+
+    HttpResponseMessage? checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
+
+    if (checkExists.StatusCode == HttpStatusCode.OK)
+    {
+        LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+    } else {
+        //User non assegnato, creazione fixare error 400
+
+        HttpResponseMessage createUser = await _utenteHttpService.AddNewUser(LoggedUser);
+
+        //Assegna anche l'id
+        if (createUser.StatusCode == HttpStatusCode.OK)
+            LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="989509766036-m7kb2is391d96vcs669p9t808ij9kjlp.apps.googleusercontent.com">
 
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -60,8 +89,8 @@
         <div class="navbar-collapse collapse order-3">
             <ul class="navbar-nav ml-2-nav">
                 <li class="nav-item">
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                    <!--<a href="#" onclick="signOut();">Sign out</a>-->
+                        <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>
+                        <p> @LoggedUser.Nome @LoggedUser.Cognome</p>
                 </li>
 
             </ul>
