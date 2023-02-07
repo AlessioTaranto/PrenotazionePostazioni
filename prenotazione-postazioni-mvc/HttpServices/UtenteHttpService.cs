@@ -29,6 +29,15 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
+        public async Task<HttpResponseMessage> OnGetUtenteByEmail(int id)
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Utente");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/impostazioni/getUtenteByEmail?email={id}");
+
+            return httpResponseMessage;
+        }
+
         public async Task<HttpResponseMessage> OnGetUtentiPrenotatiByDay(DateTime date)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Utente");
