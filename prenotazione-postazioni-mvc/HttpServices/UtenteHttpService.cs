@@ -27,7 +27,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Utente");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/impostazioni/getUtenteById?id={id}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/utenti/getUtenteById?id={id}");
 
             return httpResponseMessage;
         }
@@ -35,8 +35,9 @@ namespace prenotazione_postazioni_mvc.HttpServices
         public async Task<HttpResponseMessage> OnGetUtenteByEmail(string email)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Utente");
+            email.Replace("\"", "");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/impostazioni/getUtenteByEmail?email={email}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/utenti/getUtenteByEmail?email={email}");
 
             return httpResponseMessage;
         }
@@ -58,7 +59,10 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Utente");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/utenti/addNewUtente", new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
+            string json = "{" + "\"nome\":\"" + user.Nome + "\", " + "\"cognome\": \"" + user.Cognome + "\", " + "\"image\": \"" + user.Image + "\", " + "\"email\": \"" + user.Email + "\", " + "\"idRuolo\": " + user.IdRuolo + "}" + "";
+            StringContent ctx = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/utenti/addNewUtente", ctx);
 
             return httpResponseMessage;
         }
