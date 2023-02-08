@@ -62,7 +62,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Save(Utente utente)
         {
-            string query = $"INSERT INTO Utenti (nome, cognome, immagine, email, idRuolo) VALUES (@nome, @cognome, @image, @email, @id_ruolo);";
+            string query = $"INSERT INTO Utenti (nome, cognome, email, idRuolo) VALUES (@nome, @cognome, @email, @id_ruolo);";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@nome", utente.Nome);
             sqlCommand.Parameters.AddWithValue("@cognome", utente.Cognome);
