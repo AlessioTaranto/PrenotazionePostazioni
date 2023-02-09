@@ -134,8 +134,12 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>Lista di Prenotazioni e status 200, altrimenti 404</returns>
         [HttpGet]
         [Route("getPrenotazioniByDate")]
-        public IActionResult GetPrenotazioniByDate(int idStanza, DateTime startDate, DateTime endDate)
+        public IActionResult GetPrenotazioniByDate(int idStanza, int startDateYear, int startDateMonth, int startDateDay, int startDateHour, int startDateMinute, int endDateYear, int endDateMonth, int endDateDay, int endDateHour, int endDateMinute)
         {
+
+            DateTime startDate = new DateTime(startDateYear, startDateMonth, startDateDay, startDateHour, startDateMinute, 0);
+            DateTime endDate = new DateTime(endDateYear, endDateMonth, endDateDay, startDateHour, startDateMinute, 59);
+
             try
             {
                 _logger.Info("Giorno inserite: ");
