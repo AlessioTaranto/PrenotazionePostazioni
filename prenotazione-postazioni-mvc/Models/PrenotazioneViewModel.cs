@@ -205,7 +205,7 @@ namespace prenotazione_postazioni_mvc.Models
 
         }
 
-        public async Task doPrenotazioneAsync(Utente utente, Stanza stanza, DateTime start, DateTime end)
+        public async Task doPrenotazioneAsync(string utente, string stanza, string start, string end)
         {
 
             if (utente == null)

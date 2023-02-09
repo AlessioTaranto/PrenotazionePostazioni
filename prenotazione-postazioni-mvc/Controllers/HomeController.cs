@@ -156,14 +156,9 @@ public class HomeController : Controller
     [HttpPost]
     [ActionName("Prenota")]
     public IActionResult Prenota(string user, string room, string start, string end)
-    {
+    { 
 
-        Utente utente = JsonConvert.DeserializeObject<Utente>(user);
-        Stanza stanza = JsonConvert.DeserializeObject<Stanza>(room);
-        DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
-        DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
-
-        ViewModel?.doPrenotazioneAsync(utente, stanza, inizio, fine);
+        ViewModel?.doPrenotazioneAsync(user, room, start, end);
 
         return View();
     }

@@ -60,15 +60,17 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
-        public async Task<HttpResponseMessage> AddPrenotazione(DateTime start, DateTime end, Utente utente, Stanza stanza)
+        public async Task<HttpResponseMessage> AddPrenotazione(string start, string end, string utente, string stanza)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Postazioni");
 
-            PrenotazioneDto prenotazione = new PrenotazioneDto(start, end, stanza, utente);
 
-            StringContent ctx = new StringContent(JsonConvert.SerializeObject(prenotazione), Encoding.UTF8, "application/json");
+            string jsonPrenotazione = "{\"startDate\": " + start + "," + "\"endDate\": " + end + "," + "\"stanza\": " + stanza + "," + "\"utente\": " + utente + "}" + "";
+            StringContent ctx = new StringContent(jsonPrenotazione, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/utenti/addNewUtente", ctx);
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/prenotazioni/addPrenotazione", ctx);
+
+            //Controllo esistenza prenotazione
 
             return httpResponseMessage;
         }

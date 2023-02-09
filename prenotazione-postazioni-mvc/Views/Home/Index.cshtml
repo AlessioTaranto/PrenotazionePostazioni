@@ -49,9 +49,6 @@
             HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
         }
     }
-}
-
-@{
 
     Stanza? Room = null;
 
@@ -433,6 +430,11 @@
 
 </script>
 
+<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
+<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
+<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
+<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
+
 <script>
 
     $('#prenota').on('click', function(event) {
@@ -442,11 +444,9 @@
         $.ajax({
             type: "POST",
             url: "Home/Prenota",
-            data: { "user": @JsonConvert.SerializeObject(LoggedUser), "room": @JsonConvert.SerializeObject(Room), "start": @JsonConvert.SerializeObject(@ViewModel.Start), "end": @JsonConvert.SerializeObject(@ViewModel.End)},
+            data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "start": $('#_valueDateStart').text(), "end": $('#_valueDateEnd').text() },
             error: function (xhr) {
-                alertBox(xhr.responseText);
-                event.preventDefault();
-                event.target.value = "@ViewModel.FormatHour(@ViewModel.End.Hour):00";
+                window.location.reload();
             }
         }).done(function () {
             window.location.reload();
