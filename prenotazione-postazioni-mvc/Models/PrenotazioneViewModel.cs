@@ -1,4 +1,5 @@
 ﻿using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_mvc.HttpServices;
 using System.Xml.Schema;
 
 namespace prenotazione_postazioni_mvc.Models
@@ -27,40 +28,55 @@ namespace prenotazione_postazioni_mvc.Models
         // Costante: Massima ora selezionabile
         public const int HourEnd = 22;
 
-        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti)
+        /*
+         *  -1 : Non è stata effettuata prenotazione 
+         *  410: Utente non specificato
+         *  411: Stanza non specificata
+         *  200: Prenotazione effettuata
+         *  1200: Prenotazione cancellata
+         */
+        public int statusPrenotazione = -1;
+
+        public PrenotazioneHttpSerivice Service { get; set; }
+
+        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti, PrenotazioneHttpSerivice serivice)
         {
             Date = date;
             Stanza = stanza;
             Start = start;
             End = end;
             Presenti = presenti;
+            Service = serivice;
         }
 
-        public PrenotazioneViewModel(DateTime date, string stanza)
+        public PrenotazioneViewModel(DateTime date, string stanza, PrenotazioneHttpSerivice serivice)
         {
             Date = date;
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
+            Service = serivice;
         }
 
-        public PrenotazioneViewModel(string stanza)
+        public PrenotazioneViewModel(string stanza, PrenotazioneHttpSerivice serivice)
         {
             Date = DateTime.Now;
             Stanza = stanza;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
+            Service = serivice;
         }
 
-        public PrenotazioneViewModel()
+        public PrenotazioneViewModel(PrenotazioneHttpSerivice serivice)
         {
             Stanza = "null";
             Date = DateTime.Now;
             Start = new DateTime(Date.Year, Date.Month, Date.Day, 9, 0, 0);
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
+            Service = serivice;
         }
 
         /// <summary>
@@ -187,6 +203,29 @@ namespace prenotazione_postazioni_mvc.Models
                 throw new Exception("L'orario selezionato non è valido");
             }
 
+        }
+
+        public async Task doPrenotazioneAsync(Utente utente, Stanza stanza, DateTime start, DateTime end)
+        {
+
+            if (utente == null)
+            {
+                statusPrenotazione = 410;
+                return;
+            }
+            else if (stanza == null)
+            {
+                statusPrenotazione = 411;
+                return;
+            }
+
+            HttpResponseMessage status = await Service.AddPrenotazione(start, end, utente, stanza);
+
+            if (status.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                //Prenotazione effettuata
+                statusPrenotazione = 200;
+            } 
         }
 
     }

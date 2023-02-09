@@ -4,19 +4,30 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using prenotazione_postazioni_mvc.Models;
 using Microsoft.AspNetCore.Authorization;
+using prenotazione_postazioni_libs.Models;
+using Newtonsoft.Json;
+using prenotazione_postazioni_mvc.HttpServices;
 
 namespace prenotazione_postazioni_mvc.Controllers;
 
 public class HomeController : Controller
 {
 
-    public static PrenotazioneViewModel ViewModel { get; set; }
+    public static PrenotazioneViewModel? ViewModel { get; set; }
+
+    //HTTP Client Factory -> Prenotazioni
+    public readonly PrenotazioneHttpSerivice _prenotazioneHttpService;
+
+    public HomeController(PrenotazioneHttpSerivice prenotazioneHttpService)
+    {
+        _prenotazioneHttpService = prenotazioneHttpService;
+    }
 
     public IActionResult Index()
     {
 
         if (ViewModel == null)
-            ViewModel = new PrenotazioneViewModel();
+            ViewModel = new PrenotazioneViewModel(_prenotazioneHttpService);
 
         return View(ViewModel);
     }
@@ -139,6 +150,22 @@ public class HomeController : Controller
         ViewModel?.ToggleCollapseList();
 
         return Ok("Collapse change");
+    }
+
+
+    [HttpPost]
+    [ActionName("Prenota")]
+    public IActionResult Prenota(string user, string room, string start, string end)
+    {
+
+        Utente utente = JsonConvert.DeserializeObject<Utente>(user);
+        Stanza stanza = JsonConvert.DeserializeObject<Stanza>(room);
+        DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
+        DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
+
+        ViewModel?.doPrenotazioneAsync(utente, stanza, inizio, fine);
+
+        return View();
     }
 
     [HttpPost]

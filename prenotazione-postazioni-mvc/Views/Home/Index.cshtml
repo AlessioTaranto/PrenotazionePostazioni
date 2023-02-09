@@ -11,10 +11,58 @@
 @inject ImpostazioniHttpService _impostazioniHttpService;
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
+@inject StanzeHttpService _stanzeHttpService;
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    Utente? LoggedUser = (Utente?) ViewData["LoggedUser"];         
+
+    Utente? LoggedUser = new Utente(
+        "Andrea",
+        "Redegalli",
+        "",
+        "redegalli03@gmail.com",
+        1
+    );
+
+    HttpResponseMessage? checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
+
+    HttpStatusCode code = checkExists.StatusCode;
+
+    if (checkExists.StatusCode == HttpStatusCode.OK)
+    {
+
+        LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+
+        HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
+    } else {
+        //User non assegnato, creazione fixare error 400
+        HttpResponseMessage createUser = await _utenteHttpService.AddNewUser(LoggedUser);
+
+        //Assegna anche l'id
+        if (createUser.StatusCode == HttpStatusCode.OK)
+        {
+            checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
+            code = checkExists.StatusCode;
+
+            LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+
+            HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
+        }
+    }
+}
+
+@{
+
+    Stanza? Room = null;
+
+    HttpResponseMessage checkRoom = await _stanzeHttpService.OnGetStanzaByName(ViewModel.Stanza);
+
+    if (checkRoom.StatusCode == HttpStatusCode.OK)
+    {
+        Room = await checkRoom.Content.ReadFromJsonAsync<Stanza>();
+    }
+
+    //Add Guest features
 
 }
 
@@ -157,16 +205,19 @@
             <div class="card card-body person-div">
                 <ul id="lista-prenotazioni">
                     @{
-                        HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
-                        List<Utente>? presenti = null;
-                        if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                        if (Room != null)
                         {
-                            presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
-                            for(int i=0; i<presenti.Count; i++)
+                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
+                            List<Utente>? presenti = null;
+                            if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
                             {
+                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
+                                for (int i = 0; i < presenti.Count; i++)
+                                {
                                     <li>
-                                    <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @JsonConvert.DeserializeObject(HttpContextAccessor.HttpContext.Session.GetString("_User"));
+                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @Room.Nome
                                     </li>
+                                }
                             }
                         }
                     }
@@ -380,11 +431,27 @@
         });
     });
 
-    /*$('#prenota').('click', function(event) {
+</script>
 
-        //Prenota postazione
+<script>
 
+    $('#prenota').on('click', function(event) {
 
-    });*/
+        console.log("Test");
+
+        $.ajax({
+            type: "POST",
+            url: "Home/Prenota",
+            data: { "user": @JsonConvert.SerializeObject(LoggedUser), "room": @JsonConvert.SerializeObject(Room), "start": @JsonConvert.SerializeObject(@ViewModel.Start), "end": @JsonConvert.SerializeObject(@ViewModel.End)},
+            error: function (xhr) {
+                alertBox(xhr.responseText);
+                event.preventDefault();
+                event.target.value = "@ViewModel.FormatHour(@ViewModel.End.Hour):00";
+            }
+        }).done(function () {
+            window.location.reload();
+        });
+
+    });
 
 </script>
