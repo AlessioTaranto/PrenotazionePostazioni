@@ -18,6 +18,7 @@
     if (checkExists.StatusCode == HttpStatusCode.OK)
     {
         LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+        ViewData["LoggedUser"] = LoggedUser;
     } else {
         //User non assegnato, creazione fixare error 400
         HttpResponseMessage createUser = await _utenteHttpService.AddNewUser(LoggedUser);
@@ -28,6 +29,7 @@
             checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
             code = checkExists.StatusCode;
             LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+            ViewData["LoggedUser"] = LoggedUser;
         }
     }
 }

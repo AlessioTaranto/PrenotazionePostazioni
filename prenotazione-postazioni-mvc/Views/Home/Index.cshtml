@@ -2,9 +2,6 @@
     ViewData["Title"] = "Postazioni";
 
     PrenotazioneViewModel ViewModel = (PrenotazioneViewModel) Model;
-
-    Utente test = new Utente();
-
 }
 
 @using System.Net
@@ -15,6 +12,10 @@
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
 
+@{
+    Utente? LoggedUser = (Utente?) ViewData["LoggedUser"];         
+
+}
 
 <div class="container mt-4 ml-3 position-fixed calendar-div">
     <div class="calendar">
@@ -163,7 +164,7 @@
                             for(int i=0; i<presenti.Count; i++)
                             {
                                     <li>
-                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome
+                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @ViewData["LoggedUser"].ToString
                                     </li>
                             }
                         }
@@ -377,5 +378,12 @@
             window.location.reload();
         });
     });
+
+    /*$('#prenota').('click', function(event) {
+
+        //Prenota postazione
+
+
+    });*/
 
 </script>
