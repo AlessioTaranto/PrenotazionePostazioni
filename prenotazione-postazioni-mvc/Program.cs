@@ -46,14 +46,42 @@ builder.Services.AddHttpClient("PrenotazionePostazioni-Impostazioni", httpClient
 
 builder.Services.AddHttpClient("PrenotazionePostazioni-Utente", HttpClient =>
 {
-    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/impostazioni/");
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/utenti/");
 
     HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
 
 builder.Services.AddHttpClient("PrenotazionePostazioni-Voti", HttpClient =>
 {
-    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/impostazioni/");
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/voti/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-Festa", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/festivita/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-Postazioni", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/postazioni/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-Ruolo", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/ruoli/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-Capienza", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/stanze/");
 
     HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
@@ -65,6 +93,8 @@ builder.Services.AddSingleton<UtenteHttpService>();
 builder.Services.AddSingleton<VotoHttpService>();
 builder.Services.AddSingleton<CapienzaHttpService>();
 builder.Services.AddSingleton<FestaHttpService>();
+builder.Services.AddSingleton<PrenotazioneHttpSerivice>();
+builder.Services.AddSingleton<StanzeHttpService>();
 
 var app = builder.Build();
 
