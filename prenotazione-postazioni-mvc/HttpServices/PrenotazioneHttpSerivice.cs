@@ -1,4 +1,9 @@
-﻿namespace prenotazione_postazioni_mvc.HttpServices
+﻿using Newtonsoft.Json;
+using prenotazione_postazioni_libs.Dto;
+using prenotazione_postazioni_libs.Models;
+using System.Text;
+
+namespace prenotazione_postazioni_mvc.HttpServices
 {
     public class PrenotazioneHttpSerivice
     {
@@ -51,6 +56,19 @@
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Prenotazioni");
 
             var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/prenotazioni/getPrenotazioniByDate?idStanza={idStanza}&startDateYear={start.Year}&startDateMonth={start.Month}&startDateDay={start.Day}&startDateHour={start.Hour}&startDateMinute={start.Minute}&endDateYear={end.Year}&endDateMonth={end.Month}&endDateDay={end.Day}&endDateHour={end.Hour}&endDateMinute={end.Minute}");
+
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> AddPrenotazione(DateTime start, DateTime end, Utente utente, Stanza stanza)
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Postazioni");
+
+            PrenotazioneDto prenotazione = new PrenotazioneDto(start, end, stanza, utente);
+
+            StringContent ctx = new StringContent(JsonConvert.SerializeObject(prenotazione), Encoding.UTF8, "application/json");
+
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/utenti/addNewUtente", ctx);
 
             return httpResponseMessage;
         }
