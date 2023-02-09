@@ -50,7 +50,7 @@
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Prenotazioni");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/prenotazioni/getPrenotazioniByDate?idStanza={idStanza}&startDateYear={start.Year}&startDateMonth={start.Month}&startDateDay={start.Day}&endDateYear={end.Year}&endDateMonth={end.Month}&endDateDay={end.Day}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/prenotazioni/getPrenotazioniByDate?idStanza={idStanza}&startDateYear={start.Year}&startDateMonth={start.Month}&startDateDay={start.Day}&startDateHour={start.Hour}&startDateMinute={start.Minute}&endDateYear={end.Year}&endDateMonth={end.Month}&endDateDay={end.Day}&endDateHour={end.Hour}&endDateMinute={end.Minute}");
 
             return httpResponseMessage;
         }
