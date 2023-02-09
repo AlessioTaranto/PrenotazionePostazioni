@@ -6,38 +6,37 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class StanzeHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private HttpClient httpClient;
+
         public StanzeHttpService(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-
-            this.httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Stanze");
-        }
-        //getAllStanze
-        public async Task<List<Stanza>?> OnGetAllStanze()
-        {
-            var httpResponseMessage = await httpClient.GetAsync("https://localhost:7126/api/stanze/");
-            if (httpResponseMessage.IsSuccessStatusCode)
-            {
-                return await httpResponseMessage.Content.ReadFromJsonAsync<List<Stanza>>();
-            }
-            throw new HttpRequestException("Error code: " + httpResponseMessage.StatusCode);
         }
 
-        public async Task<List<Stanza>> OnGetStanzaById(int id)
+        public async Task<HttpResponseMessage> OnGetAllStanze()
         {
-            throw new NotImplementedException();
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Stanze");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/stanze/getAllStanze");
+
+            return httpResponseMessage;
         }
 
-
-
-        public async Task<Stanza> OnGetStanzaByName(string name)
+        public async Task<HttpResponseMessage> OnGetStanzaById(int id)
         {
-            throw new NotImplementedException();
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Stanze");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/stanze/getStanzaById?id={id}");
+
+            return httpResponseMessage;
         }
-        public async Task OnPostStanza(StanzaDto stanzaDto)
+
+        public async Task<HttpResponseMessage> OnGetStanzaByName(string name)
         {
-            throw new NotImplementedException();
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Stanze");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/stanze/getStanzaByName?stanzaName={name}");
+
+            return httpResponseMessage;
         }
     }
 }
