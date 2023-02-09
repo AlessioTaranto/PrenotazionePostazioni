@@ -11,6 +11,7 @@
 @inject ImpostazioniHttpService _impostazioniHttpService;
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     Utente? LoggedUser = (Utente?) ViewData["LoggedUser"];         
@@ -164,7 +165,7 @@
                             for(int i=0; i<presenti.Count; i++)
                             {
                                     <li>
-                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @ViewData["LoggedUser"].ToString
+                                    <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @JsonConvert.DeserializeObject(HttpContextAccessor.HttpContext.Session.GetString("_User"));
                                     </li>
                             }
                         }

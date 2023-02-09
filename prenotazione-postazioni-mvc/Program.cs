@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Net.Http.Headers;
 using prenotazione_postazioni_mvc.HttpServices;
 
@@ -95,6 +96,7 @@ builder.Services.AddSingleton<CapienzaHttpService>();
 builder.Services.AddSingleton<FestaHttpService>();
 builder.Services.AddSingleton<PrenotazioneHttpSerivice>();
 builder.Services.AddSingleton<StanzeHttpService>();
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
 
