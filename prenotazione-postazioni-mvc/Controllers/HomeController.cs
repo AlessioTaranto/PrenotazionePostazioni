@@ -160,7 +160,7 @@ public class HomeController : Controller
 
         ViewModel?.doPrenotazioneAsync(user, room, start, end);
 
-        return View();
+        return Ok("Richiesta di prenotazione effettuata");
     }
 
     [HttpPost]

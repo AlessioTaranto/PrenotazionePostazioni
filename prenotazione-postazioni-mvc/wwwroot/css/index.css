@@ -127,12 +127,10 @@ area {
     left: 1%;
 }
 
-    .alert-box .alert-box-view {
-        background-color: rgb(235,56,56);
-        border: 1px solid rgb(194,29,29);
-        border-radius: 5.5px;
-        padding: 0.7vh 2vw;
-        font-size: 1.1vw;
-        width: auto;
-        color: white;
-    }
+.alert-box .alert-box-view {
+    border-radius: 5.5px;
+    padding: 0.7vh 2vw;
+    font-size: 1.1vw;
+    width: auto;
+    color: white;
+}

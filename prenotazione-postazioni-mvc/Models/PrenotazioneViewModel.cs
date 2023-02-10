@@ -28,15 +28,6 @@ namespace prenotazione_postazioni_mvc.Models
         // Costante: Massima ora selezionabile
         public const int HourEnd = 22;
 
-        /*
-         *  -1 : Non è stata effettuata prenotazione 
-         *  410: Utente non specificato
-         *  411: Stanza non specificata
-         *  200: Prenotazione effettuata
-         *  1200: Prenotazione cancellata
-         */
-        public int statusPrenotazione = -1;
-
         public PrenotazioneHttpSerivice Service { get; set; }
 
         public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti, PrenotazioneHttpSerivice serivice)
@@ -205,27 +196,17 @@ namespace prenotazione_postazioni_mvc.Models
 
         }
 
+        /// <summary>
+        /// Crea una prenotazione
+        /// </summary>
+        /// <param name="utente"></param>
+        /// <param name="stanza"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
         public async Task doPrenotazioneAsync(string utente, string stanza, string start, string end)
         {
-
-            if (utente == null)
-            {
-                statusPrenotazione = 410;
-                return;
-            }
-            else if (stanza == null)
-            {
-                statusPrenotazione = 411;
-                return;
-            }
-
             HttpResponseMessage status = await Service.AddPrenotazione(start, end, utente, stanza);
-
-            if (status.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                //Prenotazione effettuata
-                statusPrenotazione = 200;
-            } 
         }
 
     }
