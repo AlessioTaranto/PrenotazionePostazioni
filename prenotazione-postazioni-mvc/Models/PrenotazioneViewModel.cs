@@ -211,7 +211,7 @@ namespace prenotazione_postazioni_mvc.Models
             HttpResponseMessage status = await Service.AddPrenotazione(start, end, utente, stanza);
         }
 
-        public async Task<HttpStatusCode> getPrenotazione(string utente, string stanza, string start, string end) {
+        public async Task<HttpStatusCode> GetPrenotazione(string utente, string stanza, string start, string end) {
 
             if (stanza == null || utente == null || start == null || end == null)
                 return HttpStatusCode.UnprocessableEntity;
@@ -221,6 +221,9 @@ namespace prenotazione_postazioni_mvc.Models
             Stanza? room = JsonConvert.DeserializeObject<Stanza>(stanza);
             DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
             DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
+
+            if (room == null || user == null)
+                return HttpStatusCode.UnprocessableEntity;
 
             HttpResponseMessage msgRq = await Service.OnGetPrenotazioneByDate(room.IdStanza, inizio, fine);
 

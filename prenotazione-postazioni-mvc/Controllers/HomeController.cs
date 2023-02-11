@@ -159,7 +159,7 @@ public class HomeController : Controller
     public IActionResult Prenota(string user, string room, string start, string end)
     {
 
-        Task<HttpStatusCode> getRq = ViewModel?.getPrenotazione(user, room, start, end);
+        Task<HttpStatusCode> getRq = ViewModel?.GetPrenotazione(user, room, start, end);
         getRq.Wait();
 
         HttpStatusCode code = getRq.Result;

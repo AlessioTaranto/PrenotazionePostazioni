@@ -12,6 +12,7 @@
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
 @inject StanzeHttpService _stanzeHttpService;
+@inject PrenotazioneHttpSerivice _prenotazioneHttpService;
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -62,6 +63,13 @@
     //Add Guest features
 
 }
+
+<!-- HIDDEN VALUES -->
+<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
+<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
+<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
+<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
+<!---->
 
 <div class="container mt-4 ml-3 position-fixed calendar-div">
     <div class="calendar">
@@ -224,7 +232,23 @@
     </div>
     <br>
     <div>
-        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
+        @{
+            Task<HttpStatusCode>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
+            , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
+            getPrenotazione.Wait();
+            HttpStatusCode prenotazioneCode = getPrenotazione.Result;
+
+            if (prenotazioneCode != HttpStatusCode.UnprocessableEntity)
+            {
+                if (prenotazioneCode == HttpStatusCode.OK)
+                {
+                    <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="cancprenota">Annulla prenotazione</button> 
+                } else
+                {
+                    <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button> 
+                }
+            }
+        }
     </div>
 
 </div>
@@ -431,12 +455,6 @@
 
 </script>
 
-<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
-<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
-<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
-<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
-
-
 <!-- Qui viene gestito lato Javascript il processo di prenotazione. (Btn, cancellazione e errori) -->
 <script>
 
@@ -460,7 +478,7 @@
             var status = xhr.status;
             if (status === 200)
                 alertBox("Prenotazione effettuata", "#08a100");
-            else if (status === 404)
+            else if (status === 404) 
                 alertBox("Non puoi prenotarti nuovamente", "#de4802");
             else
                 alertBox("Errore", "#de4802");
