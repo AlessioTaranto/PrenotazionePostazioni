@@ -97,6 +97,18 @@ namespace prenotazioni_postazioni_api.Repositories
             return DatabaseManager<List<Prenotazione>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
+        /// <summary>
+        /// Cancella una prenotazione dal DB
+        /// </summary>
+        /// <param name="idPrenotazione">Id della prenotazione da cancellare</param>
+        internal void DeleteById(int idPrenotazione)
+        {
+            string query = $"DELETE FROM Prenotazioni WHERE idPrenotazione = @id_prenotazione;";
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.Parameters.AddWithValue("@id_prenotazione", idPrenotazione);
+            DatabaseManager<List<Prenotazione>>.GetInstance().MakeQueryMoreResults(cmd);
+        }
+
 
 
 

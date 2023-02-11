@@ -162,7 +162,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        
+
 
         /// <summary>
         /// Salva una prenotazione nel database
@@ -184,12 +184,44 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("PrenotazioneDto aggiunto con successo!");
                 return Ok();
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
-                _logger.Error("Errore insertimento del parametro: " + ex.Message);
+                _logger.Error("Errore inserimento del parametro: " + ex.Message);
                 return BadRequest(ex.Message);
             }
-            catch(PrenotazionePostazioniApiException ex)
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                _logger.Error("Errore: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Cancella una prenotazione se presente nel database
+        /// </summary>
+        /// <param name="idPrenotazione">Id associato alla prenotazione da cancellare</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("deletePrenotazioneById")]
+        public IActionResult DeletePrenotazioneById(int idPrenotazione)
+        {
+            try
+            {
+                _logger.Info("Id Prenotazione: " + idPrenotazione);
+                _prenotazioneService.DeleteById(idPrenotazione);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.Error("Errore inserimento del parametro: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (PrenotazionePostazioniApiException ex)
             {
                 _logger.Error("Errore: " + ex.Message);
                 return BadRequest(ex.Message);
