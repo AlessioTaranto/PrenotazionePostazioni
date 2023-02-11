@@ -456,8 +456,14 @@
             data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "start": $('#_valueDateStart').text(), "end": $('#_valueDateEnd').text() },
             error: function (xhr) {
             }
-        }).done(function () {
-            alertBox("Prenotazione effettuata", "#08a100");
+        }).done(function (data, statusText, xhr) {
+            var status = xhr.status;
+            if (status === 200)
+                alertBox("Prenotazione effettuata", "#08a100");
+            else if (status === 404)
+                alertBox("Non puoi prenotarti nuovamente", "#de4802");
+            else
+                alertBox("Errore", "#de4802");
         });
 
     });
