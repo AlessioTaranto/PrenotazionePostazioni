@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazione_postazioni_mvc.HttpServices;
+using System.Net;
 
 namespace prenotazione_postazioni_mvc.Controllers;
 
@@ -156,11 +157,25 @@ public class HomeController : Controller
     [HttpPost]
     [ActionName("Prenota")]
     public IActionResult Prenota(string user, string room, string start, string end)
-    { 
+    {
 
-        ViewModel?.doPrenotazioneAsync(user, room, start, end);
+        Task<HttpStatusCode> getRq = ViewModel?.getPrenotazione(user, room, start, end);
+        getRq.Wait();
 
-        return Ok("Richiesta di prenotazione effettuata");
+        HttpStatusCode code = getRq.Result;
+
+        if (code == HttpStatusCode.NotFound)
+        {
+            //Non trova prenotazioni per quel giorno
+            ViewModel?.doPrenotazioneAsync(user, room, start, end);
+
+            return Ok("Prenotazione effettuata");
+        } else if (code == HttpStatusCode.OK)
+        {
+            return NotFound("Prenotazione già effettuata");
+        } else {
+            return BadRequest("Errore");
+        }
     }
 
     [HttpPost]

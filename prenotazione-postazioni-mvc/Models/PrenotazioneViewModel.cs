@@ -1,5 +1,7 @@
-﻿using prenotazione_postazioni_libs.Models;
+﻿using Newtonsoft.Json;
+using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
+using System.Net;
 using System.Xml.Schema;
 
 namespace prenotazione_postazioni_mvc.Models
@@ -207,6 +209,34 @@ namespace prenotazione_postazioni_mvc.Models
         public async Task doPrenotazioneAsync(string utente, string stanza, string start, string end)
         {
             HttpResponseMessage status = await Service.AddPrenotazione(start, end, utente, stanza);
+        }
+
+        public async Task<HttpStatusCode> getPrenotazione(string utente, string stanza, string start, string end) {
+
+            if (stanza == null || utente == null || start == null || end == null)
+                return HttpStatusCode.UnprocessableEntity;
+
+            //Translating json text to objects
+            Utente? user = JsonConvert.DeserializeObject<Utente>(utente);
+            Stanza? room = JsonConvert.DeserializeObject<Stanza>(stanza);
+            DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
+            DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
+
+            HttpResponseMessage msgRq = await Service.OnGetPrenotazioneByDate(room.IdStanza, inizio, fine);
+
+            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK) {
+
+                List<Prenotazione>? prenotazioni = await msgRq.Content.ReadFromJsonAsync<List<Prenotazione>?>();
+
+                foreach (Prenotazione prenotazione in prenotazioni)
+                    if (prenotazione.IdUtente == user.IdUtente)
+                        return HttpStatusCode.OK;
+
+                return HttpStatusCode.NotFound;
+
+            }
+
+            return HttpStatusCode.UnprocessableEntity;
         }
 
     }
