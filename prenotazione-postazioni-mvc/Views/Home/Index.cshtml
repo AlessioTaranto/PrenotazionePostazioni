@@ -233,20 +233,26 @@
     <br>
     <div>
         @{
-            Task<HttpStatusCode>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
+            Task<Prenotazione?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
             , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
             getPrenotazione.Wait();
-            HttpStatusCode prenotazioneCode = getPrenotazione.Result;
+            Prenotazione? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
 
-            if (prenotazioneCode != HttpStatusCode.UnprocessableEntity)
+            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
+            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="cancprenota">Annulla prenotazione</button>
+
+            if (prenotazione != null)
             {
-                if (prenotazioneCode == HttpStatusCode.OK)
-                {
-                    <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="cancprenota">Annulla prenotazione</button> 
-                } else
-                {
-                    <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button> 
-                }
+                <script>
+                    $('#prenota').css('display', 'none');
+                    $('#cancprenota').css('display', 'block');
+                </script>
+            } else
+            {
+                <script>
+                    $('#prenota').css('display', 'block');
+                    $('#cancprenota').css('display', 'none');
+                </script>
             }
         }
     </div>
@@ -476,10 +482,44 @@
             }
         }).done(function (data, statusText, xhr) {
             var status = xhr.status;
-            if (status === 200)
+            if (status === 200) {
+                $('#prenota').css('display', 'none');
+                $('#cancprenota').css('display', 'block');
+
                 alertBox("Prenotazione effettuata", "#08a100");
-            else if (status === 404) 
+            } else if (status === 404) 
                 alertBox("Non puoi prenotarti nuovamente", "#de4802");
+            else
+                alertBox("Errore", "#de4802");
+        });
+
+    });
+
+    $('#cancprenota').on('click', function(event) {
+
+        if ($('#_valueRoom').text() === "null") {
+            alertBox("Seleziona una stanza", "#de4802");
+            return;
+        } else if ($('#_valueUtente').text() === "null") {
+            alertBox("Non puoi cancellare prenotazioni come Guest", "#de4802");
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "Home/DeletePrenotazione",
+            data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "start": $('#_valueDateStart').text(), "end": $('#_valueDateEnd').text() },
+            error: function (xhr) {
+            }
+        }).done(function (data, statusText, xhr) {
+            var status = xhr.status;
+            if (status === 200) {
+                $('#prenota').css('display', 'block');
+                $('#cancprenota').css('display', 'none');
+
+                alertBox("Prenotazione cancellata", "#08a100");
+            } else if (status === 404) 
+                alertBox("Prenotazione non trovata", "#de4802");
             else
                 alertBox("Errore", "#de4802");
         });

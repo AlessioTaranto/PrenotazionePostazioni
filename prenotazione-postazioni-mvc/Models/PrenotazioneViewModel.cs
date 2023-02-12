@@ -211,7 +211,8 @@ namespace prenotazione_postazioni_mvc.Models
             HttpResponseMessage status = await Service.AddPrenotazione(start, end, utente, stanza);
         }
 
-        public async Task<HttpStatusCode> GetPrenotazione(string utente, string stanza, string start, string end) {
+        public async Task<HttpStatusCode> ExistsPrenotazione(string utente, string stanza, string start, string end)
+        {
 
             if (stanza == null || utente == null || start == null || end == null)
                 return HttpStatusCode.UnprocessableEntity;
@@ -227,7 +228,8 @@ namespace prenotazione_postazioni_mvc.Models
 
             HttpResponseMessage msgRq = await Service.OnGetPrenotazioneByDate(room.IdStanza, inizio, fine);
 
-            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK) {
+            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK)
+            {
 
                 List<Prenotazione>? prenotazioni = await msgRq.Content.ReadFromJsonAsync<List<Prenotazione>?>();
 
@@ -240,6 +242,47 @@ namespace prenotazione_postazioni_mvc.Models
             }
 
             return HttpStatusCode.UnprocessableEntity;
+        }
+
+        public async Task<Prenotazione?> GetPrenotazione(string utente, string stanza, string start, string end)
+        {
+
+            if (stanza == null || utente == null || start == null || end == null)
+                return null;
+
+            //Translating json text to objects
+            Utente? user = JsonConvert.DeserializeObject<Utente>(utente);
+            Stanza? room = JsonConvert.DeserializeObject<Stanza>(stanza);
+            DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
+            DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
+
+            if (room == null || user == null)
+                return null;
+
+            HttpResponseMessage msgRq = await Service.OnGetPrenotazioneByDate(room.IdStanza, inizio, fine);
+
+            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+
+                List<Prenotazione>? prenotazioni = await msgRq.Content.ReadFromJsonAsync<List<Prenotazione>?>();
+
+                foreach (Prenotazione prenotazione in prenotazioni)
+                    if (prenotazione.IdUtente == user.IdUtente)
+                        return prenotazione;
+
+                return null;
+
+            }
+
+            return null;
+        }
+
+        public async Task<HttpResponseMessage> DeletePrenotazione(int idPrenotazione)
+        {
+            //Continua qua
+            HttpResponseMessage deleteRq = await Service.DeletePrenotazione(idPrenotazione);
+
+            return deleteRq;
         }
 
     }

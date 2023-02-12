@@ -75,5 +75,14 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
+        public async Task<HttpResponseMessage> DeletePrenotazione(int idPrenotazione)
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Postazioni");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/prenotazioni/deletePrenotazioneById?idPrenotazione={idPrenotazione}");
+
+            return httpResponseMessage;
+        }
+
     }
 }

@@ -159,7 +159,7 @@ public class HomeController : Controller
     public IActionResult Prenota(string user, string room, string start, string end)
     {
 
-        Task<HttpStatusCode> getRq = ViewModel?.GetPrenotazione(user, room, start, end);
+        Task<HttpStatusCode>? getRq = ViewModel?.ExistsPrenotazione(user, room, start, end);
         getRq.Wait();
 
         HttpStatusCode code = getRq.Result;
@@ -170,12 +170,37 @@ public class HomeController : Controller
             ViewModel?.doPrenotazioneAsync(user, room, start, end);
 
             return Ok("Prenotazione effettuata");
-        } else if (code == HttpStatusCode.OK)
+        }
+        else if (code == HttpStatusCode.OK)
         {
             return NotFound("Prenotazione già effettuata");
-        } else {
+        }
+        else
+        {
             return BadRequest("Errore");
         }
+    }
+
+    [HttpGet]
+    [ActionName("DeletePrenotazione")]
+    public IActionResult DeletePrenotazione(string user, string room, string start, string end)
+    {
+
+        Task<Prenotazione> prenotazioneTask = ViewModel?.GetPrenotazione(user, room, start, end);
+        prenotazioneTask.Wait();
+        Prenotazione? prenotazione = prenotazioneTask.Result;
+
+        if (prenotazione == null)
+            return NotFound("Prenotazione non trovata");
+
+        Task<HttpResponseMessage>? getRq = ViewModel?.DeletePrenotazione(prenotazione.IdPrenotazioni);
+        getRq.Wait();
+        HttpStatusCode code = getRq.Result.StatusCode;
+
+        if (code == HttpStatusCode.OK)
+            return Ok("Prenotazione cancellata");    
+        else  
+            return NotFound("Errore");
     }
 
     [HttpPost]

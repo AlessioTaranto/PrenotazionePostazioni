@@ -103,7 +103,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idPrenotazione">Id della prenotazione da cancellare</param>
         internal void DeleteById(int idPrenotazione)
         {
-            string query = $"DELETE FROM Prenotazioni WHERE idPrenotazione = @id_prenotazione;";
+            string query = $"DELETE FROM Prenotazioni WHERE idPrenotazioni = @id_prenotazione;";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@id_prenotazione", idPrenotazione);
             DatabaseManager<List<Prenotazione>>.GetInstance().MakeQueryMoreResults(cmd);
