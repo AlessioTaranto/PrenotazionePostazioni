@@ -10,7 +10,7 @@
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
-
+@inject FestaHttpService _festaHttpService;
 @inject CapienzaHttpService _capienzaHttpService;
 
 <!-- ChangeStateBar Script -->
@@ -166,7 +166,20 @@
             <h1>@ViewModel.FestivitaViewModel.GetFestaSelezionata()</h1>
             <br>
             <div>
-                <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività" onclick="festaButton()">Imposta come festività</button>
+                @{
+
+                    var getFesta = _festaHttpService.getFesta(ViewModel.FestivitaViewModel.GiornoSelezionato.Year, ViewModel.FestivitaViewModel.GiornoSelezionato.Month, ViewModel.FestivitaViewModel.GiornoSelezionato.Day);
+                    getFesta.Wait();
+                    HttpResponseMessage festa = getFesta.Result;
+
+                    if (festa.StatusCode == HttpStatusCode.OK)
+                    {
+                        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="removefestabutton" value="Rimuovi festività">Rimuovi festività</button>
+                    } else
+                    {
+                        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività">Imposta come festività</button>
+                    }
+                }
             </div>
             <br>
             <ul id="lista-feste"></ul>
@@ -561,12 +574,27 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/AggiungiFesta",
-                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day" },
+                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day", "description": "None" },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();
                 }
             }).done(function() {
+                window.location.reload();
+            });
+        });
+
+    $('#removefestabutton').on('click',
+        function (event) {
+            $.ajax({
+                type: "GET",
+                url: "Impostazioni/RimuoviFesta",
+                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day" },
+                error: function (xhr) {
+                    alertBox(xhr.responseText);
+                    event.preventDefault();
+                }
+            }).done(function () {
                 window.location.reload();
             });
         });

@@ -81,11 +81,11 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         [HttpPost]
         [ActionName("AggiungiFesta")]
-        public IActionResult AggiungiFesta(int year, int month, int day)
+        public IActionResult AggiungiFesta(int year, int month, int day, string description)
         {
-            ViewModel?.FestivitaViewModel.AddFesta(year, month, day);
+            ViewModel?.FestivitaViewModel.AddFesta(year, month, day, description);
 
-            return RedirectToAction("Index");
+            return Ok();
         }
 
         /// <summary>
@@ -95,14 +95,14 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <param name="month">Mese selezionato</param>
         /// <param name="day">Giorno selezionato</param>
         /// <returns>RedirectToAction -> Index()</returns>
-
-        [HttpPost]
+        
+        [HttpGet]
         [ActionName("RimuoviFesta")]
         public IActionResult RimuoviFesta(int year, int month, int day)
         {
             ViewModel?.FestivitaViewModel.RemoveFesta(year, month, day);
 
-            return RedirectToAction("Index");
+            return Ok();
         }
 
         /// <summary>

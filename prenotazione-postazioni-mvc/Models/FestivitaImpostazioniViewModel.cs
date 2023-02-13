@@ -61,7 +61,7 @@ namespace prenotazione_postazioni_mvc.Models
         /// <param name="day">Giorno selezionato</param>
         /// <exception cref="Exception">Giorno non valido, Festività già inserita</exception>
 
-        public async void AddFesta(int year, int month, int day)
+        public async void AddFesta(int year, int month, int day, string description)
         {
             DateTime date;
 
@@ -77,7 +77,7 @@ namespace prenotazione_postazioni_mvc.Models
             if (Festivita.Contains(date))
                 throw new Exception("Festività già inserita");
 
-            HttpResponseMessage addFesta = await service.AddFesta(date);
+            HttpResponseMessage addFesta = await service.AddFesta(date, description);
             if (addFesta == null || addFesta.StatusCode != HttpStatusCode.OK)
                 return;
 
@@ -92,11 +92,9 @@ namespace prenotazione_postazioni_mvc.Models
         /// <param name="day">Giorno selezionato</param>
         /// <exception cref="Exception">Giorno non valido, Festività non inserita</exception>
 
-        public void RemoveFesta(int year, int month, int day)
+        public async Task RemoveFesta(int year, int month, int day)
         {
             DateTime date;
-
-            //Manca sql
 
             try
             {
@@ -107,10 +105,14 @@ namespace prenotazione_postazioni_mvc.Models
                 throw new Exception("Giorno non valido");
             }
 
-            if (Festivita.Contains(date))
+            if (!Festivita.Contains(date))
                 throw new Exception("Festività non presente");
 
-            Festivita.Remove(date);
+            HttpResponseMessage removeFesta = await service.RemoveFesta(year, month, day);
+            if (removeFesta == null || removeFesta.StatusCode != HttpStatusCode.OK)
+                return;
+
+            LoadFeste();
         }
 
         /// <summary>
