@@ -34,8 +34,8 @@ function loadCalendar() {
             $('#'.concat(j).concat('-').concat(i)).text(date.getDate());
             if (date.getMonth() !== month)
                 $('#'.concat(j).concat('-').concat(i)).css("color", "#a6a6a6");
-            else if (getFesta(date))
-                $('#'.concat(getFesta(date).id.replace('f', ''))).css("color", "darkorange");
+            else if (isFesta(date))
+                $('#'.concat(j).concat('-').concat(i)).css("color", "darkorange");
             
             date.setDate(date.getDate() + 1);
         }

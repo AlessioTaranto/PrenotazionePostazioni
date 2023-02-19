@@ -26,7 +26,6 @@
     }
 
     // Importa le date
-    //deserializeFeste(@ViewModel.FestivitaViewModel.SerializeFeste());
 </script>
 
 <!-- Sidebar tab (Sinistra) -->
@@ -163,21 +162,24 @@
             </div>
         </div>
         <div class="container mt-4 ml-50 position-fixed calendar-info-div">
-            <h1>@ViewModel.FestivitaViewModel.GetFestaSelezionata()</h1>
+            <h1>@ViewModel.GetFestaSelezionata()</h1>
             <br>
             <div>
                 @{
 
-                    var getFesta = _festaHttpService.getFesta(ViewModel.FestivitaViewModel.GiornoSelezionato.Year, ViewModel.FestivitaViewModel.GiornoSelezionato.Month, ViewModel.FestivitaViewModel.GiornoSelezionato.Day);
-                    getFesta.Wait();
-                    HttpResponseMessage festa = getFesta.Result;
+                    var getFesta = _festaHttpService.getFesta(ViewModel.FestaSelezionata.Year, ViewModel.FestaSelezionata.Month, ViewModel.FestaSelezionata.Day);
+                    
+                    if (ViewModel.FestaSelezionata.Year != 1) {
+                        getFesta.Wait();
+                        HttpResponseMessage festa = getFesta.Result;
 
-                    if (festa.StatusCode == HttpStatusCode.OK)
-                    {
-                        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="removefestabutton" value="Rimuovi festività">Rimuovi festività</button>
-                    } else
-                    {
-                        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività">Imposta come festività</button>
+                        if (festa.StatusCode == HttpStatusCode.OK)
+                        {
+                            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="removefestabutton" value="Rimuovi festività">Rimuovi festività</button>
+                        } else
+                        {
+                            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività">Imposta come festività</button>
+                        }
                     }
                 }
             </div>
@@ -455,7 +457,7 @@
     loadCalendar();
 
     // Giorni selezionati dall'utente, non possono essere nulli. Null -> Year: 1901 
-    let festaSelezionata = new Date(@ViewModel.FestivitaViewModel.GiornoSelezionato.Year, (@ViewModel.FestivitaViewModel.GiornoSelezionato.Month - 1), @ViewModel.FestivitaViewModel.GiornoSelezionato.Day);
+    let festaSelezionata = new Date(@ViewModel.FestaSelezionata.Year, (@ViewModel.FestaSelezionata.Month - 1), @ViewModel.FestaSelezionata.Day);
     let presenzaSelezionata = new Date(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Year, (@ViewModel.PresenzeViewModel.PresenzaSelezionata.Month - 1), @ViewModel.PresenzeViewModel.PresenzaSelezionata.Day);
 
     // Se l'anno è 1901, allora non è stato selezionato un giorno. C# ha come anno default 1901
@@ -463,7 +465,7 @@
     if (festaSelezionata.getFullYear() !== 1901) {
         goDate(festaSelezionata);
         if ((month === 11 ? 0 : (month+1)) === festaSelezionata.getMonth())
-            clickCalendarFest(getIdDay(@ViewModel.FestivitaViewModel.GiornoSelezionato.Day));
+            clickCalendarFest(getIdDay(@ViewModel.FestaSelezionata.Day));
     }
 
     if (presenzaSelezionata.getFullYear() !== 1901) {
@@ -474,6 +476,17 @@
         
     //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
 
+    $.ajax({
+        type: "GET",
+        url: "Impostazioni/ReloadFeste",
+        dataType: 'json',
+        error: function (xhr) {}
+    });
+
+    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
+
+    for (var i in festeJSON)
+        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
 
     /*
     * ! <area> è utilizzato unicamente nella Map.
@@ -577,7 +590,7 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/AggiungiFesta",
-                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day", "description": "None" },
+                data: { "year": "@ViewModel.FestaSelezionata.Year", "month": "@ViewModel.FestaSelezionata.Month", "day": "@ViewModel.FestaSelezionata.Day", "description": "None" },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();
@@ -592,7 +605,7 @@
             $.ajax({
                 type: "GET",
                 url: "Impostazioni/RimuoviFesta",
-                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day" },
+                data: { "year": "@ViewModel.FestaSelezionata.Year", "month": "@ViewModel.FestaSelezionata.Month", "day": "@ViewModel.FestaSelezionata.Day" },
                 error: function (xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();

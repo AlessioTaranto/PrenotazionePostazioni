@@ -86,8 +86,6 @@ builder.Services.AddHttpClient("PrenotazionePostazioni-Capienza", HttpClient =>
     HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
 
-
-
 builder.Services.AddSingleton<ImpostazioniHttpService>();
 builder.Services.AddSingleton<UtenteHttpService>();
 builder.Services.AddSingleton<VotoHttpService>();
@@ -96,6 +94,16 @@ builder.Services.AddSingleton<FestaHttpService>();
 builder.Services.AddSingleton<PrenotazioneHttpSerivice>();
 builder.Services.AddSingleton<StanzeHttpService>();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7126/",
+                                "https://localhost:7126/api/festivita/getAll");
+        });
+});
 
 var app = builder.Build();
 
@@ -112,12 +120,26 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors();
+
 app.UseAuthorization();
 
 app.UseSession();
 
 app.UseEndpoints(endpoints => {
     endpoints.MapDefaultControllerRoute();
+});
+
+app.Use(async (context, next) =>
+{
+    // Do work that can write to the Response.
+    await next.Invoke();
+    // Do logging or other work that doesn't write to the Response.
+});
+
+app.Run(async context =>
+{
+    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 });
 
 app.Run();

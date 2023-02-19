@@ -22,9 +22,11 @@ namespace prenotazione_postazioni_mvc.Controllers
             if (ViewModel == null)
                 ViewModel = new ImpostazioniViewModel(
                     new CapienzaImpostazioniViewModel(_capienzaHttpService), 
-                    new FestivitaImpostazioniViewModel(_festaHttpService), 
-                    new PresenzeImpostazioniViewModel()
+                    new PresenzeImpostazioniViewModel(),
+                    _festaHttpService
                 );
+
+            ReloadFeste();
 
             return View(ViewModel);
         }
@@ -66,7 +68,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel?.FestivitaViewModel.SelectFesta(year, month, day);
+            ViewModel?.SelectFesta(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -83,7 +85,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("AggiungiFesta")]
         public IActionResult AggiungiFesta(int year, int month, int day, string description)
         {
-            ViewModel?.FestivitaViewModel.AddFesta(year, month, day, description);
+            ViewModel?.AddFesta(year, month, day, description);
 
             return Ok();
         }
@@ -100,7 +102,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("RimuoviFesta")]
         public IActionResult RimuoviFesta(int year, int month, int day)
         {
-            ViewModel?.FestivitaViewModel.RemoveFesta(year, month, day);
+            ViewModel?.RemoveFesta(year, month, day);
 
             return Ok();
         }
@@ -220,6 +222,16 @@ namespace prenotazione_postazioni_mvc.Controllers
             }
 
             return Ok("Capienza aggiornata");
+        }
+
+        [HttpGet]
+        [ActionName("ReloadFeste")]
+        public IActionResult ReloadFeste()
+        {
+            Task task = ViewModel.ReloadFeste();
+            task.Wait();
+
+            return Ok("Festività ricaricate");
         }
     }
 }
