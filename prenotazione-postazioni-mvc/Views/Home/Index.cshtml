@@ -369,6 +369,20 @@
     });
 </script>
 <script>
+
+    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
+
+    $.ajax({
+        type: "GET",
+        url: "Home/ReloadFeste",
+        dataType: 'json',
+        error: function (xhr) { }
+    });
+
+    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
+
+    for (var i in festeJSON)
+        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
     
     // Giorno selezionato nel calendario
     let daySel = new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month - 1), @ViewModel.Date.Day);

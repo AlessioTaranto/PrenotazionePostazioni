@@ -18,17 +18,22 @@ public class HomeController : Controller
 
     //HTTP Client Factory -> Prenotazioni
     public readonly PrenotazioneHttpSerivice _prenotazioneHttpService;
+    //HTTP Client Factory -> Festa
+    public readonly FestaHttpService _festaHttpService;
 
-    public HomeController(PrenotazioneHttpSerivice prenotazioneHttpService)
+    public HomeController(PrenotazioneHttpSerivice prenotazioneHttpService, FestaHttpService festaHttpService)
     {
         _prenotazioneHttpService = prenotazioneHttpService;
+        _festaHttpService = festaHttpService;
     }
 
     public IActionResult Index()
     {
 
         if (ViewModel == null)
-            ViewModel = new PrenotazioneViewModel(_prenotazioneHttpService);
+            ViewModel = new PrenotazioneViewModel(_prenotazioneHttpService,_festaHttpService);
+
+        ReloadFeste();
 
         return View(ViewModel);
     }
@@ -210,8 +215,26 @@ public class HomeController : Controller
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Serve a caricare nel calendario le feste, [da aggiungere dove vi si trova un calendario]
+    /// 
+    /// TIP: Ricreare un modello apposito da implementare alle varie model
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [ActionName("ReloadFeste")]
+    public IActionResult ReloadFeste()
+    {
+        Task task = ViewModel.ReloadFeste();
+        task.Wait();
+
+        return Ok("Festività ricaricate");
+    }
+
+
+
     //TESTING
-    
+
     /*[ActionName("Login")]
     public async Task Login()
     {

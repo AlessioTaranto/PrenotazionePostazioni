@@ -224,6 +224,12 @@ namespace prenotazione_postazioni_mvc.Controllers
             return Ok("Capienza aggiornata");
         }
 
+        /// <summary>
+        /// Serve a caricare nel calendario le feste, [da aggiungere dove vi si trova un calendario]
+        /// 
+        /// TIP: Ricreare un modello apposito da implementare alle varie model
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("ReloadFeste")]
         public IActionResult ReloadFeste()

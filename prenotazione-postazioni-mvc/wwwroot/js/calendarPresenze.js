@@ -27,16 +27,18 @@ function loadCalendar1() {
                 firstLineLoad = false;
             }
             $('#'.concat(j).concat('-').concat(i).concat('1')).text(date1.getDate());
+            if (isFesta(date1))
+                $('#'.concat(j).concat('-').concat(i).concat('1')).css("color", "darkorange");
             if (date1.getMonth() !== month1)
                 $('#'.concat(j).concat('-').concat(i).concat('1')).css("color", "#a6a6a6");
-            else if (isFesta(date))
-                $('#'.concat(j).concat('-').concat(i)).css("color", "darkorange");
 
             date1.setDate(date1.getDate() + 1);
         }
     }
 
     checkSelected1();
+
+    console.log(festivita.length);
 }
 
 function nextMonth1() {

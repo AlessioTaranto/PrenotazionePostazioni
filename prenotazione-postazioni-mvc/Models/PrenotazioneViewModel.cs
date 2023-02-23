@@ -32,7 +32,17 @@ namespace prenotazione_postazioni_mvc.Models
 
         public PrenotazioneHttpSerivice Service { get; set; }
 
-        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti, PrenotazioneHttpSerivice serivice)
+        //Festività selezionata
+        public DateTime FestaSelezionata { get; set; }
+
+        //Stringa JSON con lista delle feste da leggere in javascript
+        public string FesteJSON { get; set; } = "{}";
+
+        // Http Festa service 
+        public FestaHttpService _festaHttpService { get; set; }
+
+
+        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti, PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Date = date;
             Stanza = stanza;
@@ -40,9 +50,10 @@ namespace prenotazione_postazioni_mvc.Models
             End = end;
             Presenti = presenti;
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
-        public PrenotazioneViewModel(DateTime date, string stanza, PrenotazioneHttpSerivice serivice)
+        public PrenotazioneViewModel(DateTime date, string stanza, PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Date = date;
             Stanza = stanza;
@@ -50,9 +61,10 @@ namespace prenotazione_postazioni_mvc.Models
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
-        public PrenotazioneViewModel(string stanza, PrenotazioneHttpSerivice serivice)
+        public PrenotazioneViewModel(string stanza, PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Date = DateTime.Now;
             Stanza = stanza;
@@ -60,9 +72,10 @@ namespace prenotazione_postazioni_mvc.Models
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
-        public PrenotazioneViewModel(PrenotazioneHttpSerivice serivice)
+        public PrenotazioneViewModel(PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Stanza = "null";
             Date = DateTime.Now;
@@ -70,6 +83,7 @@ namespace prenotazione_postazioni_mvc.Models
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
         /// <summary>
@@ -285,5 +299,15 @@ namespace prenotazione_postazioni_mvc.Models
             return deleteRq;
         }
 
+        public async Task ReloadFeste()
+        {
+            HttpResponseMessage msg = await _festaHttpService.getAllFeste();
+            if (msg == null || msg.StatusCode != HttpStatusCode.OK)
+                return;
+
+            Task<String> ctxString = msg.Content.ReadAsStringAsync();
+            ctxString.Wait();
+            FesteJSON = ctxString.Result;
+        }
     }
 }

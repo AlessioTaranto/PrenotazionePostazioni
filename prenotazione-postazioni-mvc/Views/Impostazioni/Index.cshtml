@@ -453,6 +453,20 @@
 <!-- Calendar Script -->
 <script>
 
+    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
+
+    $.ajax({
+        type: "GET",
+        url: "Impostazioni/ReloadFeste",
+        dataType: 'json',
+        error: function (xhr) {}
+    });
+
+    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
+
+    for (var i in festeJSON)
+        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
+
     // Carica tutti i dati del Calendar Feste in quanto non è selezionato un giorno.
     loadCalendar();
 
@@ -473,20 +487,6 @@
         if ((month1 === 11 ? 0 : (month1+1)) === presenzaSelezionata.getMonth())
             clickCalendarPres(getIdDay1(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Day));
     }
-        
-    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
-
-    $.ajax({
-        type: "GET",
-        url: "Impostazioni/ReloadFeste",
-        dataType: 'json',
-        error: function (xhr) {}
-    });
-
-    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
-
-    for (var i in festeJSON)
-        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
 
     /*
     * ! <area> è utilizzato unicamente nella Map.
@@ -515,20 +515,20 @@
          */
 
         $('td').on('click', function (event) {
-            if (isValidDay(event.target.id))
-                if (event.target.id.length === 3) 
-                    $.ajax({
-                        type: "POST",
-                        url: "Impostazioni/SelectFesta",
-                        data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
-                        error: function(xhr) {
-                            alertBox(xhr.responseText);
-                            event.preventDefault();
-                        }
-                    }).done(function() {
-                        window.location.reload();
-                    });
-                else 
+            if (event.target.id.length === 3)
+                $.ajax({
+                    type: "POST",
+                    url: "Impostazioni/SelectFesta",
+                    data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                    error: function (xhr) {
+                        alertBox(xhr.responseText);
+                        event.preventDefault();
+                    }
+                }).done(function () {
+                    window.location.reload();
+                });
+            else {
+                if (isValidDay(event.target.id))
                     $.ajax({
                         type: "POST",
                         url: "Impostazioni/SelectPresenza",
@@ -540,7 +540,7 @@
                     }).done(function() {
                         window.location.reload();
                     });
-
+            }
         });
 
     });
