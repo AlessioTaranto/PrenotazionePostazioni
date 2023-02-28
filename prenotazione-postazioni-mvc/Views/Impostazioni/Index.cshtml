@@ -289,9 +289,9 @@
                                         <li>
                                             <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome
                                         </li>
+                                    }
                                 }
                             }
-                        }
                         </ul>
                     </div>
                 </div>
@@ -303,69 +303,38 @@
     <!-- Users selector -->
     <div class="tab-pane fade" id="options-pills-users" role="tabpanel" aria-labelledby="options-pills-users-tab">
         <div class="container mt-4 ml-21 position-fixed users-body-div">
+            <br />
             <h2>Lista Utenti</h2>
             <br />
             <div class="list-group user-list">
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Third List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Third List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Third List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Third List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Third List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </a>
+                @{
+                    Task<HttpResponseMessage> getAllUtentiList = _utenteHttpService.OnGetAllUtenti();
+                    getAllUtentiList.Wait();
+
+                    List<Utente>? ListUtenti = null;
+
+                    if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
+                    {
+                        ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<Utente>?>();
+                        for(int i = 0; i<ListUtenti.Count; i++) 
+                        {
+                            Utente user = ListUtenti[i];
+
+                            <div class="list-group-item my-auto">
+                                <div style="clear: both; display: flex; align-items: center;">
+                                    <div style="float: left">
+                                        <img src="~/img/user_icon.png" alt="@user.IdUtente" style="width: 3vw; height: auto">
+                                    </div>
+                                    <div style="float: left; margin-left: 1vw;">
+                                        <h4 class="list-group-item-heading">@user.Nome @user.Cognome</h4>
+                                        <p class="list-group-item-text">@user.Email</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                }
             </div>
         </div>
     </div>
