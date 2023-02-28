@@ -86,3 +86,9 @@ a {
     height: 77vh;
     background-color: white;
 }
+
+.user-list {
+    max-height: 65vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
