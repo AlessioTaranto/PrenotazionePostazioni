@@ -117,14 +117,14 @@ namespace prenotazioni_postazioni_api.Services
             if (ruoloUtente.AccessoImpostazioni)
             {
                 _logger.Info("L'utente ha i permessi!");
-                _logger.Info("Chiedo di cambiare i permessi dell'utente in: " + RuoloEnum.Utente.ToString());
-                _ruoloRepository.UpdateRuolo (utente.IdUtente, RuoloEnum.Utente);
+                _logger.Info("Chiedo di cambiare i permessi dell'utente in: " + RuoloType.Utente.ToString());
+                _ruoloRepository.UpdateRuolo (utente.IdUtente, RuoloType.Utente);
             }
             else
             {
                 _logger.Info("L'utente NON ha i permessi!");
-                _logger.Info("Chiedo di cambiare i permessi dell'utente in: " + RuoloEnum.Admin.ToString());
-                _ruoloRepository.UpdateRuolo(utente.IdUtente, RuoloEnum.Admin);
+                _logger.Info("Chiedo di cambiare i permessi dell'utente in: " + RuoloType.Admin.ToString());
+                _ruoloRepository.UpdateRuolo(utente.IdUtente, RuoloType.Admin);
             }
             _logger.Info("Ho cambiato il ruolo dell'utente con successo!");
             return true;

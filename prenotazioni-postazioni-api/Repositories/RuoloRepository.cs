@@ -53,7 +53,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente che gli verra cambiato il ruolo</param>
         /// <param name="ruoloEnum">Il ruolo con cui verra aggiornato l'utente</param>
-        internal void UpdateRuolo(int idUtente, RuoloEnum ruoloEnum)
+        internal void UpdateRuolo(int idUtente, RuoloType ruoloEnum)
         {
             string query = $"UPDATE Utenti SET idRuolo = @ruolo_enum WHERE idUtente = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);

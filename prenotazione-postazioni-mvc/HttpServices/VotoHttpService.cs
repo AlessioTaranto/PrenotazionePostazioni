@@ -57,5 +57,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
+        
+
     }
 }

@@ -73,7 +73,7 @@ namespace prenotazione_postazioni_mvc.Controllers
 
     /*
      * 
-     *  CALCOLO RUMOROSITA'
+     *  CALCOLO RUMOROSITA':
      *  
      *  Mediana dei velori ottenuti su ciascun utente:
      *  
