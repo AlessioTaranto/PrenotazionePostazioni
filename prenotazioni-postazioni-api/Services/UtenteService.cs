@@ -9,10 +9,10 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class UtenteService
     {
-        private UtenteRepository _utenteRepository;
+        private UserRepository _utenteRepository;
         private readonly ILog logger = LogManager.GetLogger(typeof(UtenteService));
 
-        public UtenteService(UtenteRepository utenteRepository)
+        public UtenteService(UserRepository utenteRepository)
         {
             _utenteRepository = utenteRepository;
         }

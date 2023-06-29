@@ -8,7 +8,7 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class FestaService
     {
-        private FestaRepository _festaRepository = new FestaRepository();
+        private HolidayRepository _festaRepository = new HolidayRepository();
         private readonly ILog logger = LogManager.GetLogger(typeof(FestaService));
  
 

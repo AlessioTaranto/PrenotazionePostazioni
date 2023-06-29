@@ -8,10 +8,10 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class StanzaService
     {
-        private StanzaRepository _stanzaRepository;
+        private RoomRepository _stanzaRepository;
         private readonly ILog logger = LogManager.GetLogger(typeof(StanzaService));
        
-        public StanzaService(StanzaRepository stanzaRepository, ILogger<StanzaService> logger)
+        public StanzaService(RoomRepository stanzaRepository, ILogger<StanzaService> logger)
         {
             _stanzaRepository = stanzaRepository;
         }

@@ -8,10 +8,10 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class VotoService
     {
-        private VotoRepository _votoRepository;
+        private VoteRepository _votoRepository;
         private UtenteService _utenteService;
         private readonly ILog logger = LogManager.GetLogger(typeof(VotoService));
-        public VotoService(VotoRepository votoRepository, UtenteService utenteService)
+        public VotoService(VoteRepository votoRepository, UtenteService utenteService)
         {
             _votoRepository = votoRepository;
             _utenteService = utenteService;

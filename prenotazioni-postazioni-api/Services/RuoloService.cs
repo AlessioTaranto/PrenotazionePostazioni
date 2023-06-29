@@ -8,11 +8,11 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class RuoloService
     {
-        private RuoloRepository _ruoloRepository;
-        private UtenteRepository _utenteRepository;
+        private RoleRepository _ruoloRepository;
+        private UserRepository _utenteRepository;
         private readonly ILog _logger = LogManager.GetLogger(typeof(RuoloService));
 
-        public RuoloService(RuoloRepository ruoloRepository, UtenteRepository utenteRepository)
+        public RuoloService(RoleRepository ruoloRepository, UserRepository utenteRepository)
         {
             _ruoloRepository = ruoloRepository;
             _utenteRepository = utenteRepository;

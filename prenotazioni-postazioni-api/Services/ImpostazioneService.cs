@@ -7,10 +7,10 @@ namespace prenotazioni_postazioni_api.Services
 {
     public class ImpostazioneService
     {
-        private ImpostazioneRepository _impostazioneRepository;
+        private SettingsRepository _impostazioneRepository;
         private readonly ILog logger = LogManager.GetLogger(typeof(ImpostazioneService));
 
-        public ImpostazioneService(ImpostazioneRepository impostazioneRepository)
+        public ImpostazioneService(SettingsRepository impostazioneRepository)
         {
             this._impostazioneRepository = impostazioneRepository;
         }

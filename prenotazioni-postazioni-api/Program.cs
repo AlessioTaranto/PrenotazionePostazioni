@@ -21,31 +21,31 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<FestaController, FestaController>();
 builder.Services.AddSingleton<FestaService, FestaService>();
-builder.Services.AddSingleton<FestaRepository, FestaRepository>();
+builder.Services.AddSingleton<HolidayRepository, HolidayRepository>();
 
 builder.Services.AddSingleton<ImpostazioneController, ImpostazioneController>();
-builder.Services.AddSingleton<ImpostazioneRepository, ImpostazioneRepository>();
+builder.Services.AddSingleton<SettingsRepository, SettingsRepository>();
 builder.Services.AddSingleton<ImpostazioneService, ImpostazioneService>();
 
 builder.Services.AddSingleton<PrenotazioneController, PrenotazioneController>();
 builder.Services.AddSingleton<PrenotazioneService, PrenotazioneService>();
-builder.Services.AddSingleton<PrenotazioneRepository, PrenotazioneRepository>();
+builder.Services.AddSingleton<BookingRepository, BookingRepository>();
 
 builder.Services.AddSingleton<RuoloController, RuoloController>();
 builder.Services.AddSingleton<RuoloService, RuoloService>();
-builder.Services.AddSingleton<RuoloRepository, RuoloRepository>();
+builder.Services.AddSingleton<RoleRepository, RoleRepository>();
 
 builder.Services.AddSingleton<StanzaController, StanzaController>();
 builder.Services.AddSingleton<StanzaService, StanzaService>();
-builder.Services.AddSingleton<StanzaRepository, StanzaRepository>();
+builder.Services.AddSingleton<RoomRepository, RoomRepository>();
 
 builder.Services.AddSingleton<UtenteController, UtenteController>();
 builder.Services.AddSingleton<UtenteService, UtenteService>();
-builder.Services.AddSingleton<UtenteRepository, UtenteRepository>();
+builder.Services.AddSingleton<UserRepository, UserRepository>();
 
 builder.Services.AddSingleton<VotoController, VotoController>();
 builder.Services.AddSingleton<VotoService, VotoService>();
-builder.Services.AddSingleton<VotoRepository, VotoRepository>();
+builder.Services.AddSingleton<VoteRepository, VoteRepository>();
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 DatabaseInfo.DefaultConnectionString = connectionString;

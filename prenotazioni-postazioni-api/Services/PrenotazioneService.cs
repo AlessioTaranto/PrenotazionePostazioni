@@ -9,13 +9,13 @@ namespace prenotazioni_postazioni_api.Services
  {
      public class PrenotazioneService
      {
-        private PrenotazioneRepository _prenotazioneRepository;
+        private BookingRepository _prenotazioneRepository;
         private StanzaService _stanzaService;
         private ImpostazioneService _impostazioneService;
         private UtenteService _utenteService;
         private readonly ILog logger = LogManager.GetLogger(typeof(PrenotazioneService));
 
-        public PrenotazioneService (PrenotazioneRepository prenotazioneRepository, StanzaService stanzaService, ImpostazioneService impostazioneService, UtenteService utenteService)
+        public PrenotazioneService (BookingRepository prenotazioneRepository, StanzaService stanzaService, ImpostazioneService impostazioneService, UtenteService utenteService)
         {
             _prenotazioneRepository = prenotazioneRepository;
             _stanzaService = stanzaService;
