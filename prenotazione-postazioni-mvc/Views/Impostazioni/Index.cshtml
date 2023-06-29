@@ -10,7 +10,7 @@
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
-
+@inject FestaHttpService _festaHttpService;
 @inject CapienzaHttpService _capienzaHttpService;
 
 <!-- ChangeStateBar Script -->
@@ -26,7 +26,6 @@
     }
 
     // Importa le date
-    //deserializeFeste(@ViewModel.FestivitaViewModel.SerializeFeste());
 </script>
 
 <!-- Sidebar tab (Sinistra) -->
@@ -36,7 +35,7 @@
         <a class="nav-link-1" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false" onclick="changeStateTab(1)">Festività</a>
         <a class="nav-link-1" id="options-pills-presenze-tab" data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false" onclick="changeStateTab(2)">Presenze</a>
         <a class="nav-link-1" id="options-pills-users-tab" data-toggle="pill" href="#options-pills-users" role="tab" aria-controls="options-pills-users" aria-selected="false" onclick="changeStateTab(3)">Utenti</a>
-        <a class="nav-link-1" id="options-pills-admin-tab" data-toggle="pill" href="#options-pills-admin" role="tab" aria-controls="options-pills-admin" aria-selected="false" onclick="changeStateTab(4)">Amministrazione</a>
+        <a class="nav-link-1" id="options-pills-admin-tab" data-toggle="pill" href="#options-pills-admin" role="tab" aria-controls="options-pills-admin" aria-selected="false" onclick="changeStateTab(4)">Covid</a>
     </div>
 </div>
 
@@ -163,10 +162,26 @@
             </div>
         </div>
         <div class="container mt-4 ml-50 position-fixed calendar-info-div">
-            <h1>@ViewModel.FestivitaViewModel.GetFestaSelezionata()</h1>
+            <h1>@ViewModel.GetFestaSelezionata()</h1>
             <br>
             <div>
-                <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività" onclick="festaButton()">Imposta come festività</button>
+                @{
+
+                    var getFesta = _festaHttpService.getFesta(ViewModel.FestaSelezionata.Year, ViewModel.FestaSelezionata.Month, ViewModel.FestaSelezionata.Day);
+                    
+                    if (ViewModel.FestaSelezionata.Year != 1) {
+                        getFesta.Wait();
+                        HttpResponseMessage festa = getFesta.Result;
+
+                        if (festa.StatusCode == HttpStatusCode.OK)
+                        {
+                            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="removefestabutton" value="Rimuovi festività">Rimuovi festività</button>
+                        } else
+                        {
+                            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività">Imposta come festività</button>
+                        }
+                    }
+                }
             </div>
             <br>
             <ul id="lista-feste"></ul>
@@ -274,9 +289,9 @@
                                         <li>
                                             <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome
                                         </li>
+                                    }
                                 }
                             }
-                        }
                         </ul>
                     </div>
                 </div>
@@ -287,10 +302,44 @@
 
     <!-- Users selector -->
     <div class="tab-pane fade" id="options-pills-users" role="tabpanel" aria-labelledby="options-pills-users-tab">
-       
+        <div class="container mt-4 ml-21 position-fixed users-body-div">
+            <br />
+            <h2>Lista Utenti</h2>
+            <br />
+            <div class="list-group user-list">
+                @{
+                    Task<HttpResponseMessage> getAllUtentiList = _utenteHttpService.OnGetAllUtenti();
+                    getAllUtentiList.Wait();
+
+                    List<Utente>? ListUtenti = null;
+
+                    if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
+                    {
+                        ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<Utente>?>();
+                        for(int i = 0; i<ListUtenti.Count; i++) 
+                        {
+                            Utente user = ListUtenti[i];
+
+                            <div class="list-group-item my-auto">
+                                <div style="clear: both; display: flex; align-items: center;">
+                                    <div style="float: left">
+                                        <img src="~/img/user_icon.png" alt="@user.IdUtente" style="width: 3vw; height: auto">
+                                    </div>
+                                    <div style="float: left; margin-left: 1vw;">
+                                        <h4 class="list-group-item-heading">@user.Nome @user.Cognome</h4>
+                                        <p class="list-group-item-text">@user.Email</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                }
+            </div>
+        </div>
     </div>
 
-    <!-- Admin selector -->
+    <!-- Covid selector -->
     <div class="tab-pane fade" id="options-pills-admin" role="tabpanel" aria-labelledby="options-pills-admin-tab">
         <div class="container mt-4 ml-21 position-fixed admin-body-div">
             <br>
@@ -438,11 +487,25 @@
 <!-- Calendar Script -->
 <script>
 
+    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
+
+    $.ajax({
+        type: "GET",
+        url: "Impostazioni/ReloadFeste",
+        dataType: 'json',
+        error: function (xhr) {}
+    });
+
+    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
+
+    for (var i in festeJSON)
+        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
+
     // Carica tutti i dati del Calendar Feste in quanto non è selezionato un giorno.
     loadCalendar();
 
     // Giorni selezionati dall'utente, non possono essere nulli. Null -> Year: 1901 
-    let festaSelezionata = new Date(@ViewModel.FestivitaViewModel.GiornoSelezionato.Year, (@ViewModel.FestivitaViewModel.GiornoSelezionato.Month - 1), @ViewModel.FestivitaViewModel.GiornoSelezionato.Day);
+    let festaSelezionata = new Date(@ViewModel.FestaSelezionata.Year, (@ViewModel.FestaSelezionata.Month - 1), @ViewModel.FestaSelezionata.Day);
     let presenzaSelezionata = new Date(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Year, (@ViewModel.PresenzeViewModel.PresenzaSelezionata.Month - 1), @ViewModel.PresenzeViewModel.PresenzaSelezionata.Day);
 
     // Se l'anno è 1901, allora non è stato selezionato un giorno. C# ha come anno default 1901
@@ -450,7 +513,7 @@
     if (festaSelezionata.getFullYear() !== 1901) {
         goDate(festaSelezionata);
         if ((month === 11 ? 0 : (month+1)) === festaSelezionata.getMonth())
-            clickCalendarFest(getIdDay(@ViewModel.FestivitaViewModel.GiornoSelezionato.Day));
+            clickCalendarFest(getIdDay(@ViewModel.FestaSelezionata.Day));
     }
 
     if (presenzaSelezionata.getFullYear() !== 1901) {
@@ -458,7 +521,7 @@
         if ((month1 === 11 ? 0 : (month1+1)) === presenzaSelezionata.getMonth())
             clickCalendarPres(getIdDay1(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Day));
     }
-        
+
     /*
     * ! <area> è utilizzato unicamente nella Map.
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
@@ -486,20 +549,20 @@
          */
 
         $('td').on('click', function (event) {
-            if (isValidDay(event.target.id))
-                if (event.target.id.length === 3) 
-                    $.ajax({
-                        type: "POST",
-                        url: "Impostazioni/SelectFesta",
-                        data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
-                        error: function(xhr) {
-                            alertBox(xhr.responseText);
-                            event.preventDefault();
-                        }
-                    }).done(function() {
-                        window.location.reload();
-                    });
-                else 
+            if (event.target.id.length === 3)
+                $.ajax({
+                    type: "POST",
+                    url: "Impostazioni/SelectFesta",
+                    data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                    error: function (xhr) {
+                        alertBox(xhr.responseText);
+                        event.preventDefault();
+                    }
+                }).done(function () {
+                    window.location.reload();
+                });
+            else {
+                if (isValidDay(event.target.id))
                     $.ajax({
                         type: "POST",
                         url: "Impostazioni/SelectPresenza",
@@ -511,7 +574,7 @@
                     }).done(function() {
                         window.location.reload();
                     });
-
+            }
         });
 
     });
@@ -561,12 +624,27 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/AggiungiFesta",
-                data: { "year": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Year", "month": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Month", "day": "@ViewModel.FestivitaViewModel.GiornoSelezionato.Day" },
+                data: { "year": "@ViewModel.FestaSelezionata.Year", "month": "@ViewModel.FestaSelezionata.Month", "day": "@ViewModel.FestaSelezionata.Day", "description": "None" },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();
                 }
             }).done(function() {
+                window.location.reload();
+            });
+        });
+
+    $('#removefestabutton').on('click',
+        function (event) {
+            $.ajax({
+                type: "GET",
+                url: "Impostazioni/RimuoviFesta",
+                data: { "year": "@ViewModel.FestaSelezionata.Year", "month": "@ViewModel.FestaSelezionata.Month", "day": "@ViewModel.FestaSelezionata.Day" },
+                error: function (xhr) {
+                    alertBox(xhr.responseText);
+                    event.preventDefault();
+                }
+            }).done(function () {
                 window.location.reload();
             });
         });

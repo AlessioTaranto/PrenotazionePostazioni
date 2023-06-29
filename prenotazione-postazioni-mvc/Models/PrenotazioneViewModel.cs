@@ -1,5 +1,7 @@
-﻿using prenotazione_postazioni_libs.Models;
+﻿using Newtonsoft.Json;
+using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
+using System.Net;
 using System.Xml.Schema;
 
 namespace prenotazione_postazioni_mvc.Models
@@ -28,18 +30,19 @@ namespace prenotazione_postazioni_mvc.Models
         // Costante: Massima ora selezionabile
         public const int HourEnd = 22;
 
-        /*
-         *  -1 : Non è stata effettuata prenotazione 
-         *  410: Utente non specificato
-         *  411: Stanza non specificata
-         *  200: Prenotazione effettuata
-         *  1200: Prenotazione cancellata
-         */
-        public int statusPrenotazione = -1;
-
         public PrenotazioneHttpSerivice Service { get; set; }
 
-        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti, PrenotazioneHttpSerivice serivice)
+        //Festività selezionata
+        public DateTime FestaSelezionata { get; set; }
+
+        //Stringa JSON con lista delle feste da leggere in javascript
+        public string FesteJSON { get; set; } = "{}";
+
+        // Http Festa service 
+        public FestaHttpService _festaHttpService { get; set; }
+
+
+        public PrenotazioneViewModel(DateTime date, string stanza, DateTime start, DateTime end, List<Utente> presenti, PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Date = date;
             Stanza = stanza;
@@ -47,9 +50,10 @@ namespace prenotazione_postazioni_mvc.Models
             End = end;
             Presenti = presenti;
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
-        public PrenotazioneViewModel(DateTime date, string stanza, PrenotazioneHttpSerivice serivice)
+        public PrenotazioneViewModel(DateTime date, string stanza, PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Date = date;
             Stanza = stanza;
@@ -57,9 +61,10 @@ namespace prenotazione_postazioni_mvc.Models
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
-        public PrenotazioneViewModel(string stanza, PrenotazioneHttpSerivice serivice)
+        public PrenotazioneViewModel(string stanza, PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Date = DateTime.Now;
             Stanza = stanza;
@@ -67,9 +72,10 @@ namespace prenotazione_postazioni_mvc.Models
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
-        public PrenotazioneViewModel(PrenotazioneHttpSerivice serivice)
+        public PrenotazioneViewModel(PrenotazioneHttpSerivice serivice, FestaHttpService festaHttpService)
         {
             Stanza = "null";
             Date = DateTime.Now;
@@ -77,6 +83,7 @@ namespace prenotazione_postazioni_mvc.Models
             End = new DateTime(Date.Year, Date.Month, Date.Day, 18, 0, 0);
             Presenti = new List<Utente>();
             Service = serivice;
+            _festaHttpService = festaHttpService;
         }
 
         /// <summary>
@@ -205,28 +212,102 @@ namespace prenotazione_postazioni_mvc.Models
 
         }
 
+        /// <summary>
+        /// Crea una prenotazione
+        /// </summary>
+        /// <param name="utente"></param>
+        /// <param name="stanza"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
         public async Task doPrenotazioneAsync(string utente, string stanza, string start, string end)
         {
-
-            if (utente == null)
-            {
-                statusPrenotazione = 410;
-                return;
-            }
-            else if (stanza == null)
-            {
-                statusPrenotazione = 411;
-                return;
-            }
-
             HttpResponseMessage status = await Service.AddPrenotazione(start, end, utente, stanza);
-
-            if (status.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                //Prenotazione effettuata
-                statusPrenotazione = 200;
-            } 
         }
 
+        public async Task<HttpStatusCode> ExistsPrenotazione(string utente, string stanza, string start, string end)
+        {
+
+            if (stanza == null || utente == null || start == null || end == null)
+                return HttpStatusCode.UnprocessableEntity;
+
+            //Translating json text to objects
+            Utente? user = JsonConvert.DeserializeObject<Utente>(utente);
+            Stanza? room = JsonConvert.DeserializeObject<Stanza>(stanza);
+            DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
+            DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
+
+            if (room == null || user == null)
+                return HttpStatusCode.UnprocessableEntity;
+
+            HttpResponseMessage msgRq = await Service.OnGetPrenotazioneByDate(room.IdStanza, inizio, fine);
+
+            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+
+                List<Prenotazione>? prenotazioni = await msgRq.Content.ReadFromJsonAsync<List<Prenotazione>?>();
+
+                foreach (Prenotazione prenotazione in prenotazioni)
+                    if (prenotazione.IdUtente == user.IdUtente)
+                        return HttpStatusCode.OK;
+
+                return HttpStatusCode.NotFound;
+
+            }
+
+            return HttpStatusCode.UnprocessableEntity;
+        }
+
+        public async Task<Prenotazione?> GetPrenotazione(string utente, string stanza, string start, string end)
+        {
+
+            if (stanza == null || utente == null || start == null || end == null)
+                return null;
+
+            //Translating json text to objects
+            Utente? user = JsonConvert.DeserializeObject<Utente>(utente);
+            Stanza? room = JsonConvert.DeserializeObject<Stanza>(stanza);
+            DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
+            DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
+
+            if (room == null || user == null)
+                return null;
+
+            HttpResponseMessage msgRq = await Service.OnGetPrenotazioneByDate(room.IdStanza, inizio, fine);
+
+            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+
+                List<Prenotazione>? prenotazioni = await msgRq.Content.ReadFromJsonAsync<List<Prenotazione>?>();
+
+                foreach (Prenotazione prenotazione in prenotazioni)
+                    if (prenotazione.IdUtente == user.IdUtente)
+                        return prenotazione;
+
+                return null;
+
+            }
+
+            return null;
+        }
+
+        public async Task<HttpResponseMessage> DeletePrenotazione(int idPrenotazione)
+        {
+            //Continua qua
+            HttpResponseMessage deleteRq = await Service.DeletePrenotazione(idPrenotazione);
+
+            return deleteRq;
+        }
+
+        public async Task ReloadFeste()
+        {
+            HttpResponseMessage msg = await _festaHttpService.getAllFeste();
+            if (msg == null || msg.StatusCode != HttpStatusCode.OK)
+                return;
+
+            Task<String> ctxString = msg.Content.ReadAsStringAsync();
+            ctxString.Wait();
+            FesteJSON = ctxString.Result;
+        }
     }
 }

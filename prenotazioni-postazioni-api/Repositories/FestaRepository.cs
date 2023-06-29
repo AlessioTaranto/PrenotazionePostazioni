@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = "SELECT * FROM Feste WHERE giorno = @giorno;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@giorno", date.ToString("yyyy-MM-dd hh:mm:ss:fff"));
+            sqlCommand.Parameters.AddWithValue("@giorno", date.ToString("yyyy-MM-dd"));
             return DatabaseManager<Festa>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
@@ -45,8 +45,20 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = $"INSERT INTO Feste (giorno, descrizione) VALUES (@festa_giorno, @festa_desc);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@festa_giorno", festa.Giorno.ToString("yyyy-MM-dd HH:mm:ss"));
+            sqlCommand.Parameters.AddWithValue("@festa_giorno", festa.Giorno.ToString("yyyy-MM-dd"));
             sqlCommand.Parameters.AddWithValue("@festa_desc", festa.Descrizione);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
+        }
+
+        /// <summary>
+        /// Rimuove una festività dal database
+        /// </summary>
+        /// <param name="day">indica il giorno in cui cade la festività</param>
+        internal void Remove(DateTime day)
+        {
+            string query = $"DELETE FROM Feste WHERE giorno = @festa_giorno;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@festa_giorno", day.ToString("yyyy-MM-dd"));
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }

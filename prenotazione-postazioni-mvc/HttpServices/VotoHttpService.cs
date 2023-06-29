@@ -22,6 +22,15 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
+        public async Task<HttpResponseMessage> OnGetVotiToUtente(int idUtente)
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Voti");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/voti/getVotiToUtente?idUtente={idUtente}");
+
+            return httpResponseMessage;
+        }
+
         public async Task<HttpResponseMessage> OnMakeVoto(VotoDto voto)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Voti");
@@ -47,6 +56,8 @@ namespace prenotazione_postazioni_mvc.HttpServices
 
             return httpResponseMessage;
         }
+
+        
 
     }
 }

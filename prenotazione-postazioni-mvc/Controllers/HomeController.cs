@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazione_postazioni_mvc.HttpServices;
+using System.Net;
 
 namespace prenotazione_postazioni_mvc.Controllers;
 
@@ -17,17 +18,22 @@ public class HomeController : Controller
 
     //HTTP Client Factory -> Prenotazioni
     public readonly PrenotazioneHttpSerivice _prenotazioneHttpService;
+    //HTTP Client Factory -> Festa
+    public readonly FestaHttpService _festaHttpService;
 
-    public HomeController(PrenotazioneHttpSerivice prenotazioneHttpService)
+    public HomeController(PrenotazioneHttpSerivice prenotazioneHttpService, FestaHttpService festaHttpService)
     {
         _prenotazioneHttpService = prenotazioneHttpService;
+        _festaHttpService = festaHttpService;
     }
 
     public IActionResult Index()
     {
 
         if (ViewModel == null)
-            ViewModel = new PrenotazioneViewModel(_prenotazioneHttpService);
+            ViewModel = new PrenotazioneViewModel(_prenotazioneHttpService,_festaHttpService);
+
+        ReloadFeste();
 
         return View(ViewModel);
     }
@@ -156,11 +162,50 @@ public class HomeController : Controller
     [HttpPost]
     [ActionName("Prenota")]
     public IActionResult Prenota(string user, string room, string start, string end)
-    { 
+    {
 
-        ViewModel?.doPrenotazioneAsync(user, room, start, end);
+        Task<HttpStatusCode>? getRq = ViewModel?.ExistsPrenotazione(user, room, start, end);
+        getRq.Wait();
 
-        return View();
+        HttpStatusCode code = getRq.Result;
+
+        if (code == HttpStatusCode.NotFound)
+        {
+            //Non trova prenotazioni per quel giorno
+            ViewModel?.doPrenotazioneAsync(user, room, start, end);
+
+            return Ok("Prenotazione effettuata");
+        }
+        else if (code == HttpStatusCode.OK)
+        {
+            return NotFound("Prenotazione già effettuata");
+        }
+        else
+        {
+            return BadRequest("Errore");
+        }
+    }
+
+    [HttpGet]
+    [ActionName("DeletePrenotazione")]
+    public IActionResult DeletePrenotazione(string user, string room, string start, string end)
+    {
+
+        Task<Prenotazione> prenotazioneTask = ViewModel?.GetPrenotazione(user, room, start, end);
+        prenotazioneTask.Wait();
+        Prenotazione? prenotazione = prenotazioneTask.Result;
+
+        if (prenotazione == null)
+            return NotFound("Prenotazione non trovata");
+
+        Task<HttpResponseMessage>? getRq = ViewModel?.DeletePrenotazione(prenotazione.IdPrenotazioni);
+        getRq.Wait();
+        HttpStatusCode code = getRq.Result.StatusCode;
+
+        if (code == HttpStatusCode.OK)
+            return Ok("Prenotazione cancellata");    
+        else  
+            return NotFound("Errore");
     }
 
     [HttpPost]
@@ -170,8 +215,26 @@ public class HomeController : Controller
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Serve a caricare nel calendario le feste, [da aggiungere dove vi si trova un calendario]
+    /// 
+    /// TIP: Ricreare un modello apposito da implementare alle varie model
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [ActionName("ReloadFeste")]
+    public IActionResult ReloadFeste()
+    {
+        Task task = ViewModel.ReloadFeste();
+        task.Wait();
+
+        return Ok("Festività ricaricate");
+    }
+
+
+
     //TESTING
-    
+
     /*[ActionName("Login")]
     public async Task Login()
     {

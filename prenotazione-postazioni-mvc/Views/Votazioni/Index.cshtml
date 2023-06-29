@@ -12,6 +12,8 @@
 @inject UtenteHttpService _utenteHttpService
 @inject VotoHttpService _votoHttpService
 
+@inject IHttpContextAccessor HttpContextAccessor
+
     <style>
         .icon-img {
             width: 40%;
@@ -20,9 +22,11 @@
 
 
 @{
-    int idUtente = 1; //esempio
+    Utente LoggedUser = JsonConvert.DeserializeObject<Utente>(HttpContextAccessor.HttpContext.Session.GetString("_User"));
+
+
     HttpResponseMessage? getAllUtentiResult = await _utenteHttpService.OnGetAllUtenti(); 
-    HttpResponseMessage? getAllVotiResult = await _votoHttpService.OnGetVotiFromUtente(idUtente); 
+    HttpResponseMessage? getAllVotiResult = await _votoHttpService.OnGetVotiFromUtente(LoggedUser.IdUtente); 
     List<Utente>? utenti = null;
     List<Voto>? voti = null;
     if(getAllUtentiResult != null && getAllUtentiResult.StatusCode == HttpStatusCode.OK && getAllVotiResult.StatusCode == HttpStatusCode.OK)
@@ -32,7 +36,7 @@
 
         for(int i = 0; i < utenti.Count; i++)
         {
-            if (utenti[i].IdUtente != idUtente)
+            if (utenti[i].IdUtente != LoggedUser.IdUtente)
             {
                 string fullName = utenti[i].Nome + " " + utenti[i].Cognome;
                 string rumorosita = "rumorosita" + (i + 1);
@@ -47,92 +51,83 @@
                         voto = voti[j].VotoEffettuato == true ? 1 : -1;
                     }
                 }
-    <div class="container-fluid mt-4">
-                        <div class="p-3 border bg-light"><div class="row">
-                        <div class="col-sm-1 ml-3 align-self-center"><img class="item icon-img" src="img/user_icon.png" alt="user_icon"></div>
+
+                <div class="container-fluid mt-4">
+                    <div class="p-3 border bg-light"><div class="row">
+                        <div class="col-sm-1 ml-3 align-self-center">
+                            <img class="item icon-img" src="img/user_icon.png" alt="user_icon">
+                        </div>
                         <div class="col-sm-8 align-self-center">@fullName</div>
-                        <div class="col-sm-1 align-self-center"><input type="checkbox" name="@rumorosita" id="@rumoroso" alt=@($"{utenti[i].IdUtente}") value="rumoroso" @(
-                        voto == 1 ? "checked='checked'" : "")><label for="@rumoroso">Rumoroso</label></div>
-                        <div class="col align-self-center"><input type="checkbox" name="@rumorosita" id="@non_rumoroso" alt=@($"{utenti[i].IdUtente}") value="non_rumoroso" @(
-                        voto == -1 ? "checked='checked'" : "")><label for="@non_rumoroso">Non rumoroso</label></div>
-                    </div></div>
-    </div>
+                            <div class="col-sm-1 align-self-center">
+                                <input type="checkbox" name="@rumorosita" id="@rumoroso" alt=@($"{utenti[i].IdUtente}") value="rumoroso" @(voto == 1 ? "checked='checked'" : "")>
+                                <label for="@rumoroso">Rumoroso</label>
+                            </div>
+                            <div class="col align-self-center">
+                                <input type="checkbox" name="@rumorosita" id="@non_rumoroso" alt=@($"{utenti[i].IdUtente}") value="non_rumoroso" @(voto == -1 ? "checked='checked'" : "")>
+                                <label for="@non_rumoroso">Non rumoroso</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
             
         }
     }
-
-
-    /*utenti.Add(new Utente(1, "giuseppe", "rossi", null, "giusepperossi@gmail.com", 1));
-    utenti.Add(new Utente(2, "filippo", "strozzi", null, "filippostrozzi@gmail.com", 2));
-    utenti.Add(new Utente(3, "arnaldo", "ficoni", null, "arnaldoficoni@gmail.com", 1));
-    utenti.Add(new Utente(4, "anna", "giallini", null, "annagiallini@gmail.com", 1));*/
 
 }
 
 <script src="js/vote.js"></script>
 
 <script>
+    // Abilita la deselezione
      $("input:checkbox").on('click', function() {
-          // in the handler, 'this' refers to the box clicked on
           var $box = $(this);
           if ($box.is(":checked")) {
-            // the name of the box is retrieved using the .attr() method
-            // as it is assumed and expected to be immutable
             var group = "input:checkbox[name='" + $box.attr("name") + "']";
-            // the checked state of the group/box on the other hand will change
-            // and the current value is retrieved using .prop() method
             $(group).prop("checked", false);
             $box.prop("checked", true);
           } else {
             $box.prop("checked", false);
           }
     });
-</script>
-    <script>
 
-        ///script che rende una sola checkbox attivabile in un gruppo
-        /// invio richiesta post
-         $("input:checkbox").on('click', function() {
-              // in the handler, 'this' refers to the box clicked on
-              var $box = $(this);
-              var i = parseInt($box.attr("id").charAt($box.attr("id").length - 1)) - 1;
-              let idUtenteVotato = parseInt($box.attr("alt"));
-              if ($box.is(":checked")) {
-                // the name of the box is retrieved using the .attr() method
-                // as it is assumed and expected to be immutable
-                var group = "input:checkbox[name='" + $box.attr("name") + "']";
-                // the checked state of the group/box on the other hand will change
-                // and the current value is retrieved using .prop() method
-                $(group).prop("checked", false);
-                $box.prop("checked", true);
+    // Gestione voti
+    $("input:checkbox").on('click', function() {
+        var $box = $(this);
+        var i = parseInt($box.attr("id").charAt($box.attr("id").length - 1)) - 1;
+        let idUtenteVotato = parseInt($box.attr("alt"));
 
-                ///se l'utente è stato votato come non rumoroso
-                  if ($box.attr("id").includes("non_rumoroso")) {
-                      $.ajax({
-                          type: "POST",
-                          url: "Votazioni/VoteUser",
-                          data: { "voto": -1, "idUtente" : @idUtente , "idUtenteVotato" : idUtenteVotato}
-                      })
-                  ///se l'utente è stato votato come rumoroso
-                  } else {
-                      $.ajax({
-                          type: "POST",
-                          url: "Votazioni/VoteUser",
-                          data: { "voto": 1, "idUtente" : @idUtente , "idUtenteVotato" : idUtenteVotato }
-                      })
-                  }
-                  ///se il voto è stato tolto (è neutro)
-              } else {
-                  $box.prop("checked", false);
-                  $.ajax({
-                      type: "POST",
-                      url: "Votazioni/VoteUser",
-                      data: { "voto": 0, "idUtente" : @idUtente , "idUtenteVotato" : idUtenteVotato}
-                  }).done(function() {
+        if ($box.is(":checked")) {
+            var group = "input:checkbox[name='" + $box.attr("name") + "']";
+            $(group).prop("checked", false);
+            $box.prop("checked", true);
+
+            //se l'utente è stato votato come non rumoroso
+            if ($box.attr("id").includes("non_rumoroso")) {
+                $.ajax({
+                    type: "POST",
+                    url: "Votazioni/VoteUser",
+                    data: { "voto": -1, "idUtente": @LoggedUser.IdUtente , "idUtenteVotato": $box.attr("alt") }
+                });
+            //se l'utente è stato votato come rumoroso
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "Votazioni/VoteUser",
+                    data: { "voto": 1, "idUtente": @LoggedUser.IdUtente , "idUtenteVotato": $box.attr("alt") }
+                });
+            }
+        //se il voto è stato tolto (neutrale)
+        } else {
+            $box.prop("checked", false);
+            $.ajax({
+                type: "POST",
+                url: "Votazioni/VoteUser",
+                data: { "voto": 0, "idUtente": @LoggedUser.IdUtente , "idUtenteVotato": $box.attr("alt") }
+            }).done(function() {
                       
-                  });
-              }
-        });
+            });
+        }
+    });
         
-    </script>
+</script>

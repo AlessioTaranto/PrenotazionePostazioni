@@ -70,4 +70,19 @@ namespace prenotazione_postazioni_mvc.Controllers
             //else return NotFound("Utente non trovato");
         }
     }
+
+    /*
+     * 
+     *  CALCOLO RUMOROSITA':
+     *  
+     *  Mediana dei velori ottenuti su ciascun utente:
+     *  
+     *      - Ordina array:
+     *          - Se count % 2 == 0: 
+     *              ret array[round((n/2+(n+1)/2)/2)]
+     *          - Se count % 2 != 0:
+     *              ret array[(n+1)/2]
+     *  
+    */
+
 }

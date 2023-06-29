@@ -80,3 +80,15 @@ a {
     height: 77vh;
     background-color: white;
 }
+
+.users-body-div {
+    width: 77vw;
+    height: 77vh;
+    background-color: white;
+}
+
+.user-list {
+    max-height: 60vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}

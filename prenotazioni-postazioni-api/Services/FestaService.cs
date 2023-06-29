@@ -42,13 +42,24 @@ namespace prenotazioni_postazioni_api.Services
         internal void Save(FestaDto festaDto)
         {
             logger.Info("Controllando se festaDto e' valida...");
-            if(_festaRepository.FindByDate(festaDto.Date) != null)
+            if (_festaRepository.FindByDate(festaDto.Date) != null)
             {
                 logger.Warn("FestaDto non e' valida, ho lanciato una PrenotazionePostazioniApiException!");
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
             logger.Info("FestaDto e' valida. Cercando di salvare Festa nel database...");
             _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc));
+        }
+
+        /// <summary>
+        /// Rimuove una festività dal database
+        /// </summary>
+        /// <param name="day">Indica il giorno della festività da rimuovere</param>
+        internal void Remove(DateTime day)
+        {
+            logger.Info("Rimozione della festa dal database...");
+            _festaRepository.Remove(day);
+            logger.Info("Festività rimossa dal database");
         }
     }
 }

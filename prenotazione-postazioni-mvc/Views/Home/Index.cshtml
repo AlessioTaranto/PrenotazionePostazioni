@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Postazioni";
 
-    PrenotazioneViewModel ViewModel = (PrenotazioneViewModel) Model;
+    PrenotazioneViewModel ViewModel = (PrenotazioneViewModel)Model;
 }
 
 @using System.Net
@@ -12,17 +12,18 @@
 @using Newtonsoft.Json;
 @inject UtenteHttpService _utenteHttpService;
 @inject StanzeHttpService _stanzeHttpService;
+@inject PrenotazioneHttpSerivice _prenotazioneHttpService;
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
 
     Utente? LoggedUser = new Utente(
-        "Andrea",
-        "Redegalli",
-        "",
-        "redegalli03@gmail.com",
-        1
-    );
+                "Andrea",
+                "Redegalli",
+                "",
+                "redegalli03@gmail.com",
+                1
+            );
 
     HttpResponseMessage? checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
 
@@ -62,6 +63,13 @@
     //Add Guest features
 
 }
+
+<!-- HIDDEN VALUES -->
+<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
+<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
+<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
+<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
+<!---->
 
 <div class="container mt-4 ml-3 position-fixed calendar-div">
     <div class="calendar">
@@ -144,31 +152,31 @@
 
 <!-- Piantina Div -->
 <div class="container mt-4 ml-21 position-fixed piantina-div">
-        <img src="img/piantina.png" usemap="#image-map">
+    <img src="img/piantina.png" usemap="#image-map">
 
-        <map name="image-map" id="image-map">
-            <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
-            <!--<area alt="s2" href="" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
-            <area alt="s3" href="" title="s3" coords="185,161,185,127,300,126,300,175" shape="poly">
-            <area alt="s4" href="" title="s4" coords="306,126,344,128,344,182,306,177" shape="poly">
-            <area alt="s5" href="" title="s5" coords="316,117,342,117,344,101,388,98,389,39,318,42,317,62" shape="poly">
-            <area alt="s6" href="" title="s6" coords="349,183,390,189,391,111,350,110" shape="poly">.-->
-            <!--<area alt="Finanze" href="" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
-            <area alt="Bansky" href="" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
-            <area alt="OpenSpace #1" href="" title="OpenSpace #1" coords="491,40,706,64,708,145,492,123" shape="poly">
-            <area alt="OpenSpace #2" href="" title="OpenSpace #2" coords="492,207,704,231,704,147,492,126" shape="poly">
-            <!--<area alt="s10" href="" title="s10" coords="544,225,598,232,595,265,540,261" shape="poly">
-            <area alt="s11" href="" title="s11" coords="606,233,660,242,655,275,600,266" shape="poly">
-            <area alt="s12" href="" title="s12" coords="588,310,705,330,708,495,588,495" shape="poly">-->
-            <area alt="Sviluppo" href="" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
-            <area alt="Assistenza" href="" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
-            <!--<area alt="s15" href="" title="s15" coords="43,246,134,260,135,376,122,383,46,384" shape="poly">
-            <area alt="s16" href="" title="s16" coords="43,399,125,397,147,415,149,508,52,509" shape="poly">
-            <area alt="s17" href="" title="s17" coords="161,508,247,508,248,403,178,403,160,417" shape="poly">-->
-            <area alt="Commerciale" href="" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
-            <area alt="Meeting" href="" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
-        </map>
-    </div>
+    <map name="image-map" id="image-map">
+        <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
+        <!--<area alt="s2" href="" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
+        <area alt="s3" href="" title="s3" coords="185,161,185,127,300,126,300,175" shape="poly">
+        <area alt="s4" href="" title="s4" coords="306,126,344,128,344,182,306,177" shape="poly">
+        <area alt="s5" href="" title="s5" coords="316,117,342,117,344,101,388,98,389,39,318,42,317,62" shape="poly">
+        <area alt="s6" href="" title="s6" coords="349,183,390,189,391,111,350,110" shape="poly">.-->
+        <!--<area alt="Finanze" href="" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
+        <area alt="Bansky" href="" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
+        <area alt="OpenSpace #1" href="" title="OpenSpace #1" coords="491,40,706,64,708,145,492,123" shape="poly">
+        <area alt="OpenSpace #2" href="" title="OpenSpace #2" coords="492,207,704,231,704,147,492,126" shape="poly">
+        <!--<area alt="s10" href="" title="s10" coords="544,225,598,232,595,265,540,261" shape="poly">
+        <area alt="s11" href="" title="s11" coords="606,233,660,242,655,275,600,266" shape="poly">
+        <area alt="s12" href="" title="s12" coords="588,310,705,330,708,495,588,495" shape="poly">-->
+        <area alt="Sviluppo" href="" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
+        <area alt="Assistenza" href="" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
+        <!--<area alt="s15" href="" title="s15" coords="43,246,134,260,135,376,122,383,46,384" shape="poly">
+        <area alt="s16" href="" title="s16" coords="43,399,125,397,147,415,149,508,52,509" shape="poly">
+        <area alt="s17" href="" title="s17" coords="161,508,247,508,248,403,178,403,160,417" shape="poly">-->
+        <area alt="Commerciale" href="" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
+        <area alt="Meeting" href="" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
+    </map>
+</div>
 
 <!-- Room info Div -->
 <div class="container mt-4 ml-70 position-fixed room-info-div">
@@ -224,7 +232,29 @@
     </div>
     <br>
     <div>
-        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
+        @{
+            Task<Prenotazione?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
+            , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
+            getPrenotazione.Wait();
+            Prenotazione? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
+
+            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
+            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="cancprenota">Annulla prenotazione</button>
+
+            if (prenotazione != null)
+            {
+                <script>
+                    $('#prenota').css('display', 'none');
+                    $('#cancprenota').css('display', 'block');
+                </script>
+            } else
+            {
+                <script>
+                    $('#prenota').css('display', 'block');
+                    $('#cancprenota').css('display', 'none');
+                </script>
+            }
+        }
     </div>
 
 </div>
@@ -239,10 +269,11 @@
 
     let usingAlertBox = false;
 
-    function alertBox(message) {
+    function alertBox(message, color) {
         let alertBox = $('#error-box');
 
         alertBox.text(message);
+        alertBox.css('background-color', color)
 
         if (usingAlertBox === false) {
             usingAlertBox = true;
@@ -338,6 +369,20 @@
     });
 </script>
 <script>
+
+    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
+
+    $.ajax({
+        type: "GET",
+        url: "Home/ReloadFeste",
+        dataType: 'json',
+        error: function (xhr) { }
+    });
+
+    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
+
+    for (var i in festeJSON)
+        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
     
     // Giorno selezionato nel calendario
     let daySel = new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month - 1), @ViewModel.Date.Day);
@@ -379,7 +424,7 @@
                 url: "Home/ReloadDay",
                 data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                 error: function(xhr) {
-                    alertBox(xhr.responseText);
+                    alertBox(xhr.responseText, "#de4802");
                     event.preventDefault();
                 }
             }).done(function(data) {
@@ -398,7 +443,7 @@
             url: "Home/ReloadStart",
             data: { "hour": (event.target.value).split(":")[0] },
             error: function(xhr) {
-                alertBox(xhr.responseText);
+                alertBox(xhr.responseText, "#de4802");
                 event.preventDefault();
                 event.target.value = "@ViewModel.FormatHour(@ViewModel.Start.Hour):00";
             }
@@ -419,7 +464,7 @@
             url: "Home/ReloadFinish",
             data: { "hour": (event.target.value).split(":")[0] },
             error: function(xhr) {
-                alertBox(xhr.responseText);
+                alertBox(xhr.responseText, "#de4802");
                 event.preventDefault();
                 event.target.value = "@ViewModel.FormatHour(@ViewModel.End.Hour):00";
             }
@@ -430,26 +475,67 @@
 
 </script>
 
-<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
-<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
-<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
-<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
-
+<!-- Qui viene gestito lato Javascript il processo di prenotazione. (Btn, cancellazione e errori) -->
 <script>
 
     $('#prenota').on('click', function(event) {
 
-        console.log("Test");
+        if ($('#_valueRoom').text() === "null") {
+            alertBox("Seleziona una stanza", "#de4802");
+            return;
+        } else if ($('#_valueUtente').text() === "null") {
+            alertBox("Non puoi effettuare prenotazioni come Guest", "#de4802");
+            return;
+        }
 
         $.ajax({
             type: "POST",
             url: "Home/Prenota",
             data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "start": $('#_valueDateStart').text(), "end": $('#_valueDateEnd').text() },
             error: function (xhr) {
-                window.location.reload();
             }
-        }).done(function () {
-            window.location.reload();
+        }).done(function (data, statusText, xhr) {
+            var status = xhr.status;
+            if (status === 200) {
+                $('#prenota').css('display', 'none');
+                $('#cancprenota').css('display', 'block');
+
+                alertBox("Prenotazione effettuata", "#08a100");
+            } else if (status === 404) 
+                alertBox("Non puoi prenotarti nuovamente", "#de4802");
+            else
+                alertBox("Errore", "#de4802");
+        });
+
+    });
+
+    $('#cancprenota').on('click', function(event) {
+
+        if ($('#_valueRoom').text() === "null") {
+            alertBox("Seleziona una stanza", "#de4802");
+            return;
+        } else if ($('#_valueUtente').text() === "null") {
+            alertBox("Non puoi cancellare prenotazioni come Guest", "#de4802");
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "Home/DeletePrenotazione",
+            data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "start": $('#_valueDateStart').text(), "end": $('#_valueDateEnd').text() },
+            error: function (xhr) {
+            }
+        }).done(function (data, statusText, xhr) {
+            var status = xhr.status;
+            if (status === 200) {
+                $('#prenota').css('display', 'block');
+                $('#cancprenota').css('display', 'none');
+
+                alertBox("Prenotazione cancellata", "#08a100");
+            } else if (status === 404) 
+                alertBox("Prenotazione non trovata", "#de4802");
+            else
+                alertBox("Errore", "#de4802");
         });
 
     });

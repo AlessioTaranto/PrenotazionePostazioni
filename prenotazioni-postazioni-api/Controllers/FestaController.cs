@@ -106,7 +106,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 logger.Info("FestaDto salvato con successo, Ok");
                 return Ok();
             }
-            catch(PrenotazionePostazioniApiException ex)
+            catch (PrenotazionePostazioniApiException ex)
             {
                 logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
@@ -118,6 +118,28 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        //[Route("deleteFestaByDate")]
+        [Route("removeFesta")]
+        [HttpGet]
+        public IActionResult RemoveFesta(int year, int month, int day) { 
+            try
+            {
+                DateTime dayTime = new DateTime(year, month, day);
+
+                logger.Info("Giorno della festa: " + dayTime);
+                _festaService.Remove(dayTime);
+                return Ok();
+            }
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                logger.Error("Bad request: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                logger.Fatal("Errore Interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }

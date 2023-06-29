@@ -177,5 +177,12 @@ namespace prenotazioni_postazioni_api.Services
             }
             return 0;
         }
+
+        public void DeleteById(int idPrenotazione)
+        {
+            logger.Info("Cancellando la prenotazione con id [" + idPrenotazione + "] dal database...");
+            _prenotazioneRepository.DeleteById(idPrenotazione);
+            logger.Info("La prenotazione con id [" + idPrenotazione + "] è stata cancellata dal database...");
+        }
     }
  }

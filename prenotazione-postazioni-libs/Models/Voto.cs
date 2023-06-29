@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Models
 {
+
+    public enum Rumorosità
+    { 
+        Loud = 1,
+        Ok = 0,
+        Silent = -1
+
+    }
+
     public class Voto
     {
 
