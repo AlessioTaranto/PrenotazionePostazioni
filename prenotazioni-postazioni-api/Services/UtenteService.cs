@@ -26,7 +26,7 @@ namespace prenotazioni_postazioni_api.Services
         internal List<Utente> getAllUtenti()
         {
             logger.Info("Trovando tutti gli utenti nel database...");
-            return _utenteRepository.FindAll();
+            return _utenteRepository.GetAll();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Utente GetUtenteById(int id)
         {
             logger.Info("Trovando l'utente mediante il suo id: " + id);
-            Utente utente = _utenteRepository.FindById(id);
+            Utente utente = _utenteRepository.GetById(id);
             logger.Info("Controllando se l'utente trovato e' valido...");
             if (utente == null)
             {
@@ -62,7 +62,7 @@ namespace prenotazioni_postazioni_api.Services
             internal Utente GetUtenteByEmail(string email)
         {
             logger.Info("Trovando l'utente mediante il suo email: " + email);
-            Utente utente = _utenteRepository.FindByEmail(email);
+            Utente utente = _utenteRepository.GetByEmail(email);
             logger.Info("Controllando se l'utente e' null...");
             if (utente == null)
             {
@@ -77,7 +77,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Utente GetUtenteByName(string nome, string cognome)
         {
             logger.Info($"Trovando l'utente mediante il suo nome: {nome} {cognome}");
-            Utente utente = _utenteRepository.FindByName(nome, cognome);
+            Utente utente = _utenteRepository.GetByName(nome, cognome);
             logger.Info("Controllando se l'utente e' null...");
             if (utente == null)
             {
@@ -100,7 +100,7 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info("Convertendo utenteDto in Utente...");
             Utente utente = new Utente(utenteDto.Nome, utenteDto.Cognome, utenteDto.Image, utenteDto.Email, utenteDto.IdRuolo);
             logger.Info("Procedo con il salvataggio dell'utente nel database");
-            _utenteRepository.Save(utente);
+            _utenteRepository.Add(utente);
         }
 
         /// <summary>
@@ -110,12 +110,12 @@ namespace prenotazioni_postazioni_api.Services
         /// <returns>List di Utente senza duplicati</returns>
         internal List<Utente> GetUtentiPrenotatiByDay(DateTime date)
         {
-            List<Utente> utentiWithDupes = _utenteRepository.FindUtentiByDate(date);
+            List<Utente> utentiWithDupes = _utenteRepository.GetAllByDate(date);
             List<Utente> utentiWithoutDupes = utentiWithDupes.Distinct(new UtenteEqualityComparer()).ToList();
             List<Utente> utenti = new List<Utente>();
             foreach(Utente utente in utentiWithoutDupes)
             {
-                utenti.Add(_utenteRepository.FindById(utente.IdUtente));
+                utenti.Add(_utenteRepository.GetById(utente.IdUtente));
             }
             return utenti;
 

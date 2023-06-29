@@ -25,7 +25,7 @@ namespace prenotazioni_postazioni_api.Services
         internal List<Stanza> GetAllStanze()
         {
             logger.Info("trovando tutte le stanze... chiamando il metodo FindAll...");
-            return _stanzaRepository.FindAll();
+            return _stanzaRepository.GetAll();
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Stanza GetStanzaById(int id)
         {
             logger.Info("Troovando una stanza mediante il suo id: " + id);
-            Stanza stanza = _stanzaRepository.FindById(id);
+            Stanza stanza = _stanzaRepository.GetById(id);
             logger.Info("Controllando se la stanza trovata e' valida...");
             if (stanza == null)
             {
@@ -57,7 +57,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Stanza GetStanzaByName(string stanzaName)
         {
             logger.Info("Trovando la stanza mediante il suo nome: " + stanzaName);
-            Stanza stanza = _stanzaRepository.FindByName(stanzaName);
+            Stanza stanza = _stanzaRepository.GetByName(stanzaName);
             logger.Info("Controllando se la stanza trovata e' valida...");
             if (stanza == null)
             {
@@ -85,7 +85,7 @@ namespace prenotazioni_postazioni_api.Services
                 logger.Info("Convertendo la stanzaDto in Stanza...");
                 Stanza stanza = new Stanza(stanzaDto.Nome, stanzaDto.PostiMax, stanzaDto.PostiMaxEmergenza);
                 logger.Info("Procedo con il salvataggio della stanza nel database...");
-                _stanzaRepository.Save(stanza);
+                _stanzaRepository.Add(stanza);
             }
             else
             {
@@ -118,7 +118,7 @@ namespace prenotazioni_postazioni_api.Services
             {
                 throw new PrenotazionePostazioniApiException("Posti massimi non validi");
             }
-            _stanzaRepository.ChangePostiMax(postiMax, id);
+            _stanzaRepository.UpdateCapacity(postiMax, id);
             
         }
 
@@ -128,7 +128,7 @@ namespace prenotazioni_postazioni_api.Services
             {
                 throw new PrenotazionePostazioniApiException("Posti massimi non validi");
             }
-            _stanzaRepository.ChangePostiMaxEmergenza(postiMax, id);
+            _stanzaRepository.UpdateCapacityEmergency(postiMax, id);
         }
     }
 }

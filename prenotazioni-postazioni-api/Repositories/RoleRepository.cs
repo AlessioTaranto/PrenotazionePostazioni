@@ -21,7 +21,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public Ruolo? FindById(int idRuolo)
+        public Ruolo? GetById(int idRuolo)
         {
             string query = $"SELECT * FROM Role WHERE id = {idRuolo};";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente che servira per trovare il suo ruolo</param>
         /// <returns>Ruolo dell'utente, null altrimenti</returns>
-        public Ruolo? FindByIdUtente(int idUtente)
+        public Ruolo? GetByUser(int idUtente)
         {
             string query = $"SELECT * FROM User WHERE id = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -53,7 +53,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente che gli verra cambiato il ruolo</param>
         /// <param name="ruoloEnum">Il ruolo con cui verra aggiornato l'utente</param>
-        internal void UpdateRuolo(int idUtente, RuoloType ruoloEnum)
+        internal void UpdateUserRole(int idUtente, RuoloType ruoloEnum)
         {
             string query = $"UPDATE User SET idRole = @ruolo_enum WHERE id = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);

@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Services
         public bool GetImpostazioneEmergenza()
         {
             logger.Info("Chiamando FindImpostazioneEmergenza() per trovare l'impostazione di emergenza...");
-            Impostazioni impostazioni = _impostazioneRepository.FindImpostazioneEmergenza();
+            Impostazioni impostazioni = _impostazioneRepository.Get();
             logger.Info("Controllando se impostazioni (Risultato trovato) e' valida...");
             if (impostazioni == null)
             {
@@ -49,12 +49,12 @@ namespace prenotazioni_postazioni_api.Services
             if (GetImpostazioneEmergenza() == true)
             {
                 logger.Info("Impostazione emergenza e' a true! L'ho cambiato a false!");
-                _impostazioneRepository.UpdateImpostazioneEmergenza(false);
+                _impostazioneRepository.Update(false);
             }
             else
             {
                 logger.Info("Impostazione emergenza e' a false! L'ho cambiato a true!");
-                _impostazioneRepository.UpdateImpostazioneEmergenza(true);
+                _impostazioneRepository.Update(true);
             }
         }
         

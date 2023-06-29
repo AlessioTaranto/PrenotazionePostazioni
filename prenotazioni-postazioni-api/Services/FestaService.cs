@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Services
         internal Festa GetByDate(DateTime date)
         {
             logger.Info("Chiedendo a FestaRepository di trovare una festa mediante una data...");
-            return _festaRepository.FindByDate(date);
+            return _festaRepository.GetByDate(date);
         }
 
 
@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Services
         internal List<Festa> GetAll()
         {
             logger.Info("Chiedendo a FestaRepository di trovare tutte le feste");
-            return _festaRepository.FindAll();
+            return _festaRepository.GetAll();
         }
 
         /// <summary>
@@ -42,13 +42,13 @@ namespace prenotazioni_postazioni_api.Services
         internal void Save(FestaDto festaDto)
         {
             logger.Info("Controllando se festaDto e' valida...");
-            if (_festaRepository.FindByDate(festaDto.Date) != null)
+            if (_festaRepository.GetByDate(festaDto.Date) != null)
             {
                 logger.Warn("FestaDto non e' valida, ho lanciato una PrenotazionePostazioniApiException!");
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
             logger.Info("FestaDto e' valida. Cercando di salvare Festa nel database...");
-            _festaRepository.Save(new Festa(festaDto.Date, festaDto.Desc));
+            _festaRepository.Add(new Festa(festaDto.Date, festaDto.Desc));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace prenotazioni_postazioni_api.Services
         internal void Remove(DateTime day)
         {
             logger.Info("Rimozione della festa dal database...");
-            _festaRepository.Remove(day);
+            _festaRepository.Delete(day);
             logger.Info("Festività rimossa dal database");
         }
     }

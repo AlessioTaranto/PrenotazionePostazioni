@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto>? FindAllByIdUtenteFrom(int idUtente)
+        internal List<Voto>? GetUserVotes(int idUtente)
         {
             string query = $"SELECT * FROM Vote WHERE idUser = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -36,7 +36,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto>? FindAllByIdUtenteTo(int idUtente)
+        internal List<Voto>? GetVictimVotes(int idUtente)
         {
             string query = $"SELECT * FROM Vote WHERE idVictim = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -48,7 +48,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// query al db, salva un voto al database
         /// </summary>
         /// <param name="voto">il voto che verra salvato nel database</param>
-        internal void Save(Voto voto)
+        internal void Add(Voto voto)
         {
             string query = $"INSERT INTO Vote (idUser, idVictim, vote) VALUES (@id_utente, @id_utente_votato, @voto_effettutato);";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -63,7 +63,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idUtente">L'utente che ha votato</param>
         /// <param name="idUtenteVotato">L'utente che e' stato votato</param>
         /// <returns>Il voto che trovato, null altrimenti</returns>
-        internal Voto? FindByIdUtenteToAndIdUtenteFrom(int idUtente, int idUtenteVotato)
+        internal Voto? GetUserVictimVote(int idUtente, int idUtenteVotato)
         {
             string query = $"SELECT * FROM Vote WHERE idUser = @id_utente AND idVictim = @id_utente_votato;";
             SqlCommand sqlCommmand = new SqlCommand(query);
@@ -76,7 +76,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// query al db, aggiorna il voto al suo opposto
         /// </summary>
         /// <param name="voto">Il voto da aggiornare</param>
-        internal void UpdateVoto(Voto voto)
+        internal void Update(Voto voto)
         {
             string query = $"UPDATE Vote SET vote = 1 ^ vote WHERE idUser = @id_utente AND idVictim = @id_utente_votato;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -85,7 +85,7 @@ namespace prenotazioni_postazioni_api.Repositories
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal void DeleteVoto(int idVoto)
+        internal void Delete(int idVoto)
         {
             string query = $"DELETE FROM Vote WHERE id = @id_voto;";
             SqlCommand sqlCommand = new SqlCommand(query);

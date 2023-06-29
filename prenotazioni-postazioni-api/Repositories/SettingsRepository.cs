@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db per restituire il campo Impostazione Emergenza
         /// </summary>
         /// <returns>Lo stato dell'Impostazione Emergenza</returns>
-        public Impostazioni? FindImpostazioneEmergenza()
+        public Impostazioni? Get()
         {
             string query = "SELECT * FROM Settings;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -32,7 +32,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="userValue">valore aggiornato, sostituendo lo stato di Impostazione Emergenza vecchia presente nel Database</param>
         /// <returns>Lo stato di Impostazione Emergenza nuova</returns>
-        public void UpdateImpostazioneEmergenza(bool userValue)
+        public void Update(bool userValue)
         {
             string query = "UPDATE Settings SET modeEmergency = 1 ^ modEmergency;";
             SqlCommand sqlCommand = new SqlCommand(query);

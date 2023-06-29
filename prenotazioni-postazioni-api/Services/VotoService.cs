@@ -29,7 +29,7 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info("Trovando tutti i voti effettuati da un utente...");
             logger.Info($"Verifico che l'idUtente {idUtente} sia associato a un utente valido");
             Utente utenteApp = _utenteService.GetUtenteById(idUtente);
-            return _votoRepository.FindAllByIdUtenteFrom(idUtente);
+            return _votoRepository.GetUserVotes(idUtente);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info("Trovando tutti  i voti effettuati verso un determinato utente...");
             logger.Info($"Verifico che l'idUtente {idUtente} sia associato a un utente valido");
             Utente utenteApp = _utenteService.GetUtenteById(idUtente);
-            return _votoRepository.FindAllByIdUtenteTo(idUtente);
+            return _votoRepository.GetVictimVotes(idUtente);
         }
 
         /// <summary>
@@ -52,14 +52,14 @@ namespace prenotazioni_postazioni_api.Services
         internal void MakeVotoToUtente(VotoDto votoDto)
         {
             logger.Info("Trovando il voto mediante l'id dell'utente " + votoDto.Utente.IdUtente + " che ha votato e l'id dell'utente " + votoDto.UtenteVotato.IdUtente + " che ha ricevuto il voto");
-            Voto? voto = _votoRepository.FindByIdUtenteToAndIdUtenteFrom(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente);
+            Voto? voto = _votoRepository.GetUserVictimVote(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente);
             logger.Info("Controllando se il voto e' null..");
             if (voto == null)
             {
                 logger.Info("Il voto e' null, e' valido");
                 logger.Info("Convertendo il votoDto in Voto...");
                 logger.Info("Procedo con il salvataggio nel database");
-                _votoRepository.Save(new Voto(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente, votoDto.VotoEffettuato));
+                _votoRepository.Add(new Voto(votoDto.Utente.IdUtente, votoDto.UtenteVotato.IdUtente, votoDto.VotoEffettuato));
                 return;
             }
             logger.Info("Il voto non e' null, il voto dunque e' gia stato effettuato in precedenza");
@@ -72,7 +72,7 @@ namespace prenotazioni_postazioni_api.Services
             }
             logger.Info("Aggiorno il voto!");
             //switch il valore del voto
-            _votoRepository.UpdateVoto(voto);
+            _votoRepository.Update(voto);
         }
 
         internal void DeleteVoto(int idUtente, int idUtenteVotato)
@@ -94,7 +94,7 @@ namespace prenotazioni_postazioni_api.Services
             {
                 logger.Info("Voto da eliminare trovato!");
                 logger.Info("Elimino il voto...");
-                _votoRepository.DeleteVoto(id);
+                _votoRepository.Delete(id);
             }else
             {
                 logger.Fatal("ERRORE: Voto da elimare non valido!");

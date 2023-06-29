@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Services
         public Prenotazione? GetPrenotazioneById(int idPrenotazione)
         {
             logger.Info("Cercando una prenotazione mediante il suo id " + idPrenotazione);
-            Prenotazione? prenotazione = _prenotazioneRepository.FindById(idPrenotazione);
+            Prenotazione? prenotazione = _prenotazioneRepository.GetById(idPrenotazione);
             logger.Info("Controllando se e' una prenotazione valida...");
             if (prenotazione == null){
                 logger.Warn("Prenotazione e' null, non e' valida!");
@@ -61,7 +61,7 @@ namespace prenotazioni_postazioni_api.Services
             Stanza stanzaApp = _stanzaService.GetStanzaById(idStanza);
 
             logger.Info($"Cercando una prenotazione mediante l'id stanza {idStanza}");
-            return _prenotazioneRepository.FindByStanza(idStanza); ;
+            return _prenotazioneRepository.GetByRoom(idStanza); ;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace prenotazioni_postazioni_api.Services
             Stanza stanzaApp = _stanzaService.GetStanzaById(idStanza);
 
             logger.Info("Chiamando il metodo FindAllByIdStanzaAndDate()");
-            return _prenotazioneRepository.FindAllByIdStanzaAndDate(idStanza, startDate, endDate);
+            return _prenotazioneRepository.GetAllByRoomDate(idStanza, startDate, endDate);
         }
         
          /// <summary>
@@ -90,7 +90,7 @@ namespace prenotazioni_postazioni_api.Services
          internal List<Prenotazione>? GetAllPrenotazioni()
          {
             logger.Info("Chiamando il metodo FindAll per trovare tutte le stanze");
-             return _prenotazioneRepository.FindAll();
+             return _prenotazioneRepository.GetAll();
          }
 
          /// <summary>
@@ -105,7 +105,7 @@ namespace prenotazioni_postazioni_api.Services
             Utente utenteApp = _utenteService.GetUtenteById(idUtente);
 
             logger.Info("Chiamando il metodo FindByUtente()");
-            return _prenotazioneRepository.FindByUtente(idUtente);
+            return _prenotazioneRepository.GetByUser(idUtente);
          }
 
          /// <summary>
@@ -128,7 +128,7 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info("Creando una nuova prenotazione...");
             Prenotazione newPrenotazione = new Prenotazione(prenotazioneDto.StartDate, prenotazioneDto.EndDate, prenotazioneDto.Stanza.IdStanza, prenotazioneDto.Utente.IdUtente);
             logger.Info("Cercando tutte le prenotazioni che sovrappongono l'orario della prenotazione che si vuole salvare...");
-            List<Prenotazione>? prenotazioni = _prenotazioneRepository.FindAllByIdStanzaAndDate(newPrenotazione.IdStanza, newPrenotazione.StartDate, newPrenotazione.EndDate);
+            List<Prenotazione>? prenotazioni = _prenotazioneRepository.GetAllByRoomDate(newPrenotazione.IdStanza, newPrenotazione.StartDate, newPrenotazione.EndDate);
             logger.Info("Controllo se prenotazioni e' null...");
             if (prenotazioni == null)
             {
@@ -141,7 +141,7 @@ namespace prenotazioni_postazioni_api.Services
             if(resultOreOverlap == 0)
             {
                 logger.Info("Prenotazione valida! Procedo con il salvataggio nel database!");
-                _prenotazioneRepository.Save(newPrenotazione);
+                _prenotazioneRepository.Add(newPrenotazione);
                 return 0;
             }
             logger.Warn("L'orario della prenotazione non e' valida, troppe prenotazione nello stesso orario!");
@@ -181,7 +181,7 @@ namespace prenotazioni_postazioni_api.Services
         public void DeleteById(int idPrenotazione)
         {
             logger.Info("Cancellando la prenotazione con id [" + idPrenotazione + "] dal database...");
-            _prenotazioneRepository.DeleteById(idPrenotazione);
+            _prenotazioneRepository.Delete(idPrenotazione);
             logger.Info("La prenotazione con id [" + idPrenotazione + "] è stata cancellata dal database...");
         }
     }

@@ -21,7 +21,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Serve per ottenere una lista completa di tutti gli utenti
         /// </summary>
         /// <returns>Lista di Utente trovati, null altrimenti</returns>
-        internal List<Utente>? FindAll()
+        internal List<Utente>? GetAll()
         {
             string query = "SELECT * FROM User;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente? FindById(int idUtente)
+        internal Utente? GetById(int idUtente)
         {
             string query = $"SELECT * FROM User WHERE id = @id_utente;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -47,7 +47,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="email">L'email dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente? FindByEmail(string email)
+        internal Utente? GetByEmail(string email)
         {
             string query = $"SELECT * FROM User WHERE email = @email;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -60,7 +60,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db, salva un utente al database
         /// </summary>
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
-        internal void Save(Utente utente)
+        internal void Add(Utente utente)
         {
             string query = $"INSERT INTO User (name, surname, email, idRole) VALUES (@nome, @cognome, @email, @id_ruolo);";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -72,7 +72,7 @@ namespace prenotazioni_postazioni_api.Repositories
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal Utente? FindByName(string nome, string cognome)
+        internal Utente? GetByName(string nome, string cognome)
         {
             string query = $"SELECT * FROM User WHERE (name = @nome AND surname = @cognome)";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -86,7 +86,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="date"></param>
         /// <returns>List di Utente contenenti solo gli Id</returns>
-        internal List<Utente>? FindUtentiByDate(DateTime date)
+        internal List<Utente>? GetAllByDate(DateTime date)
         {
             string query = $"SELECT idUser FROM Booking WHERE YEAR(startDate) = @year AND MONTH(startDate) = @month AND DAY(startDate) = {date.Day};";
             SqlCommand sqlCommand = new SqlCommand(query);

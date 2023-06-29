@@ -19,7 +19,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="date">la data</param>
         /// <returns>Lista di Feste</returns>
-        internal Festa? FindByDate(DateTime date)
+        internal Festa? GetByDate(DateTime date)
         {
             string query = "SELECT * FROM Holiday WHERE day = @giorno;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -30,7 +30,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// query al db, restituisce tutte le festa
         /// </summary>
         /// <returns>Lista di festa</returns>
-        internal List<Festa>? FindAll()
+        internal List<Festa>? GetAll()
         {
             string query = $"SELECT * FROM Holiday";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -41,7 +41,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// query al db, salva una festa al database
         /// </summary>
         /// <param name="festa">la festa da salvare</param>
-        internal void Save(Festa festa)
+        internal void Add(Festa festa)
         {
             string query = $"INSERT INTO Holiday (day, description) VALUES (@festa_giorno, @festa_desc);";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -54,7 +54,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Rimuove una festività dal database
         /// </summary>
         /// <param name="day">indica il giorno in cui cade la festività</param>
-        internal void Remove(DateTime day)
+        internal void Delete(DateTime day)
         {
             string query = $"DELETE FROM Holiday WHERE giorno = @festa_giorno;";
             SqlCommand sqlCommand = new SqlCommand(query);

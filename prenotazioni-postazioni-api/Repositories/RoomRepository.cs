@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db, restituisce tutte le stanze presente nel database
         /// </summary>
         /// <returns>Lista di Stanza</returns>
-        internal List<Stanza>? FindAll()
+        internal List<Stanza>? GetAll()
         {
             string query = $"SELECT * FROM Room";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza? FindById(int idStanza)
+        internal Stanza? GetById(int idStanza)
         {
             string query = $"SELECT * FROM Room WHERE id = @id_stanza;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -46,7 +46,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="stanzaName">Il nome della stanza da trovare</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza? FindByName(string stanzaName)
+        internal Stanza? GetByName(string stanzaName)
         {
             string query = $"SELECT * FROM Room WHERE UPPER(Room.name) = UPPER(@stanza_name);";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -57,7 +57,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db, aggiunge una nuova stanza alla tabella Stanze
         /// </summary>
         /// <param name="stanza">La stanza da aggiungere al db</param>
-        internal void Save(Stanza stanza)
+        internal void Add(Stanza stanza)
         {
             string query = $"INSERT INTO Room (name, capacity, capacityEmergency) VALUES (@nome_stanza, @stanza_posti_max, @stanza_posti_max_emergenza);";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -67,7 +67,7 @@ namespace prenotazioni_postazioni_api.Repositories
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal void ChangePostiMax(int postiMax, int id)
+        internal void UpdateCapacity(int postiMax, int id)
         {
             string query = "UPDATE Room SET capacity = @postiMax WHERE id = @idStanza;";
             SqlCommand sqlCommand = new SqlCommand(query);
@@ -76,7 +76,7 @@ namespace prenotazioni_postazioni_api.Repositories
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal void ChangePostiMaxEmergenza(int postiMaxEmergenza, int id)
+        internal void UpdateCapacityEmergency(int postiMaxEmergenza, int id)
         {
             string query = "UPDATE Room SET capacityEmergency = @postiMax WHERE id = @idStanza;";
             SqlCommand sqlCommand = new SqlCommand(query);
