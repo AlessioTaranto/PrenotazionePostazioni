@@ -61,14 +61,29 @@
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <nav class="navbar navbar-expand-sm bg-light">
-        <div class="order-0">
-            <a class="navbar-brand mx-auto black" href="#" style="font-size: 2vw">@ViewData["Title"]</a>
-        </div>
+    <nav class="navbar navbar-expand-sm bg-light p-3">
+            @{
+                if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
+                    <div class="d-flex flex-row align-items-center justify-content-center gap-3 m-0 p-0">
+                        <div class="order-0">
+                            <a class="navbar-brand mx-auto black" href="#" style="font-size: 1.3vw;">Prenota postazione per il:</a>
+                        </div>
+
+                        <div class="order-0">
+                            <span class="navbar-brand mx-auto black" href="#" style="font-size: 1.3vw; font-weight: 600">@ViewData["DateSelected"]</span>
+                        </div> 
+                    </div>
+                }else{
+                    <div class="order-0">
+                        <a class="navbar-brand mx-auto black" href="#" style="font-size: 1.3vw; margin-right:1vw;">@ViewData["Title"]</a>
+                    </div>
+                }
+            }
+        
         <div class="navbar-collapse collapse order-3">
             <ul class="navbar-nav ml-2-nav">
                 <li class="nav-item">
-                        <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>
+                    <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>
                 </li>
 
             </ul>

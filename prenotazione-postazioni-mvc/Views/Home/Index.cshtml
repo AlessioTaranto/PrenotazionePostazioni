@@ -2,6 +2,7 @@
     ViewData["Title"] = "Prenota postazioni";
 
     PrenotazioneViewModel ViewModel = (PrenotazioneViewModel)Model;
+    ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM/yyyy");
 }
 
 @using System.Net
@@ -13,6 +14,7 @@
 @inject UtenteHttpService _utenteHttpService;
 @inject StanzeHttpService _stanzeHttpService;
 @inject PrenotazioneHttpSerivice _prenotazioneHttpService;
+@inject FestaHttpService _festaHttpService;
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -70,89 +72,11 @@
 <p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
 <!---->
-<div class="d-flex flex-row h-auto w-100 p-5 gap-10">
-    <div class="container p-4 calendar-div">
-        <div class="calendar">
-            <div class="head">
-                <ul class="d-flex align-items-center justify-content-center">
-                    <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
-                    <li><a class="item" id="month-year"></a></li>
-                    <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
-                </ul>
-            </div>
-            <div class="body">
-                <table>
-                    <tr>
-                        <th>Lun</th>
-                        <th>Mar</th>
-                        <th>Mer</th>
-                        <th>Gio</th>
-                        <th>Ven</th>
-                        <th>Sab</th>
-                        <th>Dom</th>
-                    </tr>
-                    <tr>
-                        <td id="0-0">1</td>
-                        <td id="1-0">2</td>
-                        <td id="2-0">3</td>
-                        <td id="3-0">4</td>
-                        <td id="4-0">5</td>
-                        <td id="5-0">6</td>
-                        <td id="6-0">7</td>
-                    </tr>
-                    <tr>
-                        <td id="0-1">8</td>
-                        <td id="1-1">9</td>
-                        <td id="2-1">10</td>
-                        <td id="3-1">11</td>
-                        <td id="4-1">12</td>
-                        <td id="5-1">13</td>
-                        <td id="6-1">14</td>
-                    </tr>
-                    <tr>
-                        <td id="0-2">15</td>
-                        <td id="1-2">16</td>
-                        <td id="2-2">17</td>
-                        <td id="3-2">18</td>
-                        <td id="4-2">19</td>
-                        <td id="5-2">20</td>
-                        <td id="6-2">21</td>
-                    </tr>
-                    <tr>
-                        <td id="0-3">22</td>
-                        <td id="1-3">23</td>
-                        <td id="2-3">24</td>
-                        <td id="3-3">25</td>
-                        <td id="4-3">26</td>
-                        <td id="5-3">27</td>
-                        <td id="6-3">28</td>
-                    </tr>
-                    <tr>
-                        <td id="0-4">29</td>
-                        <td id="1-4">30</td>
-                        <td id="2-4">31</td>
-                        <td id="3-4">1</td>
-                        <td id="4-4">2</td>
-                        <td id="5-4">3</td>
-                        <td id="6-4">4</td>
-                    </tr>
-                    <tr>
-                        <td id="0-5">29</td>
-                        <td id="1-5">30</td>
-                        <td id="2-5">31</td>
-                        <td id="3-5">1</td>
-                        <td id="4-5">2</td>
-                        <td id="5-5">3</td>
-                        <td id="6-5">4</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+<div class="d-flex flex-row align-items-top w-100 p-5 gap-10" style="height: 90vh;">
 
     <!-- Piantina Div -->
-    <div class="container w-auto piantina-div">
-        <img src="img/piantina.png" usemap="#image-map" class="h-auto">
+    <div class="container w-100 h-auto piantina-div m-0">
+        <img src="img/piantina.png" usemap="#image-map" class="h-100 w-100">
 
         <map name="image-map" id="image-map">
             <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
@@ -179,108 +103,213 @@
     </div>
 
     <!-- Room info Div -->
-    <div class="container room-info-div p-5 w-90 h-100 rounded-3">
-        <h1 style="font-size: 1.2vw; font-weight: 700" class="h1">@ViewModel.GetStanza()</h1>
-        <br>
-        @{
-            if(Room != null){
-        <div class="btn-collapse">
-            <a class="fw-bold" data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Seleziona orario
-            </a>
-        </div>
-        <div>
-            <div class="collapse" id="orario">
-                <div class="p-2 d-flex flex-column align-items-left justify-content-center gap-3">
-                    <div class="d-flex flex-column user-select-none">
-                        <label for="start">Inizio</label>
-                        <input class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
-                        min="07:00" max="22:00" required>
-                    </div>
-                    
-                    <div class="d-flex flex-column user-select-none">
-                        <label for="finish">Termine</label>
-                        <input class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
-                        min="07:00" max="22:00" required>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="btn-collapse">
-            <a class="fw-bold" data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Prenotazioni
-            </a>
-        </div>
-        <div>
-            <div class="collapse" id="prenotazioni">
-                <div class="p-2 h-auto" >
-                    <ul id="lista-prenotazioni" style="list-style: none; padding: 0; margin: 0;">
-                        @{
-                            if (Room != null)
-                            {
-                                HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
-                                List<Utente>? presenti = null;
-                                if (getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
-                                {
-                                    presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
-                                    if(presenti != null && presenti.Count>0 ){
-                                        for (int i = 0; i < presenti.Count; i++)
+    <div class="d-flex flex-column justify-content-between gap-5" style="width: 40%;">
+        <div class="container room-info-div p-4 w-100 h-auto rounded-3">
+        <div id="room-info-content">
+            <h1 style="font-size: 1.2vw; font-weight: 700" class="">@ViewModel.GetStanza()</h1>
+            <br>
+            @{
+                if(Room != null){   
+                    HttpResponseMessage holiday = await _festaHttpService.getAllFeste();
+                    List<Festa>? holidayList = null;
+                        if(holiday.StatusCode == HttpStatusCode.OK){
+                            holidayList = holiday.Content.ReadFromJsonAsync<List<Festa>>().Result;
+                        }
+                        for(int i = 0; holidayList != null && i < holidayList.Count; i++){
+                            if(holidayList[i].Giorno.ToString("dd/MM/yyyy") == ViewModel.Date.ToString("dd/MM/yyyy")){
+                                <div style="font-size: 1.5vw ;">
+                                    Chiuso per ferie!
+                                </div>
+                            }else{
+                                <div class="btn-collapse">
+                                    <a class="fw-bold" data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Seleziona orario
+                                    </a>
+                                </div>
+                                <div>
+                                    <div class="collapse" id="orario">
+                                        <div class="p-2 d-flex flex-column align-items-left justify-content-center gap-3">
+                                            <div class="d-flex flex-column user-select-none">
+                                                <label for="start">Inizio</label>
+                                                <input class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
+                                                min="07:00" max="22:00" required>
+                                            </div>
+                                                        
+                                            <div class="d-flex flex-column user-select-none">
+                                                <label for="finish">Termine</label>
+                                                <input class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
+                                                min="07:00" max="22:00" required>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                                <br>
+                                <div class="btn-collapse">
+                                    <a class="fw-bold" data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Prenotazioni
+                                    </a>
+                                </div>
+                                <div class="collapse" id="prenotazioni">
+                                    <div class="p-2 h-auto" >
+                                        <ul id="lista-prenotazioni" style="list-style: none; padding: 0; margin: 0;">
+                                            @{
+                                                HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
+                                                List<Utente>? presenti = null;
+                                                if (getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK){
+                                                        presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
+                                                            
+                                                        if(presenti != null && presenti.Count>0 ){
+                                                            for (int j = 0; j < presenti.Count; j++){
+                                                                <li class="d-flex flex-row justify-content-left align-items-center">
+                                                                    <div class="reservation d-flex flex-row justify-content-center align-items-center" style="font-size: 1vw;">
+                                                                        <img src="~/img/example/example-1.png">
+                                                                            @presenti[@j].Nome
+                                                                            @presenti[@j].Cognome
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        }else{
+                                                            <li class="m-0">
+                                                                Nessuna prenotazione
+                                                            </li>
+                                                        }
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br>
+                                <div>
+                                    @{
+                                        Task<Prenotazione?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
+                                        , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
+                                        getPrenotazione.Wait();
+                                        Prenotazione? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
+
+                                        <div class="btn btn-primary bg-darkorange bd-darkorange w-100" style="font-size: 1vw;" type="button" id="prenota"> Prenota</div>
+                                        <div class="btn btn-primary bg-darkorange bd-darkorange w-100" style="font-size: 1vw;" type="button" id="cancprenota">Annulla prenotazione</div>
+
+                                        if (prenotazione != null)
                                         {
-                                            <li class="d-flex flex-row justify-content-left align-items-center">
-                                                <div class="reservation d-flex flex-row justify-content-center align-items-center" style="font-size: 1vw;">
-                                                    <img src="~/img/example/example-1.png">
-                                                    @presenti[@i].Nome
-                                                    @presenti[@i].Cognome
-                                                </div>
-                                            </li>
+                                            <script>
+                                                $('#prenota').css('display', 'none');
+                                                $('#cancprenota').css('display', 'block');
+                                            </script>
+                                        } else
+                                        {
+                                            <script>
+                                                $('#prenota').css('display', 'block');
+                                                $('#cancprenota').css('display', 'none');
+                                            </script>
                                         }
-                                    }else{
-                                        <li class="m-0">
-                                            Nessuna prenotazione
-                                        </li>
                                     }
-                                }   
+                                </div>
                             }
                         }
-                    </ul>
+                    }     
+            <div class="alert-box">
+                <div class="alert-box-view" style="opacity: 0" id="error-box">
+                 <!-- Qui dentro viene inserito il codice di errore -->
                 </div>
             </div>
-        </div>
-        
-        <br>
-        <div>
-            @{
-                Task<Prenotazione?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
-                , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
-                getPrenotazione.Wait();
-                Prenotazione? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
-
-                <div class="btn btn-primary bg-darkorange bd-darkorange w-100" style="font-size: 1vw;" type="button" id="prenota"> Prenota</div>
-                <div class="btn btn-primary bg-darkorange bd-darkorange w-100" style="font-size: 1vw;" type="button" id="cancprenota">Annulla prenotazione</div>
-
-                if (prenotazione != null)
-                {
-                    <script>
-                        $('#prenota').css('display', 'none');
-                        $('#cancprenota').css('display', 'block');
-                    </script>
-                } else
-                {
-                    <script>
-                        $('#prenota').css('display', 'block');
-                        $('#cancprenota').css('display', 'none');
-                    </script>
-                }
             }
         </div>
-        }
-        }
     </div>
 
-    <div class="alert-box">
-        <div class="alert-box-view" style="opacity: 0" id="error-box">
-            <!-- Qui dentro viene inserito il codice di errore -->
+
+    <button type="button" class="btn btn-primary bg-darkorange bd-darkorange" data-toggle="modal" data-target="#exampleModalLong">
+        Seleziona una data
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Calendario</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="calendar">
+                            <div class="head">
+                                <ul class="d-flex align-items-center justify-content-center">
+                                    <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
+                                    <li><a class="item" id="month-year"></a></li>
+                                    <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <table>
+                                    <tr>
+                                        <th>Lun</th>
+                                        <th>Mar</th>
+                                        <th>Mer</th>
+                                        <th>Gio</th>
+                                        <th>Ven</th>
+                                        <th>Sab</th>
+                                        <th>Dom</th>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-0">1</td>
+                                        <td id="1-0">2</td>
+                                        <td id="2-0">3</td>
+                                        <td id="3-0">4</td>
+                                        <td id="4-0">5</td>
+                                        <td id="5-0">6</td>
+                                        <td id="6-0">7</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-1">8</td>
+                                        <td id="1-1">9</td>
+                                        <td id="2-1">10</td>
+                                        <td id="3-1">11</td>
+                                        <td id="4-1">12</td>
+                                        <td id="5-1">13</td>
+                                        <td id="6-1">14</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-2">15</td>
+                                        <td id="1-2">16</td>
+                                        <td id="2-2">17</td>
+                                        <td id="3-2">18</td>
+                                        <td id="4-2">19</td>
+                                        <td id="5-2">20</td>
+                                        <td id="6-2">21</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-3">22</td>
+                                        <td id="1-3">23</td>
+                                        <td id="2-3">24</td>
+                                        <td id="3-3">25</td>
+                                        <td id="4-3">26</td>
+                                        <td id="5-3">27</td>
+                                        <td id="6-3">28</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-4">29</td>
+                                        <td id="1-4">30</td>
+                                        <td id="2-4">31</td>
+                                        <td id="3-4">1</td>
+                                        <td id="4-4">2</td>
+                                        <td id="5-4">3</td>
+                                        <td id="6-4">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-5">29</td>
+                                        <td id="1-5">30</td>
+                                        <td id="2-5">31</td>
+                                        <td id="3-5">1</td>
+                                        <td id="4-5">2</td>
+                                        <td id="5-5">3</td>
+                                        <td id="6-5">4</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -419,16 +448,17 @@
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
     */
 
+
+    
+
     $('area').on('click', function () {
         let nameStanza = event.target.alt;
-
         $.ajax({
             type: "POST",
             url: "Home/ReloadRoom",
             data: { "room": nameStanza }
-        }).done(function() {
-            window.location.reload();
         });
+        location.window.reload();
     });
 
     /*

@@ -1,8 +1,3 @@
-html {
-  max-height: 100vh;
-  height: 100vh;
-}
-
 ::-webkit-scrollbar {
   width: 7px;
 }
@@ -25,9 +20,7 @@ body {
     )
     no-repeat right top !important;
   font-family: Poppins, serif;
-  width: 100%;
   margin: 0;
-  overflow-x: hidden;
 }
 
 .bg-darkorange {
@@ -73,8 +66,6 @@ body {
 }
 
 .calendar-div {
-  width: 20vw;
-  height: 50vh;
   background-color: white;
 }
 
