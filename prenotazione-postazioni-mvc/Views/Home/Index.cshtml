@@ -72,11 +72,12 @@
 <p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
 <!---->
-<div class="d-flex flex-row align-items-top w-100 p-5 gap-3" style="height: 82vh;">
+<div class="d-flex flex-row align-items-top p-5" style="height: 82vh; gap: 2vw;">
 
     <!-- Piantina Div -->
-    <div class="container piantina-div m-0">
-        <img src="img/piantina.png" usemap="#image-map" style="height: 100%; width: 100%">
+    <div class="container piantina-div m-0 h-auto" >
+        <img src="img/piantina.png" usemap="#image-map" style="width: 100%; height: 100%">
+
         <map name="image-map" id="image-map">
             <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
             <!--<area alt="s2" href="" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
@@ -149,8 +150,8 @@
                                     </a>
                                 </div>
                                 <div class="collapse" id="prenotazioni">
-                                    <div class="p-2 h-auto" >
-                                        <ul id="lista-prenotazioni" style="list-style: none; padding: 0; margin: 0;">
+                                    <div class="p-2 h-auto">
+                                        <ul id="lista-prenotazioni" class="d-flex flex-column align-items-left gap-2" style="list-style: none; padding: 0; margin: 0;">
                                             @{
                                                 HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
                                                 List<Utente>? presenti = null;
