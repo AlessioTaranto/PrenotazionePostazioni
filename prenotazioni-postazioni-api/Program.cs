@@ -19,31 +19,31 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<FestaController, FestaController>();
+builder.Services.AddSingleton<HolidayController, HolidayController>();
 builder.Services.AddSingleton<HolidayService, HolidayService>();
 builder.Services.AddSingleton<HolidayRepository, HolidayRepository>();
 
-builder.Services.AddSingleton<ImpostazioneController, ImpostazioneController>();
+builder.Services.AddSingleton<SettingsController, SettingsController>();
 builder.Services.AddSingleton<SettingsRepository, SettingsRepository>();
 builder.Services.AddSingleton<SettingsService, SettingsService>();
 
-builder.Services.AddSingleton<PrenotazioneController, PrenotazioneController>();
+builder.Services.AddSingleton<BookingController, BookingController>();
 builder.Services.AddSingleton<BookingService, BookingService>();
 builder.Services.AddSingleton<BookingRepository, BookingRepository>();
 
-builder.Services.AddSingleton<RuoloController, RuoloController>();
+builder.Services.AddSingleton<RoleController, RoleController>();
 builder.Services.AddSingleton<RoleService, RoleService>();
 builder.Services.AddSingleton<RoleRepository, RoleRepository>();
 
-builder.Services.AddSingleton<StanzaController, StanzaController>();
+builder.Services.AddSingleton<RoomController, RoomController>();
 builder.Services.AddSingleton<RoomService, RoomService>();
 builder.Services.AddSingleton<RoomRepository, RoomRepository>();
 
-builder.Services.AddSingleton<UtenteController, UtenteController>();
+builder.Services.AddSingleton<UserController, UserController>();
 builder.Services.AddSingleton<UserService, UserService>();
 builder.Services.AddSingleton<UserRepository, UserRepository>();
 
-builder.Services.AddSingleton<VotoController, VotoController>();
+builder.Services.AddSingleton<VoteController, VoteController>();
 builder.Services.AddSingleton<VoteService, VoteService>();
 builder.Services.AddSingleton<VoteRepository, VoteRepository>();
 

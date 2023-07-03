@@ -116,7 +116,7 @@ namespace prenotazioni_postazioni_api.Services
          public int Add(PrenotazioneDto bookingDto)
          {
             logger.Info("Controllando se la stanza della prenotazione e' valida...");
-            Stanza room = _roomService.GetById(bookingDto.Stanza.IdStanza);
+            Stanza room = _roomService.GetById(bookingDto.IdStanza);
             if (room == null)
             {
                 logger.Error("la stanza non e' valida!");
@@ -124,9 +124,9 @@ namespace prenotazioni_postazioni_api.Services
             }
             logger.Info("La stanza e' valida");
             logger.Info("Controllando se siamo in stato di emergenza...");
-            int roomCapacity = _settingsService.GetModEmergency() ? room.PostiMaxEmergenza : room.PostiMax;
+            int roomCapacity = _settingsService.Get() ? room.PostiMaxEmergenza : room.PostiMax;
             logger.Info("Creando una nuova prenotazione...");
-            Prenotazione booking = new Prenotazione(bookingDto.StartDate, bookingDto.EndDate, bookingDto.Stanza.IdStanza, bookingDto.Utente.IdUtente);
+            Prenotazione booking = new Prenotazione(bookingDto.StartDate, bookingDto.EndDate, bookingDto.IdStanza, bookingDto.IdUtente);
             logger.Info("Cercando tutte le prenotazioni che sovrappongono l'orario della prenotazione che si vuole salvare...");
             List<Prenotazione>? bookings = _bookingRepository.GetAllByRoomDate(booking.IdStanza, booking.StartDate, booking.EndDate);
             logger.Info("Controllo se prenotazioni e' null...");
@@ -178,7 +178,7 @@ namespace prenotazioni_postazioni_api.Services
             return 0;
         }
 
-        public void DeleteById(int id)
+        public void Delete(int id)
         {
             logger.Info("Cancellando la prenotazione con id [" + id + "] dal database...");
             _bookingRepository.Delete(id);

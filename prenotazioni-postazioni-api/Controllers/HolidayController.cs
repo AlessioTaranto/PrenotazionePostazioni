@@ -9,15 +9,15 @@ using prenotazioni_postazioni_api.Services;
 namespace prenotazioni_postazioni_api.Controllers
 {
     [ApiController]
-    [Route("/api/festivita")]
-    public class FestaController : ControllerBase
+    [Route("/api/holiday")]
+    public class HolidayController : ControllerBase
     {
-        private readonly ILog logger = LogManager.GetLogger(typeof(FestaController));
-        private HolidayService _festaService;
+        private readonly ILog logger = LogManager.GetLogger(typeof(HolidayController));
+        private HolidayService _holidayService;
 
-        public FestaController(HolidayService festaService)
+        public HolidayController(HolidayService holidayService)
         {
-            this._festaService = festaService;
+            this._holidayService = holidayService;
         }
 
 
@@ -40,14 +40,14 @@ namespace prenotazioni_postazioni_api.Controllers
                 logger.Info("Month: " + month);
                 logger.Info("Day: " + day);
                 logger.Info("Trovando una festa mediante date...");
-                Festa festa = _festaService.GetByDate(new DateTime(year, month, day));
-                if(festa == null)
+                Festa holiday = _holidayService.GetByDate(new DateTime(year, month, day));
+                if(holiday == null)
                 {
                     logger.Warn("Festa e' null, return NotFound");
                     return NotFound("Festa è null");
                 }
                 logger.Info("Festa trovato. Return OK");
-                return Ok(festa);
+                return Ok(holiday);
             }
             catch(PrenotazionePostazioniApiException ex)
             {
@@ -72,14 +72,14 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 logger.Info("Trovando tutte le feste...");
-                List<Festa> feste = _festaService.GetAll();
-                if(feste == null)
+                List<Festa> holidays = _holidayService.GetAll();
+                if(holidays == null)
                 {
                     logger.Warn("Nessuna festa trovata, NotFound");
                     return NotFound("feste e' null");
                 }
                 logger.Info("Feste trovate, Ok");
-                return Ok(feste);
+                return Ok(holidays);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
@@ -93,17 +93,17 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [Route("addFesta")]
+        [Route("add")]
         [HttpPost]
-        public IActionResult AddFestaByDate([FromBody] FestaDto festaDto)
+        public IActionResult Add([FromBody] FestaDto holidayDto)
         {
             try
             {
-                logger.Info("Giorno della festa: " + festaDto.Date);
-                logger.Info("Descrizione della festa: " + festaDto.Desc);
+                logger.Info("Giorno della festa: " + holidayDto.Date);
+                logger.Info("Descrizione della festa: " + holidayDto.Desc);
                 logger.Info("Salvando una festaDto del database...");
-                _festaService.Add(festaDto);
-                logger.Info("FestaDto salvato con successo, Ok");
+                _holidayService.Add(holidayDto);
+                logger.Info("HolidayDto salvato con successo, Ok");
                 return Ok();
             }
             catch (PrenotazionePostazioniApiException ex)
@@ -118,15 +118,15 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [Route("removeFesta")]
-        [HttpGet]
-        public IActionResult RemoveFesta(int year, int month, int day) { 
+        [Route("delete")]
+        [HttpDelete]
+        public IActionResult Delete(int year, int month, int day) { 
             try
             {
-                DateTime dayTime = new DateTime(year, month, day);
+                DateTime date = new DateTime(year, month, day);
 
-                logger.Info("Giorno della festa: " + dayTime);
-                _festaService.Delete(dayTime);
+                logger.Info("Giorno della festa: " + date);
+                _holidayService.Delete(date);
                 return Ok();
             }
             catch (PrenotazionePostazioniApiException ex)

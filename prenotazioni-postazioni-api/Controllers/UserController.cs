@@ -8,28 +8,28 @@ using log4net;
 namespace prenotazioni_postazioni_api.Controllers
 {
     [ApiController]
-    [Route("/api/utenti")]
-    public class UtenteController : ControllerBase
+    [Route("/api/user")]
+    public class UserController : ControllerBase
     {
-        private UserService _utenteService;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(UtenteController));
+        private UserService _UserService;
+        private readonly ILog _logger = LogManager.GetLogger(typeof(UserController));
 
-        public UtenteController( UserService utenteService)
+        public UserController( UserService userService)
         {
-            _utenteService = utenteService;
+            _UserService = userService;
         }
 
         [HttpGet]
-        [Route("getAllUtenti")]
-        public IActionResult GetAllUtenti()
+        [Route("getAll")]
+        public IActionResult getAll()
         {
             try
             {
                 _logger.Info("Prelevando tutti gli utenti...");
-                List<Utente> utenti = _utenteService.GetAll();
+                List<Utente> users = _UserService.GetAll();
                 _logger.Info("Prelevato tutti gli utenti con successo!");
 
-                return Ok(utenti);
+                return Ok(users);
             }
             catch (Exception ex)
             {
@@ -41,19 +41,19 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <summary>
         /// Restituisce un utente mediante il suo id
         /// </summary>
-        /// <param name="id">Id dell'utente da trovare</param>
+        /// <param name="idUser">Id dell'utente da trovare</param>
         /// <returns>L'utente trovato e 200, 404 altrimenti</returns>
         [HttpGet]
-        [Route("getUtenteById")]
-        public IActionResult GetUtenteById(int id)
+        [Route("getById")]
+        public IActionResult GetById(int idUser)
         {
             try
             {
-                _logger.Info("Id utente: " + id);
-                _logger.Info("Prelevando un utente mediante il suo id: " + id + "...");
-                Utente utente = _utenteService.GetById(id);
+                _logger.Info("Id utente: " + idUser);
+                _logger.Info("Prelevando un utente mediante il suo id: " + idUser + "...");
+                Utente user = _UserService.GetById(idUser);
                 _logger.Info("Utente trovato con successo!");
-                return Ok(utente);
+                return Ok(user);
             }catch(PrenotazionePostazioniApiException ex)
             {
                 _logger.Warn("Utente non trovato: " + ex.Message);
@@ -67,17 +67,17 @@ namespace prenotazioni_postazioni_api.Controllers
         }
 
         [HttpGet]
-        [Route("getUtenteByName")]
-        public IActionResult GetUtenteByName(string nome, string cognome)
+        [Route("getByName")]
+        public IActionResult GetByName(string name, string surname)
         {
             try
             {
-                _logger.Info("Nome: " + nome);
-                _logger.Info("Cognome: " + cognome);
-                _logger.Info($"Trovando l'utente mediante il suo nome {nome} {cognome}...");
-                Utente utente = _utenteService.GetByName(nome, cognome);
+                _logger.Info("Nome: " + name);
+                _logger.Info("Cognome: " + surname);
+                _logger.Info($"Trovando l'utente mediante il suo nome {name} {surname}...");
+                Utente user = _UserService.GetByName(name, surname);
                 _logger.Info($"utente trovato mediante il suo nome con successo!");
-                return Ok(utente);
+                return Ok(user);
             }
             catch(PrenotazionePostazioniApiException ex)
             {
@@ -97,16 +97,16 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="email">L'email dell'utente da trovare</param>
         /// <returns>L'utente trovato e 200, 404 altrimenti</returns>
         [HttpGet]
-        [Route("getUtenteByEmail")]
-        public IActionResult GetUtenteByEmail(string email)
+        [Route("getByEmail")]
+        public IActionResult GetByEmail(string email)
         {
             try
             {
                 _logger.Info("Email: " + email);
                 _logger.Info($"Trovando l'utente mediante la sua email:{email}...");
-                Utente utente = _utenteService.GetByEmail(email);
+                Utente user = _UserService.GetByEmail(email);
                 _logger.Info("Utente trovato mediante il suo email con successo!");
-                return Ok(utente);
+                return Ok(user);
             }
             catch (PrenotazionePostazioniApiException ex)
             {
@@ -126,14 +126,14 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <param name="date"></param>
         /// <returns>Lista di utenti</returns>
         [HttpGet]
-        [Route("getUtentiPrenotatiByDay")]
-        public IActionResult GetUtentiPrenotatiByDay(int year, int month, int day)
+        [Route("getByDate")]
+        public IActionResult GetByDate(int year, int month, int day)
         {
             DateTime date = new DateTime(year, month, day);
             try
             {
-                List<Utente> utenti = _utenteService.GetByDate(date);
-                return Ok(utenti);
+                List<Utente> users = _UserService.GetByDate(date);
+                return Ok(users);
             }
             catch (Exception ex)
             {
@@ -145,18 +145,18 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <summary>
         /// Aggiunge un utente al database
         /// </summary>
-        /// <param name="utenteDto">L'utente da inserire nel database</param>
+        /// <param name="userDto">L'utente da inserire nel database</param>
         /// <returns>httpstatus 200 se salvataggio corretto, httpstatus 400 altrimenti</returns>
         [HttpPost]
-        [Route("addNewUtente")]
-        public IActionResult AddNewUtente(UtenteDto utenteDto)
+        [Route("add")]
+        public IActionResult Add(UtenteDto userDto)
         {
             try
             {
-                _logger.Info("Nome utente: " + utenteDto.Nome);
-                _logger.Info("Cognome utente: " + utenteDto.Cognome);
+                _logger.Info("Nome utente: " + userDto.Nome);
+                _logger.Info("Cognome utente: " + userDto.Cognome);
                 _logger.Info("Salvando un utente nel database...");
-                _utenteService.Add(utenteDto);
+                _UserService.Add(userDto);
                 _logger.Info("Utente salvato nel database con successo!");
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)

@@ -20,7 +20,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <returns>Valore effettivo dell'impostazione di emergenza. True, o False</returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        public bool GetModEmergency()
+        public bool Get()
         {
             logger.Info("Chiamando Get() per trovare l'impostazione di emergenza...");
             Impostazioni settings = _settingsRepository.Get();
@@ -43,18 +43,18 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="userValue">Il valore con cui si aggiornera Impostazioni Emergenza</param>
         /// <returns>Lo stato di Impostazione Emergenza aggiornata</returns>
-        public void UpdateModEmergency()
+        public void Update()
         {
             logger.Info("Controllando se Impostazioni Emergenza e' a true...");
-            if (GetModEmergency() == true)
+            if (Get() == true)
             {
                 logger.Info("Impostazione emergenza e' a true! L'ho cambiato a false!");
-                _settingsRepository.Update(false);
+                _settingsRepository.Set();
             }
             else
             {
                 logger.Info("Impostazione emergenza e' a false! L'ho cambiato a true!");
-                _settingsRepository.Update(true);
+                _settingsRepository.Set();
             }
         }
         

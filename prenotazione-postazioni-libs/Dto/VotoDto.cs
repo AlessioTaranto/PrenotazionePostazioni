@@ -9,14 +9,14 @@ namespace prenotazione_postazioni_libs.Dto
 {
     public class VotoDto
     {
-        public Utente Utente { get; set; }
-        public Utente UtenteVotato { get; set; }
+        public int IdUtente { get; set; }
+        public int IdUtenteVotato { get; set; }
         public bool VotoEffettuato { get; set; }
 
-        public VotoDto(Utente utente, Utente utenteVotato, bool votoEffettuato)
+        public VotoDto(int idUtente, int idUutenteVotato, bool votoEffettuato)
         {
-            this.Utente = utente;
-            this.UtenteVotato = utenteVotato;
+            this.IdUtente = idUtente;
+            this.IdUtenteVotato = idUutenteVotato;
             this.VotoEffettuato = votoEffettuato;
         }
 

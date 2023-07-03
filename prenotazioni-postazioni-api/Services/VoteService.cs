@@ -51,15 +51,15 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="voteDto"></param>
         internal void UpdateVote(VotoDto voteDto)
         {
-            logger.Info("Trovando il voto mediante l'id dell'utente " + voteDto.Utente.IdUtente + " che ha votato e l'id dell'utente " + voteDto.UtenteVotato.IdUtente + " che ha ricevuto il voto");
-            Voto? vote = _voteRepository.GetUserVictimVote(voteDto.Utente.IdUtente, voteDto.UtenteVotato.IdUtente);
+            logger.Info("Trovando il voto mediante l'id dell'utente " + voteDto.IdUtente.IdUtente + " che ha votato e l'id dell'utente " + voteDto.IdUtenteVotato.IdUtente + " che ha ricevuto il voto");
+            Voto? vote = _voteRepository.GetUserVictimVote(voteDto.IdUtente.IdUtente, voteDto.IdUtenteVotato.IdUtente);
             logger.Info("Controllando se il voto e' null..");
             if (vote == null)
             {
                 logger.Info("Il voto e' null, e' valido");
                 logger.Info("Convertendo il votoDto in Voto...");
                 logger.Info("Procedo con il salvataggio nel database");
-                _voteRepository.Add(new Voto(voteDto.Utente.IdUtente, voteDto.UtenteVotato.IdUtente, voteDto.VotoEffettuato));
+                _voteRepository.Add(new Voto(voteDto.IdUtente.IdUtente, voteDto.IdUtenteVotato.IdUtente, voteDto.VotoEffettuato));
                 return;
             }
             logger.Info("Il voto non e' null, il voto dunque e' gia stato effettuato in precedenza");
