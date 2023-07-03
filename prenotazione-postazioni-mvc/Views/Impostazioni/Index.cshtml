@@ -280,10 +280,10 @@
                         <ul id="lista-presenti">
                             @{
                             HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.PresenzeViewModel.PresenzaSelezionata);
-                            List<Utente>? presenti = null;
+                            List<@int>? presenti = null;
                             if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
                             {
-                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
+                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<@int>?>();
                                 for(int i=0; i<presenti.Count; i++)
                                 {
                                         <li>
@@ -311,14 +311,14 @@
                     Task<HttpResponseMessage> getAllUtentiList = _utenteHttpService.OnGetAllUtenti();
                     getAllUtentiList.Wait();
 
-                    List<Utente>? ListUtenti = null;
+                    List<@int>? ListUtenti = null;
 
                     if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
                     {
-                        ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<Utente>?>();
+                        ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<@int>?>();
                         for(int i = 0; i<ListUtenti.Count; i++) 
                         {
-                            Utente user = ListUtenti[i];
+                            @int user = ListUtenti[i];
 
                             <div class="list-group-item my-auto">
                                 <div style="clear: both; display: flex; align-items: center;">

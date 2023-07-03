@@ -17,7 +17,7 @@
 
 @{
 
-    Utente? LoggedUser = new Utente(
+    @int? LoggedUser = new @int(
                 "Andrea",
                 "Redegalli",
                 "",
@@ -32,7 +32,7 @@
     if (checkExists.StatusCode == HttpStatusCode.OK)
     {
 
-        LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+        LoggedUser = await checkExists.Content.ReadFromJsonAsync<@int>();
 
         HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
     } else {
@@ -45,19 +45,19 @@
             checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
             code = checkExists.StatusCode;
 
-            LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+            LoggedUser = await checkExists.Content.ReadFromJsonAsync<@int>();
 
             HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
         }
     }
 
-    Stanza? Room = null;
+    @int? Room = null;
 
     HttpResponseMessage checkRoom = await _stanzeHttpService.OnGetStanzaByName(ViewModel.Stanza);
 
     if (checkRoom.StatusCode == HttpStatusCode.OK)
     {
-        Room = await checkRoom.Content.ReadFromJsonAsync<Stanza>();
+        Room = await checkRoom.Content.ReadFromJsonAsync<@int>();
     }
 
     //Add Guest features
@@ -213,14 +213,14 @@
                         if (Room != null)
                         {
                             HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
-                            List<Utente>? presenti = null;
+                            List<@int>? presenti = null;
                             if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
                             {
-                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
+                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<@int>?>();
                                 for (int i = 0; i < presenti.Count; i++)
                                 {
                                     <li>
-                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @Room.Nome
+                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @Room.Name
                                     </li>
                                 }
                             }
@@ -233,10 +233,10 @@
     <br>
     <div>
         @{
-            Task<Prenotazione?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
+            Task<Booking?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
             , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
             getPrenotazione.Wait();
-            Prenotazione? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
+            Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
 
             <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
             <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="cancprenota">Annulla prenotazione</button>

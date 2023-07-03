@@ -37,7 +37,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id ruolo: " + idRole);
                 _logger.Info("Prelevando un ruolo mediante Ruolo Id...");
-                Ruolo ruolo = _roleService.GetById(idRole);
+                Role ruolo = _roleService.GetById(idRole);
                 _logger.Info("Ruolo prelevato con successo!");
                 return Ok(ruolo);
             }
@@ -66,7 +66,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUser);
                 _logger.Info("Trovando un ruolo mediante l'id dell'utente...");
-                Ruolo role = _roleService.GetByIdUser(idUser);
+                Role role = _roleService.GetByIdUser(idUser);
                 _logger.Info("Ruolo dell'id utente: " + idUser + " trovato con successo!");
                 return Ok(role);
             }
@@ -90,14 +90,14 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public IActionResult Update(int idUser,int idAdmin)
+        public IActionResult Update(int idUser,int idAdmin, string futureRole)
         {
             try
             {
                 _logger.Info("Id Utente: " + idUser);
                 _logger.Info("Id admin: " + idAdmin);
                 _logger.Info("Aggiornando il ruolo di un utente...");
-                bool ok = _roleService.Update(idUser, idAdmin);
+                bool ok = _roleService.Update(idUser, idAdmin, futureRole);
                 _logger.Info("Controllando se l'autorizzazione e' valida...");
                 if (ok)
                 {

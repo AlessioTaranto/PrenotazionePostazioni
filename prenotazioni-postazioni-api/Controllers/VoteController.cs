@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUser);
                 _logger.Info("Trovando tutti i voti effettuati di un utente...");
-                List<Voto> votes = _voteService.GetUserVotes(idUser);
+                List<Vote> votes = _voteService.GetUserVotes(idUser);
                 _logger.Info("Voti dell'utente trovati con successo!");
                 return Ok(votes);
             }
@@ -59,7 +59,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idVictim);
                 _logger.Info("Trovando tutti i voti che sono stati effettuati su un utente...");
-                List<Voto> votes = _voteService.GetVictimVotes(idVictim);
+                List<Vote> votes = _voteService.GetVictimVotes(idVictim);
                 _logger.Info("Voti trovati con successo!");
                 return Ok(votes);
             }

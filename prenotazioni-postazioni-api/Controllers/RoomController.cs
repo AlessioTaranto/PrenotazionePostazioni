@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Trovando tutte le stanze...");
-                List<Stanza> rooms = _roomService.GetAll();
+                List<Room> rooms = _roomService.GetAll();
                 _logger.Info("Stanze trovate con successo!");
                 return Ok(rooms);
             }
@@ -55,7 +55,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id stanza: " + idRoom);
                 _logger.Info("Trovando la stanza mediante il suo id: " + idRoom + "...");
-                Stanza stanza = _roomService.GetById(idRoom);
+                Room stanza = _roomService.GetById(idRoom);
                 _logger.Info("Stanza trovata con successo!");
                 return Ok(stanza);
             }catch(PrenotazionePostazioniApiException ex)
@@ -84,7 +84,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Nome della stanza: " + name);
                 _logger.Info("Trovando la stanza mediante il suo nome: " + name + "...");
-                Stanza room = _roomService.GetByName(name);
+                Room room = _roomService.GetByName(name);
                 _logger.Info("Stanza trovata con successo!");
                 return Ok(room);
             }
@@ -135,8 +135,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                Stanza room = _roomService.GetByName(name);
-                _roomService.UpdateCapacity(capacity, room.IdStanza);
+                Room room = _roomService.GetByName(name);
+                _roomService.UpdateCapacity(capacity, room.Id);
                 return Ok("Posti massimi cambiati");
             }
             catch (PrenotazionePostazioniApiException ex)
@@ -154,8 +154,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                Stanza room = _roomService.GetByName(name);
-                _roomService.UpdateCapacityEmergency(capacity, room.IdStanza);
+                Room room = _roomService.GetByName(name);
+                _roomService.UpdateCapacityEmergency(capacity, room.Id);
                 return Ok("Posti massimi cambiati");
             }
             catch (PrenotazionePostazioniApiException ex)

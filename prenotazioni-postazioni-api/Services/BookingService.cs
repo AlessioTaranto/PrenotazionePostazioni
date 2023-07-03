@@ -31,10 +31,10 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="idBooking">ID Prenotazione da trovare</param>
         /// <returns>Prenotazione trovata, altrimenti null</returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        public Prenotazione? GetById(int idBooking)
+        public Booking? GetById(int idBooking)
         {
             logger.Info("Cercando una prenotazione mediante il suo id " + idBooking);
-            Prenotazione? booking = _bookingRepository.GetById(idBooking);
+            Booking? booking = _bookingRepository.GetById(idBooking);
             logger.Info("Controllando se e' una prenotazione valida...");
             if (booking == null){
                 logger.Warn("Prenotazione e' null, non e' valida!");
@@ -55,10 +55,10 @@ namespace prenotazioni_postazioni_api.Services
          /// <param name="idRoom">ID della stanza associata alla Prenotazione da trovare</param>
          /// <returns>Prenotazione trovata, altrimenti null</returns>
          /// <exception cref="PrenotazionePostazioniApiException"></exception>
-         public List<Prenotazione>? GetByRoom(int idRoom)
+         public List<Booking>? GetByRoom(int idRoom)
          {
             logger.Info($"Verifico che l'id {idRoom} corrisponda a una stanza valida...");
-            Stanza room = _roomService.GetById(idRoom);
+            Room room = _roomService.GetById(idRoom);
 
             logger.Info($"Cercando una prenotazione mediante l'id stanza {idRoom}");
             return _bookingRepository.GetByRoom(idRoom); ;
@@ -70,14 +70,14 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="idRoom"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        internal List<Prenotazione>? GetAllByRoomDate(int idRoom, DateTime startDate, DateTime endDate)
+        internal List<Booking>? GetAllByRoomDate(int idRoom, DateTime startDate, DateTime endDate)
         {
             logger.Info($"Cercando tutte le prenotazione di una stanza mediante una data di inizio e fine");
             logger.Info($"Id Stanza: {idRoom}");
             logger.Info("StartDate: " + startDate.ToString());
             logger.Info("EndDate: " + endDate.ToString());
             logger.Info($"Verifico che l'idStanza {idRoom} sia associato a una stanza valida");
-            Stanza room = _roomService.GetById(idRoom);
+            Room room = _roomService.GetById(idRoom);
 
             logger.Info("Chiamando il metodo GetAllByRoomDate()");
             return _bookingRepository.GetAllByRoomDate(idRoom, startDate, endDate);
@@ -87,7 +87,7 @@ namespace prenotazioni_postazioni_api.Services
          /// Trova tutte le prenotazioni presenti nel Database
          /// </summary>
          /// <returns>Lista di Prenotazioni trovate nel Database</returns>
-         internal List<Prenotazione>? GetAll()
+         internal List<Booking>? GetAll()
          {
              logger.Info("Chiamando il metodo GetAll() per trovare tutte le stanze");
              return _bookingRepository.GetAll();
@@ -98,11 +98,11 @@ namespace prenotazioni_postazioni_api.Services
          /// </summary>
          /// <param name="idUser">ID utente associata alla Prenotazione</param>
          /// <returns>Prenotazione trovata, altrimenti null</returns
-         internal List<Prenotazione>? GetByUser(int idUser)
+         internal List<Booking>? GetByUser(int idUser)
          {
             logger.Info("Trovando tutte le prenotazioni di un utente, id utente: " + idUser);
             logger.Info($"Verifico che l'id {idUser} sia associato ad un utente valido");
-            Utente utenteApp = _userService.GetById(idUser);
+            User utenteApp = _userService.GetById(idUser);
 
             logger.Info("Chiamando il metodo GetByUser()");
             return _bookingRepository.GetByUser(idUser);
@@ -116,7 +116,7 @@ namespace prenotazioni_postazioni_api.Services
          public int Add(PrenotazioneDto bookingDto)
          {
             logger.Info("Controllando se la stanza della prenotazione e' valida...");
-            Stanza room = _roomService.GetById(bookingDto.IdStanza);
+            Room room = _roomService.GetById(bookingDto.IdStanza);
             if (room == null)
             {
                 logger.Error("la stanza non e' valida!");
@@ -124,11 +124,11 @@ namespace prenotazioni_postazioni_api.Services
             }
             logger.Info("La stanza e' valida");
             logger.Info("Controllando se siamo in stato di emergenza...");
-            int roomCapacity = _settingsService.Get() ? room.PostiMaxEmergenza : room.PostiMax;
+            int roomCapacity = _settingsService.Get() ? room.CapacityEmergency : room.Capacity;
             logger.Info("Creando una nuova prenotazione...");
-            Prenotazione booking = new Prenotazione(bookingDto.StartDate, bookingDto.EndDate, bookingDto.IdStanza, bookingDto.IdUtente);
+            Booking booking = new Booking(bookingDto.StartDate, bookingDto.EndDate, bookingDto.IdStanza, bookingDto.IdUtente);
             logger.Info("Cercando tutte le prenotazioni che sovrappongono l'orario della prenotazione che si vuole salvare...");
-            List<Prenotazione>? bookings = _bookingRepository.GetAllByRoomDate(booking.IdStanza, booking.StartDate, booking.EndDate);
+            List<Booking>? bookings = _bookingRepository.GetAllByRoomDate(booking.IdRoom, booking.StartDate, booking.EndDate);
             logger.Info("Controllo se prenotazioni e' null...");
             if (bookings == null)
             {
@@ -148,7 +148,7 @@ namespace prenotazioni_postazioni_api.Services
             return timeOverlap;
         }
 
-        private int ControlloPrenotazioneOrePiena(Prenotazione newPrenotazione, List<Prenotazione> prenotazioni, int MAX_STANZA)
+        private int ControlloPrenotazioneOrePiena(Booking newPrenotazione, List<Booking> prenotazioni, int MAX_STANZA)
         {
             
             int maxOre = 1;

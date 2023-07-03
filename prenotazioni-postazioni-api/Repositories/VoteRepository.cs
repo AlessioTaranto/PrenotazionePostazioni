@@ -23,12 +23,12 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUser">L'id dell'utente</param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto>? GetUserVotes(int idUser)
+        internal List<Vote>? GetUserVotes(int idUser)
         {
             string query = $"SELECT * FROM Vote WHERE idUser = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);
-            return DatabaseManager<List<Voto>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            return DatabaseManager<List<Vote>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
         /// <summary>
@@ -36,25 +36,25 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idVictim">L'id dell'utente</param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto>? GetVictimVotes(int idVictim)
+        internal List<Vote>? GetVictimVotes(int idVictim)
         {
             string query = $"SELECT * FROM Vote WHERE idVictim = @idVictim;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idVictim", idVictim);
-            return DatabaseManager<List<Voto>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            return DatabaseManager<List<Vote>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
         /// <summary>
         /// query al db, salva un voto al database
         /// </summary>
         /// <param name="vote">il voto che verra salvato nel database</param>
-        internal void Add(Voto vote)
+        internal void Add(Vote vote)
         {
             string query = $"INSERT INTO Vote (idUser, idVictim, vote) VALUES (@idUser, @idVictim, @vote);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@idUser", vote.IdUtente);
-            sqlCommand.Parameters.AddWithValue("@idVictim", vote.IdUtenteVotato);
-            sqlCommand.Parameters.AddWithValue("@vote", vote.VotoEffettuato);
+            sqlCommand.Parameters.AddWithValue("@idUser", vote.IdUser);
+            sqlCommand.Parameters.AddWithValue("@idVictim", vote.IdVictim);
+            sqlCommand.Parameters.AddWithValue("@vote", vote.VoteResults);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
         /// <summary>
@@ -63,25 +63,25 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idUser">L'utente che ha votato</param>
         /// <param name="idVictim">L'utente che e' stato votato</param>
         /// <returns>Il voto che trovato, null altrimenti</returns>
-        internal Voto? GetUserVictimVote(int idUser, int idVictim)
+        internal Vote? GetUserVictimVote(int idUser, int idVictim)
         {
             string query = $"SELECT * FROM Vote WHERE idUser = @idUser AND idVictim = @idVictim;";
             SqlCommand sqlCommmand = new SqlCommand(query);
             sqlCommmand.Parameters.AddWithValue("@idUser", idUser);
             sqlCommmand.Parameters.AddWithValue("@idVictim", idVictim);
-            return DatabaseManager<Voto>.GetInstance().MakeQueryOneResult(sqlCommmand);
+            return DatabaseManager<Vote>.GetInstance().MakeQueryOneResult(sqlCommmand);
         }
 
         /// <summary>
         /// query al db, aggiorna il voto al suo opposto
         /// </summary>
         /// <param name="vote">Il voto da aggiornare</param>
-        internal void Set(Voto vote)
+        internal void Set(Vote vote)
         {
             string query = $"UPDATE Vote SET vote = 1 ^ vote WHERE idUser = @idUser AND idVictim = @idVictim;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@idUser", vote.IdUtente);
-            sqlCommand.Parameters.AddWithValue("@idVictim", vote.IdUtenteVotato);
+            sqlCommand.Parameters.AddWithValue("@idUser", vote.IdUser);
+            sqlCommand.Parameters.AddWithValue("@idVictim", vote.IdVictim);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 

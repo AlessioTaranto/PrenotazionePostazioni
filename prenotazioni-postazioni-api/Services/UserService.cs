@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Services
         /// Restituisce tutti gli utenti
         /// </summary>
         /// <returns>List di Utente trovati, null altrimenti</returns>
-        internal List<Utente> GetAll()
+        internal List<User> GetAll()
         {
             logger.Info("Trovando tutti gli utenti nel database...");
             return _userRepository.GetAll();
@@ -35,10 +35,10 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        internal Utente GetById(int id)
+        internal User GetById(int id)
         {
             logger.Info("Trovando l'utente mediante il suo id: " + id);
-            Utente user = _userRepository.GetById(id);
+            User user = _userRepository.GetById(id);
             logger.Info("Controllando se l'utente trovato e' valido...");
             if (user == null)
             {
@@ -59,10 +59,10 @@ namespace prenotazioni_postazioni_api.Services
             /// <param name="email">L'email dell'utente da trovare</param>
             /// <returns>L'utente trovato, null altrimenti</returns>
             /// <exception cref="PrenotazionePostazioniApiException"></exception>
-            internal Utente GetByEmail(string email)
+            internal User GetByEmail(string email)
         {
             logger.Info("Trovando l'utente mediante il suo email: " + email);
-            Utente user = _userRepository.GetByEmail(email);
+            User user = _userRepository.GetByEmail(email);
             logger.Info("Controllando se l'utente e' null...");
             if (user == null)
             {
@@ -74,10 +74,10 @@ namespace prenotazioni_postazioni_api.Services
             return user;
         }
 
-        internal Utente GetByName(string name, string surname)
+        internal User GetByName(string name, string surname)
         {
             logger.Info($"Trovando l'utente mediante il suo nome: {name} {surname}");
-            Utente user = _userRepository.GetByName(name, surname);
+            User user = _userRepository.GetByName(name, surname);
             logger.Info("Controllando se l'utente e' null...");
             if (user == null)
             {
@@ -98,7 +98,7 @@ namespace prenotazioni_postazioni_api.Services
         internal void Add(UtenteDto userDto)
         {
             logger.Info("Convertendo userDto in Utente...");
-            Utente user = new Utente(userDto.Nome, userDto.Cognome, userDto.Image, userDto.Email, userDto.IdRuolo);
+            User user = new User(userDto.Nome, userDto.Cognome, userDto.Image, userDto.Email, userDto.IdRuolo);
             logger.Info("Procedo con il salvataggio dell'utente nel database");
             _userRepository.Add(user);
         }
@@ -108,14 +108,14 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="date"></param>
         /// <returns>List di Utente senza duplicati</returns>
-        internal List<Utente> GetByDate(DateTime date)
+        internal List<User> GetByDate(DateTime date)
         {
-            List<Utente> usersWithDupes = _userRepository.GetAllByDate(date);
-            List<Utente> usersWithoutDupes = usersWithDupes.Distinct(new UtenteEqualityComparer()).ToList();
-            List<Utente> users = new List<Utente>();
-            foreach(Utente user in usersWithoutDupes)
+            List<User> usersWithDupes = _userRepository.GetAllByDate(date);
+            List<User> usersWithoutDupes = usersWithDupes.Distinct(new UtenteEqualityComparer()).ToList();
+            List<User> users = new List<User>();
+            foreach(User user in usersWithoutDupes)
             {
-                users.Add(_userRepository.GetById(user.IdUtente));
+                users.Add(_userRepository.GetById(user.Id));
             }
             return users;
         }

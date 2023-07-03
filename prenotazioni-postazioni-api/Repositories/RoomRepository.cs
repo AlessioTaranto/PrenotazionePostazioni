@@ -20,11 +20,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db, restituisce tutte le stanze presente nel database
         /// </summary>
         /// <returns>Lista di Stanza</returns>
-        internal List<Stanza>? GetAll()
+        internal List<Room>? GetAll()
         {
             string query = $"SELECT * FROM Room";
             SqlCommand sqlCommand = new SqlCommand(query);
-            return DatabaseManager<List<Stanza>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            return DatabaseManager<List<Room>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
 
@@ -33,12 +33,12 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza? GetById(int idRoom)
+        internal Room? GetById(int idRoom)
         {
             string query = $"SELECT * FROM Room WHERE id = @id_stanza;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@id_stanza", idRoom);
-            return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(sqlCommand);
+            return DatabaseManager<Room>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>
@@ -46,24 +46,24 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="roomName">Il nome della stanza da trovare</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza? GetByName(string roomName)
+        internal Room? GetByName(string roomName)
         {
             string query = $"SELECT * FROM Room WHERE UPPER(Room.name) = UPPER(@roomName );";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@stanza_name", roomName);
-            return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(sqlCommand);
+            return DatabaseManager<Room>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
         /// Query al db, aggiunge una nuova stanza alla tabella Stanze
         /// </summary>
         /// <param name="room">La stanza da aggiungere al db</param>
-        internal void Add(Stanza room)
+        internal void Add(Room room)
         {
             string query = $"INSERT INTO Room (name, capacity, capacityEmergency) VALUES (@roomName, @capacity, @capacityEmergency);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@roomName", room.Nome);
-            sqlCommand.Parameters.AddWithValue("@capacity", room.PostiMax);
-            sqlCommand.Parameters.AddWithValue("@capacityEmergency", room.PostiMaxEmergenza);
+            sqlCommand.Parameters.AddWithValue("@roomName", room.Name);
+            sqlCommand.Parameters.AddWithValue("@capacity", room.Capacity);
+            sqlCommand.Parameters.AddWithValue("@capacityEmergency", room.CapacityEmergency);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 

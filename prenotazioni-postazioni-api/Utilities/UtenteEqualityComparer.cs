@@ -2,20 +2,20 @@
 
 namespace prenotazioni_postazioni_api.Utilities
 {
-    public class UtenteEqualityComparer : IEqualityComparer<Utente>
+    public class UtenteEqualityComparer : IEqualityComparer<User>
     {
-        public bool Equals(Utente? x, Utente? y)
+        public bool Equals(User? x, User? y)
         {
             if(x == null || y == null)
             {
                 return false;
             }
-            return x.IdUtente == y.IdUtente;
+            return x.Id == y.Id;
         }
 
-        public int GetHashCode(Utente obj)
+        public int GetHashCode(User obj)
         {
-            return obj.IdUtente.GetHashCode();
+            return obj.Id.GetHashCode();
         }
 
     }

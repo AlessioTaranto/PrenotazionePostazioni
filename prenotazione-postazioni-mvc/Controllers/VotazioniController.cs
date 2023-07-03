@@ -51,8 +51,8 @@ namespace prenotazione_postazioni_mvc.Controllers
             //if (utenteResponse.StatusCode == HttpStatusCode.OK && utenteVotatoResponse.StatusCode == HttpStatusCode.OK)
             //{
 
-            Utente utente = new Utente(idUtente, null, null, null, null, 0);//await utenteResponse.Content.ReadFromJsonAsync<Utente>();
-            Utente utenteVotato = new Utente(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
+            User utente = new User(idUtente, null, null, null, null, 0);//await utenteResponse.Content.ReadFromJsonAsync<Utente>();
+            User utenteVotato = new User(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
             if (voto == 0)
             {
                   response = await _votoHttpService.OnDeleteVoto(idUtente, idUtenteVotato);

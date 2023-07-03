@@ -19,34 +19,34 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="date">la data</param>
         /// <returns>Lista di Feste</returns>
-        internal Festa? GetByDate(DateTime date)
+        internal Holiday? GetByDate(DateTime date)
         {
             string query = "SELECT * FROM Holiday WHERE day = @dya;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@day", date.ToString("yyyy-MM-dd"));
-            return DatabaseManager<Festa>.GetInstance().MakeQueryOneResult(sqlCommand);
+            return DatabaseManager<Holiday>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
         /// query al db, restituisce tutte le festa
         /// </summary>
         /// <returns>Lista di festa</returns>
-        internal List<Festa>? GetAll()
+        internal List<Holiday>? GetAll()
         {
             string query = $"SELECT * FROM Holiday";
             SqlCommand sqlCommand = new SqlCommand(query);
-            return DatabaseManager<List<Festa>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            return DatabaseManager<List<Holiday>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
         /// <summary>
         /// query al db, salva una festa al database
         /// </summary>
         /// <param name="festa">la festa da salvare</param>
-        internal void Add(Festa festa)
+        internal void Add(Holiday festa)
         {
             string query = $"INSERT INTO Holiday (day, description) VALUES (@day, @description);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@day", festa.Giorno.ToString("yyyy-MM-dd"));
-            sqlCommand.Parameters.AddWithValue("@description", festa.Descrizione);
+            sqlCommand.Parameters.AddWithValue("@day", festa.Date.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@description", festa.Description);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 

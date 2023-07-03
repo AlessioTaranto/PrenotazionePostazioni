@@ -40,7 +40,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 logger.Info("Month: " + month);
                 logger.Info("Day: " + day);
                 logger.Info("Trovando una festa mediante date...");
-                Festa holiday = _holidayService.GetByDate(new DateTime(year, month, day));
+                Holiday holiday = _holidayService.GetByDate(new DateTime(year, month, day));
                 if(holiday == null)
                 {
                     logger.Warn("Festa e' null, return NotFound");
@@ -72,7 +72,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 logger.Info("Trovando tutte le feste...");
-                List<Festa> holidays = _holidayService.GetAll();
+                List<Holiday> holidays = _holidayService.GetAll();
                 if(holidays == null)
                 {
                     logger.Warn("Nessuna festa trovata, NotFound");

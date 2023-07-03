@@ -24,11 +24,11 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="idUser"></param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto> GetUserVotes(int idUser)
+        internal List<Vote> GetUserVotes(int idUser)
         {
             logger.Info("Trovando tutti i voti effettuati da un utente...");
             logger.Info($"Verifico che l'idUser {idUser} sia associato a un utente valido");
-            Utente user = _userService.GetById(idUser);
+            User user = _userService.GetById(idUser);
             return _voteRepository.GetUserVotes(idUser);
         }
 
@@ -37,11 +37,11 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="idUser"></param>
         /// <returns>Lista di voti</returns>
-        internal List<Voto> GetVictimVotes(int idUser)
+        internal List<Vote> GetVictimVotes(int idUser)
         {
             logger.Info("Trovando tutti  i voti effettuati verso un determinato utente...");
             logger.Info($"Verifico che l'idUser {idUser} sia associato a un utente valido");
-            Utente user = _userService.GetById(idUser);
+            User user = _userService.GetById(idUser);
             return _voteRepository.GetVictimVotes(idUser);
         }
 
@@ -52,7 +52,7 @@ namespace prenotazioni_postazioni_api.Services
         internal void UpdateVote(VotoDto voteDto)
         {
             logger.Info("Trovando il voto mediante l'id dell'utente " + voteDto.IdUtente.IdUtente + " che ha votato e l'id dell'utente " + voteDto.IdUtenteVotato.IdUtente + " che ha ricevuto il voto");
-            Voto? vote = _voteRepository.GetUserVictimVote(voteDto.IdUtente.IdUtente, voteDto.IdUtenteVotato.IdUtente);
+            Vote? vote = _voteRepository.GetUserVictimVote(voteDto.IdUtente.IdUtente, voteDto.IdUtenteVotato.IdUtente);
             logger.Info("Controllando se il voto e' null..");
             if (vote == null)
             {
@@ -65,7 +65,7 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info("Il voto non e' null, il voto dunque e' gia stato effettuato in precedenza");
             logger.Info("Procedo con il cambiare il voto effettuato...");
             logger.Info("Controllo se il voto effettutato e' uguale al voto nel votoDto...");
-            if(vote.VotoEffettuato == voteDto.VotoEffettuato)
+            if(vote.VoteResults == voteDto.VotoEffettuato)
             {
                 logger.Fatal("ERRORE: Il voto effettutato e' uguale a quello nel votoDto...");
                 throw new PrenotazionePostazioniApiException("Il voto e' uguale");
@@ -81,13 +81,13 @@ namespace prenotazioni_postazioni_api.Services
             int id = 0;
             logger.Info($"Eliminazione voto di {idUtente} verso {idUtenteVotato}");
             logger.Info($"Ricerco esistenza voto");
-            List<Voto> votiApp = GetUserVotes(idUtente);
-            foreach(Voto voto in votiApp) if (!ok)
+            List<Vote> votiApp = GetUserVotes(idUtente);
+            foreach(Vote voto in votiApp) if (!ok)
             {
-                if(voto.IdUtenteVotato == idUtenteVotato)
+                if(voto.IdVictim == idUtenteVotato)
                 {
                     ok = true;
-                    id = voto.IdVoto;
+                    id = voto.Id;
                 }
             }
             if(ok == true)

@@ -20,11 +20,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Query al db per restituire il campo Impostazione Emergenza
         /// </summary>
         /// <returns>Lo stato dell'Impostazione Emergenza</returns>
-        public Impostazioni? Get()
+        public Settings? Get()
         {
             string query = "SELECT * FROM Settings;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            return DatabaseManager<Impostazioni>.GetInstance().MakeQueryOneResult(sqlCommand);
+            return DatabaseManager<Settings>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>

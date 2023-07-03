@@ -25,10 +25,10 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        public Ruolo GetById(int idUser)
+        public Role GetById(int idUser)
         {
             _logger.Info("Trovando il ruolo mediante il suo id: " + idUser);
-            Ruolo? role = _roleRepository.GetById(idUser);
+            Role? role = _roleRepository.GetById(idUser);
             if (role == null)
             {
                 _logger.Warn("Ruolo non trovato! Lancio una PrenotazionePrenotazioniApiException!");
@@ -48,10 +48,10 @@ namespace prenotazioni_postazioni_api.Services
             /// <param name="idUser"></param>
             /// <returns></returns>
             /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        public Ruolo GetByIdUser(int idUser)
+        public Role GetByIdUser(int idUser)
         {
             _logger.Info("Trovando un utente mediante il suo id utente: " + idUser);
-            Ruolo? role = _roleRepository.GetByUser(idUser);
+            Role? role = _roleRepository.GetByUser(idUser);
             _logger.Info("Controllando se l'utente e' valido...");
             if (role == null)
             {
@@ -72,12 +72,12 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="idAdmin">L'id dell'admin che effettua il cambiamento di accesso impostazioni all'utente</param>
         /// <returns>TRUE se l'admin ha accesso impostazioni a true, FALSE altrimenti</returns>
         /// <exception cref="PrenotazionePostazioniApiException">Se admin, utente, ruoloUtente, o ruoloAdmin sono null</exception>
-        internal bool Update(int idUser, int idAdmin)
+        internal bool Update(int idUser, int idAdmin, string futureRole)
         {
             _logger.Info("Trovando un utente mediante il suo id: " + idUser);
-            Utente user = _userRepository.GetById(idUser);
+            User user = _userRepository.GetById(idUser);
             _logger.Info("Trovando un utente admin mediante il suo idL: " + idAdmin);
-            Utente admin = _userRepository.GetById(idAdmin);
+            User admin = _userRepository.GetById(idAdmin);
             _logger.Info("Controllando se admin e' valido");
             if (admin == null){
                 _logger.Error("Admin non e' valido");
@@ -90,10 +90,10 @@ namespace prenotazioni_postazioni_api.Services
             }
             _logger.Info("Admin e Utente validi!");
             _logger.Info("Trovando il ruolo dell'utente...");
-            Ruolo? roleUser = _roleRepository.GetById(user.IdRuolo);
+            Role? roleUser = _roleRepository.GetById(user.IdRole);
             _logger.Info("Trovando il ruolo dell'admin...");
-            Console.WriteLine("Ruolo admin: " + admin.IdRuolo);
-            Ruolo? roleAdmin = _roleRepository.GetById(admin.IdRuolo);
+            Console.WriteLine("Ruolo admin: " + admin.IdRole);
+            Role? roleAdmin = _roleRepository.GetById(admin.IdRole);
             _logger.Info("Controllando se il ruolo admin e' valido...");
             if (roleAdmin == null)
             {
@@ -105,16 +105,22 @@ namespace prenotazioni_postazioni_api.Services
                 _logger.Error("Il ruolo dell'utente non e' valido");
                 throw new PrenotazionePostazioniApiException("ruolo utente non trovato");
             }
+            Role? roleFuture = _roleRepository.GetByName(futureRole);
+            if (roleFuture == null)
+            {
+                _logger.Error("Il ruolo futuro non è valido");
+                throw new PrenotazionePostazioniApiException("Ruolo futuro non trovato");
+            }
             _logger.Info("Il ruolo dell'admin e dell'utente sono validi!");
             _logger.Info("Procedo con il controllo se admin ha i permessi!");
-            if (!roleAdmin.AccessoImpostazioni)
+            if (!roleAdmin.AccessToSettings)
             {
                 _logger.Error("Admin non ha i permessi!");
                 return false;
             }
             _logger.Info("Admin ha i permessi");
             _logger.Info("Chiedo di cambiare il ruolo dell'utente");
-            _roleRepository.UpdateUserRole (user.IdUtente, user.IdRuolo);
+            _roleRepository.UpdateUserRole (user.Id, roleFuture.Id);
             _logger.Info("Ho cambiato il ruolo dell'utente con successo!");
             return true;
         }

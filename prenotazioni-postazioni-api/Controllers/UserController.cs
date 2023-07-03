@@ -26,7 +26,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Prelevando tutti gli utenti...");
-                List<Utente> users = _UserService.GetAll();
+                List<User> users = _UserService.GetAll();
                 _logger.Info("Prelevato tutti gli utenti con successo!");
 
                 return Ok(users);
@@ -51,7 +51,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUser);
                 _logger.Info("Prelevando un utente mediante il suo id: " + idUser + "...");
-                Utente user = _UserService.GetById(idUser);
+                User user = _UserService.GetById(idUser);
                 _logger.Info("Utente trovato con successo!");
                 return Ok(user);
             }catch(PrenotazionePostazioniApiException ex)
@@ -75,7 +75,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Nome: " + name);
                 _logger.Info("Cognome: " + surname);
                 _logger.Info($"Trovando l'utente mediante il suo nome {name} {surname}...");
-                Utente user = _UserService.GetByName(name, surname);
+                User user = _UserService.GetByName(name, surname);
                 _logger.Info($"utente trovato mediante il suo nome con successo!");
                 return Ok(user);
             }
@@ -104,7 +104,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Email: " + email);
                 _logger.Info($"Trovando l'utente mediante la sua email:{email}...");
-                Utente user = _UserService.GetByEmail(email);
+                User user = _UserService.GetByEmail(email);
                 _logger.Info("Utente trovato mediante il suo email con successo!");
                 return Ok(user);
             }
@@ -132,7 +132,7 @@ namespace prenotazioni_postazioni_api.Controllers
             DateTime date = new DateTime(year, month, day);
             try
             {
-                List<Utente> users = _UserService.GetByDate(date);
+                List<User> users = _UserService.GetByDate(date);
                 return Ok(users);
             }
             catch (Exception ex)

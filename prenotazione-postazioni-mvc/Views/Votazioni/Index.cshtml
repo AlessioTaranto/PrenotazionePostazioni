@@ -22,16 +22,16 @@
 
 
 @{
-    Utente LoggedUser = JsonConvert.DeserializeObject<Utente>(HttpContextAccessor.HttpContext.Session.GetString("_User"));
+    @int LoggedUser = JsonConvert.DeserializeObject<@int>(HttpContextAccessor.HttpContext.Session.GetString("_User"));
 
 
     HttpResponseMessage? getAllUtentiResult = await _utenteHttpService.OnGetAllUtenti(); 
     HttpResponseMessage? getAllVotiResult = await _votoHttpService.OnGetVotiFromUtente(LoggedUser.IdUtente); 
-    List<Utente>? utenti = null;
+    List<@int>? utenti = null;
     List<Voto>? voti = null;
     if(getAllUtentiResult != null && getAllUtentiResult.StatusCode == HttpStatusCode.OK && getAllVotiResult.StatusCode == HttpStatusCode.OK)
     {
-        utenti = await getAllUtentiResult.Content.ReadFromJsonAsync<List<Utente>?>();
+        utenti = await getAllUtentiResult.Content.ReadFromJsonAsync<List<@int>?>();
         voti = await getAllVotiResult.Content.ReadFromJsonAsync<List<Voto>?>();
 
         for(int i = 0; i < utenti.Count; i++)

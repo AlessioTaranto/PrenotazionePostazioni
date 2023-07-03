@@ -17,7 +17,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="date">la data</param>
         /// <returns>lista di date</returns>
-        internal Festa GetByDate(DateTime date)
+        internal Holiday GetByDate(DateTime date)
         {
             logger.Info("Chiedendo a FestaRepository di trovare una festa mediante una data...");
             return _holidayRepository.GetByDate(date);
@@ -28,7 +28,7 @@ namespace prenotazioni_postazioni_api.Services
         /// Restituisce tutte le feste
         /// </summary>
         /// <returns>Lista di feste</returns>
-        internal List<Festa> GetAll()
+        internal List<Holiday> GetAll()
         {
             logger.Info("Chiedendo a FestaRepository di trovare tutte le feste");
             return _holidayRepository.GetAll();
@@ -48,7 +48,7 @@ namespace prenotazioni_postazioni_api.Services
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
             logger.Info("FestaDto e' valida. Cercando di salvare Festa nel database...");
-            _holidayRepository.Add(new Festa(holiday.Date, holiday.Desc));
+            _holidayRepository.Add(new Holiday(holiday.Date, holiday.Desc));
         }
 
         /// <summary>

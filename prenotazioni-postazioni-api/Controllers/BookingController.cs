@@ -33,8 +33,8 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Id Prenotazione: " + idBooking);
                 _logger.Info("Trovando una prenotazione mediante l'id...");
                 _logger.Info("Id: " + idBooking);
-                Prenotazione booking = _bookingService.GetById(idBooking);
-                _logger.Info("Trovato una prenotazione con id: " + booking.IdPrenotazioni + " con successo");
+                Booking booking = _bookingService.GetById(idBooking);
+                _logger.Info("Trovato una prenotazione con id: " + booking.Id + " con successo");
                 return Ok(booking);
             }catch(PrenotazionePostazioniApiException ex)
             {
@@ -58,7 +58,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Trovando tutte le prenotazioni...");
-                List<Prenotazione> bookings = _bookingService.GetAll();
+                List<Booking> bookings = _bookingService.GetAll();
                 _logger.Info("Prenotazioni trovate con successo!");
                 return Ok(bookings);
             }
@@ -82,7 +82,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id stanza: " + idRoom);
                 _logger.Info("Trovando tutte le prenotazioni di una stanza...");
-                List<Prenotazione> bookings = _bookingService.GetByRoom(idRoom);
+                List<Booking> bookings = _bookingService.GetByRoom(idRoom);
                 _logger.Info("Prenotazioni della stanza ID: " + idRoom + " trovate!");
                 return Ok(bookings);
             }catch(PrenotazionePostazioniApiException ex)
@@ -111,7 +111,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUser);
                 _logger.Info("Trovando tutte le prenotazioni di un utente");
-                List<Prenotazione> bookings = _bookingService.GetByUser(idUser);
+                List<Booking> bookings = _bookingService.GetByUser(idUser);
                 _logger.Info("Prenotazioni dell'id utente: " + idUser + " trovate con successo!");
                 return Ok(bookings);
             }catch(PrenotazionePostazioniApiException ex)
@@ -147,7 +147,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("StartDate: " + startDate.ToString());
                 _logger.Info("EndDate: " + endDate.ToString());
                 _logger.Info("Trovando tutte le prenotazioni di una data...");
-                List<Prenotazione> bookings = _bookingService.GetAllByRoomDate(idRoom, startDate, endDate);
+                List<Booking> bookings = _bookingService.GetAllByRoomDate(idRoom, startDate, endDate);
                 _logger.Info("Prenotazioni della stanza trovate con successo");
                 return Ok(bookings);
             }catch(PrenotazionePostazioniApiException ex)

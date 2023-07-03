@@ -58,12 +58,12 @@ namespace prenotazioni_postazioni_api.Controllers
         /// </param>
         [HttpPut]
         [Route("update")]
-        public IActionResult Update()
+        public IActionResult Update(int idAdmin)
         {
             try
             {
                 _logger.Info("Cambiando l'impostazione di emergenza...");
-                _settingsService.Update();
+                _settingsService.Update(idAdmin);
                 _logger.Info("Impostazione di emergenza cambiato con successo");
                 return Ok();
             }

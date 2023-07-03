@@ -191,14 +191,14 @@ public class HomeController : Controller
     public IActionResult DeletePrenotazione(string user, string room, string start, string end)
     {
 
-        Task<Prenotazione> prenotazioneTask = ViewModel?.GetPrenotazione(user, room, start, end);
+        Task<Booking> prenotazioneTask = ViewModel?.GetPrenotazione(user, room, start, end);
         prenotazioneTask.Wait();
-        Prenotazione? prenotazione = prenotazioneTask.Result;
+        Booking? prenotazione = prenotazioneTask.Result;
 
         if (prenotazione == null)
             return NotFound("Prenotazione non trovata");
 
-        Task<HttpResponseMessage>? getRq = ViewModel?.DeletePrenotazione(prenotazione.IdPrenotazioni);
+        Task<HttpResponseMessage>? getRq = ViewModel?.DeletePrenotazione(prenotazione.Id);
         getRq.Wait();
         HttpStatusCode code = getRq.Result.StatusCode;
 

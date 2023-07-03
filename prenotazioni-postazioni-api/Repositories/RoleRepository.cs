@@ -5,6 +5,7 @@ using prenotazioni_postazioni_api.Repositories.Database;
 using System.Data.SqlClient;
 using prenotazioni_postazioni_api.Exceptions;
 using log4net;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace prenotazioni_postazioni_api.Repositories
 {
@@ -21,11 +22,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUtente">L'id dell'utente</param>
         /// <returns>Ruolo trovato, null altrimenti</returns>
-        public Ruolo? GetById(int idRole)
+        public Role? GetById(int idRole)
         {
             string query = $"SELECT * FROM Role WHERE id = {idRole};";
             SqlCommand sqlCommand = new SqlCommand(query);
-            return DatabaseManager<Ruolo>.GetInstance().MakeQueryOneResult(sqlCommand);
+            return DatabaseManager<Role>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>
@@ -33,20 +34,28 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="idUser">L'id dell'utente che servira per trovare il suo ruolo</param>
         /// <returns>Ruolo dell'utente, null altrimenti</returns>
-        public Ruolo? GetByUser(int idUser)
+        public Role? GetByUser(int idUser)
         {
             string query = $"SELECT * FROM User WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);
-            Utente? utente = DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
+            User? utente = DatabaseManager<User>.GetInstance().MakeQueryOneResult(sqlCommand);
             if(utente == null)
             {
                 throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             }
             query = $"SELECT * FROM Role WHERE id = @idRole;";
             sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@idRole", utente.IdRuolo);
-            return DatabaseManager<Ruolo>.GetInstance().MakeQueryOneResult(sqlCommand);
+            sqlCommand.Parameters.AddWithValue("@idRole", utente.IdRole);
+            return DatabaseManager<Role>.GetInstance().MakeQueryOneResult(sqlCommand);
+        }
+
+        public Role? GetByName(string name)
+        {
+            string query = $"SELECT * FROM Role WHERE name = @name;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@name", name);
+            return DatabaseManager<Role>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
         /// Query al db, switch il ruolo accesso impostazioni dell'utente

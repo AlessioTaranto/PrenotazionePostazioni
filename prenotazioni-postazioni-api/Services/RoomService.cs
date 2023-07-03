@@ -22,7 +22,7 @@ namespace prenotazioni_postazioni_api.Services
         /// restituisce tutte le stanze presenti nel database
         /// </summary>
         /// <returns>una lista di stanza</returns>
-        internal List<Stanza> GetAll()
+        internal List<Room> GetAll()
         {
             logger.Info("trovando tutte le stanze... chiamando il metodo GetAll...");
             return _roomRepository.GetAll();
@@ -34,10 +34,10 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="id">L'id della stanza</param>
         /// <returns>Stanza trovata, null altrimenti</returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        internal Stanza GetById(int id)
+        internal Room GetById(int id)
         {
             logger.Info("Troovando una stanza mediante il suo id: " + id);
-            Stanza room = _roomRepository.GetById(id);
+            Room room = _roomRepository.GetById(id);
             logger.Info("Controllando se la stanza trovata e' valida...");
             if (room == null)
             {
@@ -54,10 +54,10 @@ namespace prenotazioni_postazioni_api.Services
         /// <param name="name">il nome della stanza da trovare</param>
         /// <returns>stanza trovata, null altrimenti</returns>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        internal Stanza GetByName(string name)
+        internal Room GetByName(string name)
         {
             logger.Info("Trovando la stanza mediante il suo nome: " + name);
-            Stanza room = _roomRepository.GetByName(name);
+            Room room = _roomRepository.GetByName(name);
             logger.Info("Controllando se la stanza trovata e' valida...");
             if (room == null)
             {
@@ -83,7 +83,7 @@ namespace prenotazioni_postazioni_api.Services
             {
                 logger.Info("stanzaDto e' valida!");
                 logger.Info("Convertendo la stanzaDto in Stanza...");
-                Stanza stanza = new Stanza(roomDto.Nome, roomDto.PostiMax, roomDto.PostiMaxEmergenza);
+                Room stanza = new Room(roomDto.Nome, roomDto.PostiMax, roomDto.PostiMaxEmergenza);
                 logger.Info("Procedo con il salvataggio della stanza nel database...");
                 _roomRepository.Add(stanza);
             }
@@ -104,10 +104,10 @@ namespace prenotazioni_postazioni_api.Services
             /// <returns>True se il nome è unico, False se la stanza è già presente</returns>
             private bool Check(StanzaDto roomDto)
         {
-            List<Stanza> rooms = GetAll();
+            List<Room> rooms = GetAll();
             for(int i = 0; i < rooms.Count; i++)
             {
-                if (rooms[i].Nome == roomDto.Nome) return false;
+                if (rooms[i].Name == roomDto.Nome) return false;
             }
             return true;
         }
