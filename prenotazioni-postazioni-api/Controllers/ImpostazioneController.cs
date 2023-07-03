@@ -12,10 +12,10 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/impostazioni")]
     public class ImpostazioneController : ControllerBase
     {
-        private ImpostazioneService _impostazioneService;
+        private SettingsService _impostazioneService;
         private readonly ILog _logger = LogManager.GetLogger(typeof(ImpostazioneController));
 
-        public ImpostazioneController(ImpostazioneService impostazioneService)
+        public ImpostazioneController(SettingsService impostazioneService)
         {
             _impostazioneService = impostazioneService;
         }
@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Prelevando l'impostazione di emergenza...");
-                bool impostazineEmergenza = _impostazioneService.GetImpostazioneEmergenza();
+                bool impostazineEmergenza = _impostazioneService.GetModEmergency();
                 _logger.Info("Trovato impostazione di emergenza con successo!");
                 return Ok(impostazineEmergenza);
             }
@@ -63,7 +63,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Cambiando l'impostazione di emergenza...");
-                _impostazioneService.ChangeImpostazioniEmergenza();
+                _impostazioneService.UpdateModEmergency();
                 _logger.Info("Impostazione di emergenza cambiato con successo");
                 return Ok();
             }

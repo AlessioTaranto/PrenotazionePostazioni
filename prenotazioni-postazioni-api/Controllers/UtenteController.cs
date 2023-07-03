@@ -11,10 +11,10 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/utenti")]
     public class UtenteController : ControllerBase
     {
-        private UtenteService _utenteService;
+        private UserService _utenteService;
         private readonly ILog _logger = LogManager.GetLogger(typeof(UtenteController));
 
-        public UtenteController( UtenteService utenteService)
+        public UtenteController( UserService utenteService)
         {
             _utenteService = utenteService;
         }
@@ -26,7 +26,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Prelevando tutti gli utenti...");
-                List<Utente> utenti = _utenteService.getAllUtenti();
+                List<Utente> utenti = _utenteService.GetAll();
                 _logger.Info("Prelevato tutti gli utenti con successo!");
 
                 return Ok(utenti);
@@ -51,7 +51,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + id);
                 _logger.Info("Prelevando un utente mediante il suo id: " + id + "...");
-                Utente utente = _utenteService.GetUtenteById(id);
+                Utente utente = _utenteService.GetById(id);
                 _logger.Info("Utente trovato con successo!");
                 return Ok(utente);
             }catch(PrenotazionePostazioniApiException ex)
@@ -75,7 +75,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Nome: " + nome);
                 _logger.Info("Cognome: " + cognome);
                 _logger.Info($"Trovando l'utente mediante il suo nome {nome} {cognome}...");
-                Utente utente = _utenteService.GetUtenteByName(nome, cognome);
+                Utente utente = _utenteService.GetByName(nome, cognome);
                 _logger.Info($"utente trovato mediante il suo nome con successo!");
                 return Ok(utente);
             }
@@ -104,7 +104,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Email: " + email);
                 _logger.Info($"Trovando l'utente mediante la sua email:{email}...");
-                Utente utente = _utenteService.GetUtenteByEmail(email);
+                Utente utente = _utenteService.GetByEmail(email);
                 _logger.Info("Utente trovato mediante il suo email con successo!");
                 return Ok(utente);
             }
@@ -132,7 +132,7 @@ namespace prenotazioni_postazioni_api.Controllers
             DateTime date = new DateTime(year, month, day);
             try
             {
-                List<Utente> utenti = _utenteService.GetUtentiPrenotatiByDay(date);
+                List<Utente> utenti = _utenteService.GetByDate(date);
                 return Ok(utenti);
             }
             catch (Exception ex)
@@ -156,7 +156,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Nome utente: " + utenteDto.Nome);
                 _logger.Info("Cognome utente: " + utenteDto.Cognome);
                 _logger.Info("Salvando un utente nel database...");
-                _utenteService.Save(utenteDto);
+                _utenteService.Add(utenteDto);
                 _logger.Info("Utente salvato nel database con successo!");
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)

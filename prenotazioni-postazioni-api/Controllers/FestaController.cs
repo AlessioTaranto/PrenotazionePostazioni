@@ -13,9 +13,9 @@ namespace prenotazioni_postazioni_api.Controllers
     public class FestaController : ControllerBase
     {
         private readonly ILog logger = LogManager.GetLogger(typeof(FestaController));
-        private FestaService _festaService;
+        private HolidayService _festaService;
 
-        public FestaController(FestaService festaService)
+        public FestaController(HolidayService festaService)
         {
             this._festaService = festaService;
         }
@@ -102,7 +102,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 logger.Info("Giorno della festa: " + festaDto.Date);
                 logger.Info("Descrizione della festa: " + festaDto.Desc);
                 logger.Info("Salvando una festaDto del database...");
-                _festaService.Save(festaDto);
+                _festaService.Add(festaDto);
                 logger.Info("FestaDto salvato con successo, Ok");
                 return Ok();
             }
@@ -126,7 +126,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 DateTime dayTime = new DateTime(year, month, day);
 
                 logger.Info("Giorno della festa: " + dayTime);
-                _festaService.Remove(dayTime);
+                _festaService.Delete(dayTime);
                 return Ok();
             }
             catch (PrenotazionePostazioniApiException ex)

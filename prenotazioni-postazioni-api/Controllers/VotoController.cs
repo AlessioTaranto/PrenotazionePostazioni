@@ -11,10 +11,10 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/voti")]
     public class VotoController : ControllerBase
     {
-        private VotoService _votoService;
+        private VoteService _votoService;
         private readonly ILog _logger = LogManager.GetLogger(typeof(VotoController));
 
-        public VotoController(VotoService votoService)
+        public VotoController(VoteService votoService)
         {
             this._votoService = votoService;
         }
@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUtente);
                 _logger.Info("Trovando tutti i voti effettuati di un utente...");
-                List<Voto> voti = _votoService.GetVotiFromUtente(idUtente);
+                List<Voto> voti = _votoService.GetUserVotes(idUtente);
                 _logger.Info("Voti dell'utente trovati con successo!");
                 return Ok(voti);
             }
@@ -59,7 +59,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUtente);
                 _logger.Info("Trovando tutti i voti che sono stati effettuati su un utente...");
-                List<Voto> voti = _votoService.GetVotiToUtente(idUtente);
+                List<Voto> voti = _votoService.GetVictimVotes(idUtente);
                 _logger.Info("Voti trovati con successo!");
                 return Ok(voti);
             }
@@ -84,7 +84,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Voto utente: " + votoDto.Utente.Nome);
                 _logger.Info("Voto utente votato: " + votoDto.UtenteVotato.Nome);
                 _logger.Info("Effettuando un voto su un utente...");
-                _votoService.MakeVotoToUtente(votoDto);
+                _votoService.UpdateVote(votoDto);
                 _logger.Info("Voto effettuato con successo!");
                 return Ok();
             }

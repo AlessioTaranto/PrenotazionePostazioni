@@ -13,10 +13,10 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/ruoli")]
     public class RuoloController : ControllerBase
     {
-        private RuoloService _ruoloService;
+        private RoleService _ruoloService;
         private readonly ILog _logger = LogManager.GetLogger(typeof(RuoloController));
 
-        public RuoloController(RuoloService ruoloService)
+        public RuoloController(RoleService ruoloService)
         {
             _ruoloService = ruoloService;
         }
@@ -37,7 +37,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id ruolo: " + idRuolo);
                 _logger.Info("Prelevando un ruolo mediante Ruolo Id...");
-                Ruolo ruolo = _ruoloService.GetRuoloById(idRuolo);
+                Ruolo ruolo = _ruoloService.GetById(idRuolo);
                 _logger.Info("Ruolo prelevato con successo!");
                 return Ok(ruolo);
             }
@@ -66,7 +66,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUtente);
                 _logger.Info("Trovando un ruolo mediante l'id dell'utente...");
-                Ruolo ruolo = _ruoloService.GetRuoloByIdUtente(idUtente);
+                Ruolo ruolo = _ruoloService.GetByIdUser(idUtente);
                 _logger.Info("Ruolo dell'id utente: " + idUtente + " trovato con successo!");
                 return Ok(ruolo);
             }
@@ -97,7 +97,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Id Utente: " + idUtente);
                 _logger.Info("Id admin: " + idAdmin);
                 _logger.Info("Aggiornando il ruolo di un utente...");
-                bool ok = _ruoloService.UpdateRuoloUtenteByAdminUtenteId(idUtente, idAdmin);
+                bool ok = _ruoloService.Update(idUtente, idAdmin);
                 _logger.Info("Controllando se l'autorizzazione e' valida...");
                 if (ok)
                 {

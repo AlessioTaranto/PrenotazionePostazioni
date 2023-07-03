@@ -34,11 +34,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id dell'utente da trovare</param>
         /// <returns>L'utente trovato, null altrimenti</returns>
-        internal Utente? GetById(int idUtente)
+        internal Utente? GetById(int idUser)
         {
-            string query = $"SELECT * FROM User WHERE id = @id_utente;";
+            string query = $"SELECT * FROM User WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@id_utente", idUtente);
+            sqlCommand.Parameters.AddWithValue("@idUser", idUser);
             return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
@@ -62,22 +62,21 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Add(Utente utente)
         {
-            string query = $"INSERT INTO User (name, surname, email, idRole) VALUES (@nome, @cognome, @email, @id_ruolo);";
+            string query = $"INSERT INTO User (name, surname, email, idRole) VALUES (@name, @surname, @email, @idRole);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@nome", utente.Nome);
-            sqlCommand.Parameters.AddWithValue("@cognome", utente.Cognome);
-            sqlCommand.Parameters.AddWithValue("@image", utente.Image);
+            sqlCommand.Parameters.AddWithValue("@name", utente.Nome);
+            sqlCommand.Parameters.AddWithValue("@surname", utente.Cognome);
             sqlCommand.Parameters.AddWithValue("@email", utente.Email);
-            sqlCommand.Parameters.AddWithValue("@id_ruolo", utente.IdRuolo);
+            sqlCommand.Parameters.AddWithValue("@idRole", utente.IdRuolo);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal Utente? GetByName(string nome, string cognome)
+        internal Utente? GetByName(string name, string surname)
         {
-            string query = $"SELECT * FROM User WHERE (name = @nome AND surname = @cognome)";
+            string query = $"SELECT * FROM User WHERE (name = @name AND surname = @surname)";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@nome", nome);
-            sqlCommand.Parameters.AddWithValue("@cognome", cognome);
+            sqlCommand.Parameters.AddWithValue("@name", name);
+            sqlCommand.Parameters.AddWithValue("@surname", surname);
             return DatabaseManager<Utente>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 

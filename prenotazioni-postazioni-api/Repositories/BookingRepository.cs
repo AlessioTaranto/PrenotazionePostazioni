@@ -16,26 +16,25 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <summary>
         /// Query al db per restitire una Prenotazione in base al suo Id
         /// </summary>
-        /// <param name="idPrenotazione">Id della Prenotazione</param>
+        /// <param name="idBooking">Id della Prenotazione</param>
         /// <returns>Prenotazione</returns>
-        internal Prenotazione? GetById(int idPrenotazione)
+        internal Prenotazione? GetById(int idBooking)
         {
-
-            string query = "SELECT * FROM Booking WHERE id = @id_prenotazione;";
+            string query = "SELECT * FROM Booking WHERE id = @idBooking;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@id_prenotazione", idPrenotazione);
+            sqlCommand.Parameters.AddWithValue("@idBooking", idBooking);
             return DatabaseManager<Prenotazione>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
         /// Query al db per restituire una Prenotazione in base all'id della stanza associata
         /// </summary>
-        /// <param name="idStanza">L'Id della stanza associata alla Prenotazione</param>
+        /// <param name="idRoom">L'Id della stanza associata alla Prenotazione</param>
         /// <returns>Lista di Prenotazione</returns>
-        internal List<Prenotazione>? GetByRoom(int idStanza)
+        internal List<Prenotazione>? GetByRoom(int idRoom)
         {
-            string query = $"SELECT * FROM Booking WHERE idRoom = @id_stanza;";
+            string query = $"SELECT * FROM Booking WHERE idRoom = @idRoom;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@id_stanza", idStanza);
+            sqlCommand.Parameters.AddWithValue("@idRoom", idRoom);
             return DatabaseManager<List<Prenotazione>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
@@ -52,13 +51,13 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <summary>
         /// Query al db per restituire una Prenotazione in base all'id dell'utente
         /// </summary>
-        /// <param name="idUtente">L'id dell'utente associata alla Prenotazione</param>
+        /// <param name="idUser">L'id dell'utente associata alla Prenotazione</param>
         /// <returns>Prenotazione</returns>
-        internal List<Prenotazione>? GetByUser(int idUtente)
+        internal List<Prenotazione>? GetByUser(int idUser)
         {
-            string query = $"SELECT * FROM Booking WHERE idUser = @id_utente;";
+            string query = $"SELECT * FROM Booking WHERE idUser = @idUser;";
             SqlCommand cmd = new SqlCommand(query);
-            cmd.Parameters.AddWithValue("@id_utente", idUtente);
+            cmd.Parameters.AddWithValue("@idUser", idUser);
             return DatabaseManager<List<Prenotazione>>.GetInstance().MakeQueryMoreResults(cmd);
 
         }
@@ -66,15 +65,15 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <summary>
         /// Query al db, aggiunge una nuova prenotazione nella tabella Prenotazioni
         /// </summary>
-        /// <param name="prenotazione">La prenotazione da aggiungere al database</param>
-        internal void Add(Prenotazione prenotazione)
+        /// <param name="booking">La prenotazione da aggiungere al database</param>
+        internal void Add(Prenotazione booking)
         {
-            string query = $"INSERT INTO Booking (startDate, endDate, idRoom, idUser) VALUES (@start_date, @end_date, @id_stanza, @id_utente);";
+            string query = $"INSERT INTO Booking (startDate, endDate, idRoom, idUser) VALUES (@startDate, @endDate, @idRoom, @idUser);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@start_date", prenotazione.StartDate.ToString("yyyy-MM-ddTHH:mm:ss"));
-            sqlCommand.Parameters.AddWithValue("@end_date", prenotazione.EndDate.ToString("yyyy-MM-ddTHH:mm:ss"));
-            sqlCommand.Parameters.AddWithValue("@id_utente", prenotazione.IdUtente);
-            sqlCommand.Parameters.AddWithValue("@id_stanza", prenotazione.IdStanza);
+            sqlCommand.Parameters.AddWithValue("@startDate", booking.StartDate.ToString("yyyy-MM-ddTHH:mm:ss"));
+            sqlCommand.Parameters.AddWithValue("@endDate", booking.EndDate.ToString("yyyy-MM-ddTHH:mm:ss"));
+            sqlCommand.Parameters.AddWithValue("@idUser", booking.IdUtente);
+            sqlCommand.Parameters.AddWithValue("@idRoom", booking.IdStanza);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
@@ -82,16 +81,16 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <summary>
         /// Query al db, restituisce una lista di prenotazione mediante la stanza e l'intervallo di tempo
         /// </summary>
-        /// <param name="idStanza">L'id della stanza dove sono effettuate delle prenotazioni</param>
+        /// <param name="idRoom">L'id della stanza dove sono effettuate delle prenotazioni</param>
         /// <param name="date">La data delle prenotazioni</param>
         /// <returns></returns>
-        internal List<Prenotazione>? GetAllByRoomDate(int idStanza, DateTime startDate, DateTime endDate)
+        internal List<Prenotazione>? GetAllByRoomDate(int idRoom, DateTime startDate, DateTime endDate)
         {
             string start = startDate.ToString("yyyy-MM-ddTHH:mm:ss");
             string end = endDate.ToString("yyyy-MM-ddTHH:mm:ss");
-            string query = $"SELECT * FROM Booking WHERE((idRoom = @id_stanza)AND((startDate BETWEEN @start AND @end) OR(endDate BETWEEN @start AND @end) OR (DATEDIFF(HH, startDate, @start) >= 0 AND DATEDIFF(HH, endDate, @end) <= 0)))";
+            string query = $"SELECT * FROM Booking WHERE((idRoom = @idRoom)AND((startDate BETWEEN @start AND @end) OR(endDate BETWEEN @start AND @end) OR (DATEDIFF(HH, startDate, @start) >= 0 AND DATEDIFF(HH, endDate, @end) <= 0)))";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@id_stanza", idStanza);
+            sqlCommand.Parameters.AddWithValue("@id_stanza", idRoom);
             sqlCommand.Parameters.AddWithValue("@start", start);
             sqlCommand.Parameters.AddWithValue("@end", end);
             return DatabaseManager<List<Prenotazione>>.GetInstance().MakeQueryMoreResults(sqlCommand);
@@ -100,12 +99,12 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <summary>
         /// Cancella una prenotazione dal DB
         /// </summary>
-        /// <param name="idPrenotazione">Id della prenotazione da cancellare</param>
-        internal void Delete(int idPrenotazione)
+        /// <param name="idBooking">Id della prenotazione da cancellare</param>
+        internal void Delete(int idBooking)
         {
-            string query = $"DELETE FROM Booking WHERE id = @id_prenotazione   ;";
+            string query = $"DELETE FROM Booking WHERE id = @idBooking   ;";
             SqlCommand cmd = new SqlCommand(query);
-            cmd.Parameters.AddWithValue("@id_prenotazione", idPrenotazione);
+            cmd.Parameters.AddWithValue("@idBooking", idBooking);
             DatabaseManager<List<Prenotazione>>.GetInstance().MakeQueryMoreResults(cmd);
         }
 

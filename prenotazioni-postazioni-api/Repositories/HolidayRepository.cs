@@ -21,9 +21,9 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Feste</returns>
         internal Festa? GetByDate(DateTime date)
         {
-            string query = "SELECT * FROM Holiday WHERE day = @giorno;";
+            string query = "SELECT * FROM Holiday WHERE day = @dya;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@giorno", date.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@day", date.ToString("yyyy-MM-dd"));
             return DatabaseManager<Festa>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
@@ -43,10 +43,10 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="festa">la festa da salvare</param>
         internal void Add(Festa festa)
         {
-            string query = $"INSERT INTO Holiday (day, description) VALUES (@festa_giorno, @festa_desc);";
+            string query = $"INSERT INTO Holiday (day, description) VALUES (@day, @description);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@festa_giorno", festa.Giorno.ToString("yyyy-MM-dd"));
-            sqlCommand.Parameters.AddWithValue("@festa_desc", festa.Descrizione);
+            sqlCommand.Parameters.AddWithValue("@day", festa.Giorno.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@description", festa.Descrizione);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
@@ -56,9 +56,9 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="day">indica il giorno in cui cade la festività</param>
         internal void Delete(DateTime day)
         {
-            string query = $"DELETE FROM Holiday WHERE giorno = @festa_giorno;";
+            string query = $"DELETE FROM Holiday WHERE day = @day;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@festa_giorno", day.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@day", day.ToString("yyyy-MM-dd"));
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }

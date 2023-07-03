@@ -12,10 +12,10 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("api/prenotazioni")]
     public class PrenotazioneController : ControllerBase
     {
-        private PrenotazioneService _prenotazioneService;
+        private BookingService _prenotazioneService;
         private readonly ILog _logger = LogManager.GetLogger(typeof(PrenotazioneController));
 
-        public PrenotazioneController(PrenotazioneService prenotazioneService)
+        public PrenotazioneController(BookingService prenotazioneService)
         {
             _prenotazioneService = prenotazioneService;
         }
@@ -33,7 +33,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Id Prenotazione: " + idPrenotazione);
                 _logger.Info("Trovando una prenotazione mediante l'id...");
                 _logger.Info("Id: " + idPrenotazione);
-                Prenotazione prenotazione = _prenotazioneService.GetPrenotazioneById(idPrenotazione);
+                Prenotazione prenotazione = _prenotazioneService.GetById(idPrenotazione);
                 _logger.Info("Trovato una prenotazione con id: " + prenotazione.IdPrenotazioni + " con successo");
                 return Ok(prenotazione);
             }catch(PrenotazionePostazioniApiException ex)
@@ -58,7 +58,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Trovando tutte le prenotazioni...");
-                List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioni();
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetAll();
                 _logger.Info("Prenotazioni trovate con successo!");
                 return Ok(prenotazioni);
             }
@@ -82,7 +82,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id stanza: " + idStanza);
                 _logger.Info("Trovando tutte le prenotazioni di una stanza...");
-                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByStanza(idStanza);
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetByRoom(idStanza);
                 _logger.Info("Prenotazioni della stanza ID: " + idStanza + " trovate!");
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
@@ -111,7 +111,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id utente: " + idUtente);
                 _logger.Info("Trovando tutte le prenotazioni di un utente");
-                List<Prenotazione> prenotazioni = _prenotazioneService.GetPrenotazioniByUtente(idUtente);
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetByUser(idUtente);
                 _logger.Info("Prenotazioni dell'id utente: " + idUtente + " trovate con successo!");
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
@@ -147,7 +147,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("StartDate: " + startDate.ToString());
                 _logger.Info("EndDate: " + endDate.ToString());
                 _logger.Info("Trovando tutte le prenotazioni di una data...");
-                List<Prenotazione> prenotazioni = _prenotazioneService.GetAllPrenotazioniByIdStanzaAndDate(idStanza, startDate, endDate);
+                List<Prenotazione> prenotazioni = _prenotazioneService.GetAllByRoomDate(idStanza, startDate, endDate);
                 _logger.Info("Prenotazioni della stanza trovate con successo");
                 return Ok(prenotazioni);
             }catch(PrenotazionePostazioniApiException ex)
@@ -180,7 +180,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 _logger.Info("Fine data: " + prenotazioneDto.EndDate.ToString());
                 _logger.Info("Stanza: " + prenotazioneDto.Stanza.Nome);
                 _logger.Info("Aggiungendo una prenotazioneDto nel database...");
-                _prenotazioneService.Save(prenotazioneDto);
+                _prenotazioneService.Add(prenotazioneDto);
                 _logger.Info("PrenotazioneDto aggiunto con successo!");
                 return Ok();
             }

@@ -20,31 +20,31 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<FestaController, FestaController>();
-builder.Services.AddSingleton<FestaService, FestaService>();
+builder.Services.AddSingleton<HolidayService, HolidayService>();
 builder.Services.AddSingleton<HolidayRepository, HolidayRepository>();
 
 builder.Services.AddSingleton<ImpostazioneController, ImpostazioneController>();
 builder.Services.AddSingleton<SettingsRepository, SettingsRepository>();
-builder.Services.AddSingleton<ImpostazioneService, ImpostazioneService>();
+builder.Services.AddSingleton<SettingsService, SettingsService>();
 
 builder.Services.AddSingleton<PrenotazioneController, PrenotazioneController>();
-builder.Services.AddSingleton<PrenotazioneService, PrenotazioneService>();
+builder.Services.AddSingleton<BookingService, BookingService>();
 builder.Services.AddSingleton<BookingRepository, BookingRepository>();
 
 builder.Services.AddSingleton<RuoloController, RuoloController>();
-builder.Services.AddSingleton<RuoloService, RuoloService>();
+builder.Services.AddSingleton<RoleService, RoleService>();
 builder.Services.AddSingleton<RoleRepository, RoleRepository>();
 
 builder.Services.AddSingleton<StanzaController, StanzaController>();
-builder.Services.AddSingleton<StanzaService, StanzaService>();
+builder.Services.AddSingleton<RoomService, RoomService>();
 builder.Services.AddSingleton<RoomRepository, RoomRepository>();
 
 builder.Services.AddSingleton<UtenteController, UtenteController>();
-builder.Services.AddSingleton<UtenteService, UtenteService>();
+builder.Services.AddSingleton<UserService, UserService>();
 builder.Services.AddSingleton<UserRepository, UserRepository>();
 
 builder.Services.AddSingleton<VotoController, VotoController>();
-builder.Services.AddSingleton<VotoService, VotoService>();
+builder.Services.AddSingleton<VoteService, VoteService>();
 builder.Services.AddSingleton<VoteRepository, VoteRepository>();
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");

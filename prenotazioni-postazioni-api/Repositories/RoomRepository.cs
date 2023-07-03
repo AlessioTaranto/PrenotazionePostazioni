@@ -33,55 +33,55 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="id">L'id della stanza</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza? GetById(int idStanza)
+        internal Stanza? GetById(int idRoom)
         {
             string query = $"SELECT * FROM Room WHERE id = @id_stanza;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@id_stanza", idStanza);
+            sqlCommand.Parameters.AddWithValue("@id_stanza", idRoom);
             return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
         /// <summary>
         /// Query al db, restituisce la stanza mediante il suo nome
         /// </summary>
-        /// <param name="stanzaName">Il nome della stanza da trovare</param>
+        /// <param name="roomName">Il nome della stanza da trovare</param>
         /// <returns>La stanza trovata, null altrimenti</returns>
-        internal Stanza? GetByName(string stanzaName)
+        internal Stanza? GetByName(string roomName)
         {
-            string query = $"SELECT * FROM Room WHERE UPPER(Room.name) = UPPER(@stanza_name);";
+            string query = $"SELECT * FROM Room WHERE UPPER(Room.name) = UPPER(@roomName );";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@stanza_name", stanzaName);
+            sqlCommand.Parameters.AddWithValue("@stanza_name", roomName);
             return DatabaseManager<Stanza>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
         /// Query al db, aggiunge una nuova stanza alla tabella Stanze
         /// </summary>
-        /// <param name="stanza">La stanza da aggiungere al db</param>
-        internal void Add(Stanza stanza)
+        /// <param name="room">La stanza da aggiungere al db</param>
+        internal void Add(Stanza room)
         {
-            string query = $"INSERT INTO Room (name, capacity, capacityEmergency) VALUES (@nome_stanza, @stanza_posti_max, @stanza_posti_max_emergenza);";
+            string query = $"INSERT INTO Room (name, capacity, capacityEmergency) VALUES (@roomName, @capacity, @capacityEmergency);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@nome_stanza", stanza.Nome);
-            sqlCommand.Parameters.AddWithValue("@stanza_posti_max", stanza.PostiMax);
-            sqlCommand.Parameters.AddWithValue("@stanza_posti_max_emergenza", stanza.PostiMaxEmergenza);
+            sqlCommand.Parameters.AddWithValue("@roomName", room.Nome);
+            sqlCommand.Parameters.AddWithValue("@capacity", room.PostiMax);
+            sqlCommand.Parameters.AddWithValue("@capacityEmergency", room.PostiMaxEmergenza);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal void UpdateCapacity(int postiMax, int id)
+        internal void SetCapacity(int capacity, int idRoom)
         {
-            string query = "UPDATE Room SET capacity = @postiMax WHERE id = @idStanza;";
+            string query = "UPDATE Room SET capacity = @capacity WHERE id = @idRoom;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@postiMax", postiMax);
-            sqlCommand.Parameters.AddWithValue("@idStanza", id);
+            sqlCommand.Parameters.AddWithValue("@capacity", capacity);
+            sqlCommand.Parameters.AddWithValue("@idRoom", idRoom);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
-        internal void UpdateCapacityEmergency(int postiMaxEmergenza, int id)
+        internal void SetCapacityEmergency(int capacityEmergency, int idRoom)
         {
-            string query = "UPDATE Room SET capacityEmergency = @postiMax WHERE id = @idStanza;";
+            string query = "UPDATE Room SET capacityEmergency = @capacityEmergency WHERE id = @idRoom;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@postiMax", postiMaxEmergenza);
-            sqlCommand.Parameters.AddWithValue("@idStanza", id);
+            sqlCommand.Parameters.AddWithValue("@capacityEmrgency", capacityEmergency);
+            sqlCommand.Parameters.AddWithValue("@idRoom", idRoom);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }

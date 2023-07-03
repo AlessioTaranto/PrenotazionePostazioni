@@ -13,10 +13,10 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/stanze")]
     public class StanzaController : ControllerBase
     {
-        private StanzaService _stanzaService;
+        private RoomService _stanzaService;
         private readonly ILog _logger = LogManager.GetLogger(typeof(StanzaController));
 
-        public StanzaController(StanzaService serviceService)
+        public StanzaController(RoomService serviceService)
         {
             _stanzaService = serviceService;
         }
@@ -31,7 +31,7 @@ namespace prenotazioni_postazioni_api.Controllers
             try
             {
                 _logger.Info("Trovando tutte le stanze...");
-                List<Stanza> stanze = _stanzaService.GetAllStanze();
+                List<Stanza> stanze = _stanzaService.GetAll();
                 _logger.Info("Stanze trovate con successo!");
                 return Ok(stanze);
             }
@@ -55,7 +55,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id stanza: " + id);
                 _logger.Info("Trovando la stanza mediante il suo id: " + id + "...");
-                Stanza stanza = _stanzaService.GetStanzaById(id);
+                Stanza stanza = _stanzaService.GetById(id);
                 _logger.Info("Stanza trovata con successo!");
                 return Ok(stanza);
             }catch(PrenotazionePostazioniApiException ex)
@@ -84,7 +84,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Nome della stanza: " + stanzaName);
                 _logger.Info("Trovando la stanza mediante il suo nome: " + stanzaName + "...");
-                Stanza stanza = _stanzaService.GetStanzaByName(stanzaName);
+                Stanza stanza = _stanzaService.GetByName(stanzaName);
                 _logger.Info("Stanza trovata con successo!");
                 return Ok(stanza);
             }
@@ -114,7 +114,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Nome della stanza: " + stanzaDto.Nome);
                 _logger.Info("Salvando una stanzaDto nel database...");
-                _stanzaService.Save(stanzaDto);
+                _stanzaService.Add(stanzaDto);
                 _logger.Info("StanzaDto salvato nel database con successo!");
                 return Ok();
             }catch(PrenotazionePostazioniApiException ex)
@@ -135,8 +135,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                Stanza stanza = _stanzaService.GetStanzaByName(nome);
-                _stanzaService.ChangePostiMax(postiMax, stanza.IdStanza);
+                Stanza stanza = _stanzaService.GetByName(nome);
+                _stanzaService.UpdateCapacity(postiMax, stanza.IdStanza);
                 return Ok("Posti massimi cambiati");
             }
             catch (PrenotazionePostazioniApiException ex)
@@ -154,8 +154,8 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                Stanza stanza = _stanzaService.GetStanzaByName(nome);
-                _stanzaService.ChangePostiMaxEmergenza(postiMax, stanza.IdStanza);
+                Stanza stanza = _stanzaService.GetByName(nome);
+                _stanzaService.UpdateCapacityEmergency(postiMax, stanza.IdStanza);
                 return Ok("Posti massimi cambiati");
             }
             catch (PrenotazionePostazioniApiException ex)
