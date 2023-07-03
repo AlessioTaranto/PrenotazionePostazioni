@@ -7,6 +7,7 @@ input[type="checkbox"] + label {
   position: relative !important;
   padding: 3px 0 0 40px !important;
   cursor: pointer !important;
+  margin: 0;
 }
 
 input[type="checkbox"] + label:before {
@@ -19,6 +20,7 @@ input[type="checkbox"] + label:before {
   position: absolute;
   top: 0;
   left: 0;
+  margin: 0;
 }
 
 input[type="checkbox"] + label:after {
@@ -33,15 +35,12 @@ input[type="checkbox"] + label:after {
   opacity: 0;
   transform: scale(2);
   transition: transform 0.3s linear, opacity 0.3s linear;
+  margin: 0;
 }
 
 input[type="checkbox"]:checked + label:after {
   opacity: 1;
   transform: scale(1);
-}
-
-body {
-  margin: 0;
 }
 
 .active-pink-2 input.form-control[type="text"]:focus:not([readonly]) {
@@ -57,7 +56,6 @@ body {
 .vote_container {
   padding: 2%;
   width: 100%;
-  height: 100%;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -65,6 +63,7 @@ body {
 }
 .vote_list {
   width: 100%;
+  height: auto;
   display: flex;
   align-items: left;
   justify-content: flex-start;
@@ -76,6 +75,7 @@ body {
   align-items: left;
   justify-content: space-between;
   background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 2%;
   width: 100%;
   height: 5vw;
@@ -119,10 +119,12 @@ body {
   justify-content: center;
   flex-direction: row;
 }
+
 .status_legend {
   width: 20vw;
   height: 15vw;
   position: sticky;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   right: 0;
   top: 10%;
   display: flex;
@@ -143,20 +145,24 @@ body {
   width: 100%;
 }
 .status_head h1 {
-  font-size: 1vw;
+  font-size: 1.3vw;
   font-weight: bold;
   margin: 0;
+}
+.divider {
+  border: 1px solid black;
+  width: 100%;
 }
 .status_item {
   width: 100%;
   display: flex;
-  align-items: left;
+  align-items: center;
   justify-content: left;
   flex-direction: row;
   gap: 1vw;
 }
 .status_item h2 {
-  font-size: 1vw;
+  font-size: 1.2vw;
   margin: 0;
 }
 .status_good {
@@ -176,4 +182,64 @@ body {
   width: 1vw;
   height: 1vw;
   background-color: #ff0000;
+}
+
+@media screen and (max-width: 700px) {
+  .vote_container {
+    flex-direction: column-reverse;
+    gap: 5vw;
+  }
+  .vote_list {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: left;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 4vw;
+  }
+  .vote_row {
+    height: 10vw;
+  }
+  .vote_row_header {
+    gap: 2vw;
+  }
+  .vote_row_header img {
+    width: 6vw;
+    height: 6vw;
+  }
+  .vote_row_title {
+    font-size: 5vw;
+  }
+  .status_legend {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 3%;
+    gap: 3vw;
+  }
+  .divider {
+    border: 2px solid black;
+  }
+  .status_head {
+    gap: 2vw;
+  }
+  .status_head h1 {
+    font-size: 3vw;
+  }
+  .status_item h2 {
+    font-size: 3vw;
+  }
+  .status_good {
+    width: 3vw;
+    height: 3vw;
+  }
+  .status_medium {
+    width: 3vw;
+    height: 3vw;
+  }
+  .status_bad {
+    width: 3vw;
+    height: 3vw;
+  }
 }
