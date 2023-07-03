@@ -20,7 +20,7 @@
         }
     </style>    
 
-
+@*
 @{
     Utente LoggedUser = JsonConvert.DeserializeObject<Utente>(HttpContextAccessor.HttpContext.Session.GetString("_User"));
 
@@ -53,9 +53,19 @@
                 }
 
                 <div class="container-fluid mt-4">
-                    <div class="p-3 border bg-light"><div class="row">
+                    <div class="p-3 border bg-light">
+                        <div class="row">
                         <div class="col-sm-1 ml-3 align-self-center">
                             <img class="item icon-img" src="img/user_icon.png" alt="user_icon">
+                            @{
+                                if(voto >= 0.3){
+                                    <div>
+                                        <div class="status">
+                                            <span />
+                                        </div>
+                                    </div>
+                                }
+                            }
                         </div>
                         <div class="col-sm-8 align-self-center">@fullName</div>
                             <div class="col-sm-1 align-self-center">
@@ -75,10 +85,58 @@
     }
 
 }
+*@
 
+@{
+    <div class="vote_container">
+        <div class="vote_list">
+            <div class="vote_row">
+                <div class="vote_row_header">
+                    <img src="img/user_icon.png" alt="user_icon">
+                    <div class="status_good"></div>
+                    <div class="vote_row_name">Andrea Braia</div>
+                </div>
+                <div class="vote_checkboxes">
+                    <div class="vote_checkbox_item">
+                        <input type="checkbox" name="rumorosita" id="rumoroso"  value="rumoroso">
+                        <label for="rumoroso">Rumoroso</label>
+                    </div>
+                    <div class="vote_checkbox_item">
+                        <input type="checkbox" name="rumorosita" id="non_rumoroso" >
+                        <label for="on_rumoroso">Non rumoroso</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status_legend">
+            <div class="status_head">
+                <h1>Legenda</h1>
+                <hr>
+            </div>
+            
+            <div class="status_item">
+                <div class="status_good"></div>
+                <h2>Poco rumoroso</h2>
+            </div>
+            
+            <div class="status_item">
+                <div class="status_medium"></div>
+                <h2>Medio</h2>
+            </div>
+            
+            <div class="status_item">
+                <div class="status_bad"></div>
+                <h2>Rumoroso</h2>
+            </div>
+        
+        </div>
+    </div>
+    
+}
 <script src="js/vote.js"></script>
 
-<script>
+@*<script>
     // Abilita la deselezione
      $("input:checkbox").on('click', function() {
           var $box = $(this);
@@ -131,3 +189,4 @@
     });
         
 </script>
+*@

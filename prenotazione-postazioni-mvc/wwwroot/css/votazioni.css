@@ -40,10 +40,6 @@ input[type="checkbox"]:checked + label:after {
   transform: scale(1);
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
 }
@@ -56,4 +52,128 @@ body {
 .active-pink .fa,
 .active-pink-2 .fa {
   color: darkorange;
+}
+
+.vote_container {
+  padding: 2%;
+  width: 100%;
+  height: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+}
+.vote_list {
+  width: 100%;
+  display: flex;
+  align-items: left;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1vw;
+}
+.vote_row {
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 2%;
+  width: 100%;
+  height: 5vw;
+  border-radius: 0.5vw;
+}
+.vote_row_header {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+}
+.vote_row_header img {
+  width: 3vw;
+  height: 3vw;
+}
+.vote_row_title {
+  font-size: 2vw;
+  font-weight: bold;
+}
+.status {
+  border-radius: 100%;
+  width: 1vw;
+  height: 1vw;
+  background-color: #7cfc00;
+}
+
+.vote_checkboxes {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1vw;
+}
+.vote_checkbox_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.status_legend {
+  width: 20vw;
+  height: 15vw;
+  position: sticky;
+  right: 0;
+  top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 2%;
+  gap: 1vw;
+  border-radius: 0.5vw;
+}
+.status_head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5vw;
+  width: 100%;
+}
+.status_head h1 {
+  font-size: 1vw;
+  font-weight: bold;
+  margin: 0;
+}
+.status_item {
+  width: 100%;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  flex-direction: row;
+  gap: 1vw;
+}
+.status_item h2 {
+  font-size: 1vw;
+  margin: 0;
+}
+.status_good {
+  border-radius: 100%;
+  width: 1vw;
+  height: 1vw;
+  background-color: #7cfc00;
+}
+.status_medium {
+  border-radius: 100%;
+  width: 1vw;
+  height: 1vw;
+  background-color: #ffa500;
+}
+.status_bad {
+  border-radius: 100%;
+  width: 1vw;
+  height: 1vw;
+  background-color: #ff0000;
 }
