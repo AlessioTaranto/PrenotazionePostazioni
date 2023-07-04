@@ -73,11 +73,11 @@
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
 
 <!---->
-<div class="d-flex flex-row align-items-top p-5" style="height: 82vh; gap: 2vw;">
+<div class="home_container">
 
     <!-- Piantina Div -->
-    <div class="container piantina-div m-0 h-auto" >
-        <img src="img/piantina.png" usemap="#image-map" style="width: 100%; height: 100%">
+    <div class="piantina_container" >
+        <img src="img/piantina.png" usemap="#image-map" >
 
         <map name="image-map" id="image-map">
             <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
@@ -104,10 +104,10 @@
     </div>
 
     <!-- Room info Div -->
-    <div class="d-flex flex-column justify-content-between gap-5" style="width: 40%;">
-        <div class="container room-info-div p-4 w-100 h-auto rounded-3">
+    <div class="room_info_container">
+        <div class="room_info_div">
         <div id="room-info-content">
-            <h1 style="font-size: 1.2vw; font-weight: 700" class="">@ViewModel.GetStanza().Replace('_', ' ')</h1>
+            <h2>@ViewModel.GetStanza().Replace('_', ' ')</h2>
             <br>
             @{
                 if(Room != null){   
@@ -195,8 +195,8 @@
                                     getPrenotazione.Wait();
                                     Prenotazione? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
 
-                                    <div class="btn btn-primary bg-darkorange bd-darkorange w-100" style="font-size: 1vw;" type="button" id="prenota"> Prenota</div>
-                                    <div class="btn btn-primary bg-darkorange bd-darkorange w-100" style="font-size: 1vw;" type="button" id="cancprenota">Annulla prenotazione</div>
+                                    <div class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" type="button" id="prenota"> Prenota</div>
+                                    <div class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" type="button" id="cancprenota">Annulla prenotazione</div>
 
                                     if (prenotazione != null)
                                     {
@@ -225,7 +225,7 @@
     </div>
 
 
-    <button type="button" class="btn btn-primary bg-darkorange bd-darkorange" data-toggle="modal" data-target="#exampleModalLong">
+    <button type="button" class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" data-toggle="modal" data-target="#exampleModalLong">
         Seleziona una data
     </button>
 
@@ -320,7 +320,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
 <script>
 
