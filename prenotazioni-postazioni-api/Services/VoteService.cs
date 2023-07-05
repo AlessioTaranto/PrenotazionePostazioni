@@ -49,23 +49,23 @@ namespace prenotazioni_postazioni_api.Services
         /// Aggiunge un voto al database 
         /// </summary>
         /// <param name="voteDto"></param>
-        internal void UpdateVote(VotoDto voteDto)
+        internal void UpdateVote(VoteDto voteDto)
         {
-            logger.Info("Trovando il voto mediante l'id dell'utente " + voteDto.IdUtente.IdUtente + " che ha votato e l'id dell'utente " + voteDto.IdUtenteVotato.IdUtente + " che ha ricevuto il voto");
-            Vote? vote = _voteRepository.GetUserVictimVote(voteDto.IdUtente.IdUtente, voteDto.IdUtenteVotato.IdUtente);
+            logger.Info("Trovando il voto mediante l'id dell'utente " + voteDto.IdUser.IdUtente + " che ha votato e l'id dell'utente " + voteDto.IdVictim.IdUtente + " che ha ricevuto il voto");
+            Vote? vote = _voteRepository.GetUserVictimVote(voteDto.IdUser.IdUtente, voteDto.IdVictim.IdUtente);
             logger.Info("Controllando se il voto e' null..");
             if (vote == null)
             {
                 logger.Info("Il voto e' null, e' valido");
                 logger.Info("Convertendo il votoDto in Voto...");
                 logger.Info("Procedo con il salvataggio nel database");
-                _voteRepository.Add(new Voto(voteDto.IdUtente.IdUtente, voteDto.IdUtenteVotato.IdUtente, voteDto.VotoEffettuato));
+                _voteRepository.Add(new Voto(voteDto.IdUser.IdUtente, voteDto.IdVictim.IdUtente, voteDto.VoteResults));
                 return;
             }
             logger.Info("Il voto non e' null, il voto dunque e' gia stato effettuato in precedenza");
             logger.Info("Procedo con il cambiare il voto effettuato...");
             logger.Info("Controllo se il voto effettutato e' uguale al voto nel votoDto...");
-            if(vote.VoteResults == voteDto.VotoEffettuato)
+            if(vote.VoteResults == voteDto.VoteResults)
             {
                 logger.Fatal("ERRORE: Il voto effettutato e' uguale a quello nel votoDto...");
                 throw new PrenotazionePostazioniApiException("Il voto e' uguale");

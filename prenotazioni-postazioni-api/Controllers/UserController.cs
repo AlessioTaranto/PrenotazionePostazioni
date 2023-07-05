@@ -149,12 +149,12 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>httpstatus 200 se salvataggio corretto, httpstatus 400 altrimenti</returns>
         [HttpPost]
         [Route("add")]
-        public IActionResult Add(UtenteDto userDto)
+        public IActionResult Add(UserDto userDto)
         {
             try
             {
-                _logger.Info("Nome utente: " + userDto.Nome);
-                _logger.Info("Cognome utente: " + userDto.Cognome);
+                _logger.Info("Nome utente: " + userDto.Name);
+                _logger.Info("Cognome utente: " + userDto.Surname);
                 _logger.Info("Salvando un utente nel database...");
                 _UserService.Add(userDto);
                 _logger.Info("Utente salvato nel database con successo!");

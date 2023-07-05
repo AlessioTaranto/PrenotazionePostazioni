@@ -50,11 +50,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="vote">il voto che verra salvato nel database</param>
         internal void Add(Vote vote)
         {
-            string query = $"INSERT INTO Vote (idUser, idVictim, vote) VALUES (@idUser, @idVictim, @vote);";
+            string query = $"INSERT INTO Vote (idUser, idVictim, voteResults) VALUES (@idUser, @idVictim, @voteResults);";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idUser", vote.IdUser);
             sqlCommand.Parameters.AddWithValue("@idVictim", vote.IdVictim);
-            sqlCommand.Parameters.AddWithValue("@vote", vote.VoteResults);
+            sqlCommand.Parameters.AddWithValue("@voteResults", vote.VoteResults);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
         /// <summary>

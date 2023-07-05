@@ -171,14 +171,14 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>status 200</returns>
         [HttpPost]
         [Route("add")]
-        public IActionResult Add([FromBody] PrenotazioneDto bookingDto)
+        public IActionResult Add([FromBody] BookingDto bookingDto)
         {
             try
             {
-                _logger.Info("Utente: " + bookingDto.IdUtente);
+                _logger.Info("Utente: " + bookingDto.IdUser);
                 _logger.Info("Inizio data: " + bookingDto.StartDate.ToString());
                 _logger.Info("Fine data: " + bookingDto.EndDate.ToString());
-                _logger.Info("Stanza: " + bookingDto.IdStanza);
+                _logger.Info("Stanza: " + bookingDto.IdRoom);
                 _logger.Info("Aggiungendo una prenotazioneDto nel database...");
                 _bookingService.Add(bookingDto);
                 _logger.Info("PrenotazioneDto aggiunto con successo!");

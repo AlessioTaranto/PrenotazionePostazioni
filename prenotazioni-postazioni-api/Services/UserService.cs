@@ -95,10 +95,10 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="userDto"></param>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        internal void Add(UtenteDto userDto)
+        internal void Add(UserDto userDto)
         {
             logger.Info("Convertendo userDto in Utente...");
-            User user = new User(userDto.Nome, userDto.Cognome, userDto.Image, userDto.Email, userDto.IdRuolo);
+            User user = new User(userDto.Name, userDto.Surname, userDto.Image, userDto.Email, userDto.IdRole);
             logger.Info("Procedo con il salvataggio dell'utente nel database");
             _userRepository.Add(user);
         }

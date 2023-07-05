@@ -77,12 +77,12 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns></returns>
         [Route("add")]
         [HttpPost]
-        public IActionResult Add([FromBody] VotoDto voteDto)
+        public IActionResult Add([FromBody] VoteDto voteDto)
         {
             try
             {
-                _logger.Info("Voto utente: " + voteDto.IdUtente);
-                _logger.Info("Voto utente votato: " + voteDto.IdUtenteVotato);
+                _logger.Info("Voto utente: " + voteDto.IdUser);
+                _logger.Info("Voto utente votato: " + voteDto.IdVictim);
                 _logger.Info("Effettuando un voto su un utente...");
                 _voteService.UpdateVote(voteDto);
                 _logger.Info("Voto effettuato con successo!");

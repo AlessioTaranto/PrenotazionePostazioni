@@ -76,14 +76,14 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="roomDto">la stanza da salvare</param>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        internal void Add(StanzaDto roomDto)
+        internal void Add(RoomDto roomDto)
         {
             logger.Info("Controllando se stanzaDto e' valida...");
             if (Check(roomDto))
             {
                 logger.Info("stanzaDto e' valida!");
                 logger.Info("Convertendo la stanzaDto in Stanza...");
-                Room stanza = new Room(roomDto.Nome, roomDto.PostiMax, roomDto.PostiMaxEmergenza);
+                Room stanza = new Room(roomDto.Name, roomDto.Capacity, roomDto.CapacityEmergency);
                 logger.Info("Procedo con il salvataggio della stanza nel database...");
                 _roomRepository.Add(stanza);
             }
@@ -102,12 +102,12 @@ namespace prenotazioni_postazioni_api.Services
             /// </summary>
             /// <param name="roomDto"></param>
             /// <returns>True se il nome è unico, False se la stanza è già presente</returns>
-            private bool Check(StanzaDto roomDto)
+            private bool Check(RoomDto roomDto)
         {
             List<Room> rooms = GetAll();
             for(int i = 0; i < rooms.Count; i++)
             {
-                if (rooms[i].Name == roomDto.Nome) return false;
+                if (rooms[i].Name == roomDto.Name) return false;
             }
             return true;
         }

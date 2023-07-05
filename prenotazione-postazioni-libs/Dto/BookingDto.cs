@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_libs.Dto
 {
-    public class PrenotazioneDto
+    public class BookingDto
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int IdStanza { get; set; }
-        public int IdUtente { get; set; }
+        public int IdRoom { get; set; }
+        public int IdUser { get; set; }
 
-        public PrenotazioneDto(DateTime startDate, DateTime endDate, int stanza, int utente)
+        public BookingDto(DateTime startDate, DateTime endDate, int idRoom, int idUser)
         {
             StartDate = startDate;
             EndDate = endDate;
-            IdStanza = stanza;
-            IdUtente = utente;
+            IdRoom = idRoom;
+            IdUser = idUser;
         }
 
     

@@ -95,12 +95,12 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [Route("add")]
         [HttpPost]
-        public IActionResult Add([FromBody] FestaDto holidayDto)
+        public IActionResult Add([FromBody] HolidayDto holidayDto)
         {
             try
             {
                 logger.Info("Giorno della festa: " + holidayDto.Date);
-                logger.Info("Descrizione della festa: " + holidayDto.Desc);
+                logger.Info("Descrizione della festa: " + holidayDto.Description);
                 logger.Info("Salvando una festaDto del database...");
                 _holidayService.Add(holidayDto);
                 logger.Info("HolidayDto salvato con successo, Ok");

@@ -108,11 +108,11 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>httpstatus 200</returns>
         [HttpPost]
         [Route("add")]
-        public IActionResult Add(StanzaDto roomDto)
+        public IActionResult Add(RoomDto roomDto)
         {
             try
             {
-                _logger.Info("Nome della stanza: " + roomDto.Nome);
+                _logger.Info("Nome della stanza: " + roomDto.Name);
                 _logger.Info("Salvando una stanzaDto nel database...");
                 _roomService.Add(roomDto);
                 _logger.Info("StanzaDto salvato nel database con successo!");

@@ -39,7 +39,7 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="holiday">la festa da salvare</param>
         /// <exception cref="PrenotazionePostazioniApiException">throw nel caso in cui la data e' gia esistenze</exception>
-        internal void Add(FestaDto holiday)
+        internal void Add(HolidayDto holiday)
         {
             logger.Info("Controllando se festaDto e' valida...");
             if (_holidayRepository.GetByDate(holiday.Date) != null)
@@ -48,7 +48,7 @@ namespace prenotazioni_postazioni_api.Services
                 throw new PrenotazionePostazioniApiException("data gia occupata da un'altra festa!!!");
             }
             logger.Info("FestaDto e' valida. Cercando di salvare Festa nel database...");
-            _holidayRepository.Add(new Holiday(holiday.Date, holiday.Desc));
+            _holidayRepository.Add(new Holiday(holiday.Date, holiday.Description));
         }
 
         /// <summary>

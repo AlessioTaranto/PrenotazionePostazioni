@@ -113,10 +113,10 @@ namespace prenotazioni_postazioni_api.Services
          /// </summary>
          /// <param name="bookingDto">La prenotazione da salvare</param>
          /// <exception cref="PrenotazionePostazioniApiException">Se prenotazione e' null</exception>
-         public int Add(PrenotazioneDto bookingDto)
+         public int Add(BookingDto bookingDto)
          {
             logger.Info("Controllando se la stanza della prenotazione e' valida...");
-            Room room = _roomService.GetById(bookingDto.IdStanza);
+            Room room = _roomService.GetById(bookingDto.IdRoom);
             if (room == null)
             {
                 logger.Error("la stanza non e' valida!");
@@ -126,7 +126,7 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info("Controllando se siamo in stato di emergenza...");
             int roomCapacity = _settingsService.Get() ? room.CapacityEmergency : room.Capacity;
             logger.Info("Creando una nuova prenotazione...");
-            Booking booking = new Booking(bookingDto.StartDate, bookingDto.EndDate, bookingDto.IdStanza, bookingDto.IdUtente);
+            Booking booking = new Booking(bookingDto.StartDate, bookingDto.EndDate, bookingDto.IdRoom, bookingDto.IdUser);
             logger.Info("Cercando tutte le prenotazioni che sovrappongono l'orario della prenotazione che si vuole salvare...");
             List<Booking>? bookings = _bookingRepository.GetAllByRoomDate(booking.IdRoom, booking.StartDate, booking.EndDate);
             logger.Info("Controllo se prenotazioni e' null...");
