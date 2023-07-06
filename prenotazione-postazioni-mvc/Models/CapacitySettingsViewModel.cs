@@ -140,16 +140,16 @@ namespace prenotazione_postazioni_mvc.Models
         ///     Imposta la capienza Covid di una room
         /// </summary>
         /// <param name="room">room selzionata</param>
-        /// <param name="capienza">Capienza selezionata</param>
+        /// <param name="capacity">Capienza selezionata</param>
 
-        public async void SetEmergency(string room, int capienza)
+        public async void SetCapacityEmergency(string room, int capacity)
         {
-            if (capienza <= 0)
+            if (capacity <= 0)
                 throw new Exception("Capienza non valida");
             if (room == null || !CapacityEmergency.ContainsKey(room))
                 throw new Exception("room non valida");
 
-            HttpResponseMessage? setCapienza = await Service.SetCapacityEmergency(room, capienza);
+            HttpResponseMessage? setCapienza = await Service.SetCapacityEmergency(room, capacity);
             if (setCapienza == null || setCapienza.StatusCode != HttpStatusCode.OK)
                 return;
 

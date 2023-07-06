@@ -17,23 +17,23 @@ public class HomeController : Controller
     public static BookingViewModel? ViewModel { get; set; }
 
     //HTTP Client Factory -> Prenotazioni
-    public readonly BookingHttpSerivice _prenotazioneHttpService;
+    public readonly BookingHttpSerivice _bookingHttpService;
     //HTTP Client Factory -> Festa
-    public readonly HolidayHttpService _festaHttpService;
+    public readonly HolidayHttpService _holidayHttpService;
 
-    public HomeController(BookingHttpSerivice prenotazioneHttpService, HolidayHttpService festaHttpService)
+    public HomeController(BookingHttpSerivice bookingHttpService, HolidayHttpService holidayHttpService)
     {
-        _prenotazioneHttpService = prenotazioneHttpService;
-        _festaHttpService = festaHttpService;
+        _bookingHttpService = bookingHttpService;
+        _holidayHttpService = holidayHttpService;
     }
 
     public IActionResult Index()
     {
 
         if (ViewModel == null)
-            ViewModel = new PrenotazioneViewModel(_prenotazioneHttpService,_festaHttpService);
+            ViewModel = new BookingViewModel(_bookingHttpService,_holidayHttpService);
 
-        ReloadFeste();
+        ReloadHoliday();
 
         return View(ViewModel);
     }
@@ -47,8 +47,8 @@ public class HomeController : Controller
     /// <returns>Giorno aggiornato</returns>
 
     [HttpPost]
-    [ActionName("ReloadDay")]
-    public IActionResult ReloadDay(int year, int month, int day)
+    [ActionName("ReloadDate")]
+    public IActionResult ReloadDate(int year, int month, int day)
     {
         //Dicembre
 
@@ -93,8 +93,8 @@ public class HomeController : Controller
     /// <returns>Aggiorna orario di inizio</returns>
 
     [HttpPost]
-    [ActionName("ReloadStart")]
-    public IActionResult ReloadStart(int hour)
+    [ActionName("ReloadStartDate")]
+    public IActionResult ReloadStartHour(int hour)
     {
         try
         {
@@ -115,8 +115,8 @@ public class HomeController : Controller
     /// <returns>Orario di termine aggiornato</returns>
 
     [HttpPost]
-    [ActionName("ReloadFinish")]
-    public IActionResult ReloadFinish(int hour)
+    [ActionName("ReloadEndHour")]
+    public IActionResult ReloadEndHour(int hour)
     {
         try
         {
@@ -160,11 +160,11 @@ public class HomeController : Controller
 
 
     [HttpPost]
-    [ActionName("Prenota")]
-    public IActionResult Prenota(string user, string room, string start, string end)
+    [ActionName("Booking")]
+    public IActionResult Booking(string user, string room, string startDate, string endDate)
     {
 
-        Task<HttpStatusCode>? getRq = ViewModel?.ExistBooking(user, room, start, end);
+        Task<HttpStatusCode>? getRq = ViewModel?.ExistBooking(user, room, startDate, endDate);
         getRq.Wait();
 
         HttpStatusCode code = getRq.Result;
@@ -172,7 +172,7 @@ public class HomeController : Controller
         if (code == HttpStatusCode.NotFound)
         {
             //Non trova prenotazioni per quel giorno
-            ViewModel?.DoBookingAsync(user, room, start, end);
+            ViewModel?.DoBookingAsync(user, room, startDate, endDate);
 
             return Ok("Prenotazione effettuata");
         }
@@ -187,18 +187,18 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    [ActionName("DeletePrenotazione")]
-    public IActionResult DeletePrenotazione(string user, string room, string start, string end)
+    [ActionName("DeleteBooking")]
+    public IActionResult DeleteBooking(string user, string room, string startDate, string endDate)
     {
 
-        Task<Booking> prenotazioneTask = ViewModel?.GetBooking(user, room, start, end);
-        prenotazioneTask.Wait();
-        Booking? prenotazione = prenotazioneTask.Result;
+        Task<Booking> bookingTask = ViewModel?.GetBooking(user, room, startDate, endDate);
+        bookingTask.Wait();
+        Booking? booking = bookingTask.Result;
 
-        if (prenotazione == null)
+        if (booking == null)
             return NotFound("Prenotazione non trovata");
 
-        Task<HttpResponseMessage>? getRq = ViewModel?.Delete(prenotazione.Id);
+        Task<HttpResponseMessage>? getRq = ViewModel?.Delete(booking.Id);
         getRq.Wait();
         HttpStatusCode code = getRq.Result.StatusCode;
 
@@ -209,8 +209,8 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    [ActionName("GetAllUtentiPrenotazione")]
-    public IActionResult GetAllPersonePrenotate(int inizio, int fine)
+    [ActionName("GetAllBookedUser")]
+    public IActionResult GetAllBookedUser(int startDate, int endDate)
     {
         throw new NotImplementedException();
     }
@@ -222,8 +222,8 @@ public class HomeController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [ActionName("ReloadFeste")]
-    public IActionResult ReloadFeste()
+    [ActionName("ReloadHoliday")]
+    public IActionResult ReloadHoliday()
     {
         Task task = ViewModel.ReloadHoliday();
         task.Wait();
