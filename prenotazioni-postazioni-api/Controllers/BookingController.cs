@@ -22,18 +22,18 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <summary>
         /// Restituisce la Prenotazione trovata mediante il suo ID
         /// </summary>
-        /// <param name="idBooking">Id della Prenotazione</param>
+        /// <param name="id">Id della Prenotazione</param>
         /// <returns>Prenotazione e status 200, status 404 altrimenti</returns>
         [HttpGet]
         [Route("getById")]
-        public IActionResult GetById(int idBooking)
+        public IActionResult GetById(int id)
         {
             try
             {
-                _logger.Info("Id Prenotazione: " + idBooking);
+                _logger.Info("Id Prenotazione: " + id);
                 _logger.Info("Trovando una prenotazione mediante l'id...");
-                _logger.Info("Id: " + idBooking);
-                Booking booking = _bookingService.GetById(idBooking);
+                _logger.Info("Id: " + id);
+                Booking booking = _bookingService.GetById(id);
                 _logger.Info("Trovato una prenotazione con id: " + booking.Id + " con successo");
                 return Ok(booking);
             }catch(PrenotazionePostazioniApiException ex)
@@ -76,7 +76,7 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <returns>Lista di Prenotazione e status 200, 404 altrimenti</returns>
         [HttpGet]
         [Route("getByRoom")]
-        public IActionResult GetByroom(int idRoom)
+        public IActionResult GetByRoom(int idRoom)
         {
             try
             {
@@ -204,16 +204,16 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <summary>
         /// Cancella una prenotazione se presente nel database
         /// </summary>
-        /// <param name="idBooking">Id associato alla prenotazione da cancellare</param>
+        /// <param name="id">Id associato alla prenotazione da cancellare</param>
         /// <returns></returns>
         [HttpDelete]
         [Route("delete")]
-        public IActionResult Delete(int idBooking)
+        public IActionResult Delete(int id)
         {
             try
             {
-                _logger.Info("Id Prenotazione: " + idBooking);
-                _bookingService.Delete(idBooking);
+                _logger.Info("Id Prenotazione: " + id);
+                _bookingService.Delete(id);
                 return Ok();
             }
             catch (ArgumentException ex)

@@ -7,11 +7,11 @@ namespace prenotazione_postazioni_mvc.Controllers
     public class ImpostazioniController : Controller
     {
         //HTTP Client Factory -> Capienza
-        public readonly CapienzaHttpService _capienzaHttpService;
+        public readonly CapacityHttpService _capienzaHttpService;
         //HTTP Client Factory -> Festa
-        public readonly FestaHttpService _festaHttpService;
+        public readonly HolidayHttpService _festaHttpService;
 
-        public ImpostazioniController(CapienzaHttpService capienzaHttpService, FestaHttpService festaHttpService)
+        public ImpostazioniController(CapacityHttpService capienzaHttpService, HolidayHttpService festaHttpService)
         {
             _capienzaHttpService = capienzaHttpService;
             _festaHttpService = festaHttpService;
@@ -20,9 +20,9 @@ namespace prenotazione_postazioni_mvc.Controllers
         public IActionResult Index()
         {
             if (ViewModel == null)
-                ViewModel = new ImpostazioniViewModel(
-                    new CapienzaImpostazioniViewModel(_capienzaHttpService), 
-                    new PresenzeImpostazioniViewModel(),
+                ViewModel = new SettingsViewModel(
+                    new CapacitySettingsViewModel(_capienzaHttpService), 
+                    new AttendanceSettingsViewModel(),
                     _festaHttpService
                 );
 
@@ -31,7 +31,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             return View(ViewModel);
         }
 
-        public static ImpostazioniViewModel? ViewModel { get; set; }
+        public static SettingsViewModel? ViewModel { get; set; }
 
         /// <summary>
         ///     Cambia la stanza selezionata nel tab "Covid / Capienza"
@@ -44,7 +44,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         public IActionResult SelectRoom(string stanza)
         {
             if (ViewModel != null)
-                ViewModel.CapienzaViewModel.Stanza = stanza;
+                ViewModel.CapacitySettingsViewModel.Room = stanza;
 
             return RedirectToAction("Index");
         }
@@ -68,7 +68,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel?.SelectFesta(year, month, day);
+            ViewModel?.SetHolidaySelected(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -85,7 +85,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("AggiungiFesta")]
         public IActionResult AggiungiFesta(int year, int month, int day, string description)
         {
-            ViewModel?.AddFesta(year, month, day, description);
+            ViewModel?.AddHoliday(year, month, day, description);
 
             return Ok();
         }
@@ -102,7 +102,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("RimuoviFesta")]
         public IActionResult RimuoviFesta(int year, int month, int day)
         {
-            ViewModel?.RemoveFesta(year, month, day);
+            ViewModel?.DeleteHoliday(year, month, day);
 
             return Ok();
         }
@@ -132,7 +132,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("CollapsePresenze")]
         public IActionResult CollapsePresenze()
         {
-            ViewModel?.PresenzeViewModel.ToggleCollapseList();
+            ViewModel?.AttendanceSettingsViewModel.ToggleCollapseList();
 
             return Ok("Collapse changed");
         }
@@ -155,7 +155,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel?.PresenzeViewModel.SelectPresenza(year, month, day);
+            ViewModel?.AttendanceSettingsViewModel.SelectAttendance(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -173,7 +173,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             if (_capienzaHttpService == null)
                 return BadRequest("Errore generico");
 
-            _capienzaHttpService.ToggleCovidMode();
+            _capienzaHttpService.ToggleModEmergency();
 
             return Ok("Modalità cambiata");
         }
@@ -191,7 +191,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         {
             try
             {
-                ViewModel.CapienzaViewModel.SetCapienzaNormale(stanza, capienza);
+                ViewModel.CapacitySettingsViewModel.SetCapienzaNormale(stanza, capienza);
             }
             catch (Exception exception)
             {
@@ -214,7 +214,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         {
             try
             {
-                ViewModel.CapienzaViewModel.SetCapienzaCovid(stanza, capienza);
+                ViewModel.CapacitySettingsViewModel.SetCapienzaCovid(stanza, capienza);
             }
             catch (Exception exception)
             {
@@ -234,7 +234,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("ReloadFeste")]
         public IActionResult ReloadFeste()
         {
-            Task task = ViewModel.ReloadFeste();
+            Task task = ViewModel.ReloadHoliday();
             task.Wait();
 
             return Ok("Festività ricaricate");

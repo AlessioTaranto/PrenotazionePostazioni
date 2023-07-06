@@ -8,7 +8,7 @@ using log4net;
 namespace prenotazioni_postazioni_api.Controllers
 {
     [ApiController]
-    [Route("/api/voti")]
+    [Route("/api/vote")]
     public class VoteController : ControllerBase
     {
         private VoteService _voteService;

@@ -11,11 +11,11 @@ namespace prenotazione_postazioni_mvc.Controllers
     public class VotazioniController : Controller
     {
 
-        public static VotazioniViewModel ViewModel { get; set; }
-        public readonly VotoHttpService _votoHttpService;
-        public readonly UtenteHttpService _utenteHttpService;
+        public static VoteViewModel ViewModel { get; set; }
+        public readonly VoteHttpService _votoHttpService;
+        public readonly UserHttpService _utenteHttpService;
 
-        public VotazioniController(VotoHttpService votoHttpService, UtenteHttpService utenteHttpService)
+        public VotazioniController(VoteHttpService votoHttpService, UserHttpService utenteHttpService)
         {
             _votoHttpService = votoHttpService;
             _utenteHttpService = utenteHttpService;
@@ -55,7 +55,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             User utenteVotato = new User(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
             if (voto == 0)
             {
-                  response = await _votoHttpService.OnDeleteVoto(idUtente, idUtenteVotato);
+                  response = await _votoHttpService.Delete(idUtente, idUtenteVotato);
             }
             else if (voto == 1)
             {
