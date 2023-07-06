@@ -72,12 +72,12 @@ namespace prenotazione_postazioni_mvc.Models
             if (getAllStance == null || getAllStance.StatusCode != HttpStatusCode.OK)
                 return;
 
-            List<Stanza>? Stanze = await getAllStance.Content.ReadFromJsonAsync<List<Stanza>?>();
+            List<Room>? Stanze = await getAllStance.Content.ReadFromJsonAsync<List<Room>?>();
 
             foreach (var Stanza in Stanze)
             {
-                CapienzaNormale.Add(Stanza.Nome, Stanza.PostiMax);
-                CapienzaCovid.Add(Stanza.Nome, Stanza.PostiMaxEmergenza);
+                CapienzaNormale.Add(Stanza.Name, Stanza.Capacity);
+                CapienzaCovid.Add(Stanza.Name, Stanza.CapacityEmergency);
             }
         }
 

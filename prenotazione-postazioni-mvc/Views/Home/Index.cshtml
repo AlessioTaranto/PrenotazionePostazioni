@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Prenota postazioni";
 
     PrenotazioneViewModel ViewModel = (PrenotazioneViewModel)Model;
@@ -19,7 +19,7 @@
 
 @{
 
-    Utente? LoggedUser = new Utente(
+    @int? LoggedUser = new @int(
                 "Andrea",
                 "Redegalli",
                 "",
@@ -34,7 +34,7 @@
     if (checkExists.StatusCode == HttpStatusCode.OK)
     {
 
-        LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+        LoggedUser = await checkExists.Content.ReadFromJsonAsync<@int>();
 
         HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
     } else {
@@ -47,19 +47,19 @@
             checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
             code = checkExists.StatusCode;
 
-            LoggedUser = await checkExists.Content.ReadFromJsonAsync<Utente>();
+            LoggedUser = await checkExists.Content.ReadFromJsonAsync<@int>();
 
             HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
         }
     }
 
-    Stanza? Room = null;
+    @int? Room = null;
 
     HttpResponseMessage checkRoom = await _stanzeHttpService.OnGetStanzaByName(ViewModel.Stanza);
 
     if (checkRoom.StatusCode == HttpStatusCode.OK)
     {
-        Room = await checkRoom.Content.ReadFromJsonAsync<Stanza>();
+        Room = await checkRoom.Content.ReadFromJsonAsync<@int>();
     }
 
     //Add Guest features
@@ -119,98 +119,50 @@
 
                         bool isHoliday = false;
 
-                        for(int i = 0; holidayList != null && i < holidayList.Count; i++)
-                            if(holidayList[i].Giorno.ToString("yyyy/MM/dd") == ViewModel.Date.ToString("yyyy/MM/dd")){
-                                isHoliday = true;
-                                break;
-                            }
-                        
-                        if (isHoliday){
-                            <div style="font-size: 1.5vw ;">
-                                Chiuso per ferie!
-                            </div>
-                        }else{
-                            <div class="btn-collapse">
-                                <a class="fw-bold" data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Seleziona orario
-                                </a>
-                            </div>
-                            <div>
-                                <div class="collapse" id="orario">
-                                    <div class="p-2 d-flex flex-column align-items-left justify-content-center gap-3">
-                                        <div class="d-flex flex-column user-select-none">
-                                            <label for="start">Inizio</label>
-                                            <input class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
-                                            min="07:00" max="22:00" required>
-                                        </div>
-                                                    
-                                        <div class="d-flex flex-column user-select-none">
-                                            <label for="finish">Termine</label>
-                                            <input class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
-                                            min="07:00" max="22:00" required>
-                                        </div>
-                                    </div>
-                                </div>    
-                            </div>
-                            <br>
-                            <div class="btn-collapse">
-                                <a class="fw-bold" data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Prenotazioni
-                                </a>
-                            </div>
-                            <div class="collapse" id="prenotazioni">
-                                <div class="p-2 h-auto">
-                                    <ul id="lista-prenotazioni" class="d-flex flex-column align-items-left gap-2" style="list-style: none; padding: 0; margin: 0;">
-                                        @{
-                                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
-                                            List<Utente>? presenti = null;
-                                            if (getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK){
-                                                    presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<Utente>?>();
-                                                        
-                                                    if(presenti != null && presenti.Count>0 ){
-                                                        for (int j = 0; j < presenti.Count; j++){
-                                                            <li class="d-flex flex-row justify-content-left align-items-center">
-                                                                <div class="reservation d-flex flex-row justify-content-center align-items-center" style="font-size: 1vw;">
-                                                                    <img src="~/img/example/example-1.png">
-                                                                        @presenti[@j].Nome
-                                                                        @presenti[@j].Cognome
-                                                                </div>
-                                                            </li>
-                                                        }
-                                                    }else{
-                                                        <li class="m-0">
-                                                            Nessuna prenotazione
-                                                        </li>
-                                                    }
-                                            }
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                            <br>
-                            <div>
-                                @{
-                                    Task<Prenotazione?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
-                                    , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
-                                    getPrenotazione.Wait();
-                                    Prenotazione? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
-
-                                    <div class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" type="button" id="prenota"> Prenota</div>
-                                    <div class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" type="button" id="cancprenota">Annulla prenotazione</div>
-
-                                    if (prenotazione != null)
-                                    {
-                                        <script>
-                                            $('#prenota').css('display', 'none');
-                                            $('#cancprenota').css('display', 'block');
-                                        </script>
-                                    } else
-                                    {
-                                        <script>
-                                            $('#prenota').css('display', 'block');
-                                            $('#cancprenota').css('display', 'none');
-                                        </script>
-                                    }
+<!-- Room info Div -->
+<div class="container mt-4 ml-70 position-fixed room-info-div">
+    <h1>@ViewModel.GetStanza()</h1>
+    <br>
+    <div class="btn-collapse">
+        <a data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Seleziona orario
+        </a>
+    </div>
+    <div>
+        <div class="collapse" id="orario">
+            <div class="card card-body">
+                <label for="start">Inizio</label>
+                <input type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
+                       min="07:00" max="22:00" required>
+                <label for="finish">Termine</label>
+                <input type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
+                       min="07:00" max="22:00" required>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="btn-collapse">
+        <a data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Persone prenotate
+        </a>
+    </div>
+    <div>
+        <div class="collapse" id="prenotazioni">
+            <div class="card card-body person-div">
+                <ul id="lista-prenotazioni">
+                    @{
+                        if (Room != null)
+                        {
+                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
+                            List<@int>? presenti = null;
+                            if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                            {
+                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<@int>?>();
+                                for (int i = 0; i < presenti.Count; i++)
+                                {
+                                    <li>
+                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @Room.Name
+                                    </li>
                                 }
                             </div>
                         }
@@ -223,6 +175,13 @@
             }
         </div>
     </div>
+    <br>
+    <div>
+        @{
+            Task<Booking?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
+            , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
+            getPrenotazione.Wait();
+            Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
 
 
     <button type="button" class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" data-toggle="modal" data-target="#exampleModalLong">

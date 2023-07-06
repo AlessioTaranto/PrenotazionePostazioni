@@ -31,7 +31,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
-        public async Task<HttpResponseMessage> OnMakeVoto(VotoDto voto)
+        public async Task<HttpResponseMessage> OnMakeVoto(VoteDto voto)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Voti");
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
