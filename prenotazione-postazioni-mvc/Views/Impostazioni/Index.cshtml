@@ -28,19 +28,19 @@
     // Importa le date
 </script>
 
+1<div class="settings_container">
 <!-- Sidebar tab (Sinistra) -->
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 20vw; height: 100%; border: 0.1px solid darkorange !important">
-    <div class="nav flex-column mb-auto nav-pills darkorange" id="options-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link-1" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="false" onclick="changeStateTab(0)">Postazioni</a>
-        <a class="nav-link-1" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false" onclick="changeStateTab(1)">Festività</a>
-        <a class="nav-link-1" id="options-pills-presenze-tab" data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false" onclick="changeStateTab(2)">Presenze</a>
-        <a class="nav-link-1" id="options-pills-users-tab" data-toggle="pill" href="#options-pills-users" role="tab" aria-controls="options-pills-users" aria-selected="false" onclick="changeStateTab(3)">Utenti</a>
-        <a class="nav-link-1" id="options-pills-admin-tab" data-toggle="pill" href="#options-pills-admin" role="tab" aria-controls="options-pills-admin" aria-selected="false" onclick="changeStateTab(4)">Covid</a>
-    </div>
+<div class="settings_sidebar_box">
+    <ul class="settings_sidebar_itemList">
+        <a data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="false" onclick="changeStateTab(0)">Postazioni</a>
+        <a data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false" onclick="changeStateTab(1)">Festività</a>
+        <a data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false" onclick="changeStateTab(2)">Presenze</a>
+        <a data-toggle="pill" href="#options-pills-users" role="tab" aria-controls="options-pills-users" aria-selected="false" onclick="changeStateTab(3)">Utenti</a>
+        <a data-toggle="pill" href="#options-pills-admin" role="tab" aria-controls="options-pills-admin" aria-selected="false" onclick="changeStateTab(4)">Covid</a>
+    </ul>
 </div>
-
 <!-- Pagina caricata a destra -->
-<div class="tab-content" id="options-pills-tabContent">
+<div id="options-pills-tabContent">
 
     <!-- Capienza selector -->
     <div class="tab-pane fade" id="options-pills-covid" role="tabpanel" aria-labelledby="options-pills-covid-tab">
@@ -280,14 +280,14 @@
                         <ul id="lista-presenti">
                             @{
                             HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.PresenzeViewModel.PresenzaSelezionata);
-                            List<@int>? presenti = null;
+                            List<User>? presenti = null;
                             if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
                             {
-                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<@int>?>();
+                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
                                 for(int i=0; i<presenti.Count; i++)
                                 {
                                         <li>
-                                            <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome
+                                            <img src="~/img/example/example-1.png">@presenti[@i].Name @presenti[@i].Surname
                                         </li>
                                     }
                                 }
@@ -311,22 +311,22 @@
                     Task<HttpResponseMessage> getAllUtentiList = _utenteHttpService.OnGetAllUtenti();
                     getAllUtentiList.Wait();
 
-                    List<@int>? ListUtenti = null;
+                    List<User>? ListUtenti = null;
 
                     if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
                     {
-                        ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<@int>?>();
+                        ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<User>?>();
                         for(int i = 0; i<ListUtenti.Count; i++) 
                         {
-                            @int user = ListUtenti[i];
+                            User user = ListUtenti[i];
 
                             <div class="list-group-item my-auto">
                                 <div style="clear: both; display: flex; align-items: center;">
                                     <div style="float: left">
-                                        <img src="~/img/user_icon.png" alt="@user.IdUtente" style="width: 3vw; height: auto">
+                                        <img src="~/img/user_icon.png" alt="@user.Id" style="width: 3vw; height: auto">
                                     </div>
                                     <div style="float: left; margin-left: 1vw;">
-                                        <h4 class="list-group-item-heading">@user.Nome @user.Cognome</h4>
+                                        <h4 class="list-group-item-heading">@user.Name @user.Surname</h4>
                                         <p class="list-group-item-text">@user.Email</p>
                                     </div>
                                 </div>
@@ -375,6 +375,8 @@
     <div class="alert-box-view" style="opacity: 0" id="error-box">
         <!-- Qui dentro viene inserito il codice di errore NON MODIFICARE -->
     </div>
+</div>
+
 </div>
 
 <!-- Alert Script -->

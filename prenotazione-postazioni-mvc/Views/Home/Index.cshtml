@@ -14,15 +14,13 @@
 @inject UtenteHttpService _utenteHttpService;
 @inject StanzeHttpService _stanzeHttpService;
 @inject PrenotazioneHttpSerivice _prenotazioneHttpService;
-@inject FestaHttpService _festaHttpService;
-@inject IHttpContextAccessor HttpContextAccessor
+@inject FestaHttpService _HolidayHttpService;
+@inject IHttpContextAccessor HttpContextAccessor;
 
 @{
-
-    @int? LoggedUser = new @int(
+    User? LoggedUser = new User(
                 "Andrea",
                 "Redegalli",
-                "",
                 "redegalli03@gmail.com",
                 1
             );
@@ -34,7 +32,7 @@
     if (checkExists.StatusCode == HttpStatusCode.OK)
     {
 
-        LoggedUser = await checkExists.Content.ReadFromJsonAsync<@int>();
+        LoggedUser = await checkExists.Content.ReadFromJsonAsync<User>();
 
         HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
     } else {
@@ -47,19 +45,19 @@
             checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
             code = checkExists.StatusCode;
 
-            LoggedUser = await checkExists.Content.ReadFromJsonAsync<@int>();
+            LoggedUser = await checkExists.Content.ReadFromJsonAsync<User>();
 
             HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
         }
     }
 
-    @int? Room = null;
+    User? Room = null;
 
     HttpResponseMessage checkRoom = await _stanzeHttpService.OnGetStanzaByName(ViewModel.Stanza);
 
     if (checkRoom.StatusCode == HttpStatusCode.OK)
     {
-        Room = await checkRoom.Content.ReadFromJsonAsync<@int>();
+        Room = await checkRoom.Content.ReadFromJsonAsync<User>();
     }
 
     //Add Guest features
@@ -111,13 +109,15 @@
             <br>
             @{
                 if(Room != null){   
-                    HttpResponseMessage holiday = await _festaHttpService.getAllFeste();
-                    List<Festa>? holidayList = null;
+                    HttpResponseMessage holiday = await _HolidayHttpService.getAllFeste();
+                    List<Holiday>? holidayList = null;
                         if(holiday.StatusCode == HttpStatusCode.OK){
-                            holidayList = holiday.Content.ReadFromJsonAsync<List<Festa>>().Result;
+                            holidayList = holiday.Content.ReadFromJsonAsync<List<Holiday>>().Result;
                         }
 
                         bool isHoliday = false;
+                }
+            }    
 
 <!-- Room info Div -->
 <div class="container mt-4 ml-70 position-fixed room-info-div">
@@ -154,35 +154,37 @@
                         if (Room != null)
                         {
                             HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
-                            List<@int>? presenti = null;
+                            List<User>? presenti = null;
                             if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
                             {
-                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<@int>?>();
+                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
                                 for (int i = 0; i < presenti.Count; i++)
                                 {
                                     <li>
-                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @Room.Name
+                                        <img src="~/img/example/example-1.png">@presenti[@i].Name @presenti[@i].Surname @Room.Name
                                     </li>
                                 }
-                            </div>
+                            }
                         }
-                    }     
+                    }
+                </ul>
+            </div>    
             <div class="alert-box">
                 <div class="alert-box-view" style="opacity: 0" id="error-box">
                  <!-- Qui dentro viene inserito il codice di errore -->
                 </div>
             </div>
             }
+            </div>
         </div>
     </div>
     <br>
-    <div>
         @{
             Task<Booking?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
             , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
             getPrenotazione.Wait();
             Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
-
+        }
 
     <button type="button" class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" data-toggle="modal" data-target="#exampleModalLong">
         Seleziona una data
@@ -279,8 +281,6 @@
             </div>
         </div>
     </div>
-    </div>
-
 <script>
 
     let usingAlertBox = false;
@@ -398,7 +398,7 @@
     let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
 
     for (var i in festeJSON)
-        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
+        addHoliday(festeJSON[i].idHoliday, festeJSON[i].giorno, festeJSON[i].descrizione);
     
     // Giorno selezionato nel calendario
     let daySel = new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month - 1), @ViewModel.Date.Day);

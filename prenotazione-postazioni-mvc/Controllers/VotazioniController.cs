@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
@@ -50,20 +50,17 @@ namespace prenotazione_postazioni_mvc.Controllers
             HttpResponseMessage? response = null;
             //if (utenteResponse.StatusCode == HttpStatusCode.OK && utenteVotatoResponse.StatusCode == HttpStatusCode.OK)
             //{
-
-            User utente = new User(idUtente, null, null, null, null, 0);//await utenteResponse.Content.ReadFromJsonAsync<Utente>();
-            User utenteVotato = new User(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
             if (voto == 0)
             {
                   response = await _votoHttpService.OnDeleteVoto(idUtente, idUtenteVotato);
             }
             else if (voto == 1)
             {
-                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, true));
+                response = await _votoHttpService.OnMakeVoto(new VoteDto(idUtente, idUtenteVotato, 1));
             }
             else if (voto == -1)
             {
-                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, false));
+                response = await _votoHttpService.OnMakeVoto(new VoteDto(idUtente, idUtenteVotato, 0));
             }
             return Ok("Votazione effettuata");
             //}

@@ -59,7 +59,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Utente");
 
-            string json = "{" + "\"nome\":\"" + user.Name + "\", " + "\"cognome\": \"" + user.Surname + "\", " + "\"image\": \"" + user.Image + "\", " + "\"email\": \"" + user.Email + "\", " + "\"idRuolo\": " + user.IdRole + "}" + "";
+            string json = "{" + "\"nome\":\"" + user.Name + "\", " + "\"cognome\": \"" + user.Surname + "\", " + "\"email\": \"" + user.Email + "\", " + "\"idRuolo\": " + user.IdRole + "}" + "";
             StringContent ctx = new StringContent(json, Encoding.UTF8, "application/json");
 
             var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/utenti/addNewUtente", ctx);
