@@ -11,9 +11,9 @@ namespace prenotazione_postazioni_libs.Models
     {
 
         public int Id { get; set; }
-        public string Name { get; set; } = "";
-        public int Capacity { get; set; } = 0;
-        public int CapacityEmergency { get; set; } = 0;
+        public string Name { get; set; }
+        public int Capacity { get; set; }
+        public int CapacityEmergency { get; set; }
 
 
         private Exception ModelException { get; set; } = new Exception();
