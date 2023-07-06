@@ -98,7 +98,7 @@ namespace prenotazioni_postazioni_api.Services
         internal void Add(UserDto userDto)
         {
             logger.Info("Convertendo userDto in Utente...");
-            User user = new User(userDto.Name, userDto.Surname, userDto.Image, userDto.Email, userDto.IdRole);
+            User user = new User(userDto.Name, userDto.Surname, userDto.Email, userDto.IdRole);
             logger.Info("Procedo con il salvataggio dell'utente nel database");
             _userRepository.Add(user);
         }

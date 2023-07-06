@@ -11,9 +11,9 @@ namespace prenotazione_postazioni_libs.Dto
     {
         public int IdUser { get; set; }
         public int IdVictim { get; set; }
-        public bool VoteResults { get; set; }
+        public float VoteResults { get; set; }
 
-        public VoteDto(int idUtente, int idUutenteVotato, bool votoEffettuato)
+        public VoteDto(int idUtente, int idUutenteVotato, float votoEffettuato)
         {
             this.IdUser = idUtente;
             this.IdVictim = idUutenteVotato;
