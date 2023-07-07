@@ -16,17 +16,17 @@ namespace prenotazioni_postazioni_api.Services
             _menuRepository = menuRepository;
         }
 
-        internal Menu GetByDate(DateOnly date)
+        internal Menu? GetByDate(DateOnly date)
         {
             logger.Info("Ricerca menu mediante una data...");
             return _menuRepository.GetByDate(date);
         }
-        internal List<Menu> GetAll()
+        internal List<Menu>? GetAll()
         {
             logger.Info("Ricerca di tutti i menu");
             return _menuRepository.GetAll();
         }
-        internal Menu GetById(int id)
+        internal Menu? GetById(int id)
         {
             logger.Info("Trovando il menu mediante il suo id: " + id);
             Menu menu = _menuRepository.GetById(id);
@@ -52,7 +52,7 @@ namespace prenotazioni_postazioni_api.Services
                 throw new PrenotazionePostazioniApiException("data gia occupata da un altro menu!!!");
             }
             logger.Info("MenuDto e' valido. Cercando di salvare Menu nel database...");
-            _menuRepository.Save(new Menu(menuDto.Day, menuDto.Image));
+            _menuRepository.Add(new Menu(menuDto.Day, menuDto.Image));
         }
         internal void Delete(DateOnly day) 
         {
