@@ -16,7 +16,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Stanze");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/stanze/getAllStanze");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getAll");
 
             return httpResponseMessage;
         }
@@ -25,7 +25,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Stanze");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/stanze/getStanzaById?id={id}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getById?id={id}");
 
             return httpResponseMessage;
         }
@@ -34,7 +34,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Stanze");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/stanze/getStanzaByName?stanzaName={name}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getByName?stanzaName={name}");
 
             return httpResponseMessage;
         }

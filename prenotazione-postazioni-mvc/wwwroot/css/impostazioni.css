@@ -1,0 +1,96 @@
+.settings_container {
+  padding: 2% 2% 2% 0;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  gap: 2%;
+}
+.settings_sidebar_box {
+  padding: 2%;
+  width: 20%;
+  height: 70vh;
+  display: flex;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 0 1vw 1vw 0;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.settings_sidebar_itemList {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 3vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+}
+.settings_sidebar_itemList a {
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  height: 3vw;
+  padding: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5vw;
+  color: #000;
+  text-decoration: none;
+  transition: 0.25s ease-in-out;
+}
+.settings_sidebar_itemList a:hover {
+  background-color: darkorange;
+  border-radius: 0.5vw;
+  color: #fff;
+}
+.settings_content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.settings_postazioni {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+  padding: 2%;
+  background-color: #fff;
+  border-radius: 1vw;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin: 0;
+}
+.postazioni_image_container img {
+  width: 100%;
+  height: 100%;
+}
+.postazioni_information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 50%;
+  padding: 2%;
+}
+.postazioni_information h1 {
+  font-size: 1.5vw;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
