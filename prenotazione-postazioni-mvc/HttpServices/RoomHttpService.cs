@@ -34,7 +34,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Room");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getByName?stanzaName={name}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getByName?name={name}");
 
             return httpResponseMessage;
         }
