@@ -51,7 +51,30 @@ namespace prenotazioni_postazioni_api.Controllers
 
         }
 
-       
+        [Route("getById")]
+        [HttpGet]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                _logger.Info("Id menu: " + id);
+                _logger.Info("Prelevando un menu mediante il suo id: " + id + "...");
+                Menu menu = _MenuService.GetById(id);
+                _logger.Info("Menu trovato con successo!");
+                return Ok(menu);
+            }
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                _logger.Warn("Menu non trovato: " + ex.Message);
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
 
         [Route("getAll")]
         [HttpGet]
@@ -104,10 +127,10 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [Route("removeMenu")]
+        [Route("deleteMenu")]
         [HttpDelete]
 
-        public IActionResult RemoveMenu(int year, int month, int day)
+        public IActionResult DeleteMenu(int year, int month, int day)
         {
             try
             {
