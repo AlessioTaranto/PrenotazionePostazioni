@@ -31,9 +31,13 @@ namespace prenotazione_postazioni_libs.Models
             this.Date = date;
         }
 
+<<<<<<< HEAD:prenotazione-postazioni-libs/Models/Holiday.cs
         public Holiday()
         {
 
         }
+=======
+        public Festa(){}
+>>>>>>> 290623_lorenzo:prenotazione-postazioni-libs/Models/Festa.cs
     }
 }
