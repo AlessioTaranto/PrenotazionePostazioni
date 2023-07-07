@@ -45,7 +45,7 @@
     <div class="settings_postazioni" id="options-pills-manage" role="tabpanel" aria-labelledby="options-pills-manage-tab">
 
         <div class="postazioni_image_container">
-            <img src="img/piantina.png" usemap="#image-map">
+        <img src="img/piantina.png" usemap="#image-map">
         <map name="image-map" id="image-map">
             <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
             <!--<area alt="s2" href="" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
@@ -75,17 +75,14 @@
         <div class="postazioni_information">
             <br>
             <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
-            <br>
-            @if (ViewModel.CapienzaViewModel.Stanza != "null" && ViewModel.CapienzaViewModel.Stanza != null)
+            @if (ViewModel.CapienzaViewModel.Stanza != "null")
             {
-                <h5>Capienza Normale</h5>
-                <input type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)">
-                <br>
-                <br>
-                <h5>Capienza Covid</h5>
-                <input type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)">
-                <br>
-                <br>
+                <div class="postazioni_information_form">
+                    <h5>Capienza Normale</h5>
+                    <input class="form-control" type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)"*@>
+                    <h5>Capienza Covid</h5>
+                    <input class="form-control" type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)"*@ >
+                </div>
                 <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
             }
         </div>
@@ -101,16 +98,13 @@
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
     */
 
-    $(document).ready(function() {
-        $('area').on('click', function (event) {
-                
-            $.ajax({
-                type: "POST",
-                url: "Impostazioni/SelectRoom",
-                data: { "stanza": event.target.title }
-            }).done(function() {
-                window.location.reload();
-            });
-        });
+    $('area').on('click', function () {
+    let nameStanza = event.target.title;
+    $.ajax({
+        type: "POST",
+        url: "Impostazioni/SelectRoom",
+        data: { "stanza": nameStanza }
+    });
+    location.window.reload();
     });
 </script>
