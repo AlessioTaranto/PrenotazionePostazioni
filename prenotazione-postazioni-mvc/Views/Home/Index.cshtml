@@ -29,7 +29,9 @@
     HttpResponseMessage? checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
 
     HttpStatusCode code = checkExists.StatusCode;
-
+    <body style="background-color:var(--bkg1-color)">
+    
+    </body>
     if (checkExists.StatusCode == HttpStatusCode.OK)
     {
 
@@ -95,7 +97,10 @@
     <div class="room_info_container">
         <div class="room_info_div">
         <div id="room-info-content">
+            <div class="coloreTesto">
+
             <h2>@ViewModel.GetStanza().Replace('_', ' ')</h2>
+             </div>
             <br>
             @{
                 if(Room != null){   
@@ -527,7 +532,7 @@
     $('#prenota').on('click', function(event) {
 
         if ($('#_valueRoom').text() === "null") {
-            alertBox("Seleziona una stanza", "#de4802");
+            alertBox("Seleziona una stanza ", "#de4802");
             return;
         } else if ($('#_valueUtente').text() === "null") {
             alertBox("Non puoi effettuare prenotazioni come Guest", "#de4802");
