@@ -13,81 +13,72 @@
 @inject FestaHttpService _festaHttpService;
 @inject CapienzaHttpService _capienzaHttpService;
 
-<!-- ChangeStateBar Script -->
-<script>
-    // Questa funziona cambia lo stato del tab Sidebar. Chiamata ogni volta che un utente vuole passare ad un'altra tab
-
-    function changeStateTab(number) {
-        $.ajax({
-            type: "POST",
-            url: "Impostazioni/ChangeStateTab",
-            data: { "number": number }
-        });
-    }
-
-    // Importa le date
-</script>
-
-<div class="settings_container">
-<!-- Sidebar tab (Sinistra) -->
-<div class="settings_sidebar_box">
-    <div class="settings_sidebar_itemList">
-        <a>Postazioni</a>
-        <a>Festività</a>
-        <a>Presenze</a>
-        <a>Utenti</a>
-        <a>Covid</a>
-    </div>
-</div>
-<!-- Pagina caricata a destra -->
-<div id="settings_content">
-    <!-- Capienza selector -->
-    <div class="settings_postazioni" id="options-pills-manage" role="tabpanel" aria-labelledby="options-pills-manage-tab">
-
-        <div class="postazioni_image_container">
-        <img src="img/piantina.png" usemap="#image-map">
-        <map name="image-map" id="image-map">
-            <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
-            <!--<area alt="s2" href="" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
-            <area alt="s3" href="" title="s3" coords="185,161,185,127,300,126,300,175" shape="poly">
-            <area alt="s4" href="" title="s4" coords="306,126,344,128,344,182,306,177" shape="poly">
-            <area alt="s5" href="" title="s5" coords="316,117,342,117,344,101,388,98,389,39,318,42,317,62" shape="poly">
-            <area alt="s6" href="" title="s6" coords="349,183,390,189,391,111,350,110" shape="poly">.-->
-            <!--<area alt="Finanze" href="" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
-            <area alt="Bansky" href="" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
-            <area alt="OpenSpace_1" href="" title="OpenSpace 1" coords="491,40,706,64,708,145,492,123" shape="poly">
-            <area alt="OpenSpace_2" href="" title="OpenSpace 2" coords="492,207,704,231,704,147,492,126" shape="poly">
-            <!--<area alt="s10" href="" title="s10" coords="544,225,598,232,595,265,540,261" shape="poly">
-            <area alt="s11" href="" title="s11" coords="606,233,660,242,655,275,600,266" shape="poly">
-            <area alt="s12" href="" title="s12" coords="588,310,705,330,708,495,588,495" shape="poly">-->
-            <area alt="Sviluppo" href="" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
-            <area alt="Assistenza" href="" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
-            <!--<area alt="s15" href="" title="s15" coords="43,246,134,260,135,376,122,383,46,384" shape="poly">
-            <area alt="s16" href="" title="s16" coords="43,399,125,397,147,415,149,508,52,509" shape="poly">
-            <area alt="s17" href="" title="s17" coords="161,508,247,508,248,403,178,403,160,417" shape="poly">-->
-            <area alt="Commerciale" href="" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
-            <area alt="Meeting" href="" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
-        </map>
+<link rel="stylesheet" href="css/switch.css">
+<div class="d-flex align-items-start settings_container">
+  <!-- Sidebar tab (Sinistra) -->
+    <div class="nav settings_sidebar_box">
+        <div class="settings_sidebar_itemList">    
+            <div class="nav nav-pills" style="gap: 2vw" >
+                <a class="active" id="v-pills-booking-tab" data-bs-toggle="pill" data-bs-target="#v-pills-booking" type="button" role="tab" aria-controls="v-pills-booking" aria-selected="true">Postazioni</a>
+                <a id="v-pills-holiday-tab" data-bs-toggle="pill" data-bs-target="#v-pills-holiday" type="button" role="tab" aria-controls="v-pills-holiday" aria-selected="false">Festività</a>
+                <a id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Presenze</a>
+                <a id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Utenti</a>
+            </div>
         </div>
-    
-        <link rel="stylesheet" href="css/switch.css">
-
-        <div class="postazioni_information">
-            <br>
-            <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
-            @if (ViewModel.CapienzaViewModel.Stanza != "null")
-            {
-                <div class="postazioni_information_form">
-                    <h5>Capienza Normale</h5>
-                    <input class="form-control" type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)"*@>
-                    <h5>Capienza Covid</h5>
-                    <input class="form-control" type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)"*@ >
+    </div>
+    <!-- Pagina caricata a destra -->
+    <div class="tab-content" id="v-pills-tabContent">
+        <div class="settings_postazioni tab-pane fade show active" id="v-pills-booking" role="tabpanel" aria-labelledby="v-pills-booking-tab">
+           
+                <div class="postazioni_image_container">
+                    <img src="img/piantina.png" usemap="#image-map">
+                    <map name="image-map" id="image-map">
+                        <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
+                        <!--<area alt="s2" href="" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
+                        <area alt="s3" href="" title="s3" coords="185,161,185,127,300,126,300,175" shape="poly">
+                        <area alt="s4" href="" title="s4" coords="306,126,344,128,344,182,306,177" shape="poly">
+                        <area alt="s5" href="" title="s5" coords="316,117,342,117,344,101,388,98,389,39,318,42,317,62" shape="poly">
+                        <area alt="s6" href="" title="s6" coords="349,183,390,189,391,111,350,110" shape="poly">.-->
+                        <!--<area alt="Finanze" href="" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
+                        <area alt="Bansky" href="" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
+                        <area alt="OpenSpace_1" href="" title="OpenSpace 1" coords="491,40,706,64,708,145,492,123" shape="poly">
+                        <area alt="OpenSpace_2" href="" title="OpenSpace 2" coords="492,207,704,231,704,147,492,126" shape="poly">
+                        <!--<area alt="s10" href="" title="s10" coords="544,225,598,232,595,265,540,261" shape="poly">
+                        <area alt="s11" href="" title="s11" coords="606,233,660,242,655,275,600,266" shape="poly">
+                        <area alt="s12" href="" title="s12" coords="588,310,705,330,708,495,588,495" shape="poly">-->
+                        <area alt="Sviluppo" href="" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
+                        <area alt="Assistenza" href="" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
+                        <!--<area alt="s15" href="" title="s15" coords="43,246,134,260,135,376,122,383,46,384" shape="poly">
+                        <area alt="s16" href="" title="s16" coords="43,399,125,397,147,415,149,508,52,509" shape="poly">
+                        <area alt="s17" href="" title="s17" coords="161,508,247,508,248,403,178,403,160,417" shape="poly">-->
+                        <area alt="Commerciale" href="" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
+                        <area alt="Meeting" href="" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
+                    </map>
                 </div>
-                <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
-            }
+
+                <div class="postazioni_information">
+                    <br>
+                    <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
+                    @if (ViewModel.CapienzaViewModel.Stanza != "null")
+                    {
+                        <div class="postazioni_information_form">
+                            <h5>Capienza Normale</h5>
+                            <input class="form-control" type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)"*@>
+                            <h5>Capienza Covid</h5>
+                            <input class="form-control" type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)"*@ >
+                        </div>
+                        <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
+                    }
+                </div>
+       
         </div>
+
+        <div class="tab-pane fade settings_postazioni " id="v-pills-holiday" role="tabpanel" aria-labelledby="v-pills-holiday-tab">...</div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
     </div>
 </div>
+
 
     <!-- Questo script serve per adattare le coordinate dell'ImageMap alla viewport dell'utente -->
 <script src="js/jquery.rwdImageMaps.min.js"></script>
