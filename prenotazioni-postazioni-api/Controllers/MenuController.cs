@@ -103,9 +103,9 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [Route("addMenu")]
+        [Route("add")]
         [HttpPost]
-        public IActionResult AddMenuByDate([FromBody] MenuDto menuDto)
+        public IActionResult Add([FromBody] MenuDto menuDto)
         {
             try
             {
@@ -127,10 +127,10 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [Route("deleteMenu")]
+        [Route("delete")]
         [HttpDelete]
 
-        public IActionResult DeleteMenu(int year, int month, int day)
+        public IActionResult Delete(int year, int month, int day)
         {
             try
             {
