@@ -23,21 +23,21 @@ namespace prenotazioni_postazioni_api.Repositories
             string query = "SELECT * FROM Menu WHERE day = @day;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@day", day.ToString("yyyy-MM-dd"));
-            return DatabaseManager<Menu>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            return DatabaseManager<Menu>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         internal Menu? GetById(int id)
         {
             string query = "SELECT * FROM Menu WHERE id = @id;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@id", id.ToString("yyyy-MM-dd"));
-            return DatabaseManager<Menu>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            sqlCommand.Parameters.AddWithValue("@id", id);
+            return DatabaseManager<Menu>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         internal void Add(Menu menu)
         {
             string query = $"INSERT INTO Menu (day, image) VALUES (@day, @image);";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@day", menu.Day.ToString("yyyy-MM-dd"));
-            sqlCommand.Parameters.AddWithValue("@image", menu.Image.ToString());
+            sqlCommand.Parameters.AddWithValue("@image", menu.Image);
             DatabaseManager<object>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
@@ -46,7 +46,7 @@ namespace prenotazioni_postazioni_api.Repositories
             string query = $"DELETE FROM Menu WHERE day = @day;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@day", day.ToString("yyyy-MM-dd"));
-            DatabaseManager<object>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            DatabaseManager<object>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
     }

@@ -43,7 +43,7 @@ namespace prenotazioni_postazioni_api.Services
             }
         }
 
-        internal void Save(MenuDto menuDto)
+        internal void Add(MenuDto menuDto)
         {
             logger.Info("Controllando se menuDto e' valido...");
             if(_menuRepository.GetByDate(menuDto.Day) != null)
