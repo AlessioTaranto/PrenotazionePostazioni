@@ -13,22 +13,35 @@
 @inject FestaHttpService _festaHttpService;
 @inject CapienzaHttpService _capienzaHttpService;
 
+<script>
+    function changeTab (pageNumber) {
+        $.ajax({
+            type: "POST",
+            url: "Impostazioni/ChangeStateTab",
+            data: { number: pageNumber },
+        }).done(function() {
+            window.location.reload();
+        });
+    };
+</script>
+
 <link rel="stylesheet" href="css/switch.css">
 <div class="settings_container">
   <!-- Sidebar tab (Sinistra) -->
     <div class="nav settings_sidebar_box">
         <div class="settings_sidebar_itemList">
-                <a onclick="">Postazioni</a>
-                <a onclick="">Festività</a>
-                <a>Presenze</a>
-                <a>Utenti</a>
+                <a onClick="changeTab(0)">Postazioni</a>
+                <a onClick="changeTab(1)">Festività</a>
+                <a onClick="changeTab(2)">Presenze</a>
+                <a onClick="changeTab(3)">Utenti</a>
+                <a onClick="changeTab(4)">Emergenza</a>
         </div>
     </div>
     <!-- Pagina caricata a destra -->
     <div class="settings_content">
-        <p>@ViewModel.StateTab</p>
         @{
-            if(@ViewModel.StateTab == 0){
+            switch(ViewModel.StateTab){
+                case 0:
                 <div class="settings_postazioni">
                     <div class="postazioni_image_container">
                         <img src="img/piantina.png" usemap="#image-map">
@@ -59,11 +72,21 @@
                         }
                     </div>
                 </div>
-            }else if(ViewModel.StateTab == 1){
-                <div>Test</div>
+                break;
+                case 1:
+                <div class="settings_postazioni">Test1</div>
+                break;
+                case 2:
+                <div class="settings_postazioni">Test2</div>
+                break;
+                case 3:
+                <div class="settings_postazioni">Test3</div>
+                break;
+                case 4:
+                <div class="settings_postazioni">Test4</div>
+                break;
             }
         }
-        
     </div>
 </div>
 
