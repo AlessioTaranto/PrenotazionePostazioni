@@ -96,6 +96,83 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        [Route("getByUserAndIdMenu")]
+        [HttpGet]
+        public IActionResult GetByUserAndIdMenu(int idMenu, int idUser)
+        {
+            try
+            {
+                _logger.Info("Id menu: " + idMenu);
+                _logger.Info("Id utente: " + idUser);
+                _logger.Info("Prelevando tutte le scelte...");
+                MenuChoices menuChoices = _MenuChoicesService.GetByUserAndIdMenu(idMenu, idUser);
+                _logger.Info("Scelta trovata con successo!");
+                return Ok(menuChoices);
+            }catch (PrenotazionePostazioniApiException ex) 
+            {
+                _logger.Warn("Scelta non trovata: " + ex.Message);
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Route("add")]
+        [HttpPost]
+        public IActionResult Add([FromBody] MenuChoicesDto menuChoicesDto)
+        {
+            try
+            {
+                _logger.Info("Id del menu: " + menuChoicesDto.IdMenu);
+                _logger.Info("Scelta del menu: " + menuChoicesDto.Choice);
+                _logger.Info("Id dell'utente: " + menuChoicesDto.IdUser);
+                _logger.Info("salvando un menuChoicesDto nel database...");
+                _MenuChoicesService.Add(menuChoicesDto);
+                _logger.Info("MenuChoicesDto salvato con successo, OK");
+                return Ok();
+            }
+            catch (PrenotazionePostazioniApiException ex)
+            {
+                _logger.Error("Bad request: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Bad request: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Route("delete")]
+        [HttpDelete]
+        public IActionResult Delete(int idMenu, int idUser) 
+        {
+            try
+            {
+                _logger.Info("Id menu: " + idMenu);
+                _logger.Info("Id utente: " + idUser);
+                _logger.Info($"Eliminaione scelta dell'utente {idUser} dal menu {idMenu}");
+                _MenuChoicesService.DeleteByUserAndIdMenu(idMenu, idUser);
+                return Ok();
+            }
+            catch(PrenotazionePostazioniApiException ex)
+            {
+                _logger.Info("Scelta NotFound: " + ex.Message);
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+
+
 
 
     }

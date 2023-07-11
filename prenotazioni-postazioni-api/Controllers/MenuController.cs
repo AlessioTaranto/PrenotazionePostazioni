@@ -111,7 +111,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Giorno del menu: " + menuDto.Day);
                 _logger.Info("salvando un menuDto nel database...");
-                _MenuService.Save(menuDto);
+                _MenuService.Add(menuDto);
                 _logger.Info("MenuDto salvato con successo, OK");
                 return Ok();
             }
@@ -141,8 +141,8 @@ namespace prenotazioni_postazioni_api.Controllers
             }
             catch (PrenotazionePostazioniApiException ex)
             {
-                _logger.Error("Bad request: " + ex.Message);
-                return BadRequest(ex.Message);
+                _logger.Error("NotFound: " + ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
