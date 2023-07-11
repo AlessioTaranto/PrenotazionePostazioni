@@ -57,7 +57,7 @@ namespace prenotazione_postazioni_mvc.Models
         /// <returns>Se è stata selezionata una room, ritorna la room, altrimenti "Seleziona una rooms"</returns>
         public string GetRoom()
         {
-            return Room == "null" ? "Seleziona una room" : Room;
+            return Room == "null" ? "Seleziona una stanza" : Room;
         }
 
         /// <summary>
