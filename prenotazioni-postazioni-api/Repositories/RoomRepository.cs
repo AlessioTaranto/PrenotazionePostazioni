@@ -48,9 +48,9 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>La stanza trovata, null altrimenti</returns>
         internal Room? GetByName(string roomName)
         {
-            string query = $"SELECT * FROM Room WHERE UPPER(Room.name) = UPPER(@roomName );";
+            string query = $"SELECT * FROM Room WHERE name = @roomName;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@stanza_name", roomName);
+            sqlCommand.Parameters.AddWithValue("@roomName", roomName);
             return DatabaseManager<Room>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
