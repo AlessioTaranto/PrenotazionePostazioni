@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Utente trovati, null altrimenti</returns>
         internal List<User>? GetAll()
         {
-            string query = "SELECT * FROM User;";
+            string query = "SELECT * FROM [User];";
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<List<User>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
@@ -36,7 +36,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal User? GetById(int idUser)
         {
-            string query = $"SELECT * FROM User WHERE id = @idUser;";
+            string query = $"SELECT * FROM [User] WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);
             return DatabaseManager<User>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -49,7 +49,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal User? GetByEmail(string email)
         {
-            string query = $"SELECT * FROM User WHERE email = @email;";
+            string query = $"SELECT * FROM [User] WHERE email = @email;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@email", email);
             return DatabaseManager<User>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -62,7 +62,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Add(User utente)
         {
-            string query = $"INSERT INTO User (name, surname, email, idRole) VALUES (@name, @surname, @email, @idRole);";
+            string query = $"INSERT INTO [User] (name, surname, email, idRole) VALUES (@name, @surname, @email, @idRole);";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@name", utente.Name);
             sqlCommand.Parameters.AddWithValue("@surname", utente.Surname);
@@ -73,7 +73,7 @@ namespace prenotazioni_postazioni_api.Repositories
 
         internal User? GetByName(string name, string surname)
         {
-            string query = $"SELECT * FROM User WHERE (name = @name AND surname = @surname)";
+            string query = $"SELECT * FROM [User] WHERE (name = @name AND surname = @surname)";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@name", name);
             sqlCommand.Parameters.AddWithValue("@surname", surname);
@@ -85,14 +85,14 @@ namespace prenotazioni_postazioni_api.Repositories
         /// </summary>
         /// <param name="date"></param>
         /// <returns>List di Utente contenenti solo gli Id</returns>
-        internal List<User>? GetAllByDate(DateTime date)
+        internal List<Booking>? GetAllByDate(DateTime date)
         {
-            string query = $"SELECT idUser FROM Booking WHERE YEAR(startDate) = @year AND MONTH(startDate) = @month AND DAY(startDate) = {date.Day};";
+            string query = $"SELECT * FROM Booking WHERE YEAR(startDate) = @year AND MONTH(startDate) = @month AND DAY(startDate) = @day;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@year", date.Year);
             sqlCommand.Parameters.AddWithValue("@month",date.Month);
             sqlCommand.Parameters.AddWithValue("@day", date.Day);
-            return DatabaseManager<List<User>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            return DatabaseManager<List<Booking>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
     }
 }
