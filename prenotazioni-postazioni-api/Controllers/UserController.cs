@@ -21,7 +21,7 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public IActionResult getAll()
+        public IActionResult GetAll()
         {
             try
             {
@@ -41,17 +41,17 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <summary>
         /// Restituisce un utente mediante il suo id
         /// </summary>
-        /// <param name="idUser">Id dell'utente da trovare</param>
+        /// <param name="id">Id dell'utente da trovare</param>
         /// <returns>L'utente trovato e 200, 404 altrimenti</returns>
         [HttpGet]
         [Route("getById")]
-        public IActionResult GetById(int idUser)
+        public IActionResult GetById(int id)
         {
             try
             {
-                _logger.Info("Id utente: " + idUser);
-                _logger.Info("Prelevando un utente mediante il suo id: " + idUser + "...");
-                User user = _UserService.GetById(idUser);
+                _logger.Info("Id utente: " + id);
+                _logger.Info("Prelevando un utente mediante il suo id: " + id + "...");
+                User user = _UserService.GetById(id);
                 _logger.Info("Utente trovato con successo!");
                 return Ok(user);
             }catch(PrenotazionePostazioniApiException ex)
