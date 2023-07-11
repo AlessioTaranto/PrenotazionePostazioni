@@ -45,17 +45,17 @@ namespace prenotazioni_postazioni_api.Controllers
         /// <summary>
         /// Restituisce la stanza mediante l'id associato
         /// </summary>
-        /// <param name="idRoom">L'id della stanza</param>
+        /// <param name="id">L'id della stanza</param>
         /// <returns>La stanza trovata con 200, 404 altrimenti</returns>
         [HttpGet]
         [Route("getById")]
-        public IActionResult GetById(int idRoom)
+        public IActionResult GetById(int id)
         {
             try
             {
-                _logger.Info("Id stanza: " + idRoom);
-                _logger.Info("Trovando la stanza mediante il suo id: " + idRoom + "...");
-                Room stanza = _roomService.GetById(idRoom);
+                _logger.Info("Id stanza: " + id);
+                _logger.Info("Trovando la stanza mediante il suo id: " + id + "...");
+                Room stanza = _roomService.GetById(id);
                 _logger.Info("Stanza trovata con successo!");
                 return Ok(stanza);
             }catch(PrenotazionePostazioniApiException ex)

@@ -1,16 +1,16 @@
 ﻿namespace prenotazione_postazioni_mvc.Models
 {
-    public class PresenzeImpostazioniViewModel
+    public class AttendanceSettingsViewModel
     {
         // Giorno selezionato
-        public DateTime PresenzaSelezionata { get; set; }
+        public DateTime AttendanceSelected { get; set; }
 
         // Stato del Collapse (List)
         public int CollapsedList { get; set; }
 
-        public PresenzeImpostazioniViewModel()
+        public AttendanceSettingsViewModel()
         {
-            PresenzaSelezionata = DateTime.Now;
+            AttendanceSelected = DateTime.Now;
         }
 
         /// <summary>
@@ -29,11 +29,11 @@
         /// <param name="day">Giorno selezionato</param>
         /// <exception cref="Exception">Giorno non valido</exception>
 
-        public void SelectPresenza(int year, int month, int day)
+        public void SelectAttendance(int year, int month, int day)
         {
             try
             {
-                PresenzaSelezionata = new DateTime(year, month, day);
+                AttendanceSelected = new DateTime(year, month, day);
             }
             catch (ArgumentOutOfRangeException)
             {

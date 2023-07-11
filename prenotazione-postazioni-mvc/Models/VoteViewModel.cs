@@ -1,6 +1,6 @@
 ﻿namespace prenotazione_postazioni_mvc.Models
 {
-    public class VotazioniViewModel
+    public class VoteViewModel
     {
         
     }
