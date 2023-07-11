@@ -4,47 +4,47 @@ using prenotazione_postazioni_mvc.Models;
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
-    public class ImpostazioniController : Controller
+    public class SettingsController : Controller
     {
         //HTTP Client Factory -> Capienza
-        public readonly CapienzaHttpService _capienzaHttpService;
+        public readonly CapacityHttpService _capacityHttpService;
         //HTTP Client Factory -> Festa
-        public readonly FestaHttpService _festaHttpService;
+        public readonly HolidayHttpService _festaHttpService;
 
-        public ImpostazioniController(CapienzaHttpService capienzaHttpService, FestaHttpService festaHttpService)
+        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService)
         {
-            _capienzaHttpService = capienzaHttpService;
-            _festaHttpService = festaHttpService;
+            _capacityHttpService = capacityHttpService;
+            _festaHttpService = holidayHttpService;
         }
 
         public IActionResult Index()
         {
             if (ViewModel == null)
-                ViewModel = new ImpostazioniViewModel(
-                    new CapienzaImpostazioniViewModel(_capienzaHttpService), 
-                    new PresenzeImpostazioniViewModel(),
+                ViewModel = new SettingsViewModel(
+                    new CapacitySettingsViewModel(_capacityHttpService), 
+                    new AttendanceSettingsViewModel(),
                     _festaHttpService
                 );
 
-            ReloadFeste();
+            ReloadHoliday();
 
             return View(ViewModel);
         }
 
-        public static ImpostazioniViewModel? ViewModel { get; set; }
+        public static SettingsViewModel? ViewModel { get; set; }
 
         /// <summary>
         ///     Cambia la stanza selezionata nel tab "Covid / Capienza"
         /// </summary>
-        /// <param name="stanza">Stanza selezionata</param>
+        /// <param name="room">Stanza selezionata</param>
         /// <returns>RedirectToAction -> Index()</returns>
 
         [HttpPost]
         [ActionName("SelectRoom")]
-        public IActionResult SelectRoom(string stanza)
+        public IActionResult SelectRoom(string room)
         {
             if (ViewModel != null)
-                ViewModel.CapienzaViewModel.Stanza = stanza;
+                ViewModel.CapacitySettingsViewModel.Room = room;
 
             return RedirectToAction("Index");
         }
@@ -58,7 +58,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>RedirectToAction -> Index()</returns>
 
         [HttpPost]
-        [ActionName("SelectFesta")]
+        [ActionName("SelectHoliday")]
         public IActionResult SelectFesta(int year, int month, int day)
         {
             // Dicembre
@@ -68,7 +68,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel?.SelectFesta(year, month, day);
+            ViewModel?.SetHolidaySelected(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -82,10 +82,10 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>RedirectToAction -> Index()</returns>
 
         [HttpPost]
-        [ActionName("AggiungiFesta")]
-        public IActionResult AggiungiFesta(int year, int month, int day, string description)
+        [ActionName("AddHoliday")]
+        public IActionResult AddHoliday(int year, int month, int day, string description)
         {
-            ViewModel?.AddFesta(year, month, day, description);
+            ViewModel?.AddHoliday(year, month, day, description);
 
             return Ok();
         }
@@ -99,10 +99,10 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>RedirectToAction -> Index()</returns>
         
         [HttpGet]
-        [ActionName("RimuoviFesta")]
-        public IActionResult RimuoviFesta(int year, int month, int day)
+        [ActionName("DeleteHoliday")]
+        public IActionResult DeleteHoliday(int year, int month, int day)
         {
-            ViewModel?.RemoveFesta(year, month, day);
+            ViewModel?.DeleteHoliday(year, month, day);
 
             return Ok();
         }
@@ -129,10 +129,10 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>Ok -> Collapse aggiornato</returns>
 
         [HttpPost]
-        [ActionName("CollapsePresenze")]
-        public IActionResult CollapsePresenze()
+        [ActionName("CollapseAttendance")]
+        public IActionResult CollapseAttendance()
         {
-            ViewModel?.PresenzeViewModel.ToggleCollapseList();
+            ViewModel?.AttendanceSettingsViewModel.ToggleCollapseList();
 
             return Ok("Collapse changed");
         }
@@ -146,8 +146,8 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>RedirectToAction -> Index()</returns>
 
         [HttpPost]
-        [ActionName("SelectPresenza")]
-        public IActionResult SelectPresenza(int year, int month, int day)
+        [ActionName("SelectAttendance")]
+        public IActionResult SelectAttendance(int year, int month, int day)
         {
             if (month == 0)
             {
@@ -155,7 +155,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 year--;
             }
 
-            ViewModel?.PresenzeViewModel.SelectPresenza(year, month, day);
+            ViewModel?.AttendanceSettingsViewModel.SelectAttendance(year, month, day);
 
             return RedirectToAction("Index");
         }
@@ -166,14 +166,14 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>Ok -> Modalità cambiata</returns>
 
         [HttpPost]
-        [ActionName("ToggleCovidMode")]
+        [ActionName("ToggleModEmergency")]
         public IActionResult ToggleCovidMode()
         {
 
-            if (_capienzaHttpService == null)
+            if (_capacityHttpService == null)
                 return BadRequest("Errore generico");
 
-            _capienzaHttpService.ToggleCovidMode();
+            _capacityHttpService.ToggleModEmergency();
 
             return Ok("Modalità cambiata");
         }
@@ -181,17 +181,17 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <summary>
         ///     Imposta la capienza normale di una stanza 
         /// </summary>
-        /// <param name="stanza">Stanza selezionata</param>
-        /// <param name="capienza">Capienza selezionata</param>
+        /// <param name="room">Stanza selezionata</param>
+        /// <param name="capacity">Capienza selezionata</param>
         /// <returns>Ok -> Capienza aggiornata</returns>
 
         [HttpPost]
-        [ActionName("ReloadCapienzaNormale")]
-        public IActionResult ReloadCapienzaNormale(string stanza, int capienza)
+        [ActionName("ReloadCapacity")]
+        public IActionResult ReloadCapacity(string room, int capacity)
         {
             try
             {
-                ViewModel.CapienzaViewModel.SetCapienzaNormale(stanza, capienza);
+                ViewModel.CapacitySettingsViewModel.SetCapacity(room, capacity);
             }
             catch (Exception exception)
             {
@@ -204,17 +204,17 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <summary>
         ///     Imposta la capienza covid di una stanza
         /// </summary>
-        /// <param name="stanza">Stanza selezionata</param>
-        /// <param name="capienza">Capienza selezionata</param>
+        /// <param name="room">Stanza selezionata</param>
+        /// <param name="capacity">Capienza selezionata</param>
         /// <returns>Ok -> Capienza aggiornata</returns>
 
         [HttpPost]
         [ActionName("ReloadCapienzaCovid")]
-        public IActionResult ReloadCapienzaCovid(string stanza, int capienza)
+        public IActionResult ReladCapacityEmergency(string room, int capacity)
         {
             try
             {
-                ViewModel.CapienzaViewModel.SetCapienzaCovid(stanza, capienza);
+                ViewModel.CapacitySettingsViewModel.SetCapacityEmergency(room, capacity);
             }
             catch (Exception exception)
             {
@@ -231,10 +231,10 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("ReloadFeste")]
-        public IActionResult ReloadFeste()
+        [ActionName("ReloadHoliday")]
+        public IActionResult ReloadHoliday()
         {
-            Task task = ViewModel.ReloadFeste();
+            Task task = ViewModel.ReloadHoliday();
             task.Wait();
 
             return Ok("Festività ricaricate");

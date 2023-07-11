@@ -9,8 +9,8 @@
 @using prenotazione_postazioni_libs.Dto;
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
-@inject UtenteHttpService _utenteHttpService;
-@inject VotoHttpService _VoteHttpService;
+@inject UserHttpService _userHttpService;
+@inject VoteHttpService _voteHttpService;
 
 @inject IHttpContextAccessor HttpContextAccessor
 
@@ -26,8 +26,8 @@
     User LoggedUser = JsonConvert.DeserializeObject<User>(HttpContextAccessor.HttpContext.Session.GetString("_User"));
 
 
-    HttpResponseMessage? getAllUtentiResult = await _utenteHttpService.OnGetAllUtenti(); 
-    HttpResponseMessage? getAllVotiResult = await _VoteHttpService.OnGetVotiFromUtente(LoggedUser.Id); 
+    HttpResponseMessage? getAllUtentiResult = await _userHttpService.GetAll(); 
+    HttpResponseMessage? getAllVotiResult = await _voteHttpService.GetUserVotes(LoggedUser.Id); 
     List<User>? utenti = null;
     List<Vote>? voti = null;
   
