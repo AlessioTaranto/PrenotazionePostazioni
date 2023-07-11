@@ -68,7 +68,7 @@
 
 <!-- HIDDEN VALUES -->
 <p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
-<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
+<p style="display: block" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
 <p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
 
@@ -79,27 +79,15 @@
     <div class="piantina_container" >
         <img src="img/piantina.png" usemap="#image-map" >
 
-        <map name="image-map" id="image-map">
-            <area alt="Contabilità"  href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
-            <!--<area alt="s2" href="" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
-            <area alt="s3" href="" title="s3" coords="185,161,185,127,300,126,300,175" shape="poly">
-            <area alt="s4" href="" title="s4" coords="306,126,344,128,344,182,306,177" shape="poly">
-            <area alt="s5" href="" title="s5" coords="316,117,342,117,344,101,388,98,389,39,318,42,317,62" shape="poly">
-            <area alt="s6" href="" title="s6" coords="349,183,390,189,391,111,350,110" shape="poly">.-->
-            <!--<area alt="Finanze" href="" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
-            <area alt="Bansky" href="" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
-            <area alt="OpenSpace_1" href="" title="OpenSpace 1" coords="491,40,706,64,708,145,492,123" shape="poly">
-            <area alt="OpenSpace_2" href="" title="OpenSpace 2" coords="492,207,704,231,704,147,492,126" shape="poly">
-            <!--<area alt="s10" href="" title="s10" coords="544,225,598,232,595,265,540,261" shape="poly">
-            <area alt="s11" href="" title="s11" coords="606,233,660,242,655,275,600,266" shape="poly">
-            <area alt="s12" href="" title="s12" coords="588,310,705,330,708,495,588,495" shape="poly">-->
-            <area alt="Sviluppo" href="" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
-            <area alt="Assistenza" href="" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
-            <!--<area alt="s15" href="" title="s15" coords="43,246,134,260,135,376,122,383,46,384" shape="poly">
-            <area alt="s16" href="" title="s16" coords="43,399,125,397,147,415,149,508,52,509" shape="poly">
-            <area alt="s17" href="" title="s17" coords="161,508,247,508,248,403,178,403,160,417" shape="poly">-->
-            <area alt="Commerciale" href="" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
-            <area alt="Meeting" href="" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
+        <map name="image-map">
+            <area alt="Bansky" title="Bansky" href="" coords="3865,1581,3871,936,4701,938,4708,1684" shape="poly">
+            <area alt="OpenSpace 1" title="OpenSpace_1" href="" coords="5084,529,5039,821,6336,1003,6381,705" shape="poly">
+            <area alt="OpenSpace 2" title="OpenSpace_2" href="" coords="5097,1172,6381,1334,6323,1645,5052,1464" shape="poly">
+            <area alt="Sviluppo" title="Sviluppo" href="" coords="4623,2381,4623,2556,4591,2576,4591,4113,5551,4113,5557,2517,5136,2427" shape="poly">
+            <area alt="Assistenza" title="Assistenza" href="" coords="3598,2310,3565,2491,3481,2628,3487,4100,4467,4120,4415,2368,3747,2264,3727,2297" shape="poly">
+            <area alt="Commerciale" title="Commerciale" href="" coords="2587,3251,2580,4120,3449,4107,3443,3075,3021,3095" shape="poly">
+            <area alt="Meeting" title="Meeting" href="" coords="2334,1881,2749,1771,3060,1829,3235,1933,3287,2063,3307,2192,3268,2342,3242,2420,3190,2530,3138,2588,3080,2640,2982,2725,2827,2822,2749,2874,2554,2913,2282,2958,2108,2934,1912,2789,1796,2584,1860,2322,2100,2011" shape="poly">
+            <area alt="Contabilità" title="Contabilità" href="" coords="634,1226,1601,1096,1588,344,647,344" shape="poly">
         </map>
     </div>
 
@@ -461,12 +449,13 @@
 
     $('area').on('click', function () {
         let nameStanza = event.target.alt;
+        console.log(nameStanza)
         $.ajax({
             type: "POST",
             url: "Home/ReloadRoom",
             data: { "room": nameStanza }
         });
-        location.window.reload();
+        
     });
 
     /*
