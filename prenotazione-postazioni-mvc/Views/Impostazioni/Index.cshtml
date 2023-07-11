@@ -9,9 +9,9 @@
 @using prenotazione_postazioni_libs.Dto;
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
-@inject UserHttpService _utenteHttpService;
-@inject HolidayHttpService _festaHttpService;
-@inject CapacityHttpService _capienzaHttpService;
+@inject UserHttpService _userHttpService;
+@inject HolidayHttpService _holidayHttpService;
+@inject CapacityHttpService _capacityHttpService;
 
 <script>
     function changeTab (pageNumber) {
@@ -25,7 +25,6 @@
     };
 </script>
 
-<<<<<<< HEAD
 <link rel="stylesheet" href="css/switch.css">
 <div class="settings_container">
   <!-- Sidebar tab (Sinistra) -->
@@ -57,295 +56,11 @@
                         <area alt="Contabilità" title="Contabilità" href="" coords="634,1226,1601,1096,1588,344,647,344" shape="poly">
                     </map>
                     </div>
-=======
-<!-- Sidebar tab (Sinistra) -->
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light position-fixed" style="width: 20vw; height: 100%; border: 0.1px solid darkorange !important">
-    <div class="nav flex-column mb-auto nav-pills darkorange" id="options-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link-1" id="options-pills-covid-tab" data-toggle="pill" href="#options-pills-covid" role="tab" aria-controls="options-pills-covid" aria-selected="false" onclick="changeStateTab(0)">Postazioni</a>
-        <a class="nav-link-1" id="options-pills-festivita-tab" data-toggle="pill" href="#options-pills-festivita" role="tab" aria-controls="options-pills-festivita" aria-selected="false" onclick="changeStateTab(1)">Festività</a>
-        <a class="nav-link-1" id="options-pills-presenze-tab" data-toggle="pill" href="#options-pills-presenze" role="tab" aria-controls="options-pills-presenze" aria-selected="false" onclick="changeStateTab(2)">Presenze</a>
-        <a class="nav-link-1" id="options-pills-users-tab" data-toggle="pill" href="#options-pills-users" role="tab" aria-controls="options-pills-users" aria-selected="false" onclick="changeStateTab(3)">Utenti</a>
-        <a class="nav-link-1" id="options-pills-admin-tab" data-toggle="pill" href="#options-pills-admin" role="tab" aria-controls="options-pills-admin" aria-selected="false" onclick="changeStateTab(4)">Covid</a>
-    </div>
-</div>
-
-<!-- Pagina caricata a destra -->
-<div class="tab-content" id="options-pills-tabContent">
-
-    <!-- Capienza selector -->
-    <div class="tab-pane fade" id="options-pills-covid" role="tabpanel" aria-labelledby="options-pills-covid-tab">
-
-        <div class="container mt-4 ml-21 position-fixed piantina-div">
-            <img src="img/piantina.png" usemap="#image-map">
-            <map name="image-map">
-                <area alt="Contabilità" href="" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
-                <!--<area alt="Finanze" href="" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
-                <area alt="Bansky" href="" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
-                <area alt="OpenSpace #1" href="" title="OpenSpace #1" coords="491,40,706,64,708,145,492,123" shape="poly">
-                <area alt="OpenSpace #2" href="" title="OpenSpace #2" coords="492,207,704,231,704,147,492,126" shape="poly">
-                <area alt="Sviluppo" href="" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
-                <area alt="Assistenza" href="" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
-                <area alt="Commerciale" href="" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
-                <area alt="Meeting" href="" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
-            </map>
-        </div>
-    
-        <link rel="stylesheet" href="css/switch.css">
-
-        <div class="container mt-4 ml-70 position-fixed room-info-div">
-            <br>
-            <h1>@ViewModel.CapacitySettingsViewModel.GetStanza()</h1>
-            <br>
-            @if (ViewModel.CapacitySettingsViewModel.Room != "null" && ViewModel.CapacitySettingsViewModel.Room != null)
-            {
-                <h5>Capienza Normale</h5>
-                <input type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 17vw" value="@ViewModel.CapacitySettingsViewModel.GetCapienzaNormale(@ViewModel.CapacitySettingsViewModel.Room)">
-                <br>
-                <br>
-                <h5>Capienza Covid</h5>
-                <input type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 17vw" value="@ViewModel.CapacitySettingsViewModel.GetCapienzaCovid(@ViewModel.CapacitySettingsViewModel.Room)">
-                <br>
-                <br>
-                <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
-            }
-        </div>
-    </div>
-
-    <!-- Festività selector -->
-    <div class="tab-pane fade" id="options-pills-festivita" role="tabpanel" aria-labelledby="options-pills-festivita-tab">
-        <div class="container mt-4 ml-21 position-fixed calendar-div-alt">
-            <div class="calendar">
-                <div class="head">
-                    <ul class="d-flex align-items-center justify-content-center">
-                        <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
-                        <li><a class="item" id="month-year"></a></li>
-                        <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
-                    </ul>
-                </div>
-                <div class="body">
-                    <table>
-                        <tr>
-                            <th>Lun</th>
-                            <th>Mar</th>
-                            <th>Mer</th>
-                            <th>Gio</th>
-                            <th>Ven</th>
-                            <th>Sab</th>
-                            <th>Dom</th>
-                        </tr>
-                        <tr>
-                            <td id="0-0">1</td>
-                            <td id="1-0">2</td>
-                            <td id="2-0">3</td>
-                            <td id="3-0">4</td>
-                            <td id="4-0">5</td>
-                            <td id="5-0">6</td>
-                            <td id="6-0">7</td>
-                        </tr>
-                        <tr>
-                            <td id="0-1">8</td>
-                            <td id="1-1">9</td>
-                            <td id="2-1">10</td>
-                            <td id="3-1">11</td>
-                            <td id="4-1">12</td>
-                            <td id="5-1">13</td>
-                            <td id="6-1">14</td>
-                        </tr>
-                        <tr>
-                            <td id="0-2">15</td>
-                            <td id="1-2">16</td>
-                            <td id="2-2">17</td>
-                            <td id="3-2">18</td>
-                            <td id="4-2">19</td>
-                            <td id="5-2">20</td>
-                            <td id="6-2">21</td>
-                        </tr>
-                        <tr>
-                            <td id="0-3">22</td>
-                            <td id="1-3">23</td>
-                            <td id="2-3">24</td>
-                            <td id="3-3">25</td>
-                            <td id="4-3">26</td>
-                            <td id="5-3">27</td>
-                            <td id="6-3">28</td>
-                        </tr>
-                        <tr>
-                            <td id="0-4">29</td>
-                            <td id="1-4">30</td>
-                            <td id="2-4">31</td>
-                            <td id="3-4">1</td>
-                            <td id="4-4">2</td>
-                            <td id="5-4">3</td>
-                            <td id="6-4">4</td>
-                        </tr>
-                        <tr>
-                            <td id="0-5">29</td>
-                            <td id="1-5">30</td>
-                            <td id="2-5">31</td>
-                            <td id="3-5">1</td>
-                            <td id="4-5">2</td>
-                            <td id="5-5">3</td>
-                            <td id="6-5">4</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4 ml-50 position-fixed calendar-info-div">
-            <h1>@ViewModel.GetHolidaySelected()</h1>
-            <br>
-            <div>
-                @{
-
-                    var getFesta = _festaHttpService.getFesta(ViewModel.HolidaySelected.Year, ViewModel.HolidaySelected.Month, ViewModel.HolidaySelected.Day);
-                    
-                    if (ViewModel.HolidaySelected.Year != 1) {
-                        getFesta.Wait();
-                        HttpResponseMessage festa = getFesta.Result;
-
-                        if (festa.StatusCode == HttpStatusCode.OK)
-                        {
-                            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="removefestabutton" value="Rimuovi festività">Rimuovi festività</button>
-                        } else
-                        {
-                            <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività">Imposta come festività</button>
-                        }
-                    }
-                }
-            </div>
-            <br>
-            <ul id="lista-feste"></ul>
-        </div>
-    </div>
-
-    <!-- Presenze selector -->
-    <div class="tab-pane fade" id="options-pills-presenze" role="tabpanel" aria-labelledby="options-pills-presenze-tab">
-        <div class="container mt-4 ml-21 position-fixed calendar-div-alt">
-            <div class="calendar">
-                <div class="head">
-                    <ul class="d-flex align-items-center justify-content-center">
-                        <li><img class="item item-img" src="img/left.png" alt="left-1" onclick="prevMonth1()"></li>
-                        <li><a class="item" id="month-year-1"></a></li>
-                        <li><img class="item item-img" src="img/right.png" alt="right-1" onclick="nextMonth1()"></li>
-                    </ul>
-                </div>
-                <div class="body">
-                    <table>
-                        <tr>
-                            <th>Lun</th>
-                            <th>Mar</th>
-                            <th>Mer</th>
-                            <th>Gio</th>
-                            <th>Ven</th>
-                            <th>Sab</th>
-                            <th>Dom</th>
-                        </tr>
-                        <tr>
-                            <td id="0-01">1</td>
-                            <td id="1-01">2</td>
-                            <td id="2-01">3</td>
-                            <td id="3-01">4</td>
-                            <td id="4-01">5</td>
-                            <td id="5-01">6</td>
-                            <td id="6-01">7</td>
-                        </tr>
-                        <tr>
-                            <td id="0-11">8</td>
-                            <td id="1-11">9</td>
-                            <td id="2-11">10</td>
-                            <td id="3-11">11</td>
-                            <td id="4-11">12</td>
-                            <td id="5-11">13</td>
-                            <td id="6-11">14</td>
-                        </tr>
-                        <tr>
-                            <td id="0-21">15</td>
-                            <td id="1-21">16</td>
-                            <td id="2-21">17</td>
-                            <td id="3-21">18</td>
-                            <td id="4-21">19</td>
-                            <td id="5-21">20</td>
-                            <td id="6-21">21</td>
-                        </tr>
-                        <tr>
-                            <td id="0-31">22</td>
-                            <td id="1-31">23</td>
-                            <td id="2-31">24</td>
-                            <td id="3-31">25</td>
-                            <td id="4-31">26</td>
-                            <td id="5-31">27</td>
-                            <td id="6-31">28</td>
-                        </tr>
-                        <tr>
-                            <td id="0-41">29</td>
-                            <td id="1-41">30</td>
-                            <td id="2-41">31</td>
-                            <td id="3-41">1</td>
-                            <td id="4-41">2</td>
-                            <td id="5-41">3</td>
-                            <td id="6-41">4</td>
-                        </tr>
-                        <tr>
-                            <td id="0-51">29</td>
-                            <td id="1-51">30</td>
-                            <td id="2-51">31</td>
-                            <td id="3-51">1</td>
-                            <td id="4-51">2</td>
-                            <td id="5-51">3</td>
-                            <td id="6-51">4</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4 ml-50 position-fixed calendar-info-div">
-            <h1 id="day-sel-2">Seleziona una data</h1>
-            <br>
-            <div class="btn-collapse">
-                <a data-toggle="collapse" id="presenti-btn" href="#presenti" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Persone presenti
-                </a>
-                <div class="collapse" id="presenti">
-                    <div class="card card-body person-div">
-                        <ul id="lista-presenti">
-                            @{
-                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.GetByDate(ViewModel.AttendanceSettingsViewModel.AttendanceSelected);
-                            List<@int>? presenti = null;
-                            if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
-                            {
-                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<@int>?>();
-                                for(int i=0; i<presenti.Count; i++)
-                                {
-                                        <li>
-                                            <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome
-                                        </li>
-                                    }
-                                }
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Users selector -->
-    <div class="tab-pane fade" id="options-pills-users" role="tabpanel" aria-labelledby="options-pills-users-tab">
-        <div class="container mt-4 ml-21 position-fixed users-body-div">
-            <br />
-            <h2>Lista Utenti</h2>
-            <br />
-            <div class="list-group user-list">
-                @{
-                    Task<HttpResponseMessage> getAllUtentiList = _utenteHttpService.GetAll();
-                    getAllUtentiList.Wait();
->>>>>>> develop
 
                     <div class="postazioni_information">
                         <br>
-                        <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
-                        @if (ViewModel.CapienzaViewModel.Stanza != "null")
+                        <h1>@ViewModel.CapacitySettingsViewModel.GetRoom()</h1>
+                        @if (ViewModel.CapacitySettingsViewModel.Room != "null")
                         {
                             <div class="postazioni_information_form">
                                 <h5>Capienza Normale</h5>
@@ -355,7 +70,6 @@
                             </div>
                             <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
                         }
-<<<<<<< HEAD
                     </div>
                 </div>
                 break;
@@ -373,168 +87,14 @@
                 break;
             }
         }
-=======
-                    }
-
-                }
-            </div>
-        </div>
-    </div>
-
-    <!-- Covid selector -->
-    <div class="tab-pane fade" id="options-pills-admin" role="tabpanel" aria-labelledby="options-pills-admin-tab">
-        <div class="container mt-4 ml-21 position-fixed admin-body-div">
-            <br>
-            <h5>Modalità Covid</h5>
-            <label class="switch">
-                @{
-                    HttpResponseMessage? getCovidMode = await _capienzaHttpService.GetModEmergency();
-                    bool Covid = false;
-                    if (getCovidMode.StatusCode == HttpStatusCode.OK)
-                    {
-                        Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
-
-                        if (Covid)
-                        {
-                            <input type="checkbox" id="covid-switch-btn" checked>
-                        }
-                        else
-                        {
-                            <input type="checkbox" id="covid-switch-btn">
-                        }
-                    }
-                }
-                <span class="slider"></span>
-            </label>
-            <br>
-        </div>
-    </div>
-
-</div>
-
-<!-- Alert Box -->
-<div class="alert-box">
-    <div class="alert-box-view" style="opacity: 0" id="error-box">
-        <!-- Qui dentro viene inserito il codice di errore NON MODIFICARE -->
->>>>>>> develop
     </div>
 </div>
 
 
-<<<<<<< HEAD
     <!-- Questo script serve per adattare le coordinate dell'ImageMap alla viewport dell'utente -->
-=======
-    /*
-     * Salva lo stato del tab Sidebar: Ogni volta che viene ricaricata la pagina, quindi
-     * ogni volta che viene aggiornato un dato, mantiene attivo lo stato del tab senza resettarlo.
-     *
-     * Senza questa funzione il tab tornerà sempre sul primo stato ("Covid")
-     */
-
-    // ---------------------------------------
-
-    let stateView = @ViewModel.StateTab;
-
-    let selecPillsTab = [
-        '#options-pills-covid-tab', '#options-pills-festivita-tab', '#options-pills-presenze-tab', '#options-pills-presenze-users', '#options-pills-admin-tab',
-        '#options-pills-covid', '#options-pills-festivita', '#options-pills-presenze', '#options-pills-users', '#options-pills-admin'];
-
-    for (let i = 0; i < selecPillsTab.length; i++) {
-        if (i > 4)
-            $(selecPillsTab[i]).removeClass('show');
-        $(selecPillsTab[i]).removeClass('active');
-    }
-
-    $(selecPillsTab[stateView]).addClass('active');
-    $(selecPillsTab[stateView+5]).addClass('active show');
-
-
-    let presenzeBtn = $('#presenti-btn');
-    let presenzeDiv = $('#presenti');
-
-    let statePresenzeCollapse = @ViewModel.AttendanceSettingsViewModel.CollapsedList;
-
-    if (statePresenzeCollapse === 1) {
-        presenzeBtn.removeClass('collapsed');
-        presenzeDiv.addClass('show');
-    }
-    
-
-
-    // ---------------------------------------
-
-    /*
-     * Salva lo stato del collapse Lista presenze: Ogni volta che viene ricaricata la pagina, quindi
-     * ogni volta che viene aggiornato un dato, mantiene attivo lo stato del collapse senza resettarlo.
-     *
-     * Senza questa funzione il collapse si chiuderà sempre.
-     */
-
-    // ---------------------------------------
-
-    // Fix spam click btn
-    let clickedPresenze = false;
-
-    $('#presenti-btn').on('click', function() {
-        if (clickedPresenze === false) {
-            clickedPresenze = true;
-            $.ajax({
-                type: "POST",
-                url: "Impostazioni/CollapsePresenze"
-            }).done(function() {
-                clickedPresenze = false;
-            });
-        }
-    });
-
-    // ---------------------------------------
-
-</script>
-
-<!-- Questo script serve per adattare le coordinate dell'ImageMap alla viewport dell'utente -->
->>>>>>> develop
 <script src="js/jquery.rwdImageMaps.min.js"></script>
 
 <script>
-<<<<<<< HEAD
-=======
-
-    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
-
-    $.ajax({
-        type: "GET",
-        url: "Impostazioni/ReloadFeste",
-        dataType: 'json',
-        error: function (xhr) {}
-    });
-
-    let festeJSON = JSON.parse("@ViewModel.HolidayJSON".replaceAll("&quot;", "\""));
-
-    for (var i in festeJSON)
-        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
-
-    // Carica tutti i dati del Calendar Feste in quanto non è selezionato un giorno.
-    loadCalendar();
-
-    // Giorni selezionati dall'utente, non possono essere nulli. Null -> Year: 1901 
-    let festaSelezionata = new Date(@ViewModel.HolidaySelected.Year, (@ViewModel.HolidaySelected.Month - 1), @ViewModel.HolidaySelected.Day);
-    let presenzaSelezionata = new Date(@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Year, (@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Month - 1), @ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Day);
-
-    // Se l'anno è 1901, allora non è stato selezionato un giorno. C# ha come anno default 1901
-
-    if (festaSelezionata.getFullYear() !== 1901) {
-        goDate(festaSelezionata);
-        if ((month === 11 ? 0 : (month+1)) === festaSelezionata.getMonth())
-            clickCalendarFest(getIdDay(@ViewModel.HolidaySelected.Day));
-    }
-
-    if (presenzaSelezionata.getFullYear() !== 1901) {
-        goDate1(presenzaSelezionata);
-        if ((month1 === 11 ? 0 : (month1+1)) === presenzaSelezionata.getMonth())
-            clickCalendarPres(getIdDay1(@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Day));
-    }
-
->>>>>>> develop
     /*
     * ! <area> è utilizzato unicamente nella Map.
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
@@ -547,81 +107,6 @@
         url: "Impostazioni/SelectRoom",
         data: { "stanza": nameStanza }
     });
-<<<<<<< HEAD
     location.window.reload();
     });
 </script>
-=======
-</script>
-
-<!-- Buttons Script -->
-<script>
-
-    $('#covid-switch-btn').on('click',
-        function() {
-            $.ajax({
-                type: "POST",
-                url: "Impostazioni/ToggleCovidMode"
-            });
-        });
-
-    $('#capienzaNormale').on('change',
-        function(event) {
-            $.ajax({
-                type: "POST",
-                url: "Impostazioni/ReloadCapienzaNormale",
-                data: { "stanza": "@ViewModel.CapacitySettingsViewModel.Room", "capienza": event.target.value },
-                error: function(xhr) {
-                    alertBox(xhr.responseText);
-                    event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapienzaNormaleDefault(@ViewModel.CapacitySettingsViewModel.Room);
-                    event.preventDefault();
-                }
-            });
-        });
-
-    $('#capienzaCovid').on('change',
-        function(event) {
-            $.ajax({
-                type: "POST",
-                url: "Impostazioni/ReloadCapienzaCovid",
-                data: { "stanza": "@ViewModel.CapacitySettingsViewModel.Room", "capienza": event.target.value },
-                error: function(xhr) {
-                    alertBox(xhr.responseText);
-                    event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapienzaCovidDefault(@ViewModel.CapacitySettingsViewModel.Room);
-                    event.preventDefault();
-                }
-            });
-        });
-
-    $('#festabutton').on('click',
-        function(event) {
-            $.ajax({
-                type: "POST",
-                url: "Impostazioni/AggiungiFesta",
-                data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day", "description": "None" },
-                error: function(xhr) {
-                    alertBox(xhr.responseText);
-                    event.preventDefault();
-                }
-            }).done(function() {
-                window.location.reload();
-            });
-        });
-
-    $('#removefestabutton').on('click',
-        function (event) {
-            $.ajax({
-                type: "GET",
-                url: "Impostazioni/RimuoviFesta",
-                data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day" },
-                error: function (xhr) {
-                    alertBox(xhr.responseText);
-                    event.preventDefault();
-                }
-            }).done(function () {
-                window.location.reload();
-            });
-        });
-
-</script>
->>>>>>> develop
