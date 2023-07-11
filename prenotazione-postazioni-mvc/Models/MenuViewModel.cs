@@ -1,4 +1,6 @@
-﻿namespace prenotazione_postazioni_mvc.Models
+﻿using prenotazione_postazioni_mvc.HttpServices;
+
+namespace prenotazione_postazioni_mvc.Models
 {
     public class MenuViewModel
     {
@@ -13,7 +15,7 @@
         }
         public MenuViewModel(string scelta) { Scelta = scelta; }
        
-
+       
         public string GetDate() { return Date.ToString("dd/MM"); }
 
 

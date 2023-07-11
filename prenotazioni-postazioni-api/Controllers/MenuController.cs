@@ -1,10 +1,10 @@
-﻿using prenotazione_postazioni_libs.Dto;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Exceptions;
+using Microsoft.AspNetCore.Cors;
 using log4net;
-using System.ComponentModel.Design;
 
 namespace prenotazioni_postazioni_api.Controllers
 {
@@ -12,25 +12,26 @@ namespace prenotazioni_postazioni_api.Controllers
     [Route("/api/menu")]
     public class MenuController : ControllerBase
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof(MenuController));
         private MenuService _MenuService;
+        private readonly ILog _logger = LogManager.GetLogger(typeof(MenuController));
+        
 
-        public MenuController(MenuService menuService)
+        public MenuController(MenuService _MenuService)
         {
-            _MenuService = menuService;
+            this._MenuService = _MenuService;
         }
+
         [Route("getByDate")]
         [HttpGet]
-
-        public IActionResult GetByDate(int year, int month, int day)
+        public IActionResult GetByDate(int year, int month, int date)
         {
             try
             {
                 _logger.Info($"Year: {year}");
                 _logger.Info("Month: " + month);
-                _logger.Info("Day: " + day);
+                _logger.Info("Date: " + date);
                 _logger.Info("Trovando un menu mediante date..");
-                Menu menu = _MenuService.GetByDate(new DateOnly ( year, month, day));
+                Menu menu = _MenuService.GetByDate(new DateTime ( year, month, date));
                 if(menu == null)
                 {
                     _logger.Warn("Menu e' null, return NotFound");
@@ -75,7 +76,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-
+        
         [Route("getAll")]
         [HttpGet]
         public IActionResult GetAll()
@@ -87,12 +88,13 @@ namespace prenotazioni_postazioni_api.Controllers
                 if(menu == null)
                 {
                     _logger.Warn("Nessun menu trovato, NotFound");
-                    return NotFound("menu e' null");
+                    return NotFound("Menu e' null");
                 }
                 _logger.Info("Menu trovati, Ok");
                 return Ok(menu);
             }
-            catch(PrenotazionePostazioniApiException ex) {
+            catch (PrenotazionePostazioniApiException ex)
+            {
                 _logger.Error("Bad request: " + ex.Message);
                 return BadRequest(ex.Message);
             }
@@ -109,7 +111,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                _logger.Info("Giorno del menu: " + menuDto.Day);
+                _logger.Info("Giorno del menu: " + menuDto.Date);
                 _logger.Info("salvando un menuDto nel database...");
                 _MenuService.Add(menuDto);
                 _logger.Info("MenuDto salvato con successo, OK");
@@ -134,7 +136,7 @@ namespace prenotazioni_postazioni_api.Controllers
         {
             try
             {
-                DateOnly date = new DateOnly(year, month, day);
+                DateTime date = new DateTime(year, month, day);
                 _logger.Info("Giorno del menu: " + date);
                 _MenuService.Delete(date);
                 return Ok();

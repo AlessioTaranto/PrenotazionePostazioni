@@ -14,28 +14,28 @@ namespace prenotazioni_postazioni_api.Repositories
         
         internal List<MenuChoices>? GetAll()
         {
-            string query = "SELECT * FROM MenuChoices;";
+            string query = $"SELECT * FROM MenuChoices;";
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<List<MenuChoices>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
         internal MenuChoices? GetById(int id)
         {
-            string query = "SELECT * FROM MenuChoices WHERE id = @id;";
+            string query = $"SELECT * FROM MenuChoices WHERE id = @id;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@id", id);
             return DatabaseManager<MenuChoices>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         internal MenuChoices? GetByIdMenu(int idMenu)
         {
-            string query = "SELECT * FROM MenuChoices WHERE idMenu = @idMenu;";
+            string query = $"SELECT * FROM MenuChoices WHERE idMenu = @idMenu;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idMenu", idMenu);
             return DatabaseManager<MenuChoices>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
         internal MenuChoices? GetByUserAndIdMenu(int idMenu, int idUser)
         {
-            string query = "SELECT * FROM MenuChoices WHERE ((idMenu = @idMenu)AND(idUser = @idUser));";
+            string query = $"SELECT * FROM MenuChoices WHERE ((idMenu = @idMenu)AND(idUser = @idUser));";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idMenu", idMenu);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);

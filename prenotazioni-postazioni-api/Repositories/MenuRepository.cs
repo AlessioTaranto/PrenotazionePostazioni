@@ -14,38 +14,38 @@ namespace prenotazioni_postazioni_api.Repositories
 
         internal List<Menu>? GetAll() 
         {
-            string query = "SELECT * FROM Menu;";
+            string query = $"SELECT * FROM Menu;";
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<List<Menu>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
         
-        internal Menu? GetByDate(DateOnly day) {
-            string query = "SELECT * FROM Menu WHERE day = @day;";
+        internal Menu? GetByDate(DateTime date) {
+            string query = $"SELECT * FROM Menu WHERE date = @date;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@day", day.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-ddTHH:mm:ss"));
             return DatabaseManager<Menu>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         internal Menu? GetById(int id)
         {
-            string query = "SELECT * FROM Menu WHERE id = @id;";
+            string query = $"SELECT * FROM Menu WHERE id = @id;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@id", id);
             return DatabaseManager<Menu>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         internal void Add(Menu menu)
         {
-            string query = $"INSERT INTO Menu (day, image) VALUES (@day, @image);";
+            string query = $"INSERT INTO Menu (date, image) VALUES (@date, @image);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@day", menu.Day.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@date", menu.Date.ToString("yyyy-MM-ddTHH:mm:ss"));
             sqlCommand.Parameters.AddWithValue("@image", menu.Image);
             DatabaseManager<object>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
-        internal void Delete(DateOnly day) 
+        internal void Delete(DateTime date) 
         {
-            string query = $"DELETE FROM Menu WHERE day = @day;";
+            string query = $"DELETE FROM Menu WHERE date = @date;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@day", day.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-ddTHH:mm:ss"));
             DatabaseManager<object>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
 
