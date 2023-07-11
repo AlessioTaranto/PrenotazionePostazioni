@@ -9,12 +9,12 @@
 @using prenotazione_postazioni_libs.Models;
 @using prenotazione_postazioni_mvc.HttpServices;
 
-@inject SettingsHttpService _impostazioniHttpService;
+@inject SettingsHttpService _settingsHttpService;
 @using Newtonsoft.Json;
-@inject UserHttpService _utenteHttpService;
-@inject RoomHttpService _stanzeHttpService;
-@inject BookingHttpSerivice _prenotazioneHttpService;
-@inject HolidayHttpService _festaHttpService;
+@inject UserHttpService _userHttpService;
+@inject RoomHttpService _roomHttpService;
+@inject BookingHttpSerivice _bookingHttpService;
+@inject HolidayHttpService _holidayHttpService;
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -26,7 +26,7 @@
                 1
             );
 
-    HttpResponseMessage? checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
+    HttpResponseMessage? checkExists = await _userHttpService.GetByEmail(LoggedUser.Email);
 
     HttpStatusCode code = checkExists.StatusCode;
 
@@ -38,12 +38,12 @@
         HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
     } else {
         //User non assegnato, creazione fixare error 400
-        HttpResponseMessage createUser = await _utenteHttpService.AddNewUser(LoggedUser);
+        HttpResponseMessage createUser = await _userHttpService.Add(LoggedUser);
 
         //Assegna anche l'id
         if (createUser.StatusCode == HttpStatusCode.OK)
         {
-            checkExists = await _utenteHttpService.OnGetUtenteByEmail(LoggedUser.Email);
+            checkExists = await _userHttpService.GetByEmail(LoggedUser.Email);
             code = checkExists.StatusCode;
 
             LoggedUser = await checkExists.Content.ReadFromJsonAsync<User>();
@@ -54,7 +54,7 @@
 
     Room? Room = null;
 
-    HttpResponseMessage checkRoom = await _stanzeHttpService.OnGetStanzaByName(ViewModel.Stanza);
+    HttpResponseMessage checkRoom = await _roomHttpService.GetByName(ViewModel.Room);
 
     if (checkRoom.StatusCode == HttpStatusCode.OK)
     {
@@ -68,15 +68,9 @@
 
 <!-- HIDDEN VALUES -->
 <p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
-<<<<<<< HEAD
 <p style="display: block" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
-<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
-<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
-=======
-<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
 <p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.StartDate)</p>
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
->>>>>>> develop
 
 <!---->
 <div class="home_container">
@@ -105,7 +99,7 @@
             <br>
             @{
                 if(Room != null){   
-                    HttpResponseMessage holiday = await _festaHttpService.getAllFeste();
+                    HttpResponseMessage holiday = await _holidayHttpService.GetAll();
                     List<Holiday>? holidayList = null;
                         if(holiday.StatusCode == HttpStatusCode.OK){
                             holidayList = holiday.Content.ReadFromJsonAsync<List<Holiday>>().Result;
@@ -113,7 +107,6 @@
 
                         bool isHoliday = false;
 
-<<<<<<< HEAD
                         for(int i = 0; holidayList != null && i < holidayList.Count; i++)
                             if(holidayList[i].Date.ToString("yyyy/MM/dd") == ViewModel.Date.ToString("yyyy/MM/dd")){
                                 isHoliday = true;
@@ -135,13 +128,13 @@
                                     <div class="p-2 d-flex flex-column align-items-left justify-content-center gap-3">
                                         <div class="d-flex flex-column user-select-none">
                                             <label for="start">Inizio</label>
-                                            <input class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
+                                            <input class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00"
                                             min="07:00" max="22:00" required>
                                         </div>
                                                     
                                         <div class="d-flex flex-column user-select-none">
                                             <label for="finish">Termine</label>
-                                            <input class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
+                                            <input class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00"
                                             min="07:00" max="22:00" required>
                                         </div>
                                     </div>
@@ -157,7 +150,7 @@
                                 <div class="p-2 h-auto">
                                     <ul id="lista-prenotazioni" class="d-flex flex-column align-items-left gap-2" style="list-style: none; padding: 0; margin: 0;">
                                         @{
-                                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
+                                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _userHttpService.GetByDate(ViewModel.Date);
                                             List<User>? presenti = null;
                                             if (getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK){
                                                     presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
@@ -185,8 +178,8 @@
                             <br>
                             <div>
                                 @{
-                                    Task<Booking?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
-                                    , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
+                                    Task<Booking?>? getPrenotazione = ViewModel.GetBooking(JsonConvert.SerializeObject(LoggedUser)
+                                    , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.StartDate), JsonConvert.SerializeObject(ViewModel.EndDate));
                                     getPrenotazione.Wait();
                                     Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
 
@@ -206,52 +199,6 @@
                                             $('#cancprenota').css('display', 'none');
                                         </script>
                                     }
-=======
-<!-- Room info Div -->
-<div class="container mt-4 ml-70 position-fixed room-info-div">
-    <h1>@ViewModel.GetRoom()</h1>
-    <br>
-    <div class="btn-collapse">
-        <a data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Seleziona orario
-        </a>
-    </div>
-    <div>
-        <div class="collapse" id="orario">
-            <div class="card card-body">
-                <label for="start">Inizio</label>
-                <input type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00"
-                       min="07:00" max="22:00" required>
-                <label for="finish">Termine</label>
-                <input type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00"
-                       min="07:00" max="22:00" required>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="btn-collapse">
-        <a data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Persone prenotate
-        </a>
-    </div>
-    <div>
-        <div class="collapse" id="prenotazioni">
-            <div class="card card-body person-div">
-                <ul id="lista-prenotazioni">
-                    @{
-                        if (Room != null)
-                        {
-                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.Date);
-                            List<@int>? presenti = null;
-                            if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
-                            {
-                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<@int>?>();
-                                for (int i = 0; i < presenti.Count; i++)
-                                {
-                                    <li>
-                                        <img src="~/img/example/example-1.png">@presenti[@i].Nome @presenti[@i].Cognome @Room.Name
-                                    </li>
->>>>>>> develop
                                 }
                             </div>
                         }
@@ -264,16 +211,6 @@
             }
         </div>
     </div>
-<<<<<<< HEAD
-=======
-    <br>
-    <div>
-        @{
-            Task<Booking?>? getPrenotazione = ViewModel.GetBooking(JsonConvert.SerializeObject(LoggedUser)
-            , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.StartDate), JsonConvert.SerializeObject(ViewModel.EndDate));
-            getPrenotazione.Wait();
-            Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
->>>>>>> develop
 
 
     <button type="button" class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" data-toggle="modal" data-target="#exampleModalLong">
