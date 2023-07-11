@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Http;
 
 @inject IHttpContextAccessor HttpContextAccessor
-@inject prenotazione_postazioni_mvc.HttpServices.UserHttpService _utenteHttpService;
+@inject prenotazione_postazioni_mvc.HttpServices.UserHttpService _userHttpService;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -138,6 +138,7 @@
                     height: 2px;
                     width: 0;
                     background-color: darkorange;
+                    transition: .5s ease;
                 }
 
                 .btn:hover {
@@ -158,7 +159,18 @@
                 }
 
     </style>
+        <script>
+            function cambiaImmagine() {
+                var img = document.getElementById('#image-map');
+                var pulsante = document.getElementById('pulsante');
 
+                if (img.src.endsWith('piantina.png')) {
+                    img.src = 'img/piantinaWhite.png';
+                } else {
+                    img.src = 'img/piantina.png';
+                }
+            }
+        </script>
     <div class="subnavigation">
             @{
                 if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
@@ -174,7 +186,7 @@
             }
         
         <div>
-                <button class="btn" onclick="toogleTheme()">
+                <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
                     Tema
                 </button>
 
