@@ -8,17 +8,17 @@ using System.Net;
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
-    public class VotazioniController : Controller
+    public class VoteController : Controller
     {
 
-        public static VotazioniViewModel ViewModel { get; set; }
-        public readonly VotoHttpService _votoHttpService;
-        public readonly UtenteHttpService _utenteHttpService;
+        public static VoteViewModel ViewModel { get; set; }
+        public readonly VoteHttpService _voteHttpService;
+        public readonly UserHttpService _userHttpService;
 
-        public VotazioniController(VotoHttpService votoHttpService, UtenteHttpService utenteHttpService)
+        public VoteController(VoteHttpService voteHttpService, UserHttpService userHttpService)
         {
-            _votoHttpService = votoHttpService;
-            _utenteHttpService = utenteHttpService;
+            _voteHttpService = voteHttpService;
+            _userHttpService = userHttpService;
         }
 
         public IActionResult Index()
@@ -27,8 +27,8 @@ namespace prenotazione_postazioni_mvc.Controllers
         }
 
         [HttpPost]
-        [ActionName("VoteUser")]
-        public async Task<IActionResult> VoteUser(int voto, int idUtente, int idUtenteVotato)
+        [ActionName("Add")]
+        public async Task<IActionResult> Add(int voteRusults, int idUser, int idVictim)
         {
             /*try
             {
@@ -51,19 +51,17 @@ namespace prenotazione_postazioni_mvc.Controllers
             //if (utenteResponse.StatusCode == HttpStatusCode.OK && utenteVotatoResponse.StatusCode == HttpStatusCode.OK)
             //{
 
-            User utente = new User(idUtente, null, null, null, null, 0);//await utenteResponse.Content.ReadFromJsonAsync<Utente>();
-            User utenteVotato = new User(idUtente, null, null, null, null, 0);//await utenteVotatoResponse.Content.ReadFromJsonAsync<Utente>();
-            if (voto == 0)
+            if (voteRusults == 0)
             {
-                  response = await _votoHttpService.OnDeleteVoto(idUtente, idUtenteVotato);
+                  response = await _voteHttpService.Delete(idUser, idVictim);
             }
-            else if (voto == 1)
+            else if (voteRusults == 1)
             {
-                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, true));
+                response = await _voteHttpService.Add(new VoteDto(idUser, idVictim, 0));
             }
-            else if (voto == -1)
+            else if (voteRusults == -1)
             {
-                response = await _votoHttpService.OnMakeVoto(new VotoDto(utente, utenteVotato, false));
+                response = await _voteHttpService.Add(new VoteDto(idUser, idVictim, 1));
             }
             return Ok("Votazione effettuata");
             //}

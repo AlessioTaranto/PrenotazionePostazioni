@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Impostazioni";
 
-    ImpostazioniViewModel ViewModel = (ImpostazioniViewModel) Model;
+    SettingsViewModel ViewModel = (SettingsViewModel) Model;
 }
 
 @using System.Net
@@ -9,9 +9,9 @@
 @using prenotazione_postazioni_libs.Dto;
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
-@inject UtenteHttpService _utenteHttpService;
-@inject FestaHttpService _festaHttpService;
-@inject CapienzaHttpService _capienzaHttpService;
+@inject UserHttpService _utenteHttpService;
+@inject HolidayHttpService _festaHttpService;
+@inject CapacityHttpService _capienzaHttpService;
 
 <!-- ChangeStateBar Script -->
 <script>
@@ -64,16 +64,16 @@
 
         <div class="container mt-4 ml-70 position-fixed room-info-div">
             <br>
-            <h1>@ViewModel.CapienzaViewModel.GetStanza()</h1>
+            <h1>@ViewModel.CapacitySettingsViewModel.GetStanza()</h1>
             <br>
-            @if (ViewModel.CapienzaViewModel.Stanza != "null" && ViewModel.CapienzaViewModel.Stanza != null)
+            @if (ViewModel.CapacitySettingsViewModel.Room != "null" && ViewModel.CapacitySettingsViewModel.Room != null)
             {
                 <h5>Capienza Normale</h5>
-                <input type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)">
+                <input type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 17vw" value="@ViewModel.CapacitySettingsViewModel.GetCapienzaNormale(@ViewModel.CapacitySettingsViewModel.Room)">
                 <br>
                 <br>
                 <h5>Capienza Covid</h5>
-                <input type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 17vw" value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)">
+                <input type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 17vw" value="@ViewModel.CapacitySettingsViewModel.GetCapienzaCovid(@ViewModel.CapacitySettingsViewModel.Room)">
                 <br>
                 <br>
                 <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
@@ -162,14 +162,14 @@
             </div>
         </div>
         <div class="container mt-4 ml-50 position-fixed calendar-info-div">
-            <h1>@ViewModel.GetFestaSelezionata()</h1>
+            <h1>@ViewModel.GetHolidaySelected()</h1>
             <br>
             <div>
                 @{
 
-                    var getFesta = _festaHttpService.getFesta(ViewModel.FestaSelezionata.Year, ViewModel.FestaSelezionata.Month, ViewModel.FestaSelezionata.Day);
+                    var getFesta = _festaHttpService.getFesta(ViewModel.HolidaySelected.Year, ViewModel.HolidaySelected.Month, ViewModel.HolidaySelected.Day);
                     
-                    if (ViewModel.FestaSelezionata.Year != 1) {
+                    if (ViewModel.HolidaySelected.Year != 1) {
                         getFesta.Wait();
                         HttpResponseMessage festa = getFesta.Result;
 
@@ -279,7 +279,7 @@
                     <div class="card card-body person-div">
                         <ul id="lista-presenti">
                             @{
-                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.OnGetUtentiPrenotatiByDay(ViewModel.PresenzeViewModel.PresenzaSelezionata);
+                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _utenteHttpService.GetByDate(ViewModel.AttendanceSettingsViewModel.AttendanceSelected);
                             List<@int>? presenti = null;
                             if(getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
                             {
@@ -308,7 +308,7 @@
             <br />
             <div class="list-group user-list">
                 @{
-                    Task<HttpResponseMessage> getAllUtentiList = _utenteHttpService.OnGetAllUtenti();
+                    Task<HttpResponseMessage> getAllUtentiList = _utenteHttpService.GetAll();
                     getAllUtentiList.Wait();
 
                     List<@int>? ListUtenti = null;
@@ -346,7 +346,7 @@
             <h5>Modalità Covid</h5>
             <label class="switch">
                 @{
-                    HttpResponseMessage? getCovidMode = await _capienzaHttpService.getCovidMode();
+                    HttpResponseMessage? getCovidMode = await _capienzaHttpService.GetModEmergency();
                     bool Covid = false;
                     if (getCovidMode.StatusCode == HttpStatusCode.OK)
                     {
@@ -442,7 +442,7 @@
     let presenzeBtn = $('#presenti-btn');
     let presenzeDiv = $('#presenti');
 
-    let statePresenzeCollapse = @ViewModel.PresenzeViewModel.CollapsedList;
+    let statePresenzeCollapse = @ViewModel.AttendanceSettingsViewModel.CollapsedList;
 
     if (statePresenzeCollapse === 1) {
         presenzeBtn.removeClass('collapsed');
@@ -496,7 +496,7 @@
         error: function (xhr) {}
     });
 
-    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
+    let festeJSON = JSON.parse("@ViewModel.HolidayJSON".replaceAll("&quot;", "\""));
 
     for (var i in festeJSON)
         addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
@@ -505,21 +505,21 @@
     loadCalendar();
 
     // Giorni selezionati dall'utente, non possono essere nulli. Null -> Year: 1901 
-    let festaSelezionata = new Date(@ViewModel.FestaSelezionata.Year, (@ViewModel.FestaSelezionata.Month - 1), @ViewModel.FestaSelezionata.Day);
-    let presenzaSelezionata = new Date(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Year, (@ViewModel.PresenzeViewModel.PresenzaSelezionata.Month - 1), @ViewModel.PresenzeViewModel.PresenzaSelezionata.Day);
+    let festaSelezionata = new Date(@ViewModel.HolidaySelected.Year, (@ViewModel.HolidaySelected.Month - 1), @ViewModel.HolidaySelected.Day);
+    let presenzaSelezionata = new Date(@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Year, (@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Month - 1), @ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Day);
 
     // Se l'anno è 1901, allora non è stato selezionato un giorno. C# ha come anno default 1901
 
     if (festaSelezionata.getFullYear() !== 1901) {
         goDate(festaSelezionata);
         if ((month === 11 ? 0 : (month+1)) === festaSelezionata.getMonth())
-            clickCalendarFest(getIdDay(@ViewModel.FestaSelezionata.Day));
+            clickCalendarFest(getIdDay(@ViewModel.HolidaySelected.Day));
     }
 
     if (presenzaSelezionata.getFullYear() !== 1901) {
         goDate1(presenzaSelezionata);
         if ((month1 === 11 ? 0 : (month1+1)) === presenzaSelezionata.getMonth())
-            clickCalendarPres(getIdDay1(@ViewModel.PresenzeViewModel.PresenzaSelezionata.Day));
+            clickCalendarPres(getIdDay1(@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Day));
     }
 
     /*
@@ -596,10 +596,10 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/ReloadCapienzaNormale",
-                data: { "stanza": "@ViewModel.CapienzaViewModel.Stanza", "capienza": event.target.value },
+                data: { "stanza": "@ViewModel.CapacitySettingsViewModel.Room", "capienza": event.target.value },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
-                    event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaNormaleDefault(@ViewModel.CapienzaViewModel.Stanza);
+                    event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapienzaNormaleDefault(@ViewModel.CapacitySettingsViewModel.Room);
                     event.preventDefault();
                 }
             });
@@ -610,10 +610,10 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/ReloadCapienzaCovid",
-                data: { "stanza": "@ViewModel.CapienzaViewModel.Stanza", "capienza": event.target.value },
+                data: { "stanza": "@ViewModel.CapacitySettingsViewModel.Room", "capienza": event.target.value },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
-                    event.target.value = @ViewModel.CapienzaViewModel.GetCapienzaCovidDefault(@ViewModel.CapienzaViewModel.Stanza);
+                    event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapienzaCovidDefault(@ViewModel.CapacitySettingsViewModel.Room);
                     event.preventDefault();
                 }
             });
@@ -624,7 +624,7 @@
             $.ajax({
                 type: "POST",
                 url: "Impostazioni/AggiungiFesta",
-                data: { "year": "@ViewModel.FestaSelezionata.Year", "month": "@ViewModel.FestaSelezionata.Month", "day": "@ViewModel.FestaSelezionata.Day", "description": "None" },
+                data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day", "description": "None" },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();
@@ -639,7 +639,7 @@
             $.ajax({
                 type: "GET",
                 url: "Impostazioni/RimuoviFesta",
-                data: { "year": "@ViewModel.FestaSelezionata.Year", "month": "@ViewModel.FestaSelezionata.Month", "day": "@ViewModel.FestaSelezionata.Day" },
+                data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day" },
                 error: function (xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();

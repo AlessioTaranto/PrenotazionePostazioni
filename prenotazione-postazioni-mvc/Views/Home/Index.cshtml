@@ -1,7 +1,7 @@
 @{
     ViewData["Title"] = "Prenota postazioni";
 
-    PrenotazioneViewModel ViewModel = (PrenotazioneViewModel)Model;
+    BookingViewModel ViewModel = (BookingViewModel)Model;
     ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM/yyyy");
 }
 
@@ -9,12 +9,12 @@
 @using prenotazione_postazioni_libs.Models;
 @using prenotazione_postazioni_mvc.HttpServices;
 
-@inject ImpostazioniHttpService _impostazioniHttpService;
+@inject SettingsHttpService _impostazioniHttpService;
 @using Newtonsoft.Json;
-@inject UtenteHttpService _utenteHttpService;
-@inject StanzeHttpService _stanzeHttpService;
-@inject PrenotazioneHttpSerivice _prenotazioneHttpService;
-@inject FestaHttpService _festaHttpService;
+@inject UserHttpService _utenteHttpService;
+@inject RoomHttpService _stanzeHttpService;
+@inject BookingHttpSerivice _prenotazioneHttpService;
+@inject HolidayHttpService _festaHttpService;
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -69,8 +69,8 @@
 <!-- HIDDEN VALUES -->
 <p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
 <p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
-<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.Start)</p>
-<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.End)</p>
+<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.StartDate)</p>
+<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
 
 <!---->
 <div class="home_container">
@@ -107,7 +107,7 @@
     <div class="room_info_container">
         <div class="room_info_div">
         <div id="room-info-content">
-            <h2>@ViewModel.GetStanza().Replace('_', ' ')</h2>
+            <h2>@ViewModel.GetRoom().Replace('_', ' ')</h2>
             <br>
             @{
                 if(Room != null){   
@@ -121,7 +121,7 @@
 
 <!-- Room info Div -->
 <div class="container mt-4 ml-70 position-fixed room-info-div">
-    <h1>@ViewModel.GetStanza()</h1>
+    <h1>@ViewModel.GetRoom()</h1>
     <br>
     <div class="btn-collapse">
         <a data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -132,10 +132,10 @@
         <div class="collapse" id="orario">
             <div class="card card-body">
                 <label for="start">Inizio</label>
-                <input type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
+                <input type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00"
                        min="07:00" max="22:00" required>
                 <label for="finish">Termine</label>
-                <input type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
+                <input type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00"
                        min="07:00" max="22:00" required>
             </div>
         </div>
@@ -178,8 +178,8 @@
     <br>
     <div>
         @{
-            Task<Booking?>? getPrenotazione = ViewModel.GetPrenotazione(JsonConvert.SerializeObject(LoggedUser)
-            , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.Start), JsonConvert.SerializeObject(ViewModel.End));
+            Task<Booking?>? getPrenotazione = ViewModel.GetBooking(JsonConvert.SerializeObject(LoggedUser)
+            , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.StartDate), JsonConvert.SerializeObject(ViewModel.EndDate));
             getPrenotazione.Wait();
             Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
 
@@ -395,7 +395,7 @@
         error: function (xhr) { }
     });
 
-    let festeJSON = JSON.parse("@ViewModel.FesteJSON".replaceAll("&quot;", "\""));
+    let festeJSON = JSON.parse("@ViewModel.HolidayJSON".replaceAll("&quot;", "\""));
 
     for (var i in festeJSON)
         addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
@@ -462,7 +462,7 @@
             error: function(xhr) {
                 alertBox(xhr.responseText, "#de4802");
                 event.preventDefault();
-                event.target.value = "@ViewModel.FormatHour(@ViewModel.Start.Hour):00";
+                event.target.value = "@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00";
             }
         }).done(function() {
             window.location.reload();
@@ -483,7 +483,7 @@
             error: function(xhr) {
                 alertBox(xhr.responseText, "#de4802");
                 event.preventDefault();
-                event.target.value = "@ViewModel.FormatHour(@ViewModel.End.Hour):00";
+                event.target.value = "@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00";
             }
         }).done(function() {
             window.location.reload();
