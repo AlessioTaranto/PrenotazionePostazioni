@@ -1,4 +1,11 @@
-﻿@using System.Net;
+﻿@{
+    ViewData["Title"] = "Prenota postazioni";
+
+    BookingViewModel ViewModel = (BookingViewModel)Model;
+    ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM/yyyy");
+}
+
+@using System.Net;
 @using Newtonsoft.Json;
 @using prenotazione_postazioni_libs.Models;
 @using Microsoft.AspNetCore.Http;
@@ -102,6 +109,7 @@
 
     </style>
 
+
     <style>
 
             .theme-dark {
@@ -159,18 +167,7 @@
                 }
 
     </style>
-        <script>
-            function cambiaImmagine() {
-                var img = document.getElementById('#image-map');
-                var pulsante = document.getElementById('pulsante');
 
-                if (img.src.endsWith('piantina.png')) {
-                    img.src = 'img/piantinaWhite.png';
-                } else {
-                    img.src = 'img/piantina.png';
-                }
-            }
-        </script>
     <div class="subnavigation">
             @{
                 if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
@@ -186,9 +183,19 @@
             }
         
         <div>
-                <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
+                <button class="btn" onclick="toogleTheme(), toogleMap()">
                     Tema
                 </button>
+
+                <script>
+
+                    function toogleMap(){
+
+                      @ViewModel._ThemeViewModel.SetTheme();
+                      
+                    }
+                    
+                </script>
 
                 <script>
 
@@ -201,11 +208,12 @@
                         if (localStorage.getItem('theme') === 'theme-light') {
 
                             setTheme('theme-dark');
+                            location.reload();
 
                         } else {
                             setTheme('theme-light');
+                            location.reload();
                         }
-
                     }
 
                     //funzione che deve essere invocato al inizio del caricamento
