@@ -1,0 +1,47 @@
+﻿@{
+
+    ViewData["Title"] = "Pranzo";
+    MenuViewModel ViewModel = (MenuViewModel)Model;
+}
+
+
+<main class="d-flex justify-content-around">
+    <h2> Menu del giorno : @ViewModel.GetDate()</h2>
+    <div class="container text-center mt-5">
+        <div class="row">
+            <div class="col-sm-8">
+                <img style="width: 55%"
+                     src="@ViewModel.GetUrlMenu()"
+                @*https://marketplace.canva.com/EAD0UMPtOv4/1/0/1236w/canva-oro-tenue-elegante-matrimonio-menu-FQIyCfgp1aY.jpg*@
+                     class="img-thumbnail bd-darkorange"
+                     alt="Menu" />
+            </div>
+            <div class="col-sm-4">
+                <label for="myTextarea">La tua scelta</label>
+                <textarea class="form-control overflow-hidden bd-darkorange"
+                          style="height:250px"
+                          placeholder="Scrivi qui"
+                          id="myTextarea"
+                          maxlength="64"></textarea>
+                <button class="btn btn-primary bg-darkorange bd-darkorange mt-4">Invia</button>
+                <p id="risposta"></p>
+
+                <script>
+                    $("button").on("click", function () {
+                        var res = $("#myTextarea").val().trim();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Menu/AddScelta",
+                            data: { "scelta": res },
+                            success: function (response) { $("#risposta").text(response); },
+                            error: function () { $("#risposta").text("errore") }
+                        })
+                    })
+                </script>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
