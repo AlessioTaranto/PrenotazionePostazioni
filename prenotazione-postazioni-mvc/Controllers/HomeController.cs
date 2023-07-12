@@ -226,7 +226,7 @@ public class HomeController : Controller
     public IActionResult ReloadHoliday()
     {
         Task task = ViewModel.ReloadHoliday();
-        task.Wait();
+        //task.Wait();
 
         return Ok("Festività ricaricate");
     }

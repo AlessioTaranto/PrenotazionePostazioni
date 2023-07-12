@@ -129,7 +129,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("updateCapacity")]
         public IActionResult UpdateCapacity(int capacity, string name)
         {
@@ -148,7 +148,7 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("updateCapacityEmergency")]
         public IActionResult UpdateCapacityEmergency(int capacity, string name)
         {

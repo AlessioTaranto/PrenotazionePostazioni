@@ -108,16 +108,16 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="date"></param>
         /// <returns>List di Utente senza duplicati</returns>
-        internal List<User> GetByDate(DateTime date)
+        internal List<User>? GetByDate(DateTime date)
         {
-            List<User> usersWithDupes = _userRepository.GetAllByDate(date);
-            List<User> usersWithoutDupes = usersWithDupes.Distinct(new UtenteEqualityComparer()).ToList();
+            List<Booking> bookingsDate = _userRepository.GetAllByDate(date);
             List<User> users = new List<User>();
-            foreach(User user in usersWithoutDupes)
+            foreach(Booking booking in bookingsDate)
             {
-                users.Add(_userRepository.GetById(user.Id));
+                users.Add(_userRepository.GetById(booking.IdUser));
             }
-            return users;
+            List<User> usersWithoutDupes = users.Distinct(new UtenteEqualityComparer()).ToList();
+            return usersWithoutDupes;
         }
 
     }
