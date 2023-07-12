@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 ﻿using Newtonsoft.Json;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using System.Net;
 using System.Runtime.InteropServices;
+=======
+﻿using prenotazione_postazioni_mvc.HttpServices;
+>>>>>>> fde4092c1c88d66dc32d312a0639cbf8937167cf
 
 namespace prenotazione_postazioni_mvc.Models
 {
@@ -28,6 +32,13 @@ namespace prenotazione_postazioni_mvc.Models
             Menu = new Menu();
 
         }
+<<<<<<< HEAD
+=======
+        public MenuViewModel(string scelta) { Scelta = scelta; }
+       
+       
+        public string GetDate() { return Date.ToString("dd/MM"); }
+>>>>>>> fde4092c1c88d66dc32d312a0639cbf8937167cf
 
 
         //public string GetDate() { return Date.ToString("dd/MM"); }

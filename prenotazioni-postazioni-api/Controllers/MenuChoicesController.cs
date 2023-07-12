@@ -80,7 +80,7 @@ namespace prenotazioni_postazioni_api.Controllers
             {
                 _logger.Info("Id menu: " + idMenu);
                 _logger.Info("Prelevando tutte le scelte dato id di un menu: " + idMenu + "...");
-                MenuChoices menuChoices = _MenuChoicesService.GetByIdMenu(idMenu);
+                List<MenuChoices> menuChoices = _MenuChoicesService.GetByIdMenu(idMenu);
                 _logger.Info("Almeno una scelta trovata con successo!");
                 return Ok(menuChoices);
             }

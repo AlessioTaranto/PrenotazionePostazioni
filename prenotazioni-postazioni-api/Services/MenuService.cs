@@ -1,7 +1,7 @@
-﻿using prenotazione_postazioni_libs.Models;
+﻿using prenotazione_postazioni_libs.Dto;
 using prenotazioni_postazioni_api.Repositories;
+using prenotazione_postazioni_libs.Models;
 using prenotazioni_postazioni_api.Exceptions;
-using prenotazione_postazioni_libs.Dto;
 using log4net;
 
 namespace prenotazioni_postazioni_api.Services
@@ -11,22 +11,23 @@ namespace prenotazioni_postazioni_api.Services
         private MenuRepository _menuRepository;
         private readonly ILog logger = LogManager.GetLogger(typeof(MenuService));
 
-        public MenuService (MenuRepository menuRepository)
+        public MenuService (MenuRepository _menuRepository)
         {
-            _menuRepository = menuRepository;
+            this._menuRepository = _menuRepository;
         }
-
-        internal Menu? GetByDate(DateOnly date)
-        {
-            logger.Info("Ricerca menu mediante una data...");
-            return _menuRepository.GetByDate(date);
-        }
-        internal List<Menu>? GetAll()
+        internal List<Menu> GetAll()
         {
             logger.Info("Ricerca di tutti i menu");
             return _menuRepository.GetAll();
         }
-        internal Menu? GetById(int id)
+
+        internal Menu GetByDate(DateTime date)
+        {
+            logger.Info("Ricerca menu mediante una data...");
+            return _menuRepository.GetByDate(date);
+        }
+       
+        internal Menu GetById(int id)
         {
             logger.Info("Trovando il menu mediante il suo id: " + id);
             Menu menu = _menuRepository.GetById(id);
@@ -34,7 +35,7 @@ namespace prenotazioni_postazioni_api.Services
             if(menu == null)
             {
                 logger.Error("Il menu trovato NON e' valido");
-                throw new PrenotazionePostazioniApiException("Id Utente non trovato");
+                throw new PrenotazionePostazioniApiException("Nessun menu trovato con questo id");
             }
             else
             {
@@ -46,15 +47,15 @@ namespace prenotazioni_postazioni_api.Services
         internal void Add(MenuDto menuDto)
         {
             logger.Info("Controllando se menuDto e' valido...");
-            if(_menuRepository.GetByDate(menuDto.Day) != null)
+            if(_menuRepository.GetByDate(menuDto.Date) != null)
             {
                 logger.Warn("MenuDto non e' valido, ho lanciato una prenotazionePostazioniApiException!");
                 throw new PrenotazionePostazioniApiException("data gia occupata da un altro menu!!!");
             }
             logger.Info("MenuDto e' valido. Cercando di salvare Menu nel database...");
-            _menuRepository.Add(new Menu(menuDto.Day, menuDto.Image));
+            _menuRepository.Add(new Menu(menuDto.Date, menuDto.Image));
         }
-        internal void Delete(DateOnly day) 
+        internal void Delete(DateTime day) 
         {
             logger.Info("Rimoazione del menu dal database...");
             _menuRepository.Delete(day);

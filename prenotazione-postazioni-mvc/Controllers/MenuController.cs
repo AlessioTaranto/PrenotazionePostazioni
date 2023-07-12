@@ -1,13 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+<<<<<<< HEAD
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
 using System.Net;
+=======
+using prenotazione_postazioni_mvc.HttpServices;
+using prenotazione_postazioni_mvc.Models;
+>>>>>>> fde4092c1c88d66dc32d312a0639cbf8937167cf
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
     public class MenuController : Controller
     {
+<<<<<<< HEAD
         public readonly MenuHttpService _menuHttpService;
         public readonly MenuChoicesHttpService _choicesHttpService;
 
@@ -60,6 +66,25 @@ namespace prenotazione_postazioni_mvc.Controllers
             //    return Ok("scelta inviata");
             //}
             //return BadRequest();
+=======
+        public static MenuViewModel? ViewModel { get; set; }
+        public readonly MenuHttpService _menuHttpService;
+        public readonly MenuChoicesHttpService _menuChoicesHttpService;
+        public readonly HolidayHttpService _holidayHttpService;
+
+
+        public MenuController(MenuHttpService _menuHttpService, MenuChoicesHttpService _menuChoicesHttpService, HolidayHttpService _holidayHttpService)
+
+        {
+            _menuHttpService = _menuHttpService;
+            _menuChoicesHttpService = _menuChoicesHttpService;
+            _holidayHttpService = _holidayHttpService;
+
+        }
+        public IActionResult Index()
+        {
+            return View();
+>>>>>>> fde4092c1c88d66dc32d312a0639cbf8937167cf
         }
 
     }
