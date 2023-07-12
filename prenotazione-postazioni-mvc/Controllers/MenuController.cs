@@ -1,36 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-<<<<<<< HEAD
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
 using System.Net;
-=======
-using prenotazione_postazioni_mvc.HttpServices;
-using prenotazione_postazioni_mvc.Models;
->>>>>>> fde4092c1c88d66dc32d312a0639cbf8937167cf
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
     public class MenuController : Controller
     {
-<<<<<<< HEAD
         public readonly MenuHttpService _menuHttpService;
         public readonly MenuChoicesHttpService _choicesHttpService;
+        public readonly HolidayHttpService _holidayHttpService;
 
-        public MenuController(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService)
+        public MenuController(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService, HolidayHttpService holidayHttpService)
         {
             _menuHttpService = menuHttpService;
             _choicesHttpService = menuChoicesHttpService;
+            _holidayHttpService = holidayHttpService;
         }
 
         public static MenuViewModel ViewModel { get; set; }
         public IActionResult Index()
         {
             if (ViewModel == null)
-                ViewModel = new MenuViewModel(_menuHttpService, _choicesHttpService);
+                ViewModel = new MenuViewModel(_menuHttpService, _choicesHttpService, _holidayHttpService);
+            ReloadHoliday();
             ReloadMenu();
-            ViewModel.Menu.Image = "https://marketplace.canva.com/EADrKskBfV8/1/0/1236w/canva-oro-festa-di-san-valentino-cibo-e-bevande-menu-6TIe65doazo.jpg";
-
+            //ViewModel.Menu = new Menu();
             return View(ViewModel);
         }
 
@@ -42,50 +38,42 @@ namespace prenotazione_postazioni_mvc.Controllers
             task.Wait();
             return Ok("Menu caricato");
         }
+        [HttpGet]
+        [ActionName("reloadHoliday")]
+        public IActionResult ReloadHoliday()
+        {
+            Task task = ViewModel.ReloadHoliday();
+            task.Wait();
+            return Ok("festivita caricate");
+        }
 
         [HttpPost]
         [ActionName("addChoice")]
         public IActionResult AddChoice(string choice, int idUser, int idMenu)
         {
-           return Ok("scelta gia effettuata");
-
-
-            //Task<HttpStatusCode> getRq = ViewModel.ExistsChoice(idMenu, idUser);
-            //getRq.Wait();
-            //HttpStatusCode code = getRq.Result;
-            //if (code == HttpStatusCode.OK)
-            //{
-            //    //codice per modificare la scelta dell'user quando trova la scelta gia effettuata
-            //    Ok("scelta gia effettuata");
-
-            //}
-            //else if (code == HttpStatusCode.NotFound)
-            //{
-            //    //codice per fare la scelta 
-            //    ViewModel.Add(choice, idUser,idMenu);
-            //    return Ok("scelta inviata");
-            //}
-            //return BadRequest();
-=======
-        public static MenuViewModel? ViewModel { get; set; }
-        public readonly MenuHttpService _menuHttpService;
-        public readonly MenuChoicesHttpService _menuChoicesHttpService;
-        public readonly HolidayHttpService _holidayHttpService;
-
-
-        public MenuController(MenuHttpService _menuHttpService, MenuChoicesHttpService _menuChoicesHttpService, HolidayHttpService _holidayHttpService)
-
-        {
-            _menuHttpService = _menuHttpService;
-            _menuChoicesHttpService = _menuChoicesHttpService;
-            _holidayHttpService = _holidayHttpService;
+            Task<HttpStatusCode> getRq = ViewModel.ExistsChoice(idMenu, idUser);
+            getRq.Wait();
+            HttpStatusCode code = getRq.Result;
+            if (code == HttpStatusCode.OK)
+            {
+                //codice per modificare la scelta dell'user quando trova la scelta gia effettuata
+                ViewModel.Delete(idMenu, idUser);
+            } 
+            else if(code == HttpStatusCode.BadRequest)
+            {
+                return BadRequest();
+            }
+                ViewModel.Add(choice, idUser, idMenu);
+                return Ok("scelta inviata");
 
         }
-        public IActionResult Index()
-        {
-            return View();
->>>>>>> fde4092c1c88d66dc32d312a0639cbf8937167cf
-        }
 
+        //[HttpDelete]
+        //[ActionName("removeChoice")]
+        //public IActionResult DeleteChoice(int idMenu, int idUser) 
+        //{
+        //    ViewModel.Delete(idMenu, idUser);
+        //    return Ok("scelta eliminata");
+        //}
     }
 }
