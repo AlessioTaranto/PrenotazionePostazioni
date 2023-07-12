@@ -26,12 +26,12 @@ namespace prenotazioni_postazioni_api.Repositories
             sqlCommand.Parameters.AddWithValue("@id", id);
             return DatabaseManager<MenuChoices>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
-        internal MenuChoices? GetByIdMenu(int idMenu)
+        internal List<MenuChoices>? GetByIdMenu(int idMenu)
         {
             string query = $"SELECT * FROM MenuChoices WHERE idMenu = @idMenu;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idMenu", idMenu);
-            return DatabaseManager<MenuChoices>.GetInstance().MakeQueryMoreResults(sqlCommand);
+            return DatabaseManager<List<MenuChoices>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
         internal MenuChoices? GetByUserAndIdMenu(int idMenu, int idUser)
         {

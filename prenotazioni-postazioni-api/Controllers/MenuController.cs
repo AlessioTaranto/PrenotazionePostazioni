@@ -35,9 +35,9 @@ namespace prenotazioni_postazioni_api.Controllers
                 if(menu == null)
                 {
                     _logger.Warn("Menu e' null, return NotFound");
-                    return NotFound("Menu è null");
+                    return NotFound("Nessun menu segnato per questa data");
                 }
-                _logger.Info("Menu non trovato. Return OK");
+                _logger.Info("Menu trovato. Return OK");
                 return Ok(menu);
             }
             catch (PrenotazionePostazioniApiException ex) {
@@ -88,7 +88,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 if(menu == null)
                 {
                     _logger.Warn("Nessun menu trovato, NotFound");
-                    return NotFound("Menu e' null");
+                    return NotFound("Nessun menu inserito");
                 }
                 _logger.Info("Menu trovati, Ok");
                 return Ok(menu);

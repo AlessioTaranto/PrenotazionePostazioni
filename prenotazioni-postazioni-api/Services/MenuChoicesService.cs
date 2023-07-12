@@ -32,7 +32,7 @@ namespace prenotazioni_postazioni_api.Services
             if (menuChoices == null)
             {
                 logger.Error("La scelta trovata non e' valida");
-                throw new PrenotazionePostazioniApiException("Id scelta non valido");
+                throw new PrenotazionePostazioniApiException("Non e' presente nessuna scelta con questo id");
             }
             else
             {
@@ -41,20 +41,21 @@ namespace prenotazioni_postazioni_api.Services
             }
         }
 
-        internal MenuChoices? GetByIdMenu(int idMenu)
+        internal List<MenuChoices>? GetByIdMenu(int idMenu)
         {
             logger.Info("Trovando le scelte mediante un certo id di un menu: " + idMenu);
-            MenuChoices menuChoices = _menuChoicesRepository.GetByIdMenu(idMenu);
-            if (menuChoices == null) 
+            List<MenuChoices> menuChoices = _menuChoicesRepository.GetByIdMenu(idMenu);
+            if (menuChoices == null)
             {
                 logger.Error("La scelta trovata non e' valida");
-                throw new PrenotazionePostazioniApiException("Id scelta non valido");
+                throw new PrenotazionePostazioniApiException("Nessuno ha scelto qualcosa da questo menu");
             }
             else
             {
                 logger.Info("La scelta trovata e' valida");
                 return menuChoices;
             }
+
         }
 
         internal MenuChoices? GetByUserAndIdMenu(int idMenu, int idUser)

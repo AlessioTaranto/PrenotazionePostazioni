@@ -35,7 +35,7 @@ namespace prenotazioni_postazioni_api.Services
             if(menu == null)
             {
                 logger.Error("Il menu trovato NON e' valido");
-                throw new PrenotazionePostazioniApiException("Id Utente non trovato");
+                throw new PrenotazionePostazioniApiException("Nessun menu trovato con questo id");
             }
             else
             {
