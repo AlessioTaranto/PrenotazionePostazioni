@@ -46,11 +46,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
 
-            var year = date.Year;
-            var month = date.Month;
-            var day = date.Day;
-
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/user/getByDate?year={year}&month={month}&day={day}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/user/getByDate?year=" + date.Year + "&month=" + date.Month + "&day=" + date.Day);
 
             return httpResponseMessage;
         }

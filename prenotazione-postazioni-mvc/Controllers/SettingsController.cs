@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
 
@@ -10,6 +11,8 @@ namespace prenotazione_postazioni_mvc.Controllers
         public readonly CapacityHttpService _capacityHttpService;
         //HTTP Client Factory -> Festa
         public readonly HolidayHttpService _festaHttpService;
+
+        public int numero = 0;
 
         public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService)
         {
@@ -167,7 +170,7 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         [HttpPost]
         [ActionName("ToggleModEmergency")]
-        public IActionResult ToggleCovidMode()
+        public IActionResult ToggleModEmergency()
         {
 
             if (_capacityHttpService == null)
@@ -209,7 +212,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>Ok -> Capienza aggiornata</returns>
 
         [HttpPost]
-        [ActionName("ReloadCapienzaCovid")]
+        [ActionName("ReloadCapacityEmergency")]
         public IActionResult ReladCapacityEmergency(string room, int capacity)
         {
             try

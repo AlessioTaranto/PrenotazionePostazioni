@@ -27,6 +27,7 @@ namespace prenotazione_postazioni_mvc.Models
             Capacity = capacity;
             CapacityEmergency = Emergency;
             this.Service = service;
+            LoadCapacities();
         }
 
         public CapacitySettingsViewModel(string? room, bool modEmergency, CapacityHttpService service)
@@ -38,14 +39,14 @@ namespace prenotazione_postazioni_mvc.Models
 
         public CapacitySettingsViewModel(bool modEmergency, CapacityHttpService service)
         {
-            Room = "null";
+            Room = null;
             this.Service = service;
             LoadCapacities();
         }
 
         public CapacitySettingsViewModel(CapacityHttpService service)
         {
-            Room = "null";
+            Room = null;
             this.Service = service;
             LoadCapacities();
         }
@@ -57,7 +58,7 @@ namespace prenotazione_postazioni_mvc.Models
         /// <returns>Se è stata selezionata una room, ritorna la room, altrimenti "Seleziona una rooms"</returns>
         public string GetRoom()
         {
-            return Room == "null" ? "Seleziona una stanza" : Room;
+            return Room == null ? "Seleziona una stanza" : Room;
         }
 
         /// <summary>
@@ -124,10 +125,10 @@ namespace prenotazione_postazioni_mvc.Models
 
         public async void SetCapacity(string room, int capacity)
         {
-            if (capacity <= 0)
+            if (capacity < 0)
                 throw new Exception("Capienza non valida");
-            if (room == null || !Capacity.ContainsKey(room))
-                throw new Exception("room non valida");
+            /*if (room == null || !CapacityEmergency.ContainsKey(room))
+                throw new Exception("room non valida " + room);*/
 
             HttpResponseMessage? setCapacity = await Service.SetCapacity(room, capacity);
             if (setCapacity == null || setCapacity.StatusCode != HttpStatusCode.OK)
@@ -144,11 +145,11 @@ namespace prenotazione_postazioni_mvc.Models
 
         public async void SetCapacityEmergency(string room, int capacity)
         {
-            if (capacity <= 0)
+            if (capacity < 0)
                 throw new Exception("Capienza non valida");
-            if (room == null || !CapacityEmergency.ContainsKey(room))
-                throw new Exception("room non valida");
-
+            /*if (room == null || !CapacityEmergency.ContainsKey(room))
+                throw new Exception("room non valida " + room);*/
+            
             HttpResponseMessage? setCapienza = await Service.SetCapacityEmergency(room, capacity);
             if (setCapienza == null || setCapienza.StatusCode != HttpStatusCode.OK)
                 return;
