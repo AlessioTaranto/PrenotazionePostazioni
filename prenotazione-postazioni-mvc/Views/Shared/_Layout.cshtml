@@ -1,11 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Prenota postazioni";
-
-    BookingViewModel ViewModel = (BookingViewModel)Model;
-    ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM/yyyy");
-}
-
-@using System.Net;
+﻿@using System.Net;
 @using Newtonsoft.Json;
 @using prenotazione_postazioni_libs.Models;
 @using Microsoft.AspNetCore.Http;
@@ -52,10 +45,17 @@
     
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <div backgroung="nero.jpg">
-            <div id="loader" class="loader"></div>
-
-    </div>
+<script>
+     function test() {
+            var screenWidth = window.innerWidth;
+            console.log(screenWidth);
+            $.ajax({
+                type: "POST",
+                url: "Navbar/SetScreenWidth",
+                data: { width: screenWidth },
+            });
+        };
+</script>
 
         <nav class="navbar_menu">
             <a class="navbar-brand" href="#">
@@ -87,35 +87,10 @@
                 }
             }
         
-        <div>
-                <button class="btn" onclick="reloadPage(),toogleTheme(), toogleMap()">
+            <div>
+                <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
                     Tema
                 </button>
-
-
-                <script>
-                    function reloadPage() {
-                        // Mostra il loader
-                        document.getElementById("loader").style.display = "block";
-
-                        // Ricarica la pagina
-                        location.reload();
-                    }
-
-                    // Nasconde il loader quando la pagina è completamente caricata
-                    window.addEventListener('load', function () {
-                        document.getElementById("loader").style.display = "none";
-                    });
-                </script>
-                <script>
-
-                    function toogleMap(){
-
-                      @ViewModel._ThemeViewModel.SetTheme();
-                      
-                    }
-                    
-                </script>
 
                 <script>
 
@@ -129,11 +104,10 @@
 
                             setTheme('theme-dark');
 
-
                         } else {
                             setTheme('theme-light');
-
                         }
+
                     }
 
                     //funzione che deve essere invocato al inizio del caricamento
@@ -141,13 +115,8 @@
 
                         if (localStorage.getItem('theme') === 'theme-light') {
                             setTheme('theme-light');
-
                         } else {
-
-
-
                             setTheme('theme-dark');
-
                         }
                     })();
 
@@ -195,7 +164,7 @@
                     }
                 
                     <div>
-                        <button id="pulsante" class="btn" onclick="reloadPage(),toogleTheme(), toogleMap()">
+                        <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
                             Tema
                         </button>
 
@@ -397,9 +366,6 @@
         
     });
 </script>
-
-
-
 
 </body>
 </html>
