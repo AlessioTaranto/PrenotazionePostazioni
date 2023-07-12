@@ -205,4 +205,14 @@
   .postazioni_information h1 {
     font-size: 4vh;
   }
+  .settings_presenze_content {
+    flex-direction: column;
+    gap: 2vw;
+  }
+  .settings_collapse_content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+  }
 }
