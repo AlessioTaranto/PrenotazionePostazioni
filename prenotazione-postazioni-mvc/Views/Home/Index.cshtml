@@ -32,6 +32,7 @@
     <body style="background-color:var(--bkg1-color)">
     
     </body>
+
     if (checkExists.StatusCode == HttpStatusCode.OK)
     {
 
@@ -73,12 +74,16 @@
 <p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.StartDate)</p>
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
 
+
 <!---->
 <div class="home_container">
 
     <!-- Piantina Div -->
     <div class="piantina_container" >
-        <img src="img/piantina.png" usemap="#image-map" >
+       
+   
+
+        <img src=@(ViewModel._ThemeViewModel.GetTheme()) usemap="#image-map">
 
         <map name="image-map">
             <area alt="Bansky" title="Bansky" href="" coords="3865,1581,3871,936,4701,938,4708,1684" shape="poly">

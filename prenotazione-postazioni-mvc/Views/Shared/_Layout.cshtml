@@ -1,4 +1,11 @@
-﻿@using System.Net;
+@{
+    ViewData["Title"] = "Prenota postazioni";
+
+    BookingViewModel ViewModel = (BookingViewModel)Model;
+    ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM/yyyy");
+}
+
+@using System.Net;
 @using Newtonsoft.Json;
 @using prenotazione_postazioni_libs.Models;
 @using Microsoft.AspNetCore.Http;
@@ -87,10 +94,35 @@
                 }
             }
         
-            <div>
-                <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
+        <div>
+                <button class="btn" onclick=" reloadPage(),toogleTheme(), toogleMap()">
                     Tema
                 </button>
+
+
+                <script>
+                    function reloadPage() {
+                        // Mostra il loader
+                        document.getElementById("loader").style.display = "block";
+
+                        // Ricarica la pagina
+                        location.reload();
+                    }
+
+                    // Nasconde il loader quando la pagina è completamente caricata
+                    window.addEventListener('load', function () {
+                        document.getElementById("loader").style.display = "none";
+                    });
+                </script>
+                <script>
+
+                    function toogleMap(){
+
+                      @ViewModel._ThemeViewModel.SetTheme();
+                      
+                    }
+                    
+                </script>
 
                 <script>
 
@@ -104,10 +136,11 @@
 
                             setTheme('theme-dark');
 
+
                         } else {
                             setTheme('theme-light');
-                        }
 
+                        }
                     }
 
                     //funzione che deve essere invocato al inizio del caricamento
@@ -115,8 +148,13 @@
 
                         if (localStorage.getItem('theme') === 'theme-light') {
                             setTheme('theme-light');
+
                         } else {
+
+
+
                             setTheme('theme-dark');
+
                         }
                     })();
 
@@ -366,6 +404,9 @@
         
     });
 </script>
+
+
+
 
 </body>
 </html>
