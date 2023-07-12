@@ -13,4 +13,51 @@ for details on configuring this project to bundle and minify static web assets. 
   }
 }
 
+.loader {
+    background: rgba(248, 103, 25, 0.979);
+    height: 20px;
+    width: 160px;
+    border-radius: 20px;
+    position: absolute;
+    animation: mover5 2s ease-in-out infinite;
+    top: 50%;
+    left: 45%;
+    z-index:99999;
+}
+
+    .loader::before,
+    .loader::after {
+        content: '';
+        position: absolute;
+        height: 20px;
+        border-radius: 20px;
+        left: 40px;
+        animation: mover5 2s ease-in-out infinite;
+    }
+
+    .loader::before {
+        background: rgb(201, 94, 1);
+        top: 40px;
+        width: 100px;
+    }
+
+    .loader::after {
+        background: rgb(255, 151, 106);
+        top: -40px;
+        width: 120px;
+    }
+
+@keyframes mover5 {
+    0% {
+        transform: translateX(30px) scale(1);
+    }
+
+    50% {
+        transform: translateX(-30px) scale(1.1);
+    }
+
+    100% {
+        transform: translateX(30px) scale(1);
+    }
+} 
 
