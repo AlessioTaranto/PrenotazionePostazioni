@@ -2,41 +2,114 @@
 
     ViewData["Title"] = "Pranzo";
     MenuViewModel ViewModel = (MenuViewModel)Model;
+    ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM");
+
+}
+
+@*<script>
+    $.ajax({
+        type: "GET",
+        success: function(response){ console.log("fatto " + response)},
+        url: "Menu/ReloadMenu",
+        error: function(errore){ console.log("errore" + errore)}
+    })
+</script>*@
+
+@inject prenotazione_postazioni_mvc.HttpServices.MenuChoicesHttpService _menuChoicesHttpService;
+@using System.Net;
+@using prenotazione_postazioni_libs.Models;
+
+@{
+    HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(ViewModel.Menu.Id,/*iduser*/1);
+    HttpStatusCode code = checkExists.StatusCode;
+    MenuChoices menuChoice = null;
+    <button type="button"
+            class="btn btn-primary d-none"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            id="myButton">
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Scelta gia effettuata!</h5>
+                </div>
+                <div class="modal-body">
+                    Desideri caricare la tua scelta ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-dismiss="modal" id="buttonModal" value="no">Chiudi</button>
+                    <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-dismiss="modal" id="buttonModal" value="si">Si</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () { $("#myButton").trigger("click") })
+        $("#myModal").on("shown.bs.modal", function () {
+            $("#myInput").trigger("focus");
+        });
+
+        $("#buttonModal").on("click", function () {
+            if (this.value == "si") {
+            } else {
+            }
+        })</script>
+
+    if (code == HttpStatusCode.OK)
+    {
+        menuChoice = await checkExists.Content.ReadFromJsonAsync<MenuChoices>();
+    }
+    else if (menuChoice != null)
+    {
+
+    }
+    else
+    {
+
+    }
+    menuChoice = new MenuChoices(1, 1, "valori della scelta gia effettuata",1);
 }
 
 
 <main class="d-flex justify-content-around">
-    <h2> Menu del giorno : @ViewModel.GetDate()</h2>
     <div class="container text-center mt-5">
         <div class="row">
             <div class="col-sm-8">
                 <img style="width: 55%"
-                     src="@ViewModel.GetUrlMenu()"
-                @*https://marketplace.canva.com/EAD0UMPtOv4/1/0/1236w/canva-oro-tenue-elegante-matrimonio-menu-FQIyCfgp1aY.jpg*@
+                     src="@ViewModel.Menu.Image"
                      class="img-thumbnail bd-darkorange"
                      alt="Menu" />
             </div>
             <div class="col-sm-4">
                 <label for="myTextarea">La tua scelta</label>
                 <textarea class="form-control overflow-hidden bd-darkorange"
-                          style="height:250px"
+                          style="height:2rem"
                           placeholder="Scrivi qui"
                           id="myTextarea"
-                          maxlength="64"></textarea>
-                <button class="btn btn-primary bg-darkorange bd-darkorange mt-4">Invia</button>
+                          maxlength="64">
+                    
+                      </textarea>
+                <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">Invia</button>
                 <p id="risposta"></p>
 
                 <script>
-                    $("button").on("click", function () {
-                        var res = $("#myTextarea").val().trim();
+                   
+
+                    $("#invia").on("click", function () {
+                        var choice = $("#myTextarea").val().trim();
                         $.ajax({
                             type: "POST",
-                            url: "/Menu/AddScelta",
-                            data: { "scelta": res },
+                            url: "/Menu/addChoice",
+                            data: { "choice": choice, "idUser": 1, "idMenu": 1/*@ViewModel.Menu.Id*/ },
                             success: function (response) { $("#risposta").text(response); },
                             error: function () { $("#risposta").text("errore") }
                         })
                     })
+
+                    
                 </script>
 
             </div>

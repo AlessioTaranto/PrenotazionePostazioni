@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
@@ -40,58 +40,59 @@
 
 </head>
 <body>
-<header>
+    <header>
 
-    <nav class="navbar_menu">
-        <a class="navbar-brand" href="#">
-            <img src="img/logo.png" alt="logo" class="logo-img">
-        </a>
+        <nav class="navbar_menu">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="logo" class="logo-img">
+            </a>
 
-        <ul>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Vote" asp-action="Index">Rumorosità</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Pranzo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Impostazioni" asp-action="Index">Impostazioni</a>
-            </li>
-        </ul>
-    </nav>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Vote" asp-action="Index">Rumorosità</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Impostazioni" asp-action="Index">Impostazioni</a>
+                </li>
+            </ul>
+        </nav>
 
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <style>
-        .subnavigation {
-        width: 100%;
-        height: 5vw;
-        padding: 2%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: var(--shadow-color) 0px 10px 20px, var(--shadow-color) 0px 6px 6px;
-        background-color: var(--bkg-color);
-        }
-        .subnavbar_title {
-        display: flex;
-        flex-direction: row;
-        font-size: 1.3vw;
-        gap: 1vw;
-        color:var(--font-color);
-        
-        }
-        .subnavbar_title_container {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        }
-    </style>
-    <style media="all and (max-width: 700px)">
-        .subnavigation{
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <style>
+            .subnavigation {
+                width: 100%;
+                height: 5vw;
+                padding: 2%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                box-shadow: var(--shadow-color) 0px 10px 20px, var(--shadow-color) 0px 6px 6px;
+                background-color: var(--bkg-color);
+            }
+
+            .subnavbar_title {
+                display: flex;
+                flex-direction: row;
+                font-size: 1.3vw;
+                gap: 1vw;
+                color: var(--font-color);
+            }
+
+            .subnavbar_title_container {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+            }
+        </style>
+        <style media="all and (max-width: 700px)">
+            .subnavigation {
                 padding: 4%;
                 flex-direction: column;
                 align-items: center;
@@ -99,13 +100,14 @@
                 height: auto;
                 gap: 5vw;
             }
+
             .subnavbar_title {
                 font-size: 3vw;
             }
 
-    </style>
+        </style>
 
-    <style>
+        <style>
 
             .theme-dark {
                 --bkg-color: #2c2c2c;
@@ -113,16 +115,18 @@
                 --shadow-color: orange;
                 --bkg1-color: black;
             }
-            
+
 
             .theme-light {
                 --bkg-color: white;
                 --font-color: black;
                 --shadow-color: rgba(0, 0, 0, 0.16 );
             }
-            .coloreTesto{
+
+            .coloreTesto {
                 color: var(--font-color);
             }
+
             .btn {
                 font-size: 17px;
                 background: transparent;
@@ -148,20 +152,19 @@
                     color: var(--font-color);
                 }
 
-                    
-                .btn:hover::before {
-                    width: 100%;
-                    
-                }
 
-              
+                    .btn:hover::before {
+                        width: 100%;
+                    }
 
-                .btn:hover::after {
-                    height: 100%;
-                    color: aliceblue;
-                }
 
-    </style>
+
+                    .btn:hover::after {
+                        height: 100%;
+                        color: aliceblue;
+                    }
+
+        </style>
         <script>
             function cambiaImmagine() {
                 var img = document.getElementById('#image-map');
@@ -174,21 +177,35 @@
                 }
             }
         </script>
-    <div class="subnavigation">
+        <div class="subnavigation">
             @{
-                if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
+                /*@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"*/
+                if (ViewData["DateSelected"] != null)
+                {
                     <div class="subnavbar_title">
-                            <a>Prenota postazione per il:</a>
-                            <span style="font-weight: 700;">@ViewData["DateSelected"]</span>
+                        @{
+                            if (ViewData["Title"].ToString() == "Prenota postazioni")
+                            {
+                                <a>Prenota postazione per il:</a>
+
+                            } else
+                            {
+                                <a>Menu del giorno:</a>
+                            }
+                        }
+
+                        <span style="font-weight: 700;">@ViewData["DateSelected"]</span>
                     </div>
-                }else{
+                }
+                else
+                {
                     <div class="subnavbar_title">
                         <a>@ViewData["Title"]</a>
                     </div>
                 }
             }
-        
-        <div>
+
+            <div>
                 <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
                     Tema
                 </button>
@@ -224,53 +241,53 @@
                 </script>
 
 
+            </div>
+
+            <div class="order-3">
+                <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>
+            </div>
         </div>
 
-        <div class="order-3">
-                    <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
-        </div>      
-    </div>
- 
+        <script>
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            }
+
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+            }
+        </script>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!--Inerente alla pagina Prenotazioni. NON SPOSTARE -->
+    <script src="js/jquery.rwdImageMaps.min.js"></script>
+
     <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        }
 
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-        }
+        // Rende responsive le ImageMap
+        $(document).ready(function () {
+            $('img[usemap]').rwdImageMaps();
+
+
+        });
     </script>
-</header>
-
-<main role="main">
-    @RenderBody()
-</main>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-@await RenderSectionAsync("Scripts", required: false)
-
-<!--Inerente alla pagina Prenotazioni. NON SPOSTARE -->
-<script src="js/jquery.rwdImageMaps.min.js"></script>
-
-<script>
-
-    // Rende responsive le ImageMap
-    $(document).ready(function() {
-        $('img[usemap]').rwdImageMaps();
-
-        
-    });
-</script>
 
 </body>
 </html>
