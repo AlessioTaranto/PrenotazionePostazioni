@@ -664,11 +664,12 @@
     */
     $('area').on('click', function () {
         let nameStanza = event.target.title;   
+        console.log("SelectRoom: " + nomeStanza);
         $.ajax({
             type: "POST",
             url: "Settings/SelectRoom",
             data: { "stanza": nameStanza }
         });
-        location.window.reload();
+        //location.window.reload();
     });
 </script>

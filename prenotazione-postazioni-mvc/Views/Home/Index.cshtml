@@ -455,7 +455,6 @@
 
     $('area').on('click', function () {
         let nameStanza = event.target.alt;
-        console.log(nameStanza)
         $.ajax({
             type: "POST",
             url: "Home/ReloadRoom",
