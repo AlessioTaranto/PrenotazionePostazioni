@@ -60,13 +60,14 @@
                     <div class="postazioni_information">
                         <br>
                         <h1>@ViewModel.CapacitySettingsViewModel.GetRoom()</h1>
-                        @if (ViewModel.CapacitySettingsViewModel.Room != "null")
+                        @if (ViewModel.CapacitySettingsViewModel.Room != null)
                         {
                             <div class="postazioni_information_form">
+
                                 <h5>Capienza Normale</h5>
-                                <input class="form-control" type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaNormale(@ViewModel.CapienzaViewModel.Stanza)"*@>
+                                    <input class="form-control" type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 100%" value=@ViewModel.CapacitySettingsViewModel.GetCapacity(@ViewModel.CapacitySettingsViewModel.Room)>
                                 <h5>Capienza Covid</h5>
-                                <input class="form-control" type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 100%" @*value="@ViewModel.CapienzaViewModel.GetCapienzaCovid(@ViewModel.CapienzaViewModel.Stanza)"*@ >
+                                    <input class="form-control" type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 100%" value=@(ViewModel.CapacitySettingsViewModel.GetCapacityEmergency(@ViewModel.CapacitySettingsViewModel.Room))>
                             </div>
                             <input type="button" class="btn btn-primary bg-darkorange bd-darkorange" id="conferma" value="Conferma">
                         }
@@ -313,6 +314,7 @@
                                     ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<User>?>();
                                     for(int i = 0; i<ListUtenti.Count; i++) 
                                     {
+
                                         User user = ListUtenti[i];
 
                                         <div class="list-group-item my-auto">
@@ -468,7 +470,7 @@
             clickedPresenze = true;
             $.ajax({
                 type: "POST",
-                url: "Settings/CollapsePresenze"
+                url: "Settings/CollapseAttendance"
             }).done(function() {
                 clickedPresenze = false;
             });
@@ -489,7 +491,7 @@
 
     $.ajax({
         type: "GET",
-        url: "Settings/ReloadFeste",
+        url: "Settings/ReloadHoliday",
         dataType: 'json',
         error: function (xhr) {}
     });
@@ -525,18 +527,16 @@
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
     */
 
-    $(document).ready(function() {
-        $('area').on('click', function (event) {
-                
-            $.ajax({
-                type: "POST",
-                url: "Settings/SelectRoom",
-                data: { "stanza": event.target.title }
-            }).done(function() {
-                window.location.reload();
-            });
+    $('area').on('click', function () {
+        let nameStanza = event.target.alt;
+        console.log(nameStanza)
+        $.ajax({
+            type: "POST",
+            url: "Settings/SelectRoom",
+            data: { "room": nameStanza }
         });
 
+    });
         /*
          * ! <td> è utilizzato unicamente nei Calendar.
          * Raccoglie il click da un calendar, comprende il tipo di calendar in base alla quantità
@@ -563,7 +563,7 @@
                 if (isValidDay(event.target.id))
                     $.ajax({
                         type: "POST",
-                        url: "Settings/SelectPresenza",
+                        url: "Settings/SelectHoliday",
                         data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                         error: function(xhr) {
                             alertBox(xhr.responseText);
@@ -575,7 +575,7 @@
             }
         });
 
-    });
+ 
 </script>
 
 <!-- Buttons Script -->
@@ -585,30 +585,34 @@
         function() {
             $.ajax({
                 type: "POST",
-                url: "Settings/ToggleCovidMode"
-            });
+                url: "Settings/ToggleModEmergency"
+            })
         });
 
     $('#capienzaNormale').on('change',
         function(event) {
+            console.log("change");
+
+            console.log("Room: " + "@ViewModel.CapacitySettingsViewModel.Room" + "\nCapacity: " + event.target.value);
             $.ajax({
                 type: "POST",
-                url: "Settings/ReloadCapienzaNormale",
-                data: { "stanza": "@ViewModel.CapacitySettingsViewModel.Room", "capienza": event.target.value },
+                url: "Settings/ReloadCapacity",
+                data: { "room": "@ViewModel.CapacitySettingsViewModel.Room", "capacity": event.target.value},
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapacityDefault(@ViewModel.CapacitySettingsViewModel.Room);
                     event.preventDefault();
                 }
             });
+            console.log("@ViewModel.CapacitySettingsViewModel.GetCapacity(@ViewModel.CapacitySettingsViewModel.Room)");
         });
 
     $('#capienzaCovid').on('change',
         function(event) {
             $.ajax({
                 type: "POST",
-                url: "Settings/ReloadCapienzaCovid",
-                data: { "stanza": "@ViewModel.CapacitySettingsViewModel.Room", "capienza": event.target.value },
+                url: "Settings/ReloadCapacityEmergency",
+                data: { "room": "@ViewModel.CapacitySettingsViewModel.Room", "capacity": event.target.value },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapacityEmergencyDefault(@ViewModel.CapacitySettingsViewModel.Room);
@@ -621,7 +625,7 @@
         function(event) {
             $.ajax({
                 type: "POST",
-                url: "Settings/AggiungiFesta",
+                url: "Settings/AddHoliday",
                 data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day", "description": "None" },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
@@ -636,7 +640,7 @@
         function (event) {
             $.ajax({
                 type: "GET",
-                url: "Settings/RimuoviFesta",
+                url: "Settings/DeleteHoliday",
                 data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day" },
                 error: function (xhr) {
                     alertBox(xhr.responseText);
@@ -658,14 +662,13 @@
     * ! <area> è utilizzato unicamente nella Map.
     * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
     */
-
     $('area').on('click', function () {
-    let nameStanza = event.target.title;
-    $.ajax({
-        type: "POST",
-        url: "Settings/SelectRoom",
-        data: { "stanza": nameStanza }
-    });
-    location.window.reload();
+        let nameStanza = event.target.title;   
+        $.ajax({
+            type: "POST",
+            url: "Settings/SelectRoom",
+            data: { "stanza": nameStanza }
+        });
+        location.window.reload();
     });
 </script>

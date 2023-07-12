@@ -38,7 +38,7 @@
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capacity");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/room/updateCapacity?postiMax=" + capacity + "&name=" + room, null);
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/room/updateCapacity?capacity=" + capacity + "&name=" + room, null);
 
             return httpResponseMessage;
         }
@@ -47,7 +47,7 @@
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capacity");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/stanze/changePostiMaxEmergenza?postiMax=" + capacity + "&name=" + room, null);
+            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/room/updateCapacityEmergency?capacity=" + capacity + "&name=" + room, null);
 
             return httpResponseMessage;
         }

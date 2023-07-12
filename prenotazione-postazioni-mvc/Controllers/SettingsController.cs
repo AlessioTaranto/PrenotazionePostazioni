@@ -167,7 +167,7 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         [HttpPost]
         [ActionName("ToggleModEmergency")]
-        public IActionResult ToggleCovidMode()
+        public IActionResult ToggleModEmergency()
         {
 
             if (_capacityHttpService == null)
@@ -209,7 +209,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <returns>Ok -> Capienza aggiornata</returns>
 
         [HttpPost]
-        [ActionName("ReloadCapienzaCovid")]
+        [ActionName("ReloadCapacityEmergency")]
         public IActionResult ReladCapacityEmergency(string room, int capacity)
         {
             try

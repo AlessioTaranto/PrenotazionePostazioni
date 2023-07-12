@@ -80,7 +80,7 @@ namespace prenotazioni_postazioni_api.Repositories
         {
             string query = "UPDATE Room SET capacityEmergency = @capacityEmergency WHERE id = @idRoom;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@capacityEmrgency", capacityEmergency);
+            sqlCommand.Parameters.AddWithValue("@capacityEmergency", capacityEmergency);
             sqlCommand.Parameters.AddWithValue("@idRoom", idRoom);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
