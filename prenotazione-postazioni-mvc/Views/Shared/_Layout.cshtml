@@ -2,6 +2,7 @@
 @using Newtonsoft.Json;
 @using prenotazione_postazioni_libs.Models;
 @using Microsoft.AspNetCore.Http;
+@using prenotazione_postazioni_mvc.Controllers;
 
 @inject IHttpContextAccessor HttpContextAccessor
 @inject prenotazione_postazioni_mvc.HttpServices.UserHttpService _userHttpService;
@@ -41,137 +42,38 @@
 </head>
 <body>
 <header>
+    
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <nav class="navbar_menu">
-        <a class="navbar-brand" href="#">
-            <img src="img/logo.png" alt="logo" class="logo-img">
-        </a>
+<script>
+     function test() {
+            var screenWidth = window.innerWidth;
+            console.log(screenWidth);
+            $.ajax({
+                type: "POST",
+                url: "Navbar/SetScreenWidth",
+                data: { width: screenWidth },
+            });
+        };
+</script>
 
-        <ul>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Vote" asp-action="Index">Rumorosità</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
-            </li>
-        </ul>
-    </nav>
-
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <style>
-        .subnavigation {
-        width: 100%;
-        height: 5vw;
-        padding: 2%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: var(--shadow-color) 0px 10px 20px, var(--shadow-color) 0px 6px 6px;
-        background-color: var(--bkg-color);
-        }
-        .subnavbar_title {
-        display: flex;
-        flex-direction: row;
-        font-size: 1.3vw;
-        gap: 1vw;
-        color:var(--font-color);
-        
-        }
-        .subnavbar_title_container {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        }
-    </style>
-    <style media="all and (max-width: 700px)">
-        .subnavigation{
-                padding: 4%;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                height: auto;
-                gap: 5vw;
-            }
-            .subnavbar_title {
-                font-size: 3vw;
-            }
-
-    </style>
-
-    <style>
-
-            .theme-dark {
-                --bkg-color: #2c2c2c;
-                --font-color: white;
-                --shadow-color: orange;
-                --bkg1-color: black;
-            }
-            
-
-            .theme-light {
-                --bkg-color: white;
-                --font-color: black;
-                --shadow-color: rgba(0, 0, 0, 0.16 );
-            }
-            .coloreTesto{
-                color: var(--font-color);
-            }
-            .btn {
-                font-size: 17px;
-                background: transparent;
-                border: none;
-                padding: 1em 1.5em;
-                color: var(--font-color);
-                text-transform: uppercase;
-                position: relative;
-            }
-
-                .btn::before {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                    height: 2px;
-                    width: 0;
-                    background-color: darkorange;
-                    transition: .5s ease;
-                }
-
-                .btn:hover {
-                    color: var(--font-color);
-                }
-
-                    
-                .btn:hover::before {
-                    width: 100%;
-                    
-                }
-
-              
-
-                .btn:hover::after {
-                    height: 100%;
-                    color: aliceblue;
-                }
-
-    </style>
-        <script>
-            function cambiaImmagine() {
-                var img = document.getElementById('#image-map');
-                var pulsante = document.getElementById('pulsante');
-
-                if (img.src.endsWith('piantina.png')) {
-                    img.src = 'img/piantinaWhite.png';
-                } else {
-                    img.src = 'img/piantina.png';
-                }
-            }
-        </script>
-    <div class="subnavigation">
+        <nav class="navbar_menu">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="logo" class="logo-img">
+            </a>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Vote" asp-action="Index">Rumorosità</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="subnavigation" id="sub1">
             @{
                 if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
                     <div class="subnavbar_title">
@@ -185,7 +87,7 @@
                 }
             }
         
-        <div>
+            <div>
                 <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
                     Tema
                 </button>
@@ -219,14 +121,210 @@
                     })();
 
                 </script>
-
-
+            </div>
+            <div class="order-3">
+                <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
+            </div>      
         </div>
 
-        <div class="order-3">
-                    <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
-        </div>      
-    </div>
+
+        <nav class="navbar_menu_2 navbar navbar-expand-lg navbar-light bg-darkorange">
+            <div class="container-fluid">
+                <img src="img/logo.png" alt="logo" class="logo-img">
+                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse bg-darkorange" id="navbarNavAltMarkup">
+                <hr>
+                <ul>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Vote" asp-action="Index">Rumorosità</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
+                    </li>
+                </ul>
+                <hr>
+                    
+                 <div class="subnavigation2">
+                    @{
+                        if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
+                            <div class="subnavbar_title">
+                                    <a>Prenota postazione per il:</a>
+                                    <span style="font-weight: 700;">@ViewData["DateSelected"]</span>
+                            </div>
+                        }else{
+                            <div class="subnavbar_title">
+                                <a>@ViewData["Title"]</a>
+                            </div>
+                        }
+                    }
+                
+                    <div>
+                        <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
+                            Tema
+                        </button>
+
+                        <script>
+
+                            function setTheme(themeName) {
+                                localStorage.setItem('theme', themeName);
+                                document.documentElement.className = themeName;
+                            }
+
+                            function toogleTheme() {
+                                if (localStorage.getItem('theme') === 'theme-light') {
+
+                                    setTheme('theme-dark');
+
+                                } else {
+                                    setTheme('theme-light');
+                                }
+
+                            }
+
+                            //funzione che deve essere invocato al inizio del caricamento
+                            (function () {
+
+                                if (localStorage.getItem('theme') === 'theme-light') {
+                                    setTheme('theme-light');
+                                } else {
+                                    setTheme('theme-dark');
+                                }
+                            })();
+
+                        </script>
+                    </div>
+                    <div class="order-3">
+                        <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
+                    </div>      
+                </div>
+                </div>
+            </div>
+        </nav>     
+
+    
+    <style>
+        .navbar_menu_2{
+            display: none;
+        }
+        .navbar_menu_2 ul{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+        }
+        .subnavigation {
+            width: 100%;
+            height: 5vw;
+            padding: 2%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-color) 0px 10px 20px, var(--shadow-color) 0px 6px 6px;
+            background-color: var(--bkg-color);
+        }
+        .subnavbar_title {
+            display: flex;
+            flex-direction: row;
+            font-size: 1.3vw;
+            gap: 1vw;
+            color:var(--font-color);
+        }
+        .subnavbar_title_container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+        .theme-dark {
+            --bkg-color: #2c2c2c;
+            --font-color: white;
+            --shadow-color: orange;
+            --bkg1-color: black;
+        }
+        .theme-light {
+            --bkg-color: white;
+            --font-color: black;
+            --shadow-color: rgba(0, 0, 0, 0.16 );
+        }
+        .coloreTesto{
+            color: var(--font-color);
+        }
+        .btn {
+            border-radius: 0.5vw;
+            font-size: 17px;
+            background: transparent;
+            border: none;
+            padding: 1em 1.5em;
+            color: var(--font-color);
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 0;
+            background-color: darkorange;
+            transition: .5s ease;
+        }
+        .btn:hover {
+            color: var(--font-color);
+        }   
+        .btn:hover::before {
+            width: 100%;
+        }
+        .btn:hover::after {
+            height: 100%;
+            color: aliceblue;
+        }   
+    </style>
+    <style media="all and (max-width: 700px)">
+        .navbar_menu_2 {
+            display: block;   
+        }
+        #sub1{
+            display: none;
+        }
+        .subnavigation2{
+            width: 100%;
+            height: auto;
+            padding: 2%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4vw;
+        }
+        .logo-img {
+            width: 40vw;
+            height: 10vw;
+        }
+        .subnavbar_title{
+            flex-direction: column;
+            font-size: 4vw;
+            text-align: center;
+        }
+        .btn{
+            font-size: 17px;
+            background: transparent;
+            border: none;
+            padding: 1em 1.5em;
+            background-color: #fff;
+            color: #000;
+            text-transform: uppercase;
+            position: relative;
+        }
+    </style>
  
     <script>
         function onSignIn(googleUser) {
