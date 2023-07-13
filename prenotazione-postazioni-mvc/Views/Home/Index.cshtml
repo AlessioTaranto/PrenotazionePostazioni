@@ -75,16 +75,26 @@
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
 
 
-
+<script>
+    $(document).ready(function(){
+        if(localStorage.getItem("theme") =="theme-light"){
+            document.getElementById("changeMap").src = "/img/piantina.png";
+            console.log("test1")
+        } else {
+            document.getElementById("changeMap").src = "/img/piantinaWhite.png";
+            console.log("test2")
+        }
+    })
+    
+  </script>
+  
 <!---->
 <div class="home_container">
 <!--Maremma-->
     <!-- Piantina Div -->
     <div class="piantina_container" >
-       
-   
-
-        <img src=@(ViewModel._ThemeViewModel.GetTheme()) usemap="#image-map">
+  
+        <img id="changeMap" src="/img/piantina.png" usemap="#image-map">
 
         <map name="image-map">
             <area alt="Bansky" title="Bansky" href="" coords="3865,1581,3871,936,4701,938,4708,1684" shape="poly">
@@ -195,8 +205,8 @@
                                     getPrenotazione.Wait();
                                     Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
 
-                                    <div class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" type="button" id="prenota"> Prenota</div>
-                                    <div class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" type="button" id="cancprenota">Annulla prenotazione</div>
+                                    <button class="room_info_btn" style="border: none;" type="button" id="prenota"> Prenota</button>
+                                    <button class="room_info_btn" style="border: none;" type="button" id="cancprenota">Annulla prenotazione</button>
 
                                     if (prenotazione != null)
                                     {
@@ -225,7 +235,7 @@
     </div>
 
 
-    <button type="button" class="btn btn-primary bg-darkorange bd-darkorange" style="border: none;" data-toggle="modal" data-target="#exampleModalLong">
+    <button type="button" class="room_info_btn" style="border: none;" data-toggle="modal" data-target="#exampleModalLong">
         Seleziona una data
     </button>
 
