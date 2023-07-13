@@ -27,7 +27,9 @@
 .room_info_div {
   padding: 5%;
   width: 100%;
-  height: auto;
+  min-height: 10%;
+  max-height: 90%;
+  overflow: auto;
   background-color: var(--bkg-color);
   box-shadow: var(--shadow-color) 0px 1px 4px;
   border-radius: 0.5vw;
@@ -99,8 +101,6 @@ area {
   width: 70%;
   height: auto;
   gap: 1vw;
-  background-color: var(--bkg-color);
-  box-shadow: var(--shadow-color) 0px 1px 4px;
 }
 
 .room_info_btn {
@@ -162,6 +162,73 @@ area {
   transform: scale3d(1, 1, 1);
 }
 
+.loader_container {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.1px);
+  -webkit-backdrop-filter: blur(7.1px);
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+.loader_content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5vw;
+}
+.loader {
+  background: rgba(248, 103, 25, 0.979);
+  height: 20px;
+  width: 160px;
+  border-radius: 20px;
+  animation: mover5 2s ease-in-out infinite;
+  top: 50%;
+  left: 45%;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  height: 20px;
+  border-radius: 20px;
+  left: 40px;
+  animation: mover5 2s ease-in-out infinite;
+}
+
+.loader::before {
+  background: rgb(201, 94, 1);
+  top: 40px;
+  width: 100px;
+}
+
+.loader::after {
+  background: rgb(255, 151, 106);
+  top: -40px;
+  width: 120px;
+}
+
+@keyframes mover5 {
+  0% {
+    transform: translateX(30px) scale(1);
+  }
+
+  50% {
+    transform: translateX(-30px) scale(1.1);
+  }
+
+  100% {
+    transform: translateX(30px) scale(1);
+  }
+}
+
 @media screen and (max-width: 700px) {
   .home_container {
     flex-direction: column;
@@ -196,52 +263,3 @@ area {
     padding: 4px 0;
   }
 }
-
-.loader {
-    background: rgba(248, 103, 25, 0.979);
-    height: 20px;
-    width: 160px;
-    border-radius: 20px;
-    position: absolute;
-    animation: mover5 2s ease-in-out infinite;
-    top: 50%;
-    left: 45%;
-    z-index: 9999;
-    
-}
-
-    .loader::before,
-    .loader::after {
-        content: '';
-        position: absolute;
-        height: 20px;
-        border-radius: 20px;
-        left: 40px;
-        animation: mover5 2s ease-in-out infinite;
-    }
-
-    .loader::before {
-        background: rgb(201, 94, 1);
-        top: 40px;
-        width: 100px;
-    }
-
-    .loader::after {
-        background: rgb(255, 151, 106);
-        top: -40px;
-        width: 120px;
-    }
-
-@keyframes mover5 {
-    0% {
-        transform: translateX(30px) scale(1);
-    }
-
-    50% {
-        transform: translateX(-30px) scale(1.1);
-    }
-
-    100% {
-        transform: translateX(30px) scale(1);
-    }
-} 

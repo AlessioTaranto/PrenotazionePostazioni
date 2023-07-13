@@ -41,7 +41,14 @@
 
 </head>
 <body>
-    <div id="loader" class="loader"></div>
+    <div id="loader" class="loader_container">
+        <div class="loader_content">
+            <div class="loader" ></div>
+            <img src="img/logoFHD.png" style="width: 25vw">
+        </div>
+        
+    </div>
+    
 <header>
     
 <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -89,52 +96,10 @@
             }
         
             <div>
-                <button id="pulsante" class="btn" onclick="reloadPage(),toogleTheme(), cambiaImmagine()">
+                <button id="pulsante" class="btn" onclick="reloadPage()">
                     Tema
                 </button>
-                <script>
-                    function reloadPage() {
-
-                        //mostra loader
-                        document.getElementById("loader").style.display = "block";
-                        //ricarica la pagina 
-                        location.reload();
-
-                    }
-                        //nasconde il loader quando la pagina è completamente caricata
-                        window.addEventListener("load", function () {
-                            document.getElementById("loader").style.display = "none";
-                        });
-                </script>
-                <script>
-
-                    function setTheme(themeName) {
-                        localStorage.setItem('theme', themeName);
-                        document.documentElement.className = themeName;
-                    }
-
-                    function toogleTheme() {
-                        if (localStorage.getItem('theme') === 'theme-light') {
-
-                            setTheme('theme-dark');
-
-                        } else {
-                            setTheme('theme-light');
-                        }
-
-                    }
-
-                    //funzione che deve essere invocato al inizio del caricamento
-                    (function () {
-
-                        if (localStorage.getItem('theme') === 'theme-light') {
-                            setTheme('theme-light');
-                        } else {
-                            setTheme('theme-dark');
-                        }
-                    })();
-
-                </script>
+                
             </div>
             <div class="order-3">
                 <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
@@ -178,39 +143,10 @@
                     }
                 
                     <div>
-                        <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
+                        <button id="pulsante" class="btn" onclick="reloadPage()">
                             Tema
                         </button>
 
-                        <script>
-
-                            function setTheme(themeName) {
-                                localStorage.setItem('theme', themeName);
-                                document.documentElement.className = themeName;
-                            }
-
-                            function toogleTheme() {
-                                if (localStorage.getItem('theme') === 'theme-light') {
-
-                                    setTheme('theme-dark');
-
-                                } else {
-                                    setTheme('theme-light');
-                                }
-
-                            }
-
-                            //funzione che deve essere invocato al inizio del caricamento
-                            (function () {
-
-                                if (localStorage.getItem('theme') === 'theme-light') {
-                                    setTheme('theme-light');
-                                } else {
-                                    setTheme('theme-dark');
-                                }
-                            })();
-
-                        </script>
                     </div>
                     <div class="order-3">
                         <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
@@ -381,5 +317,46 @@
     });
 </script>
 
+
+    <script>
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+        }
+
+        function toogleTheme() {
+            if (localStorage.getItem('theme') === 'theme-light') {
+                setTheme('theme-dark');
+            } else {
+                setTheme('theme-light');
+            }
+
+        }
+
+        //funzione che deve essere invocato al inizio del caricamento
+        (function () {
+
+            if (localStorage.getItem('theme') === 'theme-light') {
+                setTheme('theme-light');
+            } else {
+                setTheme('theme-dark');
+            }
+        })();
+
+
+        function reloadPage() {
+
+            //mostra loader
+            document.getElementById("loader").style.display = "block";
+            //Carica il tema
+            toogleTheme();
+
+            setTimeout(() => { 
+            document.getElementById("loader").style.display = "none";
+            //ricarica la pagina 
+            location.reload();
+            }, 2000);
+        }
+    </script>
 </body>
 </html>

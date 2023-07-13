@@ -40,10 +40,8 @@ namespace prenotazione_postazioni_mvc.Models
 
         // Http Festa service 
         public HolidayHttpService _holidayHttpService { get; set; }
-        public ThemeViewModel _ThemeViewModel = new ThemeViewModel();
 
-
-        public BookingViewModel(DateTime date, string room, DateTime startDate, DateTime endDate, List<User> attendance, BookingHttpSerivice serivice, HolidayHttpService holidayHttpService, ThemeViewModel themeViewModel)
+        public BookingViewModel(DateTime date, string room, DateTime startDate, DateTime endDate, List<User> attendance, BookingHttpSerivice serivice, HolidayHttpService holidayHttpService)
         {
             Date = date;
             Room = room;
@@ -52,7 +50,6 @@ namespace prenotazione_postazioni_mvc.Models
             Attendance = attendance;
             Service = serivice;
             _holidayHttpService = holidayHttpService;
-            _ThemeViewModel = themeViewModel;
         }
 
         public BookingViewModel(DateTime date, string room, BookingHttpSerivice serivice, HolidayHttpService holidayHttpService)
