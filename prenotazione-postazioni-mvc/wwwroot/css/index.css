@@ -181,85 +181,25 @@ area {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 5vw;
+  gap: 2vw;
 }
 .loader {
-  background: rgba(248, 103, 25, 0.979);
-  height: 20px;
-  width: 160px;
-  border-radius: 20px;
-  animation: mover5 2s ease-in-out infinite;
-  top: 50%;
-  left: 45%;
+    --blue: rgb(148, 66, 63);
+    stroke: var(--blue);
+    stroke-width: 5;
+    fill: none;
+    stroke-dasharray: 50, 14;
+    stroke-dashoffset: 192;
+    animation: dash_682 1.4s linear infinite;
 }
 
-.loader::before,
-.loader::after {
-  content: "";
-  position: absolute;
-  height: 20px;
-  border-radius: 20px;
-  left: 40px;
-  animation: mover5 2s ease-in-out infinite;
+@keyframes dash_682 {
+    72.5% {
+        opacity: 1;
+    }
+
+    to {
+        stroke-dashoffset: 1;
+    }
 }
 
-.loader::before {
-  background: rgb(201, 94, 1);
-  top: 40px;
-  width: 100px;
-}
-
-.loader::after {
-  background: rgb(255, 151, 106);
-  top: -40px;
-  width: 120px;
-}
-
-@keyframes mover5 {
-  0% {
-    transform: translateX(30px) scale(1);
-  }
-
-  50% {
-    transform: translateX(-30px) scale(1.1);
-  }
-
-  100% {
-    transform: translateX(30px) scale(1);
-  }
-}
-
-@media screen and (max-width: 700px) {
-  .home_container {
-    flex-direction: column;
-    height: auto;
-  }
-  .room_info_container {
-    width: 100%;
-    gap: 3vw;
-  }
-  .room_info_div {
-    width: 100%;
-    margin: 0;
-  }
-  .navbar_menu {
-    display: none;
-  }
-
-  .navbar_menu ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-    gap: 2vw;
-  }
-  .nav-link {
-    font-size: 4vw;
-    text-decoration: none;
-    color: #fff;
-    display: block;
-    position: relative;
-    padding: 4px 0;
-  }
-}
