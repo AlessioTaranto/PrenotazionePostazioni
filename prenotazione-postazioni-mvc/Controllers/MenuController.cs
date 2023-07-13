@@ -11,19 +11,21 @@ namespace prenotazione_postazioni_mvc.Controllers
         public readonly MenuHttpService _menuHttpService;
         public readonly MenuChoicesHttpService _choicesHttpService;
         public readonly HolidayHttpService _holidayHttpService;
+        public readonly UserHttpService _userHttpService;
 
-        public MenuController(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService, HolidayHttpService holidayHttpService)
+        public MenuController(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService, HolidayHttpService holidayHttpService, UserHttpService userHttpService)
         {
             _menuHttpService = menuHttpService;
             _choicesHttpService = menuChoicesHttpService;
             _holidayHttpService = holidayHttpService;
+            _userHttpService = userHttpService;
         }
 
         public static MenuViewModel ViewModel { get; set; }
         public IActionResult Index()
         {
             if (ViewModel == null)
-                ViewModel = new MenuViewModel(_menuHttpService, _choicesHttpService, _holidayHttpService);
+                ViewModel = new MenuViewModel(_menuHttpService, _choicesHttpService, _holidayHttpService, _userHttpService);
             ReloadHoliday();
             ReloadMenu();
             //ViewModel.Menu = new Menu();
@@ -34,7 +36,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("reloadMenu")]
         public IActionResult ReloadMenu()
         {
-            Task task = ViewModel.ReLoadMenu();
+            Task task = ViewModel.ReloadMenu();
             task.Wait();
             return Ok("Menu caricato");
         }

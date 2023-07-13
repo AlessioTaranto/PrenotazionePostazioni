@@ -19,15 +19,16 @@ namespace prenotazione_postazioni_mvc.Models
         public readonly MenuHttpService _menuHttpService;
         public readonly MenuChoicesHttpService _choicesHttpService;
         public readonly HolidayHttpService _holidayHttpService;
+        public readonly UserHttpService _userHttpService;
 
 
-        public MenuViewModel(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService, HolidayHttpService holidayHttpService)
+        public MenuViewModel(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService, HolidayHttpService holidayHttpService , UserHttpService userHttpService)
         {
             _menuHttpService = menuHttpService;
             _choicesHttpService = menuChoicesHttpService;
             _holidayHttpService = holidayHttpService;
             Date = DateTime.Now;
-
+            _userHttpService = userHttpService;
         }
 
         public string GetImage()
@@ -53,7 +54,7 @@ namespace prenotazione_postazioni_mvc.Models
         }
 
 
-        public async Task ReLoadMenu()
+        public async Task ReloadMenu()
         {
             if (Holidays != null)
             {
