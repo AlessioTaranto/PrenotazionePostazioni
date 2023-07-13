@@ -35,7 +35,7 @@
                 <a onClick="changeTab(2)" class=@(ViewModel.StateTab == 2 ? "sidebar_checked" : " ")>Presenze</a>
                 <a onClick="changeTab(3)" class=@(ViewModel.StateTab == 3 ? "sidebar_checked" : " ")>Utenti</a>
                 <a onClick="changeTab(4)" class=@(ViewModel.StateTab == 4 ? "sidebar_checked" : " ")>Menu</a>
-                <a onClick="changeTab(4)" class=@(ViewModel.StateTab == 5 ? "sidebar_checked" : " ")>Emergenza</a>
+                <a onClick="changeTab(5)" class=@(ViewModel.StateTab == 5 ? "sidebar_checked" : " ")>Emergenza</a>
         </div>
     </div>
     <!-- Pagina caricata a destra -->
@@ -339,6 +339,9 @@
                         </div>
                     </div>
                 </div>
+                break;
+                case 4:
+                <div class="settings_postazioni">Test</div>
                 break;
                 case 5:
                 <div class="settings_postazioni">

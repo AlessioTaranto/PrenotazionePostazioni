@@ -358,15 +358,17 @@
 
         function reloadPage() {
 
-            //mostra loader
-            document.getElementById("loader").style.display = "block";
             //Carica il tema
             toogleTheme();
+            //ricarica la pagina 
+            location.reload();
+            //mostra loader
+            document.getElementById("loader").style.display = "block";
+            
 
             setTimeout(() => { 
             document.getElementById("loader").style.display = "none";
-            //ricarica la pagina 
-            location.reload();
+            
             }, 2000);
         }
     </script>
