@@ -4,6 +4,7 @@ using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using System.Net;
 using System.Reflection.Metadata.Ecma335;
+using static System.Net.WebRequestMethods;
 
 namespace prenotazione_postazioni_mvc.Models
 {
@@ -33,7 +34,9 @@ namespace prenotazione_postazioni_mvc.Models
 
         public string GetImage()
         {
-            return Menu == null ? "" : Menu.Image;
+            if(Menu == null) Menu = new Menu();
+            Menu.Image = "https://marketplace.canva.com/EAD0UMPtOv4/1/0/1236w/canva-oro-tenue-elegante-matrimonio-menu-FQIyCfgp1aY.jpg";
+            return Menu.Image;
         }
         public string GetMenuChoice()
         {
