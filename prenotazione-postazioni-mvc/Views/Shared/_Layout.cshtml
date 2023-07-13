@@ -41,6 +41,7 @@
 
 </head>
 <body>
+    <div id="loader" class="loader"></div>
 <header>
     
 <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -88,10 +89,23 @@
             }
         
             <div>
-                <button id="pulsante" class="btn" onclick="toogleTheme(), cambiaImmagine()">
+                <button id="pulsante" class="btn" onclick="reloadPage(),toogleTheme(), cambiaImmagine()">
                     Tema
                 </button>
+                <script>
+                    function reloadPage() {
 
+                        //mostra loader
+                        document.getElementById("loader").style.display = "block";
+                        //ricarica la pagina 
+                        location.reload();
+
+                    }
+                        //nasconde il loader quando la pagina è completamente caricata
+                        window.addEventListener("load", function () {
+                            document.getElementById("loader").style.display = "none";
+                        });
+                </script>
                 <script>
 
                     function setTheme(themeName) {
