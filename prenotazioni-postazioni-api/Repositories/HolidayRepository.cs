@@ -21,7 +21,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Feste</returns>
         internal Holiday? GetByDate(DateTime date)
         {
-            string query = "SELECT * FROM Holiday WHERE day = @dya;";
+            string query = "SELECT * FROM Holiday WHERE day = @day;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@day", date.ToString("yyyy-MM-dd"));
             return DatabaseManager<Holiday>.GetInstance().MakeQueryOneResult(sqlCommand);

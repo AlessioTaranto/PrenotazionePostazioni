@@ -93,7 +93,7 @@ public class HomeController : Controller
     /// <returns>Aggiorna orario di inizio</returns>
 
     [HttpPost]
-    [ActionName("ReloadStartDate")]
+    [ActionName("ReloadStartHour")]
     public IActionResult ReloadStartHour(int hour)
     {
         try
@@ -161,18 +161,25 @@ public class HomeController : Controller
 
     [HttpPost]
     [ActionName("Booking")]
-    public IActionResult Booking(string user, string room, string startDate, string endDate)
+    public IActionResult Booking(string userParam, string roomParam, string startDate, string endDate)
     {
-
-        Task<HttpStatusCode>? getRq = ViewModel?.ExistBooking(user, room, startDate, endDate);
+        Console.WriteLine("ENTER: " + userParam + " - " + roomParam);
+        Task<HttpStatusCode>? getRq = ViewModel?.ExistBooking(userParam, roomParam, startDate, endDate);
         getRq.Wait();
 
         HttpStatusCode code = getRq.Result;
+        Console.WriteLine("CODE: " + code);
 
         if (code == HttpStatusCode.NotFound)
         {
+            //Translating json text to objects
+            User? user = JsonConvert.DeserializeObject<User>(userParam);
+            Room? room = JsonConvert.DeserializeObject<Room>(roomParam);
+            DateTime inizio = JsonConvert.DeserializeObject<DateTime>(startDate);
+            DateTime fine = JsonConvert.DeserializeObject<DateTime>(endDate);
+
             //Non trova prenotazioni per quel giorno
-            ViewModel?.DoBookingAsync(user, room, startDate, endDate);
+            ViewModel?.DoBookingAsync(user, room, inizio, fine);
 
             return Ok("Prenotazione effettuata");
         }
@@ -186,9 +193,9 @@ public class HomeController : Controller
         }
     }
 
-    [HttpGet]
-    [ActionName("DeleteBooking")]
-    public IActionResult DeleteBooking(string user, string room, string startDate, string endDate)
+    [HttpDelete]
+    [ActionName("Delete")]
+    public IActionResult Delete(string user, string room, string startDate, string endDate)
     {
 
         Task<Booking> bookingTask = ViewModel?.GetBooking(user, room, startDate, endDate);
@@ -201,6 +208,7 @@ public class HomeController : Controller
         Task<HttpResponseMessage>? getRq = ViewModel?.Delete(booking.Id);
         getRq.Wait();
         HttpStatusCode code = getRq.Result.StatusCode;
+        Console.WriteLine(code);
 
         if (code == HttpStatusCode.OK)
             return Ok("Prenotazione cancellata");    

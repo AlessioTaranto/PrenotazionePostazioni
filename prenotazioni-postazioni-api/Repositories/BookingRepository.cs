@@ -72,8 +72,8 @@ namespace prenotazioni_postazioni_api.Repositories
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@startDate", booking.StartDate.ToString("yyyy-MM-ddTHH:mm:ss"));
             sqlCommand.Parameters.AddWithValue("@endDate", booking.EndDate.ToString("yyyy-MM-ddTHH:mm:ss"));
-            sqlCommand.Parameters.AddWithValue("@idUser", booking.IdUser);
             sqlCommand.Parameters.AddWithValue("@idRoom", booking.IdRoom);
+            sqlCommand.Parameters.AddWithValue("@idUser", booking.IdUser);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
@@ -90,7 +90,7 @@ namespace prenotazioni_postazioni_api.Repositories
             string end = endDate.ToString("yyyy-MM-ddTHH:mm:ss");
             string query = $"SELECT * FROM Booking WHERE((idRoom = @idRoom)AND((startDate BETWEEN @start AND @end) OR(endDate BETWEEN @start AND @end) OR (DATEDIFF(HH, startDate, @start) >= 0 AND DATEDIFF(HH, endDate, @end) <= 0)))";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@id_stanza", idRoom);
+            sqlCommand.Parameters.AddWithValue("@idRoom", idRoom);
             sqlCommand.Parameters.AddWithValue("@start", start);
             sqlCommand.Parameters.AddWithValue("@end", end);
             return DatabaseManager<List<Booking>>.GetInstance().MakeQueryMoreResults(sqlCommand);
