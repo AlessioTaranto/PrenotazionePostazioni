@@ -20,6 +20,7 @@
 @{
 
     User? LoggedUser = new User(
+                1,
                 "Andrea",
                 "Redegalli",
                 "redegalli03@gmail.com",
@@ -72,6 +73,7 @@
 
 <!-- HIDDEN VALUES -->
 <p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
+<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
 <p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.StartDate)</p>
 <p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
 
@@ -199,6 +201,7 @@
                             <br>
                             <div>
                                 @{
+                                    
                                     Task<Booking?>? getPrenotazione = ViewModel.GetBooking(JsonConvert.SerializeObject(LoggedUser)
                                     , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.StartDate), JsonConvert.SerializeObject(ViewModel.EndDate));
                                     getPrenotazione.Wait();
@@ -488,7 +491,7 @@
         if (isValidDay(event.target.id))
             $.ajax({
                 type: "POST",
-                url: "Home/ReloadDay",
+                url: "Home/ReloadDate",
                 data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                 error: function(xhr) {
                     alertBox(xhr.responseText, "#de4802");
@@ -507,7 +510,7 @@
     $('#start').on('change', function(event) {
         $.ajax({
             type: "POST",
-            url: "Home/ReloadStart",
+            url: "Home/ReloadStartHour",
             data: { "hour": (event.target.value).split(":")[0] },
             error: function(xhr) {
                 alertBox(xhr.responseText, "#de4802");
@@ -528,7 +531,7 @@
 
         $.ajax({
             type: "POST",
-            url: "Home/ReloadFinish",
+            url: "Home/ReloadEndDHour",
             data: { "hour": (event.target.value).split(":")[0] },
             error: function(xhr) {
                 alertBox(xhr.responseText, "#de4802");
@@ -550,15 +553,17 @@
         if ($('#_valueRoom').text() === "null") {
             alertBox("Seleziona una stanza ", "#de4802");
             return;
-        } else if ($('#_valueUtente').text() === "null") {
+        } else if ($('#_valueUser').text() === "null") {
             alertBox("Non puoi effettuare prenotazioni come Guest", "#de4802");
             return;
         }
 
+            console.log("Booking - " + $('#_valueUser').text() + " - " + $('#_valueRoom').text());
+
         $.ajax({
             type: "POST",
-            url: "Home/Prenota",
-            data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "start": $('#_valueDateStart').text(), "end": $('#_valueDateEnd').text() },
+            url: "Home/Booking",
+            data: { "userParam": $('#_valueUser').text(), "roomParam": $('#_valueRoom').text(), "startDate": $('#_valueDateStart').text(), "endDate": $('#_valueDateEnd').text() },
             error: function (xhr) {
             }
         }).done(function (data, statusText, xhr) {
@@ -582,16 +587,16 @@
         if ($('#_valueRoom').text() === "null") {
             alertBox("Seleziona una stanza", "#de4802");
             return;
-        } else if ($('#_valueUtente').text() === "null") {
+        } else if ($('#_valueUser').text() === "null") {
             alertBox("Non puoi cancellare prenotazioni come Guest", "#de4802");
             return;
         }
 
         $.ajax({
-            type: "GET",
-            url: "Home/DeletePrenotazione",
-            data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "start": $('#_valueDateStart').text(), "end": $('#_valueDateEnd').text() },
-            error: function (xhr) {
+                type: "DELETE",
+                url: "Home/Delete",
+                data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "startDate": $('#_valueDateStart').text(), "endDate": $('#_valueDateEnd').text() },
+                error: function (xhr) {
             }
         }).done(function (data, statusText, xhr) {
             var status = xhr.status;

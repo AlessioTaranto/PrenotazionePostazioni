@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
+using System.Net.Http;
 using System.Text;
 
 namespace prenotazione_postazioni_mvc.HttpServices
@@ -60,26 +61,32 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
-        public async Task<HttpResponseMessage> Add(string start, string end, string utente, string room)
+        public async Task<HttpResponseMessage> Add(DateTime start, DateTime end, User utente, Room room)
         {
-            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Booking");
+            BookingDto bookingDto = new BookingDto(start, end, room.Id, utente.Id)
+            {
+                StartDate = start,
+                EndDate = end,
+                IdUser = utente.Id,
+                IdRoom = room.Id
+            };
 
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Booking");
 
-            string jsonBooking = "{\"startDate\": " + start + "," + "\"endDate\": " + end + "," + "\"room\": " + room + "," + "\"user\": " + utente + "}" + "";
-            StringContent ctx = new StringContent(jsonBooking, Encoding.UTF8, "application/json");
+            var jsonBooking = JsonConvert.SerializeObject(bookingDto);
+            StringContent content = new StringContent(jsonBooking, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/booking/add", ctx);
-
-            //Controllo esistenza prenotazione
+            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/booking/add", content);
 
             return httpResponseMessage;
         }
+
 
         public async Task<HttpResponseMessage> Delete(int id)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Booking");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/booking/delete?id={id}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/booking/delete?id={id}");
 
             return httpResponseMessage;
         }

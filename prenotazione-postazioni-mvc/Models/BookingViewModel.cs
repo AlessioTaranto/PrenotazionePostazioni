@@ -219,41 +219,53 @@ namespace prenotazione_postazioni_mvc.Models
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public async Task DoBookingAsync(string utente, string stanza, string start, string end)
+        public async Task DoBookingAsync(User utente, Room stanza, DateTime start, DateTime end)
         {
+            Console.WriteLine("IN AGGIUNTA");
             HttpResponseMessage status = await Service.Add(start, end, utente, stanza);
         }
 
         public async Task<HttpStatusCode> ExistBooking(string userParam, string roomParam, string start, string end)
         {
-
+            Console.WriteLine("DEAUN: " + userParam + " - " + roomParam + " - " + start + " - " + end);
             if (roomParam == null || userParam == null || start == null || end == null)
+            {
+                Console.WriteLine("ALMENO UNO NULL");
                 return HttpStatusCode.UnprocessableEntity;
+            }
 
             //Translating json text to objects
             User? user = JsonConvert.DeserializeObject<User>(userParam);
             Room? room = JsonConvert.DeserializeObject<Room>(roomParam);
-            DateTime startDate = JsonConvert.DeserializeObject<DateTime>(start);
-            DateTime endDate = JsonConvert.DeserializeObject<DateTime>(end);
+            DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
+            DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
+
+            Console.WriteLine("ROOM: " + room + " - " + user);
 
             if (room == null || user == null)
                 return HttpStatusCode.UnprocessableEntity;
 
-            HttpResponseMessage msgRq = await Service.GetByDate(room.Id, startDate, endDate);
+            Console.WriteLine("STO PER FARE IL GETBYDAY");
+            HttpResponseMessage msgRq = await Service.GetByDate(room.Id, inizio, fine);
 
-            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK)
+            if (msgRq != null && msgRq.StatusCode == HttpStatusCode.OK)
             {
 
                 List<Booking>? bookings = await msgRq.Content.ReadFromJsonAsync<List<Booking>?>();
 
                 foreach (Booking booking in bookings)
                     if (booking.IdUser == user.Id)
+                    {
+                        Console.WriteLine("Trovato");
                         return HttpStatusCode.OK;
+                    }
 
+                Console.WriteLine("Non Trovato");
                 return HttpStatusCode.NotFound;
 
             }
 
+            Console.WriteLine("Errore");
             return HttpStatusCode.UnprocessableEntity;
         }
 
@@ -274,14 +286,17 @@ namespace prenotazione_postazioni_mvc.Models
 
             HttpResponseMessage msgRq = await Service.GetByDate(room.Id, inizio, fine);
 
-            if (msgRq != null && msgRq.StatusCode == System.Net.HttpStatusCode.OK)
+            if (msgRq != null && msgRq.StatusCode == HttpStatusCode.OK)
             {
 
                 List<Booking>? bookings = await msgRq.Content.ReadFromJsonAsync<List<Booking>?>();
 
                 foreach (Booking booking in bookings)
                     if (booking.IdUser == user.Id)
+                    {
+                        Console.WriteLine("Trovato");
                         return booking;
+                    }
 
                 return null;
 

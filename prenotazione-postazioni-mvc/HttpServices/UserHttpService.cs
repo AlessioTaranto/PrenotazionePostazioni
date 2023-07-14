@@ -37,7 +37,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
             email.Replace("\"", "");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/user/getById?email={email}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/user/getByEmail?email={email}");
 
             return httpResponseMessage;
         }
