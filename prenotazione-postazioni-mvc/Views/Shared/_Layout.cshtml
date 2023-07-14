@@ -366,20 +366,19 @@
         })();
 
 
-        function reloadPage() {
-
-            //Carica il tema
-            toogleTheme();
-            //ricarica la pagina 
-            location.reload();
+        function reloadPage(){
+                
             //mostra loader
             document.getElementById("loader").style.display = "block";
-            
+            //Carica il tema
+            toogleTheme();
 
             setTimeout(() => { 
-            document.getElementById("loader").style.display = "none";
+                document.getElementById("loader").style.display = "none";
+                location.reload();
+            }, 1500);
             
-            }, 2000);
+            
         }
     </script>
 </body>
