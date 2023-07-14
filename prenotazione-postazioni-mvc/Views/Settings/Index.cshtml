@@ -629,17 +629,21 @@
         });
 
     $('#festabutton').on('click',
-        function(event) {
+        function() {
+            let year = @ViewModel.HolidaySelected.Year;
+            let month = @ViewModel.HolidaySelected.Month;
+            let day = @ViewModel.HolidaySelected.Day;
+           
             $.ajax({
                 type: "POST",
                 url: "Settings/AddHoliday",
-                data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day", "description": "None" },
+                data: { "year": year, "month": month, "day": day, "description": "None" },
                 error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();
                 }
             }).done(function() {
-                window.location.reload();
+                //window.location.reload();
             });
         });
 
