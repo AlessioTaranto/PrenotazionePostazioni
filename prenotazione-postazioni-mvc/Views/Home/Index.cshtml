@@ -488,7 +488,7 @@
         if (isValidDay(event.target.id))
             $.ajax({
                 type: "POST",
-                url: "Home/ReloadDay",
+                url: "Home/ReloadDate",
                 data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                 error: function(xhr) {
                     alertBox(xhr.responseText, "#de4802");

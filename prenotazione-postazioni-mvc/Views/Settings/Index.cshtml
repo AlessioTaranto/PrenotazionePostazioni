@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Impostazioni";
 
     SettingsViewModel ViewModel = Model;
@@ -557,25 +557,12 @@
      * ID length 4 -> Calendar Presenze
      */
 
-    $('td').on('click', function (event) {
-        if (event.target.id.length === 3)
-            $.ajax({
-                type: "POST",
-                url: "Settings/SelectFesta",
-                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
-                error: function (xhr) {
-                    alertBox(xhr.responseText);
-                    event.preventDefault();
-                }
-            }).done(function () {
-                window.location.reload();
-            });
-        else {
-            if (isValidDay(event.target.id))
+        $('td').on('click', function (event) {
+            if (event.target.id.length === 3){
                 $.ajax({
                     type: "POST",
                     url: "Settings/SelectHoliday",
-                    data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                    data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                     error: function (xhr) {
                         alertBox(xhr.responseText);
                         event.preventDefault();
@@ -583,8 +570,21 @@
                 }).done(function () {
                     window.location.reload();
                 });
-        }
-    });
+            }else {
+                if (isValidDay(event.target.id))
+                    $.ajax({
+                        type: "POST",
+                        url: "Settings/SelectAttendance",
+                        data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                        error: function(xhr) {
+                            alertBox(xhr.responseText);
+                            event.preventDefault();
+                        }
+                    }).done(function() {
+                        window.location.reload();
+                    });
+            }
+        });
 
 
 </script>
@@ -633,17 +633,21 @@
         });
 
     $('#festabutton').on('click',
-        function (event) {
+        function() {
+            let year = @ViewModel.HolidaySelected.Year;
+            let month = @ViewModel.HolidaySelected.Month;
+            let day = @ViewModel.HolidaySelected.Day;
+           
             $.ajax({
                 type: "POST",
                 url: "Settings/AddHoliday",
-                data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day", "description": "None" },
-                error: function (xhr) {
+                data: { "year": year, "month": month, "day": day, "description": "None" },
+                error: function(xhr) {
                     alertBox(xhr.responseText);
                     event.preventDefault();
                 }
-            }).done(function () {
-                window.location.reload();
+            }).done(function() {
+                //window.location.reload();
             });
         });
 
