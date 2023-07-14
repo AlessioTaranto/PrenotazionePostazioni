@@ -162,6 +162,19 @@ area {
   transform: scale3d(1, 1, 1);
 }
 
+@media screen and (max-width: 700px) {
+  .home_container {
+    display: flex;
+    flex-direction: column;
+  }
+  .room_info_container {
+    width: 100%;
+  }
+  .reservation {
+    font-size: 3vw;
+  }
+}
+
 .loader_container {
   display: none;
   position: absolute;
@@ -184,22 +197,21 @@ area {
   gap: 2vw;
 }
 .loader {
-    --blue: rgb(148, 66, 63);
-    stroke: var(--blue);
-    stroke-width: 5;
-    fill: none;
-    stroke-dasharray: 50, 14;
-    stroke-dashoffset: 192;
-    animation: dash_682 1.4s linear infinite;
+  --blue: rgb(148, 66, 63);
+  stroke: var(--blue);
+  stroke-width: 5;
+  fill: none;
+  stroke-dasharray: 50, 14;
+  stroke-dashoffset: 192;
+  animation: dash_682 1.4s linear infinite;
 }
 
 @keyframes dash_682 {
-    72.5% {
-        opacity: 1;
-    }
+  72.5% {
+    opacity: 1;
+  }
 
-    to {
-        stroke-dashoffset: 1;
-    }
+  to {
+    stroke-dashoffset: 1;
+  }
 }
-
