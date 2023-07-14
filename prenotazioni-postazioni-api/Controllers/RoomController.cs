@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
+
+ using Microsoft.AspNetCore.Mvc;
 using prenotazioni_postazioni_api.Services;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_libs.Dto;
@@ -141,8 +142,7 @@ namespace prenotazioni_postazioni_api.Controllers
             catch (PrenotazionePostazioniApiException ex)
             {
                 return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
+            }catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }

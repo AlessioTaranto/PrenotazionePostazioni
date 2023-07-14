@@ -33,8 +33,7 @@ public class HomeController : Controller
         if (ViewModel == null)
             ViewModel = new BookingViewModel(_bookingHttpService,_holidayHttpService);
 
-
-        //ReloadHoliday();
+        ReloadHoliday();
 
         return View(ViewModel);
     }

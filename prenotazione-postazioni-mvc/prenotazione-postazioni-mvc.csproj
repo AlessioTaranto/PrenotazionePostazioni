@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="HttpServices\Class.cs" />
     <Compile Remove="Models\FestivitaImpostazioniViewModel.cs" />
   </ItemGroup>
 

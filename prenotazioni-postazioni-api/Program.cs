@@ -47,14 +47,6 @@ builder.Services.AddSingleton<VoteController, VoteController>();
 builder.Services.AddSingleton<VoteService, VoteService>();
 builder.Services.AddSingleton<VoteRepository, VoteRepository>();
 
-builder.Services.AddSingleton<MenuController, MenuController>();
-builder.Services.AddSingleton<MenuService, MenuService>();
-builder.Services.AddSingleton<MenuRepository, MenuRepository>();
-
-builder.Services.AddSingleton<MenuChoicesController, MenuChoicesController>();
-builder.Services.AddSingleton<MenuChoicesService, MenuChoicesService>();
-builder.Services.AddSingleton<MenuChoicesRepository, MenuChoicesRepository>();
-
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 DatabaseInfo.DefaultConnectionString = connectionString;
 
