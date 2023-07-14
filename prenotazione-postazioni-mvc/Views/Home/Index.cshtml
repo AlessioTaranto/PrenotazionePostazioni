@@ -173,19 +173,27 @@
                                 <div class="p-2 h-auto">
                                     <ul id="lista-prenotazioni" class="d-flex flex-column align-items-left gap-2" style="list-style: none; padding: 0; margin: 0;">
                                         @{
-                                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _userHttpService.GetByDate(ViewModel.Date);
-                                            List<User>? presenti = null;
-                                            if (getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK){
-                                                    presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
-                                                        
-                                                    if(presenti != null && presenti.Count>0 ){
-                                                        for (int j = 0; j < presenti.Count; j++){
-                                                            <li class="d-flex flex-row justify-content-left align-items-center">
+                                            HttpResponseMessage? getDayBookings = await _bookingHttpService.GetByDate(Room.Id, @ViewModel.StartDate, @ViewModel.EndDate);
+                                            List<Booking>? bookings = null;
+                                            if (getDayBookings.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                bookings = await getDayBookings.Content.ReadFromJsonAsync<List<Booking>?>();
+
+                                                if (bookings != null && bookings.Count>0)
+                                                {
+                                                    for (int j = 0; j < bookings.Count; j++)
+                                                    {
+                                                        HttpResponseMessage? getUserFromBooking = await _userHttpService.GetById(@bookings[@j].IdUser);
+                                                        User? user = null; 
+                                                        <li class="d-flex flex-row justify-content-left align-items-center">
                                                                 <div class="reservation d-flex flex-row justify-content-center align-items-center" style="font-size: 1vw;">
                                                                     <img src="~/img/example/example-1.png">
-                                                                        @presenti[@j].Name
-                                                                        @presenti[@j].Surname
-                                                                </div>
+                                                                    @if(getUserFromBooking.StatusCode == HttpStatusCode.OK)
+                                                                    {
+                                                                        user = await getUserFromBooking.Content.ReadFromJsonAsync<User>();
+                                                                        @user.Name @user.Surname
+                                                                    }
+                                                            </div>
                                                             </li>
                                                         }
                                                     }else{
@@ -508,6 +516,7 @@
      */
 
     $('#start').on('change', function(event) {
+            console.log((event.target.value).split(":")[0]);
         $.ajax({
             type: "POST",
             url: "Home/ReloadStartHour",
@@ -517,9 +526,7 @@
                 event.preventDefault();
                 event.target.value = "@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00";
             }
-        }).done(function() {
-            window.location.reload();
-        });
+        })
     });
 
     /**
