@@ -570,7 +570,7 @@
                 if (isValidDay(event.target.id))
                     $.ajax({
                         type: "POST",
-                        url: "Settings/SelectHoliday",
+                        url: "Settings/SelectAttendance",
                         data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() },
                         error: function(xhr) {
                             alertBox(xhr.responseText);
