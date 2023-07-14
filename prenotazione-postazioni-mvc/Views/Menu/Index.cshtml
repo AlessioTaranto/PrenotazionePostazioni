@@ -15,22 +15,21 @@
 @inject UserHttpService _userHttpService;
 
 @{
-    HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(1, 1);
+    User? LoggedUser = new User(1, "Andrea", "Redegalli", "redegalli03@gmail.com", 1);
+    HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(ViewModel.Menu.Id, LoggedUser.Id);
     HttpStatusCode code = checkExists.StatusCode;
     if (code == HttpStatusCode.OK)
     {
         MenuChoices menuChoice = await checkExists.Content.ReadFromJsonAsync<MenuChoices>();
-        if (menuChoice != null) ViewModel.MenuChoices = menuChoice;
+        if (menuChoice != null)
+        {
+            ViewModel.MenuChoices = menuChoice;
+            Task<HttpResponseMessage> delete = ViewModel.Delete(menuChoice.IdMenu, LoggedUser.Id);
+            delete.Wait();
+            
+        }
         else ViewModel.MenuChoices = null;
     }
-
-    User? LoggedUser = new User(
-                "Andrea",
-                "Redegalli",
-                "redegalli03@gmail.com",
-                1
-            );
-
 }
 
 
@@ -38,7 +37,7 @@
 <main class="d-flex justify-content-around">
     <div class="container text-center mt-5">
         @{
-            Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(1);
+            Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(ViewModel.Menu.Id);
             getAllByMenu.Wait();
 
             List<MenuChoices>? menuChoices = null;
@@ -77,48 +76,74 @@
                      class="img-thumbnail bd-darkorange"
                      alt="Menu" />
             </div>
-            <v class="col-sm-4">
+            <div class="col-sm-4">
                 <label for="myTextarea">La tua scelta</label>
                 @{
                     if (ViewModel.Menu != null)
                     {
+                        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal" id="myButton">
+                            Launch demo modal
+                        </button>
+                        <!-- Modal Bootstrap -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Scelta Menu @ViewData["DateSelected"]</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Scelta inviata con successo
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <textarea class="form-control overflow-hidden bd-darkorange"
                                   style="height:5rem"
                                   placeholder="Scrivi qui"
                                   id="myTextarea"
-                                  maxlength="64">
-                            @ViewModel.GetMenuChoice()
-                                                                                          </textarea>
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">
+                                  maxlength="64">@ViewModel.GetMenuChoice()</textarea>  
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia" >
                             Invia
                         </button>
                         <script>
                             $("#invia").on("click", function () {
                                 var choice = $("#myTextarea").val().trim();
                                 var idMenu = @ViewModel.Menu.Id;
-                                var idUser = @ViewModel._userHttpService.GetById(LoggedUser.Id);
+                                var idUser = @LoggedUser.Id; @* @ViewModel._userHttpService.GetById(LoggedUser.Id);*@
+
                                 $.ajax({
                                     type: "POST",
-                                    url: "Menu/addChoice",
-                                    data: { "choice": choice, "idUser": , "idMenu": idMenu },
+                                    url: "/Menu/addChoice",
+                                    data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
+                                        success: function () {
+                                            $('#myButton').trigger('click');
+                                        }
                                 })
                             })
+
+
                         </script>
                     }
                     else
                     {
                         <textarea class="form-control overflow-hidden bd-darkorange" style="height:5rem" placeholder="Scrivi qui" id="myTextarea"
-                                  maxlength="64" ></textarea>
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">
+                                  maxlength="64" disabled></textarea>
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia" disabled>
                             Invia
                         </button>
                     }
                 }
-                <p id="risposta"></p>
+
+            </div>
 
         </div>
-       
+
     </div>
-</main>
+    </main>
 
 

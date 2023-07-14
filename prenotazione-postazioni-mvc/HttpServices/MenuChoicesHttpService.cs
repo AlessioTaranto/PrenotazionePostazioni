@@ -43,12 +43,14 @@ namespace prenotazione_postazioni_mvc.HttpServices
         public async Task<HttpResponseMessage> Add(MenuChoicesDto menuChoicesDto)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-MenuChoices");
-            string json = "{" + "\"Id menu\":\"" + menuChoicesDto.IdMenu + "\", " + "\"scelta\": \"" + menuChoicesDto.Choice + "\", " + "\"id utente\": \"" + menuChoicesDto.IdUser + "\"}" + "";
+            string json = JsonConvert.SerializeObject(menuChoicesDto);
+            //string json = "{" + "\"Id menu\":\"" + menuChoicesDto.IdMenu + "\", " + "\"scelta\": \"" + menuChoicesDto.Choice + "\", " + "\"id utente\": \"" + menuChoicesDto.IdUser + "\"}" + "";
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-
+            //Console.WriteLine(JsonConvert.SerializeObject(menuChoicesDto));
+            //Console.WriteLine("\\n content : " + json);
             var httpResponseMessage =
                await httpClient.PostAsync($"https://localhost:7126/api/menuChoices/add", content);
-
+           
             return httpResponseMessage;
         }
 

@@ -28,7 +28,6 @@ namespace prenotazione_postazioni_mvc.Controllers
                 ViewModel = new MenuViewModel(_menuHttpService, _choicesHttpService, _holidayHttpService, _userHttpService);
             ReloadHoliday();
             ReloadMenu();
-            //ViewModel.Menu = new Menu();
             return View(ViewModel);
         }
 
@@ -53,29 +52,28 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("addChoice")]
         public IActionResult AddChoice(string choice, int idUser, int idMenu)
         {
-            Task<HttpStatusCode> getRq = ViewModel.ExistsChoice(idMenu, idUser);
-            getRq.Wait();
-            HttpStatusCode code = getRq.Result;
-            if (code == HttpStatusCode.OK)
-            {
-                //codice per modificare la scelta dell'user quando trova la scelta gia effettuata
-                ViewModel.Delete(idMenu, idUser);
-            } 
-            else if(code == HttpStatusCode.BadRequest)
-            {
-                return BadRequest();
-            }
-                ViewModel.Add(choice, idUser, idMenu);
+           
+            Task<HttpResponseMessage> responseMessage =  ViewModel.Add(choice, idUser, idMenu);
+            responseMessage.Wait();
+            HttpStatusCode code = responseMessage.Result.StatusCode;
+            Console.WriteLine("code : " +  code);
+            if(code == HttpStatusCode.OK) 
                 return Ok("scelta inviata");
-
+            return BadRequest();
         }
 
-        //[HttpDelete]
-        //[ActionName("removeChoice")]
-        //public IActionResult DeleteChoice(int idMenu, int idUser) 
-        //{
-        //    ViewModel.Delete(idMenu, idUser);
-        //    return Ok("scelta eliminata");
-        //}
+        [HttpGet]
+        [ActionName("deleteChoice")]
+        public IActionResult DeleteChoice(int idMenu, int idUser)
+        {
+            Task<HttpResponseMessage> delete = ViewModel.Delete(idMenu, idUser);
+            delete.Wait();
+            HttpStatusCode code = delete.Result.StatusCode;
+            if (code == HttpStatusCode.OK)
+                return Ok("scelta eliminata");
+            return BadRequest();
+        }
+
+
     }
 }

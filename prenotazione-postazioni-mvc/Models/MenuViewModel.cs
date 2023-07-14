@@ -51,7 +51,6 @@ namespace prenotazione_postazioni_mvc.Models
                 List<Holiday> holidays = await responseMessage.Content.ReadFromJsonAsync<List<Holiday>>();
                 if (holidays == null || holidays.Count == 0) return;
 
-                Console.WriteLine(holidays);
                 Holidays = holidays;
             }
         }
@@ -70,52 +69,74 @@ namespace prenotazione_postazioni_mvc.Models
                 }
             }
 
-            HttpResponseMessage responseMessage = await _menuHttpService.GetByDate(Date.Year, Date.Month, Date.Day);
-            Console.WriteLine(responseMessage.StatusCode.ToString());
+            //HttpResponseMessage responseMessage = await _menuHttpService.GetByDate(Date.Year, Date.Month, Date.Day);
+            //if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
+            //{
+            //    Menu menu = await responseMessage.Content.ReadFromJsonAsync<Menu>();
+            //    if (menu != null) Menu = menu;
+            //}
+            HttpResponseMessage responseMessage = await _menuHttpService.GetAll();
             if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
             {
-                Menu menu = await responseMessage.Content.ReadFromJsonAsync<Menu>();
-                if (menu != null) Menu = menu;
+                List<Menu> lista = await responseMessage.Content.ReadFromJsonAsync<List<Menu>>();
+                if (lista.Count == 0 || lista == null) return;
+                foreach (Menu menu in lista)
+                {
+                    if (menu.Date.Year == Date.Year && menu.Date.Month == Date.Month && menu.Date.Day == Date.Day)
+                    {
+                        Menu = menu;
+                    }
+                }
             }
         }
        
         public async Task<HttpStatusCode> ExistsChoice(int idMenu, int idUser)
         {
-            HttpResponseMessage responseMessage = await _choicesHttpService.GetByUserAndIdMenu(idMenu, idUser);
+           // HttpResponseMessage responseMessage = await _choicesHttpService.GetByUserAndIdMenu(idMenu, idUser);
+            HttpResponseMessage responseMessage = await _choicesHttpService.GetAll();
+
+            
             if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
             {
-                Menu menu = await responseMessage.Content.ReadFromJsonAsync<Menu>();
-                if (menu != null)
-                {
+                //Menu menu = await responseMessage.Content.ReadFromJsonAsync<Menu>();
+                //if (menu != null)
+                //{
 
-                    return HttpStatusCode.OK;
-                }
-                else
+                //    return HttpStatusCode.OK;
+                //}
+                //else
+                //{
+                //    return HttpStatusCode.NotFound;
+
+                //}
+                List<MenuChoices> menuChoices = await responseMessage.Content.ReadFromJsonAsync<List<MenuChoices>>();
+                if(menuChoices != null && menuChoices.Count != 0)
                 {
+                    foreach(MenuChoices choice in menuChoices)
+                    {
+                        if(choice.IdUser == idUser && choice.IdMenu == idMenu)
+                            return HttpStatusCode.OK;
+                    }    
+
+                }
                     return HttpStatusCode.NotFound;
-
-                }
             }
             return HttpStatusCode.UnprocessableEntity;
 
 
         }
 
-        public async void Add(string choice, int idUser, int idMenu)
+        public async Task<HttpResponseMessage> Add(string choice, int idUser, int idMenu)
         {
-            if (choice == null || idUser < 0 || idMenu < 0)
-            {
-                throw new Exception("valori non ammessi");
-            }
+            if(choice == null) { throw new Exception("valori non ammessi"); }
             HttpResponseMessage response = await _choicesHttpService.Add(new MenuChoicesDto(idMenu, choice, idUser));
-            if (response == null || response.StatusCode != HttpStatusCode.OK) return;
+            return response;
         }
 
-        public async void Delete(int idMenu, int idUser)
+        public async Task<HttpResponseMessage> Delete(int idMenu, int idUser)
         {
-            if (idMenu < 0 || idUser < 0) throw new Exception("valori non ammessi");
             HttpResponseMessage response = await _choicesHttpService.Delete(idMenu,idUser);
-            if(response == null  || response.StatusCode != HttpStatusCode.OK) { return; }
+            return response;
         }
     }
 }
