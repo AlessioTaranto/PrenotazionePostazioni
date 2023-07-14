@@ -86,6 +86,22 @@ builder.Services.AddHttpClient("PrenotazionePostazioni-Capienza", HttpClient =>
     HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
 
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-Menu", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/menu/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+
+builder.Services.AddHttpClient("PrenotazionePostazioni-MenuChoices", HttpClient =>
+{
+    HttpClient.BaseAddress = new Uri("https://localhost:7126/api/menuChoices/");
+
+    HttpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
 builder.Services.AddSingleton<SettingsHttpService>();
 builder.Services.AddSingleton<UserHttpService>();
 builder.Services.AddSingleton<VoteHttpService>();
@@ -93,6 +109,8 @@ builder.Services.AddSingleton<CapacityHttpService>();
 builder.Services.AddSingleton<HolidayHttpService>();
 builder.Services.AddSingleton<BookingHttpSerivice>();
 builder.Services.AddSingleton<RoomHttpService>();
+builder.Services.AddSingleton<MenuHttpService>();
+builder.Services.AddSingleton<MenuChoicesHttpService>();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddCors(options =>
