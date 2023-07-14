@@ -1,4 +1,4 @@
-@{
+﻿@{
 
     ViewData["Title"] = "Pranzo";
     MenuViewModel ViewModel = (MenuViewModel)Model;
@@ -175,8 +175,7 @@
                             </div>
                         </div>
 
-                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" id="myTextarea" maxlength="64" required>
-                        <span class="placeholder-text">Inserire la tua scelta</span>
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myTextarea" maxlength="64">
                         <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">
                             Invia
                         </button>
@@ -185,6 +184,8 @@
                                 var choice = $("#myTextarea").val().trim();
                                 var idMenu = @ViewModel.Menu.Id;
                                 var idUser = @LoggedUser.Id;
+
+                                console.log("Choice: " + choice + " idMenu: " + idMenu + " idUser: " + idUser);
 
                                 $.ajax({
                                     type: "POST",
@@ -207,8 +208,8 @@
                     }
                     else
                     {
-                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myTextarea" maxlength="64" disabled>
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia" disabled>
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myTextarea" maxlength="64">
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">
                             Invia
                         </button>
                     }
