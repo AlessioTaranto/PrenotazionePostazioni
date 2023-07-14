@@ -33,9 +33,16 @@
 }
 
 
+<link rel="stylesheet" href="css/menu.css">
 
+<div class="container text-center mt-5">
+    <div class="road" style="right:50%;">
+        <img src="img/road.gif" alt="Road" class="road">
+
+        <div class="truck"></div>
+    </div>
 <main class="d-flex justify-content-around">
-    <div class="container text-center mt-5">
+
         @{
             Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(ViewModel.Menu.Id);
             getAllByMenu.Wait();
