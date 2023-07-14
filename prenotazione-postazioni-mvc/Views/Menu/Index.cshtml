@@ -1,4 +1,4 @@
-﻿@{
+@{
 
     ViewData["Title"] = "Pranzo";
     MenuViewModel ViewModel = (MenuViewModel)Model;
@@ -16,7 +16,7 @@
 
 @{
     User? LoggedUser = new User(1, "Andrea", "Redegalli", "redegalli03@gmail.com", 1);
-    //HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(ViewModel.Menu.Id, LoggedUser.Id);
+    HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(1, LoggedUser.Id);
     HttpStatusCode code = checkExists.StatusCode;
     if (code == HttpStatusCode.OK)
     {
@@ -24,7 +24,7 @@
         if (menuChoice != null)
         {
             ViewModel.MenuChoices = menuChoice;
-            Task<HttpResponseMessage> delete = ViewModel.Delete(menuChoice.IdMenu, LoggedUser.Id);
+            Task<HttpResponseMessage> delete = ViewModel.Delete(1, LoggedUser.Id);
             delete.Wait();
             
         }
@@ -33,124 +33,170 @@
 }
 
 
-<link rel="stylesheet" href="css/menu.css">
+<style>
+    .user-table-col {
+        width: 200px; /* Imposta la larghezza desiderata */
+    }
 
-<div class="container text-center mt-5">
-    <div class="road" style="right:50%;">
-        <img src="img/road.gif" alt="Road" class="road">
+    .user-table-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Aggiunge uno spazio tra le tabelle degli utenti */
+    }
 
-        <div class="truck"></div>
-    </div>
-<main class="d-flex justify-content-around">
+    .user-table-scroll {
+        max-height: 400px; /* Imposta l'altezza massima desiderata */
+        overflow-y: auto;
+    }
 
-        @{
-            Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(ViewModel.Menu.Id);
-            getAllByMenu.Wait();
+    .user-table-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-            List<MenuChoices>? menuChoices = null;
-            User? user = null;
-
-            if (getAllByMenu.Result != null && getAllByMenu.Result.StatusCode == HttpStatusCode.OK)
-            {
-                menuChoices = await getAllByMenu.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
-                for (int i = 0; i < menuChoices.Count; i++)
-                {
-                    MenuChoices mc = menuChoices[i];
-                    Task<HttpResponseMessage> getUserById = _userHttpService.GetById(mc.IdUser);
-                    getUserById.Wait();
-
-                    user = await getUserById.Result.Content.ReadFromJsonAsync<User?>();
-
-                    <div class="list-group-item my-auto">
-                        <div style="clear: both; display: flex; align-items: center;">
-                            <div style="float: left">
-                                <img src="img/user_icon.png" alt="mc.IdUser" style="width: 3vw; height: auto">
-                            </div>
-                            <div style="float: left; margin-left: 1vw;">
-                                <h4 class="list-group-item-heading">@user.Name @user.Surname</h4>
-                                <p class="list-group-item-text">@mc.Choice</p>
-                            </div>
-                        </div>
-                    </div>
-
-                }
-            }
+        .user-table-item img {
+            width: 3vw;
+            height: auto;
+            margin-right: 10px;
+            object-fit: contain; /* Aggiunto per evitare il taglio dell'immagine */
         }
+
+        .user-table-item h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .user-table-item p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+    .menu-image {
+        width: 70%; /* Imposta la larghezza al 70% per renderla leggermente più grande */
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 5px;
+        margin: 20px auto;
+    }
+
+    .btn-invia {
+        background-color: #f57c00;
+        border-color: #f57c00;
+    }
+
+    #risposta {
+        color: #f57c00;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .choice-input {
+        height: 5rem;
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background-color: transparent;
+        color: #495057;
+    }
+</style>
+
+<main class="d-flex justify-content-around">
+    <div class="container text-center mt-5">
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="user-table-container user-table-scroll">
+                    <!-- Codice per la tabella degli utenti -->
+                    @{
+                        Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(1);
+                        getAllByMenu.Wait();
+
+                        List<MenuChoices>? menuChoices = null;
+                        User? user = null;
+
+                        if (getAllByMenu.Result != null && getAllByMenu.Result.StatusCode == HttpStatusCode.OK)
+                        {
+                            menuChoices = await getAllByMenu.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
+                            for (int i = 0; i < menuChoices.Count; i++)
+                            {
+                                MenuChoices mc = menuChoices[i];
+                                Task<HttpResponseMessage> getUserById = _userHttpService.GetById(mc.IdUser);
+                                getUserById.Wait();
+
+                                user = await getUserById.Result.Content.ReadFromJsonAsync<User?>();
+
+                                <div class="user-table-item">
+                                    <img src="img/user_icon.png" alt="mc.IdUser">
+                                    <div class="user-table-col">
+                                        <h4>@user.Name @user.Surname</h4>
+                                        <p>@mc.Choice</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img class="menu-image" src="@ViewModel.GetImage()" alt="Menu" />
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-8">
-                <img style="width: 55%"
-                     src=@ViewModel.GetImage()
-                     class="img-thumbnail bd-darkorange"
-                     alt="Menu" />
-            </div>
-            <div class="col-sm-4">
                 <label for="myTextarea">La tua scelta</label>
                 @{
                     if (ViewModel.Menu != null)
                     {
-                        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal" id="myButton">
-                            Launch demo modal
-                        </button>
-                        <!-- Modal Bootstrap -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Scelta Menu @ViewData["DateSelected"]</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Scelta inviata con successo
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <textarea class="form-control overflow-hidden bd-darkorange"
-                                  style="height:5rem"
-                                  placeholder="Scrivi qui"
-                                  id="myTextarea"
-                                  maxlength="64">@ViewModel.GetMenuChoice()</textarea>  
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia" >
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input"
+                               placeholder="Inserire la tua scelta" id="myTextarea" maxlength="64">
+                        <button class="btn btn-primary bg-darkorange bd-darkorange btn-invia mt-4" id="invia">
                             Invia
                         </button>
                         <script>
-                            $("#invia").on("click", function () {
-                                var choice = $("#myTextarea").val().trim();
-                                var idMenu = @ViewModel.Menu.Id;
-                                var idUser = @LoggedUser.Id; @* @ViewModel._userHttpService.GetById(LoggedUser.Id);*@
+                            var inputField = $("#myTextarea");
+                            var defaultPlaceholder = "Inserire la tua scelta";
 
+                            inputField.on("input", function () {
+                                if (inputField.val().trim() === "") {
+                                    inputField.attr("placeholder", defaultPlaceholder);
+                                } else {
+                                    inputField.removeAttr("placeholder");
+                                }
+                            });
+
+                            $("#invia").on("click", function () {
+                                var choice = inputField.val().trim();
+                                var idMenu = @ViewModel.Menu.Id;
+                                var idUser = @ViewModel._userHttpService.GetById(LoggedUser.Id);
                                 $.ajax({
                                     type: "POST",
-                                    url: "/Menu/addChoice",
-                                    data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
-                                        success: function () {
-                                            $('#myButton').trigger('click');
-                                        }
+                                    url: "Menu/addChoice",
+                                    data: { "choice": choice, "idUser": , "idMenu": idMenu },
                                 })
                             })
-
-
                         </script>
                     }
                     else
                     {
-                        <textarea class="form-control overflow-hidden bd-darkorange" style="height:5rem" placeholder="Scrivi qui" id="myTextarea"
-                                  maxlength="64" disabled></textarea>
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia" disabled>
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input"
+                               placeholder="Inserire la tua scelta" id="myTextarea" maxlength="64">
+                        <button class="btn btn-primary bg-darkorange bd-darkorange btn-invia mt-4" id="invia">
                             Invia
                         </button>
                     }
                 }
-
+                <p id="risposta"></p>
             </div>
-
         </div>
-
     </div>
-    </main>
+</main>
 
 
