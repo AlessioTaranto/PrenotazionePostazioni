@@ -1,4 +1,4 @@
-﻿using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Services;
@@ -21,9 +21,9 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Feste</returns>
         internal Holiday? GetByDate(DateTime date)
         {
-            string query = "SELECT * FROM Holiday WHERE day = @day;";
+            string query = "SELECT * FROM Holiday WHERE date = @date;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@day", date.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd"));
             return DatabaseManager<Holiday>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
         /// <summary>
@@ -43,9 +43,9 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="festa">la festa da salvare</param>
         internal void Add(Holiday festa)
         {
-            string query = $"INSERT INTO Holiday (day, description) VALUES (@day, @description);";
+            string query = $"INSERT INTO Holiday (date, description) VALUES (@date, @description);";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@day", festa.Date.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@date", festa.Date.ToString("yyyy-MM-dd"));
             sqlCommand.Parameters.AddWithValue("@description", festa.Description);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }

@@ -54,10 +54,11 @@ namespace prenotazione_postazioni_mvc.Models
         public async void AddHoliday(int year, int month, int day, string description)
         {
             DateTime date;
-
+         
             try
             {
                 date = new DateTime(year, month, day);
+                Console.WriteLine(date);
             }
             catch (ArgumentOutOfRangeException)
             {
