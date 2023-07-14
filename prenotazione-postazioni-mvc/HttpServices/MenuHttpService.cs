@@ -1,4 +1,3 @@
-﻿//ciao
 using Microsoft.VisualBasic;
 using System.Text;
 

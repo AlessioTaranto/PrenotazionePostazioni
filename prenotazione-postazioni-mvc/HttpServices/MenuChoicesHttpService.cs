@@ -1,4 +1,3 @@
-﻿//ciao
 using Newtonsoft.Json;
 using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;

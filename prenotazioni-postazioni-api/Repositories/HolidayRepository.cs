@@ -1,4 +1,4 @@
-﻿using prenotazione_postazioni_libs.Models;
+using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Services;
