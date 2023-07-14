@@ -1,216 +1,244 @@
 .settings_sidebar_box {
-  padding: 2%;
-  width: 100%;
-  height: 70vh;
-  display: flex;
-  background-color: #fff;
-  color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 0 1vw 1vw 0;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 2%;
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    background-color: var(--bkg-color);
+    color: var(--font-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 0 1vw 1vw 0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+
 .settings_sidebar_itemList {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 3vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1vw;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
 }
-.settings_sidebar_itemList a {
-  cursor: pointer;
-  user-select: none;
-  width: 100%;
-  height: 3vw;
-  padding: 5%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5vw;
-  color: #000;
-  text-decoration: none;
-  transition: 0.25s ease-in-out;
-}
-.settings_sidebar_itemList a:hover {
-  background-color: darkorange;
-  border-radius: 0.5vw;
-  color: #fff !important;
-}
+
+    .settings_sidebar_itemList a {
+        cursor: pointer;
+        user-select: none;
+        width: 100%;
+        height: 3vw;
+        padding: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5vw;
+        color: #000;
+        text-decoration: none;
+        transition: 0.25s ease-in-out;
+    }
+
+        .settings_sidebar_itemList a:hover {
+            background-color: darkorange;
+            border-radius: 0.5vw;
+            color: #fff !important;
+        }
+
 .sidebar_checked {
-  background-color: darkorange;
-  border-radius: 0.5vw;
-  color: #fff !important;
+    background-color: darkorange;
+    border-radius: 0.5vw;
+    color: #fff !important;
 }
+
 .settings_container {
-  padding: 2% 2% 2% 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 2vw;
+    padding: 2% 2% 2% 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2vw;
 }
+
 .settings_content {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
+
 .settings_presenze_content {
-  padding: 5%;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+    padding: 5%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
+
 .settings_calendar {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .settings_collapse_content {
-  display: flex;
-  align-items: left;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
+
 .settings_postazioni {
-  width: 75vw;
-  height: 70vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1vw;
-  background-color: #fff;
-  border-radius: 1vw;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  margin: 0;
+    width: 75vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+    background-color: var(--bkg-color);
+    border-radius: 1vw;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin: 0;
 }
+
 .settings_postazioni_content {
-  width: 100%;
-  height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }
+
 .postazioni_image_container img {
-  width: 50vw;
-  height: 100%;
-  object-fit: cover;
-  margin-right: 15px;
+    width: 50vw;
+    height: 100%;
+    object-fit: cover;
+    margin-right: 15px;
 }
+
 .postazioni_information {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: flex-start;
-  gap: 2vw;
-  height: 100%;
-  width: 50%;
-  padding: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    gap: 2vw;
+    height: 100%;
+    width: 50%;
+    padding: 2%;
 }
-.postazioni_information h1 {
-  font-size: 1.5vw;
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
-}
+
+    .postazioni_information h1 {
+        font-size: 1.5vw;
+        font-weight: 700;
+        margin: 0;
+        padding: 0;
+        color: var(--font-color);
+    }
+
 .postazioni_information_form {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: center;
-  gap: 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    gap: 1vw;
 }
 
 .settings_holiday {
-  width: 75vw;
-  height: 70vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1vw;
-  padding: 2%;
-  background-color: #fff;
-  border-radius: 1vw;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  margin: 0;
+    width: 75vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+    padding: 2%;
+    background-color: #fff;
+    border-radius: 1vw;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin: 0;
 }
 
 @media screen and (max-width: 1200px) {
-  .settings_container {
-    padding: 5%;
-    flex-direction: column;
-    gap: 2vw;
-  }
-  .settings_sidebar_box {
-    padding: 3%;
-    width: 100%;
-    height: auto;
-    border-radius: 1vw;
-  }
-  .settings_sidebar_itemList {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 2vw;
-    width: 100%;
-    height: 100%;
-  }
-  .settings_sidebar_itemList a {
-    width: auto;
-    height: auto;
-    padding: 1%;
-    font-size: 3vh;
-  }
-  .settings_content {
-    width: 100%;
-    height: 80vh;
-  }
-  .settings_postazioni {
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    gap: 1vw;
-  }
-  .postazioni_image_container {
-    width: 100%;
-    height: 50%;
-  }
-  .postazioni_image_container img {
-    width: 100%;
-    height: 100%;
-  }
-  .postazioni_information {
-    width: 100%;
-    height: 50%;
-  }
-  .postazioni_information h1 {
-    font-size: 4vh;
-  }
-  .settings_presenze_content {
-    flex-direction: column;
-    gap: 2vw;
-  }
-  .settings_collapse_content {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2vw;
-  }
+    .settings_container {
+        padding: 5%;
+        flex-direction: column;
+        gap: 2vw;
+    }
+
+    .settings_sidebar_box {
+        padding: 3%;
+        width: 100%;
+        height: auto;
+        border-radius: 1vw;
+    }
+
+    .settings_sidebar_itemList {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+        width: 100%;
+        height: 100%;
+    }
+
+        .settings_sidebar_itemList a {
+            width: auto;
+            height: auto;
+            padding: 1%;
+            font-size: 3vh;
+        }
+
+    .settings_content {
+        width: 100%;
+        height: 80vh;
+    }
+
+    .settings_postazioni {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        gap: 1vw;
+    }
+
+    .postazioni_image_container {
+        width: 100%;
+        height: 50%;
+    }
+
+        .postazioni_image_container img {
+            width: 100%;
+            height: 100%;
+        }
+
+    .postazioni_information {
+        width: 100%;
+        height: 50%;
+    }
+
+        .postazioni_information h1 {
+            font-size: 4vh;
+            color: var(--font-color);
+        }
+
+    .settings_presenze_content {
+        flex-direction: column;
+        gap: 2vw;
+    }
+
+    .settings_collapse_content {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+    }
 }
