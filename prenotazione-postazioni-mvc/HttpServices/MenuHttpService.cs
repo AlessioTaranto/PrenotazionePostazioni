@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿//ciao
+using Microsoft.VisualBasic;
 using System.Text;
 
 namespace prenotazione_postazioni_mvc.HttpServices
