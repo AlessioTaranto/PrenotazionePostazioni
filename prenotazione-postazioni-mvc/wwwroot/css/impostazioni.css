@@ -117,7 +117,13 @@
   justify-content: center;
   flex-direction: row;
 }
-
+.settings_user_content {
+  padding: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .postazioni_image_container img {
   width: 50vw;
   height: 100%;
@@ -200,7 +206,12 @@
 
   .settings_content {
     width: 100%;
-    height: 80vh;
+    height: auto;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   .settings_postazioni {
