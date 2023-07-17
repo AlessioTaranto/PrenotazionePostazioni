@@ -14,14 +14,19 @@
 
 @inject IHttpContextAccessor HttpContextAccessor
 
+<body style="background-color:var(--bkg1-color)">
+    
+    </body>
     <style>
         .icon-img {
             width: 40%;
         }
     </style>    
 
+
 <div class="vote_container">
         <div class="vote_list">
+
 @{
     User LoggedUser = JsonConvert.DeserializeObject<User>(HttpContextAccessor.HttpContext.Session.GetString("_User"));
 
