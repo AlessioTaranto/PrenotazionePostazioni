@@ -16,6 +16,12 @@ namespace prenotazioni_postazioni_api.Repositories
         public RoleRepository()
         {
         }
+        public List<Role>? GetAll()
+        {
+            string query = $"SELECT * FROM Role;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            return DatabaseManager<List<Role>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+        }
 
         /// <summary>
         /// Query al db, restituisce il ruolo dell'utente associato usando il suo ID
@@ -36,7 +42,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Ruolo dell'utente, null altrimenti</returns>
         public Role? GetByUser(int idUser)
         {
-            string query = $"SELECT * FROM User WHERE id = @idUser;";
+            string query = $"SELECT * FROM [User] WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);
             User? utente = DatabaseManager<User>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -64,7 +70,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idRole">Il ruolo con cui verra aggiornato l'utente</param>
         internal void UpdateUserRole(int idUser, int idRole)
         {
-            string query = $"UPDATE User SET idRole = @idRole WHERE id = @idUser;";
+            string query = $"UPDATE [User] SET idRole = @idRole WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idRole", idRole);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);

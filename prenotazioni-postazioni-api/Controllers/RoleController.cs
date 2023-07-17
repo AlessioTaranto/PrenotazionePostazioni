@@ -21,7 +21,22 @@ namespace prenotazioni_postazioni_api.Controllers
             _roleService = roleService;
         }
 
-
+        [HttpGet]
+        [Route("getAll")]
+        public IActionResult GetAll(){
+            try
+            {
+                _logger.Info("Prelevando tutti i ruoli...");
+                List<Role> roles = _roleService.GetAll();
+                _logger.Info("Prelevati tutti i ruoli con successo!");
+                return Ok(roles);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
 
 
         /// <summary>
@@ -90,14 +105,13 @@ namespace prenotazioni_postazioni_api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public IActionResult Update(int idUser,int idAdmin, string futureRole)
+        public IActionResult Update(int idUser, string futureRole)
         {
             try
             {
                 _logger.Info("Id Utente: " + idUser);
-                _logger.Info("Id admin: " + idAdmin);
                 _logger.Info("Aggiornando il ruolo di un utente...");
-                bool ok = _roleService.Update(idUser, idAdmin, futureRole);
+                bool ok = _roleService.Update(idUser, futureRole);
                 _logger.Info("Controllando se l'autorizzazione e' valida...");
                 if (ok)
                 {

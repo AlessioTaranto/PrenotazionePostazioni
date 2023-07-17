@@ -11,13 +11,15 @@ namespace prenotazione_postazioni_mvc.Controllers
         public readonly CapacityHttpService _capacityHttpService;
         //HTTP Client Factory -> Festa
         public readonly HolidayHttpService _festaHttpService;
+        public readonly RoleHttpService _roleHttpService;
 
         public int numero = 0;
 
-        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService)
+        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService, RoleHttpService rolehttpService)
         {
             _capacityHttpService = capacityHttpService;
             _festaHttpService = holidayHttpService;
+            _roleHttpService = rolehttpService;
         }
 
         public IActionResult Index()
@@ -35,6 +37,12 @@ namespace prenotazione_postazioni_mvc.Controllers
         }
 
         public static SettingsViewModel? ViewModel { get; set; }
+
+        [HttpPut]
+        [ActionName("UpdateRole")]
+        public void UpdateRole(int idUser, string futureRole){
+            _roleHttpService.Update(idUser, futureRole);
+        }
 
         /// <summary>
         ///     Cambia la stanza selezionata nel tab "Covid / Capienza"

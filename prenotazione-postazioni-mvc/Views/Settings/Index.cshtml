@@ -12,6 +12,7 @@
 @inject UserHttpService _userHttpService;
 @inject HolidayHttpService _holidayHttpService;
 @inject CapacityHttpService _capacityHttpService;
+@inject RoleHttpService _roleHttpService;
 
 <script>
     function changeTab(pageNumber) {
@@ -325,40 +326,73 @@
                                     </thead>
                                     <tbody>
                                         @{
-                                            Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAll();
+                                            Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAllWithRole();
                                             getAllUtentiList.Wait();
 
-                                            List<User>? ListUtenti = null;
+                                            Task<HttpResponseMessage> getAllRoles = _roleHttpService.GetAll();
+                                            getAllRoles.Wait();
+
+                                            List<UserRole>? ListUtenti = null;
+                                            List<Role>? ListRoles = null;
 
                                             if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
                                             {
-                                                ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<User>?>();
-                                                for (int i = 0; i < ListUtenti.Count; i++)
-                                                {
-
-                                                    User user = ListUtenti[i];
-
-                                                    <tr>
-                                                        <td>@user.Name @user.Surname</td>
-                                                        <td>@user.Email</td>
+                                                ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<UserRole>?>();
+                                                ListRoles = await getAllRoles.Result.Content.ReadFromJsonAsync<List<Role>?>();
+                                                
+                                                
+                                                foreach (UserRole userRole in ListUtenti){
+                                                    <tr scope="row">
+                                                        <td class="user_table">@userRole.Username @userRole.Surname</td>
+                                                        <td class="user_table">@userRole.Email</td>
                                                         <td>
                                                             <!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                                @switch (user.IdRole)
-                                                                {
-                                                                    case 1:
-                                                                        <text><div>Developer</div></text>
-                                                                    break;
-                                                                    case 2:
-                                                                        <text><div>Project Director</div></text>
-                                                                    break;
-                                                                    case 3:
-                                                                        <text><div>HR Director</div></text>
-                                                                    break;
-                                                                }
+                                                            <button class="btn btn-primary bg-darkorange border-0" data-toggle="modal" data-target="#exampleModal_@userRole.Id">
+                                                               <i class="bi bi-pencil"></i> @userRole.Rolename
                                                             </button>
                                                         </td>
                                                     </tr>
+                                                    <script>
+
+                                                    </script>
+
+                                                    <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModal_@userRole.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Seleziona il nuovo ruolo da assegnare all'utente: 
+                                                                        <br>
+                                                                        <b>@userRole.Username @userRole.Surname</b>
+                                                                        <br>
+                                                                        <select class="form-select" aria-label="Default select example" id="roleSelect_@userRole.Id">
+                                                                            <option selected>
+                                                                                @userRole.Rolename
+                                                                            </option>
+                                                                            @foreach(Role role in ListRoles){
+                                                                                if(role.Name != userRole.Rolename){
+                                                                                    <option id="roleSelect" value=@role.Name >
+                                                                                        @role.Name
+                                                                                    </option>
+                                                                                }
+                                                                            }
+                                                                        </select>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-danger border-0" data-dismiss="modal">Chiudi</button>
+                                                                        <button onclick="updateRole(@userRole.Id, $('#roleSelect_@userRole.Id').val())" type="button" class="btn btn-success border-0">Salva le modifiche</button>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                 }
                                             }
 
@@ -369,26 +403,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn bg-darkorange" data-dismiss="modal">Chiudi</button>
-                                <button type="button" class="btn btn-primary">Salva le modifiche</button>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    
                     break;
                 case 5:
                     <div class="settings_postazioni">
@@ -630,6 +646,17 @@
         });
 
 
+</script>
+
+<script>
+    function updateRole(id, selectedRole) {
+        $.ajax({
+            type: "PUT",
+            url: "Settings/UpdateRole",
+            data: { "idUser": id, "futureRole": selectedRole },
+        });
+        setTimeout(() => {location.reload()}, 500);
+    } 
 </script>
 
 <!-- Buttons Script -->

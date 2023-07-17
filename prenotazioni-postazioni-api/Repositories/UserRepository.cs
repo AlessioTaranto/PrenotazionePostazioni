@@ -27,6 +27,17 @@ namespace prenotazioni_postazioni_api.Repositories
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<List<User>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
+
+         /// <summary>
+        /// Query al db, restituisce gli utenti con il loro ruolo
+        /// </summary>
+        /// <returns>Lista di Utente con i loro ruoli trovati, null altrimenti</returns>
+        internal List<UserRole>? GetAllWithRole()
+        {
+            string query = $"SELECT u.name AS 'username', u.surname, u.id, u.email, r.name AS 'rolename' FROM [User] u JOIN Role r ON u.idRole = r.id;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            return DatabaseManager<List<UserRole>>.GetInstance().MakeQueryMoreResults(sqlCommand);
+        }
         
 
         /// <summary>

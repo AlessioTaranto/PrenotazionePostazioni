@@ -108,6 +108,7 @@ builder.Services.AddSingleton<VoteHttpService>();
 builder.Services.AddSingleton<CapacityHttpService>();
 builder.Services.AddSingleton<HolidayHttpService>();
 builder.Services.AddSingleton<BookingHttpSerivice>();
+builder.Services.AddSingleton<RoleHttpService>();
 builder.Services.AddSingleton<RoomHttpService>();
 builder.Services.AddSingleton<MenuHttpService>();
 builder.Services.AddSingleton<MenuChoicesHttpService>();
