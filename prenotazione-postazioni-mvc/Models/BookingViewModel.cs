@@ -138,8 +138,8 @@ namespace prenotazione_postazioni_mvc.Models
 
             DateTime nowDate = DateTime.Now;
 
-            if ((year < nowDate.Year) || (month < nowDate.Month && year == nowDate.Year) || (day < nowDate.Day && month == nowDate.Month && year == nowDate.Year))
-                throw new Exception("Non puoi selezionare una data precedente alla data corrente");
+            /*if ((year < nowDate.Year) || (month < nowDate.Month && year == nowDate.Year) || (day < nowDate.Day && month == nowDate.Month && year == nowDate.Year))
+                throw new Exception("Non puoi selezionare una data precedente alla data corrente");*/
 
             try
             {
@@ -221,16 +221,13 @@ namespace prenotazione_postazioni_mvc.Models
         /// <returns></returns>
         public async Task DoBookingAsync(User utente, Room stanza, DateTime start, DateTime end)
         {
-            Console.WriteLine("IN AGGIUNTA");
             HttpResponseMessage status = await Service.Add(start, end, utente, stanza);
         }
 
         public async Task<HttpStatusCode> ExistBooking(string userParam, string roomParam, string start, string end)
         {
-            Console.WriteLine("DEAUN: " + userParam + " - " + roomParam + " - " + start + " - " + end);
             if (roomParam == null || userParam == null || start == null || end == null)
             {
-                Console.WriteLine("ALMENO UNO NULL");
                 return HttpStatusCode.UnprocessableEntity;
             }
 
@@ -240,12 +237,9 @@ namespace prenotazione_postazioni_mvc.Models
             DateTime inizio = JsonConvert.DeserializeObject<DateTime>(start);
             DateTime fine = JsonConvert.DeserializeObject<DateTime>(end);
 
-            Console.WriteLine("ROOM: " + room + " - " + user);
-
             if (room == null || user == null)
                 return HttpStatusCode.UnprocessableEntity;
 
-            Console.WriteLine("STO PER FARE IL GETBYDAY");
             HttpResponseMessage msgRq = await Service.GetByDate(room.Id, inizio, fine);
 
             if (msgRq != null && msgRq.StatusCode == HttpStatusCode.OK)
@@ -256,11 +250,9 @@ namespace prenotazione_postazioni_mvc.Models
                 foreach (Booking booking in bookings)
                     if (booking.IdUser == user.Id)
                     {
-                        Console.WriteLine("Trovato");
                         return HttpStatusCode.OK;
                     }
 
-                Console.WriteLine("Non Trovato");
                 return HttpStatusCode.NotFound;
 
             }

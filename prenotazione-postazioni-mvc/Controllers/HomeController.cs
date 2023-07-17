@@ -163,12 +163,10 @@ public class HomeController : Controller
     [ActionName("Booking")]
     public IActionResult Booking(string userParam, string roomParam, string startDate, string endDate)
     {
-        Console.WriteLine("ENTER: " + userParam + " - " + roomParam);
         Task<HttpStatusCode>? getRq = ViewModel?.ExistBooking(userParam, roomParam, startDate, endDate);
         getRq.Wait();
 
         HttpStatusCode code = getRq.Result;
-        Console.WriteLine("CODE: " + code);
 
         if (code == HttpStatusCode.NotFound)
         {

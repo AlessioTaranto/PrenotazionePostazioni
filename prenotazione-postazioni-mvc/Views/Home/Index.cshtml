@@ -141,7 +141,7 @@
                                 Chiuso per ferie!
                             </div>
                         }else{
-                            <div class="btn-collapse">
+                            <div class="btn-collapse" id="selectHour">
                                 <a class="fw-bold" data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Seleziona orario
                                 </a>
@@ -217,19 +217,30 @@
 
                                     <button class="room_info_btn" style="border: none;" type="button" id="prenota"> Prenota</button>
                                     <button class="room_info_btn" style="border: none;" type="button" id="cancprenota">Annulla prenotazione</button>
-
-                                    if (prenotazione != null)
+                                    if ((ViewModel.StartDate.Year < DateTime.Now.Year) || (ViewModel.StartDate.Month < DateTime.Now.Month && ViewModel.StartDate.Year == DateTime.Now.Year) || (ViewModel.StartDate.Day < DateTime.Now.Day && ViewModel.StartDate.Month == DateTime.Now.Month && ViewModel.StartDate.Year == DateTime.Now.Year))
                                     {
                                         <script>
                                             $('#prenota').css('display', 'none');
-                                            $('#cancprenota').css('display', 'block');
-                                        </script>
-                                    } else
-                                    {
-                                        <script>
-                                            $('#prenota').css('display', 'block');
                                             $('#cancprenota').css('display', 'none');
+                                            $('#selectHour').css('display', 'none');
                                         </script>
+                                    }
+                                    else
+                                    {
+                                        if (prenotazione != null)
+                                        {
+                                            <script>
+                                                $('#prenota').css('display', 'none');
+                                                $('#cancprenota').css('display', 'block');
+                                            </script>
+                                        }
+                                        else
+                                        {
+                                            <script>
+                                                $('#prenota').css('display', 'block');
+                                                $('#cancprenota').css('display', 'none');
+                                            </script>
+                                        }
                                     }
                                 }
                             </div>
@@ -516,7 +527,6 @@
      */
 
     $('#start').on('change', function(event) {
-            console.log((event.target.value).split(":")[0]);
         $.ajax({
             type: "POST",
             url: "Home/ReloadStartHour",
@@ -534,19 +544,17 @@
      * presenze aggiornata.
      */
 
-    $('#finish').on('change', function(event) {
-
+        $('#finish').on('change', function (event) {
+            console.log((event.target.value).split(":")[0]);
         $.ajax({
             type: "POST",
-            url: "Home/ReloadEndDHour",
+            url: "Home/ReloadEndHour",
             data: { "hour": (event.target.value).split(":")[0] },
             error: function(xhr) {
                 alertBox(xhr.responseText, "#de4802");
                 event.preventDefault();
                 event.target.value = "@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00";
             }
-        }).done(function() {
-            window.location.reload();
         });
     });
 
@@ -565,7 +573,7 @@
             return;
         }
 
-            console.log("Booking - " + $('#_valueUser').text() + " - " + $('#_valueRoom').text());
+            console.log("Booking - startDate: " + $('#_valueDateStart').text() + " - endDate: " + $('#_valueDateEnd').text());
 
         $.ajax({
             type: "POST",
