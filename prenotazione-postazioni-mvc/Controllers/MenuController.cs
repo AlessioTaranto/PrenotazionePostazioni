@@ -62,7 +62,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             return BadRequest();
         }
 
-        [HttpGet]
+        [HttpDelete]
         [ActionName("deleteChoice")]
         public IActionResult DeleteChoice(int idMenu, int idUser)
         {
