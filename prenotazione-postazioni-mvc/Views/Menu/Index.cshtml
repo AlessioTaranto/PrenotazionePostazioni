@@ -31,96 +31,7 @@
         else ViewModel.MenuChoices = null;
     }
 }
-
-<style>
-    .user-table-col {
-        width: 200px;
-    }
-
-    .user-table-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .user-table-scroll {
-        max-height: 400px;
-        overflow-y: auto;
-    }
-
-    .user-table-item {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .user-table-item img {
-        width: 3vw;
-        height: auto;
-        margin-right: 10px;
-        object-fit: contain;
-    }
-
-    .user-table-item h4 {
-        margin: 0;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .user-table-item p {
-        margin: 0;
-        font-size: 14px;
-    }
-
-    .menu-image {
-        width: 70%;
-        max-height: 400px;
-        object-fit: contain;
-        border-radius: 5px;
-        margin: 20px auto;
-    }
-
-    .btn-invia {
-        background-color: #f57c00;
-        border-color: #f57c00;
-    }
-
-    #risposta {
-        color: #f57c00;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-
-    .choice-input {
-        height: 5rem;
-        font-size: 16px;
-        padding: 10px;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-        background-color: transparent;
-        color: #495057;
-        position: relative;
-    }
-
-    .progress-bar {
-        height: 20px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        margin-bottom: 20px;
-    }
-
-    .progress-bar-fill {
-        height: 100%;
-        background-color: #f57c00;
-        width: 0;
-        transition: width 1s linear;
-    }
-</style>
+<link rel="stylesheet" href="css/menu.css">
 
 <script>
     // Calculate the progress in percentage
@@ -155,6 +66,22 @@
 
         <div class="row">
             <div class="col-sm-4">
+                    <div id="cooking">
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div id="area">
+                        <div id="sides">
+                        <div id="pan"></div>
+                        <div id="handle"></div>
+                        </div>
+                        <div id="pancake">
+                        <div id="pastry"></div>
+                        </div>
+                    </div>
+                    </div>
                 <div class="user-table-container user-table-scroll">
                     <!-- Codice per la tabella degli utenti -->
                     @{
