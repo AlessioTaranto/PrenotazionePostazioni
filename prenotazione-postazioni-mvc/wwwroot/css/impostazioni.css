@@ -117,7 +117,14 @@
   justify-content: center;
   flex-direction: row;
 }
-
+.settings_user_content {
+  padding: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow-y: scroll;
+}
 .postazioni_image_container img {
   width: 50vw;
   height: 100%;
@@ -168,6 +175,15 @@
 }
 
 @media screen and (max-width: 1200px) {
+  .table_btn {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: darkorange;
+    padding: 2%;
+  }
   .settings_container {
     padding: 5%;
     flex-direction: column;
@@ -200,7 +216,20 @@
 
   .settings_content {
     width: 100%;
-    height: 80vh;
+    height: auto;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .settings_user_content {
+    width: 100%;
+    height: auto;
+    overflow: scroll;
+    .user_table {
+      font-size: 1.5vw;
+    }
   }
 
   .settings_postazioni {
