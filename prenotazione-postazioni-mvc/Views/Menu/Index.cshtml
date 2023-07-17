@@ -1,4 +1,4 @@
-﻿@{
+@{
 
     ViewData["Title"] = "Pranzo";
     MenuViewModel ViewModel = (MenuViewModel)Model;
@@ -12,45 +12,170 @@
 @using prenotazione_postazioni_mvc.HttpServices;
 @using Newtonsoft.Json;
 @inject MenuChoicesHttpService _menuChoicesHttpService;
+@inject MenuHttpService _menuHttpService;
 @inject UserHttpService _userHttpService;
 
 @{
-    User? LoggedUser = new User(1, "Andrea", "Redegalli", "redegalli03@gmail.com", 1);
-    HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(1, LoggedUser.Id);
-    HttpStatusCode code = checkExists.StatusCode;
-    if (code == HttpStatusCode.OK)
+    //ViewModel.Menu = null;
+    User? LoggedUser = new User(4, "Andrea", "Redegalli", "redegalli03@gmail.com", 1);
+    if (ViewModel.Menu != null)
     {
-        MenuChoices menuChoice = await checkExists.Content.ReadFromJsonAsync<MenuChoices>();
-        if (menuChoice != null)
+        HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(ViewModel.Menu.Id, LoggedUser.Id);
+        HttpStatusCode code = checkExists.StatusCode;
+        if (code == HttpStatusCode.OK)
         {
-            ViewModel.MenuChoices = menuChoice;
-            Task<HttpResponseMessage> delete = ViewModel.Delete(1, LoggedUser.Id);
-            delete.Wait();
-            
+            MenuChoices menuChoice = await checkExists.Content.ReadFromJsonAsync<MenuChoices>();
+
+            if (menuChoice != null)
+            {
+                ViewModel.MenuChoice = menuChoice;
+            }
         }
-        else ViewModel.MenuChoices = null;
     }
 }
-<link rel="stylesheet" href="css/menu.css">
-<body style="background-color:var(--bkg1-color)">
-    
-    </body>
+
+<style>
+
+    .user-table-col {
+        width: 200px;
+    }
+
+    .user-table-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .user-table-scroll {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .user-table-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .user-table-item img {
+            width: 3vw;
+            height: auto;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+
+        .user-table-item h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .user-table-item p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+    .menu-image {
+        width: 70%;
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 5px;
+        margin: 20px auto;
+    }
+
+    .btn-invia {
+        background-color: #f57c00;
+        border-color: #f57c00;
+    }
+
+    #risposta {
+        color: #f57c00;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .choice-input {
+        height: 5rem;
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background-color: transparent;
+        color: #495057;
+        position: relative;
+    }
+
+    .progress-bar {
+        height: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background-color: #f57c00;
+        width: 0;
+        transition: width 1s linear;
+        position: relative;
+    }
+
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+    }
+</style>
+
 <script>
-    // Calculate the progress in percentage
+    // Calculate the progress in percentage and expiration time
     function calculateProgress() {
         const now = new Date();
         const hours = now.getHours();
         const minutes = now.getMinutes();
         const totalMinutes = (hours * 60) + minutes;
-        const maxMinutes = 17 * 45; // Assuming 11:00 as the end time
+        const maxMinutes = 19 * 60; // Assuming 11:00 as the end time
 
-        return (totalMinutes / maxMinutes) * 100;
+        const progress = Math.min((totalMinutes / maxMinutes) * 100, 100);
+        const expirationTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 19, 0, 0); // Assuming expiration at 11:00
+
+        return {
+            progress: progress.toFixed(2),
+            expirationTime: expirationTime,
+            currentTime: now
+        };
     }
 
-    // Update the width of the progress bar fill
+    // Update the width of the progress bar fill and display the progress and expiration time
     function updateProgressBar() {
-        const progress = calculateProgress();
+        const { progress, expirationTime, currentTime } = calculateProgress();
         $('.progress-bar-fill').css('width', `${progress}%`);
+        if (progress < 100) {
+            $('.progress-text').text(`Avanzamento: ${progress}% - Prenotare entro il tempo limite: ${expirationTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`);
+        }
+        else {
+            $('.progress-text').text(`Tempo scaduto alle ore ${expirationTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}, non puoi più ordinare`);
+        }
+
+        if (currentTime >= expirationTime) {
+            disableSubmitButton();
+        }
+    }
+
+    // Disable the submit button
+    function disableSubmitButton() {
+        $('#invia').prop('disabled', true);
+        $('#invia').addClass('disabled');
     }
 
     // Call the update function initially and every minute
@@ -61,56 +186,47 @@
 </script>
 
 <main class="d-flex justify-content-around">
-    <div class="container text-center mt-5">
+    <div class="container text-center mt-4">
         <div class="progress-bar">
-            <div class="progress-bar-fill"></div>
+            <div class="progress-bar-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-text"></div>
         </div>
 
         <div class="row">
             <div class="col-sm-4">
-                    <div id="cooking">
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                    <div id="area">
-                        <div id="sides">
-                        <div id="pan"></div>
-                        <div id="handle"></div>
-                        </div>
-                        <div id="pancake">
-                        <div id="pastry"></div>
-                        </div>
-                    </div>
-                    </div>
                 <div class="user-table-container user-table-scroll">
                     <!-- Codice per la tabella degli utenti -->
                     @{
-                        Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(1);
-                        getAllByMenu.Wait();
-
-                        List<MenuChoices>? menuChoices = null;
-                        User? user = null;
-
-                        if (getAllByMenu.Result != null && getAllByMenu.Result.StatusCode == HttpStatusCode.OK)
+                        if (ViewModel.Menu != null)
                         {
-                            menuChoices = await getAllByMenu.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
-                            foreach (MenuChoices menuChoice in menuChoices)
+                            Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(ViewModel.Menu.Id);
+                            getAllByMenu.Wait();
+
+                            List<MenuChoices>? menuChoices = null;
+                            User? user = null;
+
+                            if (getAllByMenu.Result != null && getAllByMenu.Result.StatusCode == HttpStatusCode.OK)
                             {
-                                Task<HttpResponseMessage> getUserById = _userHttpService.GetById(menuChoice.IdUser);
-                                getUserById.Wait();
+                                menuChoices = await getAllByMenu.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
+                                foreach (MenuChoices menuChoice in menuChoices)
+                                {
 
-                                user = await getUserById.Result.Content.ReadFromJsonAsync<User?>();
+                                    Task<HttpResponseMessage> getUserById = _userHttpService.GetById(menuChoice.IdUser);
+                                    getUserById.Wait();
 
-                                <div class="user-table-item">
-                                    <img src="img/user_icon.png" alt="@menuChoice.IdUser">
-                                    <div class="user-table-col">
-                                        <h4>@user.Name @user.Surname</h4>
-                                        <p>@menuChoice.Choice</p>
+                                    user = await getUserById.Result.Content.ReadFromJsonAsync<User?>();
+
+                                    <div class="user-table-item">
+                                        <img src="img/user_icon.png" alt="@menuChoice.IdUser">
+                                        <div class="user-table-col">
+                                            <h4>@user.Name @user.Surname</h4>
+                                            <p>@menuChoice.Choice</p>
+                                        </div>
                                     </div>
-                                </div>
+
+                                }
                             }
+
                         }
                     }
                 </div>
@@ -123,53 +239,87 @@
         </div>
         <div class="row">
             <div class="col-sm-8">
-                <label for="myTextarea" style="color: var(--font-color);">La tua scelta</label>
+                <label for="myInputChoice">Il tuo ordine</label>
                 @{
                     if (ViewModel.Menu != null)
                     {
-                        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal" id="myButton">
-                            Launch demo modal
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="myButton">
+                            Launch static backdrop modal
                         </button>
-                        <!-- Modal Bootstrap -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Scelta Menu @ViewData["DateSelected"]</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel"> Menu @ViewData["DateSelected"]</h1>
+                                        <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close" onclick="location.reload()"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Scelta inviata con successo
+                                        Ordine inviato con successo
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-bs-dismiss="modal" onclick="location.reload()">Chiudi</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myTextarea" maxlength="64">
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">
-                            Invia
-                        </button>
-                        <script>
-                            $("#invia").on("click", function () {
-                                var choice = $("#myTextarea").val().trim();
-                                var idMenu = @ViewModel.Menu.Id;
-                                var idUser = @LoggedUser.Id;
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64" value="@ViewModel.GetMenuChoice()">
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">Invia</button>
 
-                                console.log("Choice: " + choice + " idMenu: " + idMenu + " idUser: " + idUser);
+                        if (ViewModel.MenuChoice == null)
+                        {
+                            <script>
+                                $("#invia").on("click", function () {
+                                    var choice = $("#myInputChoice").val().trim();
+                                    var idMenu = @ViewModel.Menu.Id;
+                                    var idUser = @LoggedUser.Id;
 
-                                $.ajax({
-                                    type: "POST",
-                                    url: "/Menu/addChoice",
-                                    data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
-                                    success: function () {
-                                        $('#myButton').trigger('click');
-                                    }
+                                    console.log("Choice: " + choice + " idMenu: " + idMenu + " idUser: " + idUser);
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/Menu/addChoice",
+                                        data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
+                                        success: function () {
+                                            $('#myButton').trigger('click');
+                                        }
+                                    });
+                                })
+                            </script>
+                        }
+                        else
+                        {
+                            <script>
+                                $("#invia").on("click", function () {
+                                    var choice = $("#myInputChoice").val().trim();
+                                    var idMenu = @ViewModel.Menu.Id;
+                                    var idUser = @LoggedUser.Id;
+                                    console.log("eliminazione : Choice: " + choice + " idMenu: " + idMenu + " idUser: " + idUser);
+
+                                    $.ajax({
+                                        type: "DELETE",
+                                        url: "/Menu/deleteChoice",
+                                        data: { "idMenu": idMenu, "idUser": idUser }
+                                    }).done(function () {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/Menu/addChoice",
+                                            data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
+                                            success: function () {
+                                                $('#myButton').trigger('click');
+                                            }
+                                        });
+                                    })
+
                                 });
-                            });
+                            </script>
+                        }
 
+
+                        <script>
                             $(".choice-input").on("input", function () {
                                 if ($(this).val().trim() !== "") {
                                     $(this).addClass("has-value");
@@ -181,10 +331,8 @@
                     }
                     else
                     {
-                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myTextarea" maxlength="64">
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">
-                            Invia
-                        </button>
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64">
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">Invia</button>
                     }
                 }
 
@@ -192,5 +340,16 @@
 
         </div>
 
+
+
+        <script>
+            // Disable the submit button on page load if the expiration time has passed
+            $(document).ready(function () {
+                const { expirationTime, currentTime } = calculateProgress();
+                if (currentTime >= expirationTime) {
+                    disableSubmitButton();
+                }
+            });
+        </script>
     </div>
 </main>

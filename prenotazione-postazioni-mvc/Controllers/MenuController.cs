@@ -56,9 +56,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             Task<HttpResponseMessage> responseMessage =  ViewModel.Add(choice, idUser, idMenu);
             responseMessage.Wait();
             HttpStatusCode code = responseMessage.Result.StatusCode;
-            Console.WriteLine("code : " +  code);
-            if(code == HttpStatusCode.OK) 
-                return Ok("scelta inviata");
+            if(code == HttpStatusCode.OK) return Ok("scelta inviata");
             return BadRequest();
         }
 
@@ -69,8 +67,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             Task<HttpResponseMessage> delete = ViewModel.Delete(idMenu, idUser);
             delete.Wait();
             HttpStatusCode code = delete.Result.StatusCode;
-            if (code == HttpStatusCode.OK)
-                return Ok("scelta eliminata");
+            if (code == HttpStatusCode.OK) return Ok("scelta eliminata");
             return BadRequest();
         }
 

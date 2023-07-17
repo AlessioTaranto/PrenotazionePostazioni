@@ -14,7 +14,7 @@ namespace prenotazione_postazioni_mvc.Models
         public DateOnly Day { get; set; }
 
         public Menu Menu { get; set; }
-        public MenuChoices MenuChoices { get; set; }
+        public MenuChoices MenuChoice { get; set; }
         public List<Holiday> Holidays { get; set; }
 
         public readonly MenuHttpService _menuHttpService;
@@ -34,13 +34,17 @@ namespace prenotazione_postazioni_mvc.Models
 
         public string GetImage()
         {
-            if(Menu == null) Menu = new Menu();
-            Menu.Image = "https://marketplace.canva.com/EAD0UMPtOv4/1/0/1236w/canva-oro-tenue-elegante-matrimonio-menu-FQIyCfgp1aY.jpg";
+            if(Menu != null)
+            {
+            //Menu.Image = "https://marketplace.canva.com/EAD0UMPtOv4/1/0/1236w/canva-oro-tenue-elegante-matrimonio-menu-FQIyCfgp1aY.jpg";
             return Menu.Image;
+            }
+            return "";
         }
+       
         public string GetMenuChoice()
         {
-            return MenuChoices == null ? "" : MenuChoices.Choice;
+            return MenuChoice == null ? "" : MenuChoice.Choice;
         }
 
         public async Task ReloadHoliday()
@@ -69,12 +73,7 @@ namespace prenotazione_postazioni_mvc.Models
                 }
             }
 
-            //HttpResponseMessage responseMessage = await _menuHttpService.GetByDate(Date.Year, Date.Month, Date.Day);
-            //if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
-            //{
-            //    Menu menu = await responseMessage.Content.ReadFromJsonAsync<Menu>();
-            //    if (menu != null) Menu = menu;
-            //}
+            
             HttpResponseMessage responseMessage = await _menuHttpService.GetAll();
             if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
             {
@@ -85,6 +84,7 @@ namespace prenotazione_postazioni_mvc.Models
                     if (menu.Date.Year == Date.Year && menu.Date.Month == Date.Month && menu.Date.Day == Date.Day)
                     {
                         Menu = menu;
+                        break;
                     }
                 }
             }
@@ -92,34 +92,24 @@ namespace prenotazione_postazioni_mvc.Models
        
         public async Task<HttpStatusCode> ExistsChoice(int idMenu, int idUser)
         {
-           // HttpResponseMessage responseMessage = await _choicesHttpService.GetByUserAndIdMenu(idMenu, idUser);
-            HttpResponseMessage responseMessage = await _choicesHttpService.GetAll();
+            HttpResponseMessage responseMessage = await _choicesHttpService.GetByUserAndIdMenu(idMenu, idUser);
+            //HttpResponseMessage responseMessage = await _choicesHttpService.GetAll();
 
             
             if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
             {
-                //Menu menu = await responseMessage.Content.ReadFromJsonAsync<Menu>();
-                //if (menu != null)
-                //{
 
-                //    return HttpStatusCode.OK;
-                //}
-                //else
-                //{
-                //    return HttpStatusCode.NotFound;
-
-                //}
                 List<MenuChoices> menuChoices = await responseMessage.Content.ReadFromJsonAsync<List<MenuChoices>>();
-                if(menuChoices != null && menuChoices.Count != 0)
+                if (menuChoices != null && menuChoices.Count != 0)
                 {
-                    foreach(MenuChoices choice in menuChoices)
+                    foreach (MenuChoices choice in menuChoices)
                     {
-                        if(choice.IdUser == idUser && choice.IdMenu == idMenu)
+                        if (choice.IdUser == idUser && choice.IdMenu == idMenu)
                             return HttpStatusCode.OK;
-                    }    
+                    }
 
                 }
-                    return HttpStatusCode.NotFound;
+                return HttpStatusCode.NotFound;
             }
             return HttpStatusCode.UnprocessableEntity;
 
