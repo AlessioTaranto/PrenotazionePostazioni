@@ -57,23 +57,23 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-        .user-table-item img {
-            width: 3vw;
-            height: auto;
-            margin-right: 10px;
-            object-fit: contain;
-        }
+    .user-table-item img {
+        width: 3vw;
+        height: auto;
+        margin-right: 10px;
+        object-fit: contain;
+    }
 
-        .user-table-item h4 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
+    .user-table-item h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
 
-        .user-table-item p {
-            margin: 0;
-            font-size: 14px;
-        }
+    .user-table-item p {
+        margin: 0;
+        font-size: 14px;
+    }
 
     .menu-image {
         width: 70%;
@@ -104,10 +104,54 @@
         color: #495057;
         position: relative;
     }
+
+    .progress-bar {
+        height: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background-color: #f57c00;
+        width: 0;
+        transition: width 1s linear;
+    }
 </style>
+
+<script>
+    // Calculate the progress in percentage
+    function calculateProgress() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const totalMinutes = (hours * 60) + minutes;
+        const maxMinutes = 17 * 45; // Assuming 11:00 as the end time
+
+        return (totalMinutes / maxMinutes) * 100;
+    }
+
+    // Update the width of the progress bar fill
+    function updateProgressBar() {
+        const progress = calculateProgress();
+        $('.progress-bar-fill').css('width', `${progress}%`);
+    }
+
+    // Call the update function initially and every minute
+    $(document).ready(function () {
+        updateProgressBar();
+        setInterval(updateProgressBar, 60000); // Update every minute
+    });
+</script>
 
 <main class="d-flex justify-content-around">
     <div class="container text-center mt-5">
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
 
         <div class="row">
             <div class="col-sm-4">
