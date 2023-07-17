@@ -48,15 +48,15 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
-        public async Task<HttpResponseMessage> Delete(int idUser, int idVictim)
+       /*  public async Task<HttpResponseMessage> Delete(int idUser, int idVictim)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Vote");
 
-            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/vote/delete?idUser={idUser}&idVictim={idVictim}", null);
+            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/vote/delete?idUser={idUser}&idVictim={idVictim}");
 
             return httpResponseMessage;
         }
-
+ */
         
 
     }

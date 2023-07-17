@@ -26,10 +26,10 @@ namespace prenotazione_postazioni_mvc.Controllers
             return View();
         }
 
-        [HttpPost]
+        /* [HttpPost]
         [ActionName("Add")]
         public async Task<IActionResult> Add(int voteRusults, int idUser, int idVictim)
-        {
+        { */
             /*try
             {
                 ViewModel.Votazioni[i] = voto;
@@ -51,7 +51,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             //if (utenteResponse.StatusCode == HttpStatusCode.OK && utenteVotatoResponse.StatusCode == HttpStatusCode.OK)
             //{
 
-            if (voteRusults == 0)
+            /* if (voteRusults == 0)
             {
                   response = await _voteHttpService.Delete(idUser, idVictim);
             }
@@ -63,7 +63,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             {
                 response = await _voteHttpService.Add(new VoteDto(idUser, idVictim, 1));
             }
-            return Ok("Votazione effettuata");
+            return Ok("Votazione effettuata"); */
             //}
             //else return NotFound("Utente non trovato");
         }
@@ -82,5 +82,4 @@ namespace prenotazione_postazioni_mvc.Controllers
      *              ret array[(n+1)/2]
      *  
     */
-
-}
+//}
