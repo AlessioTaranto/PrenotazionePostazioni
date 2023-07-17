@@ -88,6 +88,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("AddHoliday")]
         public IActionResult AddHoliday(int year, int month, int day, string description)
         {
+            Console.WriteLine("Year: " + year + " - Month: " + month + " - day: " + day);
             ViewModel?.AddHoliday(year, month, day, description);
 
             return Ok();
@@ -101,7 +102,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <param name="day">Giorno selezionato</param>
         /// <returns>RedirectToAction -> Index()</returns>
         
-        [HttpGet]
+        [HttpDelete]
         [ActionName("DeleteHoliday")]
         public IActionResult DeleteHoliday(int year, int month, int day)
         {

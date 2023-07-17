@@ -54,11 +54,11 @@ namespace prenotazioni_postazioni_api.Repositories
         /// Rimuove una festività dal database
         /// </summary>
         /// <param name="day">indica il giorno in cui cade la festività</param>
-        internal void Delete(DateTime day)
+        internal void Delete(DateTime date)
         {
-            string query = $"DELETE FROM Holiday WHERE day = @day;";
+            string query = $"DELETE FROM Holiday WHERE date = @date;";
             SqlCommand sqlCommand = new SqlCommand(query);
-            sqlCommand.Parameters.AddWithValue("@day", day.ToString("yyyy-MM-dd"));
+            sqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd"));
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
     }

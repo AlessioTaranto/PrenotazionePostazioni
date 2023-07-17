@@ -647,14 +647,14 @@
                     event.preventDefault();
                 }
             }).done(function() {
-                //window.location.reload();
+                window.location.reload();
             });
         });
 
     $('#removefestabutton').on('click',
         function (event) {
             $.ajax({
-                type: "GET",
+                type: "DELETE",
                 url: "Settings/DeleteHoliday",
                 data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day" },
                 error: function (xhr) {

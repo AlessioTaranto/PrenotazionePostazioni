@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using prenotazione_postazioni_libs.Dto;
 using prenotazione_postazioni_libs.Models;
 using System.Text;
 
@@ -35,7 +36,22 @@ namespace prenotazione_postazioni_mvc.HttpServices
 
         public async Task<HttpResponseMessage> Add(DateTime date, string description)
         {
-            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Holiday");
+            HolidayDto holidayDto = new HolidayDto(date, description)
+            {
+                Date = date,
+                Description = description
+            };
+
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Holiday");
+
+            var jsonHoliday = JsonConvert.SerializeObject(holidayDto);
+            StringContent content = new StringContent(jsonHoliday, Encoding.UTF8, "application/json");
+
+            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/holiday/add", content);
+
+            return httpResponseMessage;
+
+            /*var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Holiday");
 
             string json = "{\"date\": \""+date.ToString("yyyy-MM-ddTHH:mm:ss") +"\", \"desc\": \""+description+"\"}";
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -43,14 +59,16 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var httpResponseMessage =
                 await httpClient.PostAsync($"https://localhost:7126/api/holiday/add", content);
 
-            return httpResponseMessage;
+            return httpResponseMessage;*/
         }
 
         public async Task<HttpResponseMessage> Delete(int year, int month, int day)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Holiday");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/festivita/delete?year={year}&month={month}&day={day}");
+            Console.WriteLine("DELETE: " + year + " " + month + " " + day);
+
+            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/holiday/delete?year={year}&month={month}&day={day}");
 
             return httpResponseMessage;
         }

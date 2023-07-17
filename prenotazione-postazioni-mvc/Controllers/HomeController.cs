@@ -206,7 +206,6 @@ public class HomeController : Controller
         Task<HttpResponseMessage>? getRq = ViewModel?.Delete(booking.Id);
         getRq.Wait();
         HttpStatusCode code = getRq.Result.StatusCode;
-        Console.WriteLine(code);
 
         if (code == HttpStatusCode.OK)
             return Ok("Prenotazione cancellata");    
