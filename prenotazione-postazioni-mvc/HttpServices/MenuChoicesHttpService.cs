@@ -58,7 +58,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-MenuChoices");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menuChoices/delete?idMenu={idMenu}&idUser={idUser}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/menuChoices/delete?idMenu={idMenu}&idUser={idUser}");
 
             return httpResponseMessage;
         }

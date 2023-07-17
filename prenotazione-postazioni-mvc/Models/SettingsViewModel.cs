@@ -58,7 +58,6 @@ namespace prenotazione_postazioni_mvc.Models
             try
             {
                 date = new DateTime(year, month, day);
-                Console.WriteLine(date);
             }
             catch (ArgumentOutOfRangeException)
             {

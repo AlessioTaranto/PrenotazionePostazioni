@@ -52,7 +52,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Vote");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/vote/delete?idUser={idUser}&idVictim={idVictim}", null);
+            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/vote/delete?idUser={idUser}&idVictim={idVictim}", null);
 
             return httpResponseMessage;
         }
