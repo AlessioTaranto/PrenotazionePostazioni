@@ -38,6 +38,25 @@ namespace prenotazioni_postazioni_api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("getAllWithRole")]
+        public IActionResult GetAllWithRole()
+        {
+            try
+            {
+                _logger.Info("Prelevando tutti gli utenti...");
+                List<UserRole> usersRoles = _UserService.GetAllWithRole();
+                _logger.Info("Prelevato tutti gli utenti con successo!");
+
+                return Ok(usersRoles);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("Errore interno: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         /// <summary>
         /// Restituisce un utente mediante il suo id
         /// </summary>

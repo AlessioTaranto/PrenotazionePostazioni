@@ -102,6 +102,7 @@ namespace prenotazioni_postazioni_api.Controllers
                 logger.Info("Giorno della festa: " + holidayDto.Date);
                 logger.Info("Descrizione della festa: " + holidayDto.Description);
                 logger.Info("Salvando una festaDto del database...");
+                Console.WriteLine("HolidayDto" + holidayDto.Date);
                 _holidayService.Add(holidayDto);
                 logger.Info("HolidayDto salvato con successo, Ok");
                 return Ok();

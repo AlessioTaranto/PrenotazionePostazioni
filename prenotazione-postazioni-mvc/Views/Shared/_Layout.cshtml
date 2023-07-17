@@ -20,13 +20,15 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/impostazioni.css">
     <link rel="stylesheet" href="css/votazioni.css">
+    <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="./_Layout.css">
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -115,7 +117,7 @@
             }
         
             <div>
-                <button id="pulsante" class="btn" onclick="reloadPage()">
+                <button id="pulsante" class="btn_theme" onclick="reloadPage()">
                     Tema
                 </button>
                 
@@ -162,7 +164,7 @@
                     }
                 
                     <div>
-                        <button id="pulsante" class="btn" onclick="reloadPage()">
+                        <button id="pulsante" class="btn_theme" onclick="reloadPage()">
                             Tema
                         </button>
 
@@ -225,7 +227,7 @@
         .coloreTesto{
             color: var(--font-color);
         }
-        .btn {
+        .btn_theme {
             border-radius: 0.5vw;
             font-size: 17px;
             background: transparent;
@@ -236,7 +238,7 @@
             position: relative;
         }
 
-        .btn::before {
+        .btn_theme::before {
             content: '';
             position: absolute;
             left: 0;
@@ -246,13 +248,13 @@
             background-color: darkorange;
             transition: .5s ease;
         }
-        .btn:hover {
+        .btn_theme:hover {
             color: var(--font-color);
         }   
-        .btn:hover::before {
+        .btn_theme:hover::before {
             width: 100%;
         }
-        .btn:hover::after {
+        .btn_theme:hover::after {
             height: 100%;
             color: aliceblue;
         }   
@@ -286,7 +288,7 @@
             font-size: 4vw;
             text-align: center;
         }
-        .btn{
+        .btn_theme{
             font-size: 17px;
             background: transparent;
             border: none;

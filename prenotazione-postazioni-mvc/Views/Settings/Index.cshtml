@@ -12,6 +12,7 @@
 @inject UserHttpService _userHttpService;
 @inject HolidayHttpService _holidayHttpService;
 @inject CapacityHttpService _capacityHttpService;
+@inject RoleHttpService _roleHttpService;
 
 <script>
     function changeTab(pageNumber) {
@@ -37,7 +38,7 @@
             <a onClick="changeTab(2)" class=@(ViewModel.StateTab == 2 ? "sidebar_checked" : " ")>Presenze</a>
             <a onClick="changeTab(3)" class=@(ViewModel.StateTab == 3 ? "sidebar_checked" : " ")>Utenti</a>
             <a onClick="changeTab(4)" class=@(ViewModel.StateTab == 4 ? "sidebar_checked" : " ")>Menu</a>
-            <a onClick="changeTab(4)" class=@(ViewModel.StateTab == 5 ? "sidebar_checked" : " ")>Emergenza</a>
+            <a onClick="changeTab(5)" class=@(ViewModel.StateTab == 5 ? "sidebar_checked" : " ")>Emergenza</a>
         </div>
     </div>
     <!-- Pagina caricata a destra -->
@@ -303,49 +304,148 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
                     break;
                 case 3:
                     <div class="settings_postazioni">
-                        <div class="container mt-4 ml-21 position-fixed users-body-div">
+                        <div class="settings_user_content">
                             <br />
                             <h2 style="color: var(--font-color);">Lista Utenti</h2>
                             <br />
                             <div class="list-group user-list">
-                                @{
-                                    Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAll();
-                                    getAllUtentiList.Wait();
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Nome e Cognome</th>
+                                        <th scope="col"> Email</th>
+                                        <th scope="col">Ruolo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAllWithRole();
+                                            getAllUtentiList.Wait();
 
-                                    List<User>? ListUtenti = null;
+                                            Task<HttpResponseMessage> getAllRoles = _roleHttpService.GetAll();
+                                            getAllRoles.Wait();
 
-                                    if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
-                                    {
-                                        ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<User>?>();
-                                        for (int i = 0; i < ListUtenti.Count; i++)
-                                        {
+                                            List<UserRole>? ListUtenti = null;
+                                            List<Role>? ListRoles = null;
 
-                                            User user = ListUtenti[i];
+                                            if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<UserRole>?>();
+                                                ListRoles = await getAllRoles.Result.Content.ReadFromJsonAsync<List<Role>?>();
+                                                
+                                                
+                                                foreach (UserRole userRole in ListUtenti){
+                                                    <tr scope="row">
+                                                        <td class="user_table">@userRole.Username @userRole.Surname</td>
+                                                        <td class="user_table">@userRole.Email</td>
+                                                        <td>
+                                                            <!-- Button trigger modal -->
+                                                            <button class="btn btn-primary bg-darkorange border-0" data-toggle="modal" data-target="#exampleModal_@userRole.Id">
+                                                               <i class="bi bi-pencil"></i> @userRole.Rolename
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <script>
 
-                                            <div class="list-group-item my-auto">
-                                                <div style="clear: both; display: flex; align-items: center;">
-                                                    <div style="float: left">
-                                                        <img src="~/img/user_icon.png" alt="@user.Id" style="width: 3vw; height: auto">
-                                                    </div>
-                                                    <div style="float: left; margin-left: 1vw;">
-                                                        <h4 class="list-group-item-heading">@user.Name @user.Surname</h4>
-                                                        <p class="list-group-item-text">@user.Email</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                    </script>
+
+                                                    <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModal_@userRole.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Seleziona il nuovo ruolo da assegnare all'utente: 
+                                                                        <br>
+                                                                        <b>@userRole.Username @userRole.Surname</b>
+                                                                        <br>
+                                                                        <select class="form-select" aria-label="Default select example" id="roleSelect_@userRole.Id">
+                                                                            <option selected>
+                                                                                @userRole.Rolename
+                                                                            </option>
+                                                                            @foreach(Role role in ListRoles){
+                                                                                if(role.Name != userRole.Rolename){
+                                                                                    <option id="roleSelect" value=@role.Name >
+                                                                                        @role.Name
+                                                                                    </option>
+                                                                                }
+                                                                            }
+                                                                        </select>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-danger border-0" data-dismiss="modal">Chiudi</button>
+                                                                        <button onclick="updateRole(@userRole.Id, $('#roleSelect_@userRole.Id').val())" type="button" class="btn btn-success border-0">Salva le modifiche</button>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                }
+                                            }
+
                                         }
-                                    }
-
-                                }
+                                    </tbody>
+                                </table>
+                                
                             </div>
                         </div>
                     </div>
+
+                    
+                    break;
+                case 4:
+                   
+                    <div class="settings_postazioni">
+                        <label class="custum-file-upload" for="file">
+                        <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <path fill="" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
+                        </div>
+                        <div class="text">
+                        <span>Click to upload image</span>
+                        </div>
+                        <input type="file" id="file">
+                        </label>
+
+
+                            <div class="form-container">
+                            <div class="form-content">
+                                <form>
+                                <label for="orario">Orario:</label>
+                                <input
+                                    type="time"
+                                    id="orario"
+                                    name="orario"
+                                    min="00:00"
+                                    max="23:59"
+                                    required
+                                />
+                                <input type="submit" value="Invia" />
+                                </form>
+                            </div>
+                            </div>
+
+
+
+
+                    </div>
+
+                    
+
+
+
                     break;
                 case 5:
                     <div class="settings_postazioni">
@@ -589,6 +689,17 @@
 
 </script>
 
+<script>
+    function updateRole(id, selectedRole) {
+        $.ajax({
+            type: "PUT",
+            url: "Settings/UpdateRole",
+            data: { "idUser": id, "futureRole": selectedRole },
+        });
+        setTimeout(() => {location.reload()}, 500);
+    } 
+</script>
+
 <!-- Buttons Script -->
 <script>
 
@@ -647,14 +758,14 @@
                     event.preventDefault();
                 }
             }).done(function() {
-                //window.location.reload();
+                window.location.reload();
             });
         });
 
     $('#removefestabutton').on('click',
         function (event) {
             $.ajax({
-                type: "GET",
+                type: "DELETE",
                 url: "Settings/DeleteHoliday",
                 data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day" },
                 error: function (xhr) {

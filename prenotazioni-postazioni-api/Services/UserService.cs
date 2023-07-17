@@ -29,6 +29,12 @@ namespace prenotazioni_postazioni_api.Services
             return _userRepository.GetAll();
         }
 
+        internal List<UserRole> GetAllWithRole()
+        {
+            logger.Info("Trovando tutti gli utenti con i loro ruoli nel database...");
+            return _userRepository.GetAllWithRole();
+        }
+
         /// <summary>
         /// Resituisce l'utente mediante il suo id
         /// </summary>

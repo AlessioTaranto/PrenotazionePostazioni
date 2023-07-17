@@ -11,13 +11,15 @@ namespace prenotazione_postazioni_mvc.Controllers
         public readonly CapacityHttpService _capacityHttpService;
         //HTTP Client Factory -> Festa
         public readonly HolidayHttpService _festaHttpService;
+        public readonly RoleHttpService _roleHttpService;
 
         public int numero = 0;
 
-        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService)
+        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService, RoleHttpService rolehttpService)
         {
             _capacityHttpService = capacityHttpService;
             _festaHttpService = holidayHttpService;
+            _roleHttpService = rolehttpService;
         }
 
         public IActionResult Index()
@@ -35,6 +37,12 @@ namespace prenotazione_postazioni_mvc.Controllers
         }
 
         public static SettingsViewModel? ViewModel { get; set; }
+
+        [HttpPut]
+        [ActionName("UpdateRole")]
+        public void UpdateRole(int idUser, string futureRole){
+            _roleHttpService.Update(idUser, futureRole);
+        }
 
         /// <summary>
         ///     Cambia la stanza selezionata nel tab "Covid / Capienza"
@@ -88,6 +96,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("AddHoliday")]
         public IActionResult AddHoliday(int year, int month, int day, string description)
         {
+            Console.WriteLine("Year: " + year + " - Month: " + month + " - day: " + day);
             ViewModel?.AddHoliday(year, month, day, description);
 
             return Ok();
@@ -101,7 +110,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         /// <param name="day">Giorno selezionato</param>
         /// <returns>RedirectToAction -> Index()</returns>
         
-        [HttpGet]
+        [HttpDelete]
         [ActionName("DeleteHoliday")]
         public IActionResult DeleteHoliday(int year, int month, int day)
         {

@@ -147,7 +147,7 @@ namespace prenotazioni_postazioni_api.Controllers
         }
 
         [Route("delete")]
-        [HttpGet]
+        [HttpDelete]
         public IActionResult Delete(int idMenu, int idUser) 
         {
             try

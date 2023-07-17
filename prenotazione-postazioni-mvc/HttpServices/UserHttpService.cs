@@ -23,6 +23,15 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
+        public async Task<HttpResponseMessage> GetAllWithRole()
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
+
+            var httpResponseMessage = await httpClient.GetAsync("https://localhost:7126/api/user/getAllWithRole");
+
+            return httpResponseMessage;
+        }
+
         public async Task<HttpResponseMessage> GetById(int id)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
