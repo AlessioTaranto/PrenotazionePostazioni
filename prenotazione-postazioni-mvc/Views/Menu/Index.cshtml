@@ -32,7 +32,9 @@
     }
 }
 <link rel="stylesheet" href="css/menu.css">
-
+<body style="background-color:var(--bkg1-color)">
+    
+    </body>
 <script>
     // Calculate the progress in percentage
     function calculateProgress() {
@@ -121,7 +123,7 @@
         </div>
         <div class="row">
             <div class="col-sm-8">
-                <label for="myTextarea">La tua scelta</label>
+                <label for="myTextarea" style="color: var(--font-color);">La tua scelta</label>
                 @{
                     if (ViewModel.Menu != null)
                     {

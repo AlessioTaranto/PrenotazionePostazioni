@@ -37,7 +37,7 @@
             <a onClick="changeTab(2)" class=@(ViewModel.StateTab == 2 ? "sidebar_checked" : " ")>Presenze</a>
             <a onClick="changeTab(3)" class=@(ViewModel.StateTab == 3 ? "sidebar_checked" : " ")>Utenti</a>
             <a onClick="changeTab(4)" class=@(ViewModel.StateTab == 4 ? "sidebar_checked" : " ")>Menu</a>
-            <a onClick="changeTab(4)" class=@(ViewModel.StateTab == 5 ? "sidebar_checked" : " ")>Emergenza</a>
+            <a onClick="changeTab(5)" class=@(ViewModel.StateTab == 5 ? "sidebar_checked" : " ")>Emergenza</a>
         </div>
     </div>
     <!-- Pagina caricata a destra -->
@@ -346,6 +346,38 @@
                             </div>
                         </div>
                     </div>
+                    break;
+                case 4:
+                   
+                    <div class="settings_postazioni">
+                        
+
+                            <div class="form-container">
+                            <div class="form-content">
+                                <form>
+                                <label for="orario">Orario:</label>
+                                <input
+                                    type="time"
+                                    id="orario"
+                                    name="orario"
+                                    min="00:00"
+                                    max="23:59"
+                                    required
+                                />
+                                <input type="submit" value="Invia" />
+                                </form>
+                            </div>
+                            </div>
+
+
+
+
+                    </div>
+
+                    
+
+
+
                     break;
                 case 5:
                     <div class="settings_postazioni">
