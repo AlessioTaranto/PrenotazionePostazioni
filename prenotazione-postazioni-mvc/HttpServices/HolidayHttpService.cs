@@ -66,8 +66,6 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Holiday");
 
-            Console.WriteLine("DELETE: " + year + " " + month + " " + day);
-
             var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/holiday/delete?year={year}&month={month}&day={day}");
 
             return httpResponseMessage;
