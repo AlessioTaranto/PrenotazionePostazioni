@@ -57,9 +57,9 @@
         display: flex;
         align-items: center;
         padding: 10px;
-        background-color: #f8f9fa;
+        background-color: var(--bkg-color);
         border-radius: 15px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px var(--shadow-color);
     }
 
     .user-table-item img {
@@ -73,6 +73,7 @@
         margin: 0;
         font-size: 18px;
         font-weight: bold;
+        color: var(--font-color);
     }
 
     .user-table-item p {
@@ -91,12 +92,13 @@
     .btn-invia {
         background-color: #f57c00;
         border-color: #f57c00;
-        color: white;
+        color: var(--font-color);
         padding: 12px 24px;
         font-size: 16px;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s, border-color 0.3s;
+        
     }
 
     .btn-invia:hover {
@@ -119,18 +121,18 @@
         height: 5rem;
         font-size: 16px;
         padding: 10px;
-        border: 1px solid #ced4da;
+        border: 1px solid var(--shadow-color);
         border-radius: 5px;
-        background-color: transparent;
+        background-color: var(--bkg-color);
         color: #495057;
         position: relative;
     }
 
     .progress-bar {
         height: 20px;
-        background-color: #f8f9fa;
+        background-color: var(--bkg-color);
         border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px var(--shadow-color);
         overflow: hidden;
         margin-bottom: 20px;
         position: relative;
@@ -150,7 +152,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 14px;
-        color: #212529;
+        color: var(--font-color);
     }
     </style>
 
@@ -237,7 +239,7 @@
                                         <img src="img/user_icon.png" alt="@menuChoice.IdUser">
                                         <div class="user-table-col">
                                             <h4>@user.Name @user.Surname</h4>
-                                            <p>@menuChoice.Choice</p>
+                                            <p style="color: var(--font-color);">@menuChoice.Choice</p>
                                         </div>
                                     </div>
 
@@ -251,7 +253,7 @@
             <div class="col-sm-8">
                 <div style="display: flex; align-items: center; justify-content: center;">
                     <img class="menu-image" src="@ViewModel.GetImage()" alt="Menu" />
-                    <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="fullscreen-button">Menu schermo intero</button>
+                    <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="fullscreen-button" style="color: var(--font-color);">Menu schermo intero</button>
                 </div>
             </div>
         </div>
@@ -283,7 +285,7 @@
                             </div>
                         </div>
 
-                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64" value="@ViewModel.GetMenuChoice()">
+                        <input style="color: var(--font-color);" type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64" value="@ViewModel.GetMenuChoice()">
                         <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="invia">Invia ordine</button>
 
                         if (ViewModel.MenuChoice == null)
@@ -338,7 +340,7 @@
 
                         <script>
                             $(".choice-input").on("input", function () {
-                                if ($(this).val().trim() !== "") {
+                                if ($(this).val().trim() !== "") {"
                                     $(this).addClass("has-value");
                                 } else {
                                     $(this).removeClass("has-value");

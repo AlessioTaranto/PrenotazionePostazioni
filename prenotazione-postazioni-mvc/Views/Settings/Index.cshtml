@@ -75,7 +75,7 @@
 
                                     <h5>Capienza Normale</h5>
                                     <input class="form-control" type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 100%" value=@ViewModel.CapacitySettingsViewModel.GetCapacity(@ViewModel.CapacitySettingsViewModel.Room)>
-                                    <h5>Capienza Covid</h5>
+                                    <h5>Capienza emergenza</h5>
                                     <input class="form-control" type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 100%" value=@(ViewModel.CapacitySettingsViewModel.GetCapacityEmergency(@ViewModel.CapacitySettingsViewModel.Room))>
                                 </div>
                             }
@@ -492,38 +492,42 @@
                     break;
                 case 5:
                     <div class="settings_postazioni">
-                        <div class="container mt-4 ml-21 position-sticky admin-body-div">
-                            <br>
-                            <h5 style="color: var(--font-color);">Modalità Covid</h5>
-                            <label class="switch">
-                                @{
-                                    HttpResponseMessage? getCovidMode = await _capacityHttpService.GetModEmergency();
-                                    bool Covid = false;
-                                    if (getCovidMode.StatusCode == HttpStatusCode.OK)
-                                    {
-                                        Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
+                <div class="emmergenza_content">
+    <div>
+        <br>
+        <h5 style="color: var(--font-color);">Modalità Emergenza</h5>
+        <label class="switch">
+            @{
+                HttpResponseMessage? getCovidMode = await _capacityHttpService.GetModEmergency();
+                bool Covid = false;
+                if (getCovidMode.StatusCode == HttpStatusCode.OK)
+                {
+                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
 
-                                        if (Covid)
-                                        {
-                                            <input type="checkbox" id="covid-switch-btn" checked>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" id="covid-switch-btn">
-                                        }
-                                    }
-                                }
-                                <span class="slider"></span>
-                                <div class="background-button">
-                                <button class="button">
-                                    COVID
-                                </button>
-                                </div>
+                    if (Covid)
+                    {
+                        <input type="checkbox" id="covid-switch-btn" checked>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="covid-switch-btn">
+                    }
+                }
+            }
+            <div class="background-button" style="display: flex; justify-content: center; align-items: center;">
+                <button class="button">
+                    EMERGENZA
+                </button>
+            </div>
+        </label>
+        <br>
+    </div>
+</div>
 
-                            </label>
-                            <br>
-                        </div>
-                    </div>
+
+                                
+                            </div>
+                           
                     break;
             }
         }

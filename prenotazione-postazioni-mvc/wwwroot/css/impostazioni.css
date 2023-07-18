@@ -125,6 +125,13 @@
   flex-direction: column;
   overflow-y: scroll;
 }
+.emmergenza_content {
+  padding: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .postazioni_image_container img {
   width: 50vw;
   height: 100%;
