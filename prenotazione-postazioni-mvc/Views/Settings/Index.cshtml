@@ -317,14 +317,14 @@
                             <br />
                             <div class="list-group user-list">
                                 <table class="table">
-                                    <thead>
+                                    <thead style="color: var(--font-color);"> 
                                         <tr>
                                         <th scope="col">Nome e Cognome</th>
                                         <th scope="col"> Email</th>
                                         <th scope="col">Ruolo</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody  >
                                         @{
                                             Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAllWithRole();
                                             getAllUtentiList.Wait();
@@ -343,11 +343,11 @@
                                                 
                                                 foreach (UserRole userRole in ListUtenti){
                                                     <tr scope="row">
-                                                        <td class="user_table">@userRole.Username @userRole.Surname</td>
-                                                        <td class="user_table">@userRole.Email</td>
+                                                        <td style="color: var(--font-color);" class="user_table">@userRole.Username @userRole.Surname</td>
+                                                        <td style="color: var(--font-color);" class="user_table">@userRole.Email</td>
                                                         <td>
                                                             <!-- Button trigger modal -->
-                                                            <button class="btn btn-primary bg-darkorange border-0" data-toggle="modal" data-target="#exampleModal_@userRole.Id">
+                                                            <button style="color: var(--font-color);"class="btn btn-primary bg-darkorange border-0"  data-toggle="modal" data-target="#exampleModal_@userRole.Id">
                                                                <i class="bi bi-pencil"></i> @userRole.Rolename
                                                             </button>
                                                         </td>
@@ -361,18 +361,18 @@
                                                             
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
+                                                                    <div style="background-color: var(--bkg-color);" class="modal-header">
+                                                                        <h5 style="color: var(--font-color);" class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
+                                                                        <span aria-hidden="true" style="color: var(--font-color);">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body" style="color:var(--font-color); background-color: var(--bkg-color);" >
                                                                         Seleziona il nuovo ruolo da assegnare all'utente: 
                                                                         <br>
                                                                         <b>@userRole.Username @userRole.Surname</b>
                                                                         <br>
-                                                                        <select class="form-select" aria-label="Default select example" id="roleSelect_@userRole.Id">
+                                                                        <select style="color: var(--font-color); background-color: var(--bkg-color);" class="form-select" aria-label="Default select example" id="roleSelect_@userRole.Id">
                                                                             <option selected>
                                                                                 @userRole.Rolename
                                                                             </option>
@@ -386,7 +386,7 @@
                                                                         </select>
 
                                                                     </div>
-                                                                    <div class="modal-footer">
+                                                                    <div class="modal-footer" style="background-color: var(--bkg-color);">
                                                                         <button type="button" class="btn btn-danger border-0" data-dismiss="modal">Chiudi</button>
                                                                         <button onclick="updateRole(@userRole.Id, $('#roleSelect_@userRole.Id').val())" type="button" class="btn btn-success border-0">Salva le modifiche</button>
                                                                     </div>
@@ -405,37 +405,80 @@
                     </div>
 
                     
-                    break;
+                break;
+
                 case 4:
                    
                     <div class="settings_postazioni">
-                        <label class="custum-file-upload" for="file">
-                        <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <path fill="" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
-                        </div>
-                        <div class="text">
-                        <span>Click to upload image</span>
-                        </div>
-                        <input type="file" id="file">
-                        </label>
 
-
-                            <div class="form-container">
-                            <div class="form-content">
-                                <form>
-                                <label for="orario">Orario:</label>
+                        
+                            <div class="upload-box">
                                 <input
-                                    type="time"
-                                    id="orario"
-                                    name="orario"
-                                    min="00:00"
-                                    max="23:59"
-                                    required
+                                    type="file"
+                                    id="fileInput"
+                                    accept="image/*"
+                                    style="display: none"
                                 />
-                                <input type="submit" value="Invia" />
-                                </form>
-                            </div>
-                            </div>
+                                <button class="custom-file-upload" id="customUploadButton">
+                                    Carica il Menu
+                                </button>
+                                <div class="image-preview">
+                                    <img id="previewImage" src="#" alt="Anteprima immagine" />
+                                </div>
+                                </div>
+
+                                <script>
+                                const fileInput = document.getElementById("fileInput");
+                                const previewImage = document.getElementById("previewImage");
+                                const imagePreviewDiv = document.querySelector(".image-preview");
+                                const customUploadButton = document.getElementById("customUploadButton");
+
+                                customUploadButton.addEventListener("click", function () {
+                                    fileInput.click();
+                                });
+
+                                fileInput.addEventListener("change", function () {
+                                    const file = fileInput.files[0];
+                                    const reader = new FileReader();
+
+                                    reader.onload = function () {
+                                    previewImage.src = reader.result;
+                                    imagePreviewDiv.style.display = "block";
+                                    };
+
+                                    if (file) {
+                                    reader.readAsDataURL(file);
+                                    }
+                                });
+                                </script>
+
+                        
+
+
+
+
+
+
+
+
+
+                                <div class="form-container">
+                                <div class="form-content">
+                                    <form>
+                                    <label for="orario">Orario:</label>
+                                    <input
+                                        type="time"
+                                        id="orario"
+                                        name="orario"
+                                        min="00:00"
+                                        max="23:59"
+                                        required
+                                        style="color: var(--font-color);"
+                                    />
+                                    <input type="submit" style="color: var(--font-color);" value="Invia" />
+                                    </form>
+                                </div>
+                                </div>
 
 
 
@@ -449,7 +492,7 @@
                     break;
                 case 5:
                     <div class="settings_postazioni">
-                        <div class="container mt-4 ml-21 position-fixed admin-body-div">
+                        <div class="container mt-4 ml-21 position-sticky admin-body-div">
                             <br>
                             <h5 style="color: var(--font-color);">Modalità Covid</h5>
                             <label class="switch">
@@ -471,6 +514,12 @@
                                     }
                                 }
                                 <span class="slider"></span>
+                                <div class="background-button">
+                                <button class="button">
+                                    COVID
+                                </button>
+                                </div>
+
                             </label>
                             <br>
                         </div>
@@ -807,7 +856,7 @@
             console.log("test1")
         } else {
             document.getElementById("changeMap").src = "/img/piantinaWhite.png";
-            console.log("test2")
+            console.log("test")
         }
     })
 
