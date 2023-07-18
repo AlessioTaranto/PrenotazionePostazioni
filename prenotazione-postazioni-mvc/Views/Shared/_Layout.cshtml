@@ -14,7 +14,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="google-signin-client_id" content="989509766036-m7kb2is391d96vcs669p9t808ij9kjlp.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="255636661130-apnu1c5f0r8bdh2g689cofid82j7g5m9.apps.googleusercontent.com">
 
     <title>@ViewData["Title"] | Omnia Group</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -65,7 +65,7 @@
     
 <header>
     
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
 <script>
      function test() {
@@ -123,10 +123,9 @@
                 
             </div>
             <div class="order-3">
-                <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
-            </div>      
+                <a asp-area="" asp-controller="Home" asp-action="Login">login</a>                
+            </div>
         </div>
-
 
         <nav class="navbar_menu_2 navbar navbar-expand-lg navbar-light bg-darkorange">
             <div class="container-fluid">
@@ -168,10 +167,7 @@
                             Tema
                         </button>
 
-                    </div>
-                    <div class="order-3">
-                        <a class="g-signin2" data-onsuccess="onSignIn" asp-area="" asp-controller="Home" asp-action="Login"></a>                
-                    </div>      
+                    </div>   
                 </div>
                 </div>
             </div>

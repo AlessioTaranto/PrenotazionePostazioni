@@ -21,9 +21,9 @@
     <!-- Utente fittizzio -->
     User? LoggedUser = new User(
                 1,
-                "Andrea",
-                "Redegalli",
-                "redegalli03@gmail.com",
+                "guest",
+                "guest",
+                "guest@gmail.com",
                 1
             );
 
@@ -71,13 +71,6 @@
     //prova2
 }
 
-<!-- HIDDEN VALUES -->
-<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
-<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
-<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.StartDate)</p>
-<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
-
-
 <script>
     $(document).ready(function(){
         if(localStorage.getItem("theme") =="theme-light"){
@@ -88,6 +81,33 @@
     })
     
   </script>
+@if (User.Identity.IsAuthenticated)
+{
+    LoggedUser.Name = @User.Claims.ElementAt(2).Value;
+    LoggedUser.Surname = @User.Claims.ElementAt(3).Value;
+    LoggedUser.Email = @User.Claims.ElementAt(4).Value;
+    HttpResponseMessage getByEmail = await _userHttpService.GetByEmail(LoggedUser.Email);
+    User? user = null;
+    if (getByEmail.StatusCode == HttpStatusCode.OK)
+    {
+        user = getByEmail.Content.ReadFromJsonAsync<User>().Result;
+    } else
+    {
+        user = new User(LoggedUser.Name, LoggedUser.Surname, LoggedUser.Email, 1017);
+        HttpResponseMessage add = await _userHttpService.Add(user);
+        user = add.Content.ReadFromJsonAsync<User>().Result;
+    }
+    LoggedUser.Id = user.Id;
+}
+
+
+
+<!-- HIDDEN VALUES -->
+<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
+<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
+<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.StartDate)</p>
+<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
+
   
 <!---->
 <div class="home_container">

@@ -6,7 +6,8 @@ using Microsoft.Net.Http.Headers;
 using prenotazione_postazioni_mvc.HttpServices;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+var services = builder.Services;
+var Configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -19,15 +20,15 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-}).AddCookie().AddGoogle(GoogleDefaults.AuthenticationScheme, options => 
-{
-    options.ClientId = "989509766036-m7kb2is391d96vcs669p9t808ij9kjlp.apps.googleusercontent.com";
-    options.ClientSecret = "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";
-    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+services.AddAuthentication(options => {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+}).AddCookie(options =>{
+    options.LoginPath = "/Home/Login";
+}).AddGoogle(GoogleDefaults.AuthenticationScheme, options => {
+        options.ClientId = Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+        options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
 });
 
 builder.Services.AddHttpClient("PrenotazionePostazioni-Stanze", httpClient =>
@@ -142,6 +143,9 @@ app.UseRouting();
 app.UseCors();
 
 app.UseAuthorization();
+
+app.UseAuthentication();
+
 
 app.UseSession();
 
