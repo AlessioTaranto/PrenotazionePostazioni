@@ -262,13 +262,12 @@ public class HomeController : Controller
             });
 
         return RedirectToAction("Index");
-        return Json(claims);
     }
 
-    [Authorize]
     [ActionName("Logout")]
     public async Task<IActionResult> Logout()
     {
+        Console.Write("logout");
         await HttpContext.SignOutAsync();
         return RedirectToAction("Index");
     }
