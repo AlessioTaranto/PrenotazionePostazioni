@@ -17,7 +17,8 @@
 
 @{
     //ViewModel.Menu = null;
-    User? LoggedUser = new User(4, "Andrea", "Redegalli", "redegalli03@gmail.com", 1);
+    User? LoggedUser = UserHttpService.LoggedUser;
+
     if (ViewModel.Menu != null)
     {
         HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(ViewModel.Menu.Id, LoggedUser.Id);
@@ -346,7 +347,7 @@
             // Disable the submit button on page load if the expiration time has passed
             $(document).ready(function () {
                 const { expirationTime, currentTime } = calculateProgress();
-                if (currentTime >= expirationTime) {
+                if (currentTime >= expirationTime || LoggedUser == null) {
                     disableSubmitButton();
                 }
             });

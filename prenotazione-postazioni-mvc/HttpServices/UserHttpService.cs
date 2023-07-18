@@ -8,6 +8,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class UserHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        public static User LoggedUser;
 
         public UserHttpService(IHttpClientFactory httpClientFactory)
         {
@@ -64,7 +65,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-User");
 
-            string json = "{" + "\"name\":\"" + user.Name + "\", " + "\"surna\": \"" + user.Surname + "\", " + "\"email\": \"" + user.Email + "\", " + "\"idRole\": " + user.IdRole + "}" + "";
+            string json = "{" + "\"name\":\"" + user.Name + "\", " + "\"surname\": \"" + user.Surname + "\", " + "\"email\": \"" + user.Email + "\", " + "\"idRole\": " + user.IdRole + "}" + "";
             StringContent ctx = new StringContent(json, Encoding.UTF8, "application/json");
 
             var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/user/add", ctx);
