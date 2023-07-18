@@ -317,14 +317,14 @@
                             <br />
                             <div class="list-group user-list">
                                 <table class="table">
-                                    <thead>
+                                    <thead style="color: var(--font-color);"> 
                                         <tr>
                                         <th scope="col">Nome e Cognome</th>
                                         <th scope="col"> Email</th>
                                         <th scope="col">Ruolo</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody  >
                                         @{
                                             Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAllWithRole();
                                             getAllUtentiList.Wait();
@@ -343,11 +343,11 @@
                                                 
                                                 foreach (UserRole userRole in ListUtenti){
                                                     <tr scope="row">
-                                                        <td class="user_table">@userRole.Username @userRole.Surname</td>
-                                                        <td class="user_table">@userRole.Email</td>
+                                                        <td style="color: var(--font-color);" class="user_table">@userRole.Username @userRole.Surname</td>
+                                                        <td style="color: var(--font-color);" class="user_table">@userRole.Email</td>
                                                         <td>
                                                             <!-- Button trigger modal -->
-                                                            <button class="btn btn-primary bg-darkorange border-0" data-toggle="modal" data-target="#exampleModal_@userRole.Id">
+                                                            <button style="color: var(--font-color);"class="btn btn-primary bg-darkorange border-0"  data-toggle="modal" data-target="#exampleModal_@userRole.Id">
                                                                <i class="bi bi-pencil"></i> @userRole.Rolename
                                                             </button>
                                                         </td>
@@ -361,18 +361,18 @@
                                                             
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
+                                                                    <div style="background-color: var(--bkg-color);" class="modal-header">
+                                                                        <h5 style="color: var(--font-color);" class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
+                                                                        <span aria-hidden="true" style="color: var(--font-color);">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body" style="color:var(--font-color); background-color: var(--bkg-color);" >
                                                                         Seleziona il nuovo ruolo da assegnare all'utente: 
                                                                         <br>
                                                                         <b>@userRole.Username @userRole.Surname</b>
                                                                         <br>
-                                                                        <select class="form-select" aria-label="Default select example" id="roleSelect_@userRole.Id">
+                                                                        <select style="color: var(--font-color); background-color: var(--bkg-color);" class="form-select" aria-label="Default select example" id="roleSelect_@userRole.Id">
                                                                             <option selected>
                                                                                 @userRole.Rolename
                                                                             </option>
@@ -386,7 +386,7 @@
                                                                         </select>
 
                                                                     </div>
-                                                                    <div class="modal-footer">
+                                                                    <div class="modal-footer" style="background-color: var(--bkg-color);">
                                                                         <button type="button" class="btn btn-danger border-0" data-dismiss="modal">Chiudi</button>
                                                                         <button onclick="updateRole(@userRole.Id, $('#roleSelect_@userRole.Id').val())" type="button" class="btn btn-success border-0">Salva le modifiche</button>
                                                                     </div>
@@ -856,7 +856,7 @@
             console.log("test1")
         } else {
             document.getElementById("changeMap").src = "/img/piantinaWhite.png";
-            console.log("test2")
+            console.log("test")
         }
     })
 
