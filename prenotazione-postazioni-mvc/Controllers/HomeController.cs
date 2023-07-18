@@ -81,8 +81,9 @@ public class HomeController : Controller
     public IActionResult ReloadRoom(string room)
     {
         if (ViewModel != null)
+        {
             ViewModel.Room = room;
-
+        } 
         return Ok("Stanza selezionata");
     }
 
@@ -267,8 +268,8 @@ public class HomeController : Controller
     [ActionName("Logout")]
     public async Task<IActionResult> Logout()
     {
-        Console.Write("logout");
         await HttpContext.SignOutAsync();
+        UserHttpService.LoggedUser = null;
         return RedirectToAction("Index");
     }
 }

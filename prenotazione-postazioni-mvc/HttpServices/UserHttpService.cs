@@ -8,6 +8,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class UserHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        public static User LoggedUser;
 
         public UserHttpService(IHttpClientFactory httpClientFactory)
         {

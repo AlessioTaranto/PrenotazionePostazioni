@@ -19,42 +19,7 @@
 
 @{
     <!-- Utente fittizzio -->
-    User? LoggedUser = new User(
-                1,
-                "guest",
-                "guest",
-                "guest@gmail.com",
-                1
-            );
-
-    HttpResponseMessage? checkExists = await _userHttpService.GetByEmail(LoggedUser.Email);
-
-    HttpStatusCode code = checkExists.StatusCode;
-    <body style="background-color:var(--bkg1-color)">
-    
-    </body>
-
-    if (checkExists.StatusCode == HttpStatusCode.OK)
-    {
-
-        LoggedUser = await checkExists.Content.ReadFromJsonAsync<User>();
-
-        HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
-    } else {
-        //User non assegnato, creazione fixare error 400
-        HttpResponseMessage createUser = await _userHttpService.Add(LoggedUser);
-
-        //Assegna anche l'id
-        if (createUser.StatusCode == HttpStatusCode.OK)
-        {
-            checkExists = await _userHttpService.GetByEmail(LoggedUser.Email);
-            code = checkExists.StatusCode;
-
-            LoggedUser = await checkExists.Content.ReadFromJsonAsync<User>();
-
-            HttpContextAccessor.HttpContext.Session.SetString("_User", JsonConvert.SerializeObject(LoggedUser));
-        }
-    }
+    User? LoggedUser = null;
 
     Room? Room = null;
 
@@ -80,26 +45,24 @@
         }
     })
     
-  </script>
+</script>
 @if (User.Identity.IsAuthenticated)
 {
-    LoggedUser.Name = @User.Claims.ElementAt(2).Value;
-    LoggedUser.Surname = @User.Claims.ElementAt(3).Value;
-    LoggedUser.Email = @User.Claims.ElementAt(4).Value;
-    HttpResponseMessage getByEmail = await _userHttpService.GetByEmail(LoggedUser.Email);
+    HttpResponseMessage getByEmail = await _userHttpService.GetByEmail(@User.Claims.ElementAt(4).Value);
     User? user = null;
     if (getByEmail.StatusCode == HttpStatusCode.OK)
     {
         user = getByEmail.Content.ReadFromJsonAsync<User>().Result;
+        user.IdRole = 1017;
     } else
     {
-        user = new User(LoggedUser.Name, LoggedUser.Surname, LoggedUser.Email, 1017);
+        user = new User(User.Claims.ElementAt(2).Value, User.Claims.ElementAt(3).Value, User.Claims.ElementAt(4).Value, 1017);
         HttpResponseMessage add = await _userHttpService.Add(user);
         user = add.Content.ReadFromJsonAsync<User>().Result;
     }
-    LoggedUser.Id = user.Id;
+    LoggedUser = new User(user.Id, user.Name, user.Surname, user.Email, user.IdRole);
+    UserHttpService.LoggedUser = LoggedUser;
 }
-
 
 
 <!-- HIDDEN VALUES -->
@@ -512,10 +475,13 @@
 
     $('area').on('click', function () {
         let nameStanza = event.target.alt;
+        console.log(nameStanza);
         $.ajax({
             type: "POST",
             url: "Home/ReloadRoom",
             data: { "room": nameStanza }
+        }).done(function(data) {
+            window.location.reload();
         });
         
     });
