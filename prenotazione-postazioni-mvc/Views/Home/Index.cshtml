@@ -56,12 +56,14 @@
         user.IdRole = 1017;
     } else
     {
-        user = new User(User.Claims.ElementAt(2).Value, User.Claims.ElementAt(3).Value, User.Claims.ElementAt(4).Value, 1017);
+        user = new User(User.Claims.ElementAt(2).Value, User.Claims.ElementAt(3).Value, User.Claims.ElementAt(4).Value, 1017, User.Claims.ElementAt(5).Value);
         HttpResponseMessage add = await _userHttpService.Add(user);
-        user = add.Content.ReadFromJsonAsync<User>().Result;
+        <p>ADD: @add.StatusCode</p>
     }
-    LoggedUser = new User(user.Id, user.Name, user.Surname, user.Email, user.IdRole);
+    LoggedUser = new User(user.Id, user.Name, user.Surname, user.Email, user.IdRole, user.Image);
     UserHttpService.LoggedUser = LoggedUser;
+
+    
 }
 
 
@@ -170,11 +172,12 @@
                                                         User? user = null; 
                                                         <li class="d-flex flex-row justify-content-left align-items-center">
                                                                 <div class="reservation d-flex flex-row justify-content-center align-items-center" style="font-size: 1vw;">
-                                                                    <img src="~/img/example/example-1.png">
+                                                                    
                                                                     @if(getUserFromBooking.StatusCode == HttpStatusCode.OK)
                                                                     {
                                                                         user = await getUserFromBooking.Content.ReadFromJsonAsync<User>();
-                                                                        @user.Name @user.Surname
+                                                                            <img src="@user.Image">
+                                                                        <span>@user.Name @user.Surname</span> 
                                                                     }
                                                             </div>
                                                             </li>

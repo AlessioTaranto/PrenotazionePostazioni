@@ -63,12 +63,13 @@ namespace prenotazione_postazioni_mvc.HttpServices
 
         public async Task<HttpResponseMessage> Add(User user)
         {
-            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-User");
 
-            string json = "{" + "\"name\":\"" + user.Name + "\", " + "\"surname\": \"" + user.Surname + "\", " + "\"email\": \"" + user.Email + "\", " + "\"idRole\": " + user.IdRole + "}" + "";
-            StringContent ctx = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/user/add", ctx);
+            var jsonBooking = JsonConvert.SerializeObject(user);
+            StringContent content = new StringContent(jsonBooking, Encoding.UTF8, "application/json");
+
+            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/user/add", content);
 
             return httpResponseMessage;
         }

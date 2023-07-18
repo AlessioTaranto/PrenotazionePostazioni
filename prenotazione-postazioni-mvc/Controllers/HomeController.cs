@@ -263,6 +263,7 @@ public class HomeController : Controller
             });
 
         return RedirectToAction("Index");
+        return Json(claims);
     }
 
     [ActionName("Logout")]
