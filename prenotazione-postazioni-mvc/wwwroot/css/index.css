@@ -36,9 +36,10 @@
 }
 
 .btn-collapse {
+  color: var(--font-color);
   width: 70%;
   height: auto;
-  border-bottom: 2px solid #2d2d2d;
+  border-bottom: 2px solid var(--font-color);
 }
 
 .btn-collapse a {

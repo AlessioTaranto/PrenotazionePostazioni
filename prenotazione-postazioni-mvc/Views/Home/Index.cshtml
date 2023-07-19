@@ -127,22 +127,22 @@
                             </div>
                         }else{
                             <div class="btn-collapse" id="selectHour">
-                                <a class="fw-bold" data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a style="color: var(--font-color);" class="fw-bold" data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Seleziona orario
                                 </a>
                             </div>
                             <div>
-                                <div class="collapse" id="orario">
+                                <div style="color: var(--font-color);" class="collapse" id="orario">
                                     <div class="p-2 d-flex flex-column align-items-left justify-content-center gap-3">
-                                        <div class="d-flex flex-column user-select-none">
-                                            <label for="start">Inizio</label>
-                                            <input class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00"
+                                        <div style="color: var(--font-color);" class="d-flex flex-column user-select-none">
+                                            <label for="start" >Inizio</label>
+                                            <input style="background-color: var(--bkg-color); color:var(--font-color);" class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00"
                                             min="07:00" max="22:00" required>
                                         </div>
                                                     
-                                        <div class="d-flex flex-column user-select-none">
+                                        <div style="color: var(--font-color); " class="d-flex flex-column user-select-none">
                                             <label for="finish">Termine</label>
-                                            <input class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00"
+                                            <input style="background-color: var(--bkg-color); color:var(--font-color);" class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00"
                                             min="07:00" max="22:00" required>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@
                             </div>
                             <br>
                             <div class="btn-collapse">
-                                <a class="fw-bold" data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a style="color: var(--font-color);" class="fw-bold" data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Prenotazioni
                                 </a>
                             </div>
@@ -183,7 +183,7 @@
                                                             </li>
                                                         }
                                                     }else{
-                                                        <li class="m-0">
+                                                        <li class="m-0" style="color: var(--font-color);">
                                                             Nessuna prenotazione
                                                         </li>
                                                     }
