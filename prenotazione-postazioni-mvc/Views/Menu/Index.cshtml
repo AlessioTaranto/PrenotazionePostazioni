@@ -26,11 +26,38 @@
         {
             MenuChoices menuChoice = await checkExists.Content.ReadFromJsonAsync<MenuChoices>();
 
-            if (menuChoice != null)
-            {
-                ViewModel.MenuChoice = menuChoice;
-            }
+            if (menuChoice != null) ViewModel.MenuChoice = menuChoice;
+
         }
+    }
+    else
+    {
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#modalMenuNull" id="button1">
+            Launch static backdrop modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalMenuNull" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Info Menu</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="javascript:history.back()"></button>
+                    </div>
+                    <div class="modal-body">
+                        Il menu del @ViewData["DateSelected"] non è disponibile @ViewModel.GetDescriptionHoliday()
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary bg-darkorange" data-bs-dismiss="modal" onclick="javascript:history.back()">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () { $("#button1").trigger("click") })
+        </script>
     }
 }
 
@@ -210,12 +237,9 @@
                                 menuChoices = await getAllByMenu.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
                                 foreach (MenuChoices menuChoice in menuChoices)
                                 {
-
                                     Task<HttpResponseMessage> getUserById = _userHttpService.GetById(menuChoice.IdUser);
                                     getUserById.Wait();
-
                                     user = await getUserById.Result.Content.ReadFromJsonAsync<User?>();
-
                                     <div class="user-table-item">
                                         <img src="img/user_icon.png" alt="@menuChoice.IdUser">
                                         <div class="user-table-col">
@@ -223,7 +247,6 @@
                                             <p>@menuChoice.Choice</p>
                                         </div>
                                     </div>
-
                                 }
                             }
 
@@ -253,8 +276,8 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel"> Menu @ViewData["DateSelected"]</h1>
-                                        <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close" onclick="location.reload()"></button>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Menu @ViewData["DateSelected"]</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload()"></button>
                                     </div>
                                     <div class="modal-body">
                                         Ordine inviato con successo
@@ -297,42 +320,39 @@
                                     var choice = $("#myInputChoice").val().trim();
                                     var idMenu = @ViewModel.Menu.Id;
                                     var idUser = @LoggedUser.Id;
+                                    var previousChoice = "@ViewModel.MenuChoice.Choice";
                                     console.log("eliminazione : Choice: " + choice + " idMenu: " + idMenu + " idUser: " + idUser);
 
-                                    $.ajax({
-                                        type: "DELETE",
-                                        url: "/Menu/deleteChoice",
-                                        data: { "idMenu": idMenu, "idUser": idUser }
-                                    }).done(function () {
+                                    if (previousChoice !== choice) {
                                         $.ajax({
-                                            type: "POST",
-                                            url: "/Menu/addChoice",
-                                            data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
-                                            success: function () {
-                                                $('#myButton').trigger('click');
-                                            }
-                                        });
-                                    })
+                                            type: "DELETE",
+                                            url: "/Menu/deleteChoice",
+                                            data: { "idMenu": idMenu, "idUser": idUser }
+                                        }).done(function () {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "/Menu/addChoice",
+                                                data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
+                                                success: function () {
+                                                    $('#myButton').trigger('click');
+                                                }
+                                            });
+                                        })
+                                    }
+                                    else {
+                                        $('#myButton').trigger('click');
+                                    }
 
                                 });
                             </script>
                         }
 
-
-                        <script>
-                            $(".choice-input").on("input", function () {
-                                if ($(this).val().trim() !== "") {
-                                    $(this).addClass("has-value");
-                                } else {
-                                    $(this).removeClass("has-value");
-                                }
-                            });
-                        </script>
+                       
                     }
                     else
                     {
-                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64">
-                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia">Invia</button>
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64" disabled>
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia" disabled>Invia</button>
                     }
                 }
 
