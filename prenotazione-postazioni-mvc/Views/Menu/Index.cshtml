@@ -41,14 +41,14 @@
         <div class="modal fade" id="modalMenuNull" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Info Menu</h1>
+                    <div style="background-color: var(--bkg-color);" class="modal-header">
+                        <h1 style="color: var(--font-color);" class="modal-title fs-5" id="staticBackdropLabel">Info Menu</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="javascript:history.back()"></button>
                     </div>
-                    <div class="modal-body">
+                    <div style="background-color: var(--bkg-color); color: var(--font-color); " class="modal-body">
                         Il menu del @ViewData["DateSelected"] non è disponibile @ViewModel.GetDescriptionHoliday()
                     </div>
-                    <div class="modal-footer">
+                    <div style="background-color: var(--bkg-color);" class="modal-footer">
                         <button type="button" class="btn btn-secondary bg-darkorange" data-bs-dismiss="modal" onclick="javascript:history.back()">Ok</button>
                     </div>
                 </div>
