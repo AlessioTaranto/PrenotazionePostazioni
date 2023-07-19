@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Net.Http.Headers;
 using prenotazione_postazioni_mvc.HttpServices;
+using Hangfire;
+using Hangfire.SqlServer;
+using prenotazione_postazioni_mvc;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -135,6 +139,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -153,6 +159,8 @@ app.UseEndpoints(endpoints => {
     endpoints.MapDefaultControllerRoute();
 });
 
+
+
 app.Use(async (context, next) =>
 {
     // Do work that can write to the Response.
@@ -164,5 +172,21 @@ app.Run(async context =>
 {
     context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 });
+
+// Configurazione di Hangfire con SQL Server come storage
+string connectionString = "Data Source=localhost;Initial Catalog=PrenotazioniPostazioni;User Id=Stagista-5;Integrated Security=True;TrustServerCertificate=True;"; // Imposta la tua connection string del database
+GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
+app.UseHangfireServer();
+app.UseHangfireDashboard();
+
+// Imposta l'ora e i minuti desiderati per l'invio delle email (esempio: 18:30)
+int ora = 17;
+int minuti = 55;
+
+// Aggiungi un'attività periodica per l'invio delle email ogni giorno all'ora e ai minuti specificati
+string cronExpression = $"{minuti} {ora} * * *"; // Minuti Ore * * *
+RecurringJob.AddOrUpdate(() => EmailUtility.InviaEmail("andrix.braia@gmail.com", "Oggetto dell'email", "Corpo dell'email"), cronExpression);
+
+
 
 app.Run();

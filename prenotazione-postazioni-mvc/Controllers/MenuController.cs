@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Mvc;
 using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
@@ -32,7 +33,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             return View(ViewModel);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [ActionName("sendMail")]
         public async Task<IActionResult> SendMail()
         {
@@ -44,7 +45,36 @@ namespace prenotazione_postazioni_mvc.Controllers
             EmailUtility.InviaEmail(destinatario, oggetto, corpo);
 
             return RedirectToAction("Index");
+        }*/
+
+        [HttpPost]
+        [ActionName("sendMail")]
+        public async Task<IActionResult> SendEmail()
+        {
+            try
+            {
+                // Chiamata al metodo InviaEmail
+                Task<HttpResponseMessage> getIdMenu = _menuHttpService.GetByDate(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                Menu? menu = await getIdMenu.Result.Content.ReadFromJsonAsync<Menu?>();
+                Task<HttpResponseMessage> getAllChoice = _choicesHttpService.GetByIdMenu(menu.Id);
+                List<MenuChoices>? menuChoices = null;
+                menuChoices = await getAllChoice.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
+                string choices = "";
+                foreach(MenuChoices mc in menuChoices) {
+                    choices += mc.Choice + "\n";
+                }
+                EmailUtility.InviaEmail("andrix.braia@gmail.com", "Prova", choices);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Gestione dell'eccezione - puoi registrare l'errore, mostrare un messaggio di errore all'utente, ecc.
+                // Per esempio:
+                ViewBag.ErrorMessage = "Si è verificato un errore durante l'invio dell'email. Riprova più tardi.";
+                return View("Error");
+            }
         }
+
 
         [HttpGet]
         [ActionName("reloadMenu")]

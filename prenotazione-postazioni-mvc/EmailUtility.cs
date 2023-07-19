@@ -1,11 +1,13 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using System.Threading.Tasks;
+using Hangfire;
 
 namespace prenotazione_postazioni_mvc
 {
     public class EmailUtility
     {
-        public static void InviaEmail(string destinatario, string oggetto, string corpo)
+        public static async Task InviaEmail(string destinatario, string oggetto, string corpo)
         {
             // Configura le informazioni del server SMTP
             string host = "smtp.gmail.com";
@@ -22,8 +24,16 @@ namespace prenotazione_postazioni_mvc
             smtpClient.EnableSsl = true;
             smtpClient.Credentials = new NetworkCredential(username, password);
 
-            // Invia l'email
-            smtpClient.Send(message);
+            try
+            {
+                // Invia l'email in modo asincrono
+                await smtpClient.SendMailAsync(message);
+            }
+            catch (Exception ex)
+            {
+                // Lascia che l'eccezione venga catturata e gestita nel contesto in cui stai chiamando questo metodo.
+                throw;
+            }
         }
     }
 }
