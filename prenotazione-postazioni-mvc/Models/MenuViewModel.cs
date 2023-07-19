@@ -11,8 +11,7 @@ namespace prenotazione_postazioni_mvc.Models
     public class MenuViewModel
     {
         public DateTime Date { get; set; }
-        public DateOnly Day { get; set; }
-
+        public string DescriptionHoliday { get; set; }
         public Menu Menu { get; set; }
         public MenuChoices MenuChoice { get; set; }
         public List<Holiday> Holidays { get; set; }
@@ -23,7 +22,7 @@ namespace prenotazione_postazioni_mvc.Models
         public readonly UserHttpService _userHttpService;
 
 
-        public MenuViewModel(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService, HolidayHttpService holidayHttpService , UserHttpService userHttpService)
+        public MenuViewModel(MenuHttpService menuHttpService, MenuChoicesHttpService menuChoicesHttpService, HolidayHttpService holidayHttpService, UserHttpService userHttpService)
         {
             _menuHttpService = menuHttpService;
             _choicesHttpService = menuChoicesHttpService;
@@ -34,17 +33,17 @@ namespace prenotazione_postazioni_mvc.Models
 
         public string GetImage()
         {
-            if(Menu != null)
-            {
-            //Menu.Image = "https://marketplace.canva.com/EAD0UMPtOv4/1/0/1236w/canva-oro-tenue-elegante-matrimonio-menu-FQIyCfgp1aY.jpg";
-            return Menu.Image;
-            }
-            return "";
+            return Menu != null ? Menu.Image : "";
         }
-       
+
         public string GetMenuChoice()
         {
             return MenuChoice == null ? "" : MenuChoice.Choice;
+        }
+
+        public string GetDescriptionHoliday()
+        {
+            return DescriptionHoliday != null ? $"per festività : {DescriptionHoliday}" : "";
         }
 
         public async Task ReloadHoliday()
@@ -62,70 +61,35 @@ namespace prenotazione_postazioni_mvc.Models
 
         public async Task ReloadMenu()
         {
-            if (Holidays != null)
+            if (Holidays != null && Holidays.Count != 0)
             {
-                foreach (Holiday holiday in Holidays)
-                {
-                    if (holiday.Date == Date)
-                    {
-                        return;
-                    }
-                }
+                Holiday currentHoliday = Holidays.Find(holiday => holiday.Date.Day == Date.Day && holiday.Date.Month == Date.Month);
+                if (currentHoliday != null) DescriptionHoliday = currentHoliday.Description;
             }
 
-            
-            HttpResponseMessage responseMessage = await _menuHttpService.GetAll();
+            HttpResponseMessage responseMessage = await _menuHttpService.GetByDate(Date.Year, Date.Month, Date.Day);
+
             if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
             {
-                List<Menu> lista = await responseMessage.Content.ReadFromJsonAsync<List<Menu>>();
-                if (lista.Count == 0 || lista == null) return;
-                foreach (Menu menu in lista)
-                {
-                    if (menu.Date.Year == Date.Year && menu.Date.Month == Date.Month && menu.Date.Day == Date.Day)
-                    {
-                        Menu = menu;
-                        break;
-                    }
-                }
+                Menu menu = await responseMessage.Content.ReadFromJsonAsync<Menu>();
+                if (menu != null) Menu = menu;
+
             }
-        }
-       
-        public async Task<HttpStatusCode> ExistsChoice(int idMenu, int idUser)
-        {
-            HttpResponseMessage responseMessage = await _choicesHttpService.GetByUserAndIdMenu(idMenu, idUser);
-            //HttpResponseMessage responseMessage = await _choicesHttpService.GetAll();
-
-            
-            if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
-            {
-
-                List<MenuChoices> menuChoices = await responseMessage.Content.ReadFromJsonAsync<List<MenuChoices>>();
-                if (menuChoices != null && menuChoices.Count != 0)
-                {
-                    foreach (MenuChoices choice in menuChoices)
-                    {
-                        if (choice.IdUser == idUser && choice.IdMenu == idMenu)
-                            return HttpStatusCode.OK;
-                    }
-
-                }
-                return HttpStatusCode.NotFound;
-            }
-            return HttpStatusCode.UnprocessableEntity;
-
 
         }
+
+
 
         public async Task<HttpResponseMessage> Add(string choice, int idUser, int idMenu)
         {
-            if(choice == null) { throw new Exception("valori non ammessi"); }
+            if (choice == null) { throw new Exception("valori non ammessi"); }
             HttpResponseMessage response = await _choicesHttpService.Add(new MenuChoicesDto(idMenu, choice, idUser));
             return response;
         }
 
         public async Task<HttpResponseMessage> Delete(int idMenu, int idUser)
         {
-            HttpResponseMessage response = await _choicesHttpService.Delete(idMenu,idUser);
+            HttpResponseMessage response = await _choicesHttpService.Delete(idMenu, idUser);
             return response;
         }
     }

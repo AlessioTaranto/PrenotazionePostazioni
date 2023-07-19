@@ -21,7 +21,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         public async Task<HttpResponseMessage> GetByDate(int year, int month, int day)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Menu");
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menu/getByDate?year={year}&month={month}&day={day}");
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menu/getByDate?year={year}&month={month}&date={day}");
             return httpResponseMessage;
         }
 

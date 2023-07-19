@@ -53,9 +53,9 @@ namespace prenotazione_postazioni_mvc.Controllers
         public IActionResult AddChoice(string choice, int idUser, int idMenu)
         {
            
-            Task<HttpResponseMessage> responseMessage =  ViewModel.Add(choice, idUser, idMenu);
-            responseMessage.Wait();
-            HttpStatusCode code = responseMessage.Result.StatusCode;
+            Task<HttpResponseMessage> add =  ViewModel.Add(choice, idUser, idMenu);
+            add.Wait();
+            HttpStatusCode code = add.Result.StatusCode;
             if(code == HttpStatusCode.OK) return Ok("scelta inviata");
             return BadRequest();
         }
