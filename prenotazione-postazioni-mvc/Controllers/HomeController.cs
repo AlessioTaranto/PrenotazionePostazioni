@@ -81,8 +81,9 @@ public class HomeController : Controller
     public IActionResult ReloadRoom(string room)
     {
         if (ViewModel != null)
+        {
             ViewModel.Room = room;
-
+        } 
         return Ok("Stanza selezionata");
     }
 
@@ -237,12 +238,10 @@ public class HomeController : Controller
     }
 
 
-
-    //TESTING
-
-    /*[ActionName("Login")]
+    [ActionName("Login")]
     public async Task Login()
     {
+        Console.WriteLine("Login");
         await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
         {
             RedirectUri = Url.Action("GoogleResponse")
@@ -252,6 +251,7 @@ public class HomeController : Controller
     [ActionName("GoogleResponse")]
     public async Task<IActionResult> GoogleResponse()
     {
+        Console.Write("GoogleResponse");
         var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         var claims = result.Principal.Identities
             .FirstOrDefault().Claims.Select(claim => new
@@ -261,14 +261,16 @@ public class HomeController : Controller
                 claim.Type,
                 claim.Value
             });
+
+        return RedirectToAction("Index");
         return Json(claims);
     }
 
-    [Authorize]
     [ActionName("Logout")]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync();
+        UserHttpService.LoggedUser = null;
         return RedirectToAction("Index");
-    }*/
+    }
 }

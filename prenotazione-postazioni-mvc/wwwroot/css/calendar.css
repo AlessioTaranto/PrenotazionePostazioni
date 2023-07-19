@@ -1,5 +1,5 @@
 .calendar {
-  box-shadow: 0 0 12px 5px #dedede;
+  box-shadow: 0 0 12px 5px var(--shadow-color);
 }
 
 .calendar .head {

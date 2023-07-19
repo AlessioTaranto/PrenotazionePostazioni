@@ -101,10 +101,10 @@ namespace prenotazioni_postazioni_api.Services
         /// </summary>
         /// <param name="userDto"></param>
         /// <exception cref="PrenotazionePostazioniApiException"></exception>
-        internal void Add(UserDto userDto)
+        internal void Add(User user)
         {
+            Console.WriteLine("IMMAGINE DIO STROMBOLI: " + user.Image);
             logger.Info("Convertendo userDto in Utente...");
-            User user = new User(userDto.Name, userDto.Surname, userDto.Email, userDto.IdRole);
             logger.Info("Procedo con il salvataggio dell'utente nel database");
             _userRepository.Add(user);
         }

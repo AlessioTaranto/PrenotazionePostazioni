@@ -13,6 +13,7 @@ namespace prenotazione_postazioni_libs.Models
         public string Surname { get; set; }
         public string Email { get; set; }
         public int IdRole { get; set; }
+        public string Image { get; set; }
 
 
         private Exception ModelException { get; set; } = new Exception();
@@ -29,7 +30,17 @@ namespace prenotazione_postazioni_libs.Models
             this.Validate();
         }
 
+        public User(int id, string name, string surname, string email, int idRole, string Image)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Surname = surname;
+            this.Email = email;
+            this.IdRole = idRole;
+            this.Image = Image;
 
+            this.Validate();
+        }
 
         public User(string name, string surname, string email, int idRole)
         {
@@ -37,6 +48,17 @@ namespace prenotazione_postazioni_libs.Models
             Surname = surname;
             Email = email;
             IdRole = idRole;
+            this.Validate();
+        }
+
+        public User(string name, string surname, string email, int idRole, string Image)
+        {
+            Name = name;
+            Surname = surname;
+            Email = email;
+            IdRole = idRole;
+            this.Image = Image;
+
             this.Validate();
         }
 
