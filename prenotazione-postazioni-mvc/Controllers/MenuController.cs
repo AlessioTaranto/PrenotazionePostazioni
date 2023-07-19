@@ -3,6 +3,7 @@ using prenotazione_postazioni_libs.Models;
 using prenotazione_postazioni_mvc.HttpServices;
 using prenotazione_postazioni_mvc.Models;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace prenotazione_postazioni_mvc.Controllers
 {
@@ -29,6 +30,20 @@ namespace prenotazione_postazioni_mvc.Controllers
             ReloadHoliday();
             ReloadMenu();
             return View(ViewModel);
+        }
+
+        [HttpPost]
+        [ActionName("sendMail")]
+        public async Task<IActionResult> SendMail()
+        {
+            
+            string destinatario = "Joeipaccini@gmail.com";
+            string oggetto = "Prova";
+            string corpo = "Ciao Rullooooooo";
+
+            EmailUtility.InviaEmail(destinatario, oggetto, corpo);
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

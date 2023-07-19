@@ -14,6 +14,16 @@
 @inject MenuHttpService _menuHttpService;
 @inject UserHttpService _userHttpService;
 
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Menu/sendMail",
+        });
+    })
+</script>
+
 @{
     //ViewModel.Menu = null;
     User? LoggedUser = UserHttpService.LoggedUser;
