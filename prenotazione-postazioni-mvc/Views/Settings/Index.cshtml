@@ -276,38 +276,49 @@
                             </div>
                             <div class="settings_collapse_content">
                                 <h1 id="day-sel-2" style="color: var(--font-color);">
-                                    Seleziona una data
+                                    Presenze registrate:
                                 </h1>
                                 <br>
-                                <div class="btn-collapse">
-                                    <a data-toggle="collapse" id="presenti-btn" href="#presenti" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        Persone presenti
-                                    </a>
-                                    <div class="collapse" id="presenti">
-                                        <div class="card card-body person-div">
-                                            <ul id="lista-presenti">
-                                                @{
-                                                    HttpResponseMessage? getUtentiPrenotatiByDayResult = await _userHttpService.GetByDate(ViewModel.AttendanceSettingsViewModel.AttendanceSelected);
-                                                    List<User>? presenti = null;
-                                                    if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
-                                                    {
-                                                        presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
-                                                        for (int i = 0; i < presenti.Count; i++)
-                                                        {
-                                                            <li>
-                                                                <img src="~/img/example/example-1.png">@presenti[@i].Name @presenti[@i].Surname
-                                                            </li>
-                                                        }
-                                                    }
+                                    <ul class="lista_presenti" id="lista-presenti" style="list-style: none;">
+                                        @{
+                                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _userHttpService.GetByDate(ViewModel.AttendanceSettingsViewModel.AttendanceSelected);
+                                            List<User>? presenti = null;
+                                            if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
+                                                for (int i = 0; i < presenti.Count; i++)
+                                                {
+                                                    <li class="presenti_item">
+                                                        <img class="presenti_img" src="@presenti[@i].Image">@presenti[@i].Name @presenti[@i].Surname
+                                                    </li>
                                                 }
-                                            </ul>
-                                        </div>
-                                    </div>
+                                            }
+                                        }
+                                        <style>
+                                            
+                                            .lista_presenti{
+                                                width: 100%;
+                                                max-height: 50%;
+                                                overflow-y: scroll;
+                                                gap: 1vw
+                                            }
+                                            .presenti_item {
+                                                display: flex;
+                                                align-items: center;
+                                                margin-bottom: 10px;
+                                            }
+
+                                            .presenti_img {
+                                                width: 50px;
+                                                height: 50px;
+                                                border-radius: 50%;
+                                                margin-right: 10px;
+                                            }
+                                        </style>
+                                    </ul>
                                 </div>
-                                
                             </div>
                         </div>
-                    </div>
                     break;
                 case 3:
                     <div class="settings_postazioni">
@@ -316,7 +327,7 @@
                             <h2 style="color: var(--font-color);">Lista Utenti</h2>
                             <br />
                             <div class="list-group user-list">
-                                <table class="table">
+                                <table class="table"  style="height: 80%;">
                                     <thead style="color: var(--font-color);"> 
                                         <tr>
                                         <th scope="col">Nome e Cognome</th>
@@ -324,7 +335,7 @@
                                         <th scope="col">Ruolo</th>
                                         </tr>
                                     </thead>
-                                    <tbody  >
+                                    <tbody>
                                         @{
                                             Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAllWithRole();
                                             getAllUtentiList.Wait();
