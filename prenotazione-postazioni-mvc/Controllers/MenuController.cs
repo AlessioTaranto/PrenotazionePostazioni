@@ -54,7 +54,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                     if (getByUserId.Result.StatusCode == HttpStatusCode.OK)
                     {
                         User? user = await getByUserId.Result.Content.ReadFromJsonAsync<User?>();
-                        choices += user.Name + " " + user.Surname + " -->" + mc.Choice + "<br>";
+                        choices += user.Name + " " + user.Surname + " --> " + mc.Choice + "<br>";
                     }
                 }
                 EmailUtility.InviaEmail("Joeipaccini@gmail.com", "Prova", choices);
@@ -92,11 +92,20 @@ namespace prenotazione_postazioni_mvc.Controllers
         [ActionName("addChoice")]
         public IActionResult AddChoice(string choice, int idUser, int idMenu)
         {
-           
-            Task<HttpResponseMessage> add =  ViewModel.Add(choice, idUser, idMenu);
-            add.Wait();
-            HttpStatusCode code = add.Result.StatusCode;
-            if(code == HttpStatusCode.OK) return Ok("scelta inviata");
+            if (choice != null)
+            {
+                Task<HttpResponseMessage> add = ViewModel.Add(choice, idUser, idMenu);
+                add.Wait();
+                HttpStatusCode code = add.Result.StatusCode;
+                if (code == HttpStatusCode.OK) return Ok("scelta inviata");
+            }
+            else
+            {
+                Task<HttpResponseMessage> delete = ViewModel.Delete(idUser, idMenu);
+                delete.Wait();
+                HttpStatusCode code = delete.Result.StatusCode;
+                if (code == HttpStatusCode.OK) return Ok("scelta eliminata");
+            }
             return BadRequest();
         }
 
