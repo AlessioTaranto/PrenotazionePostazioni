@@ -36,6 +36,16 @@ namespace prenotazione_postazioni_mvc.Controllers
             return View(ViewModel);
         }
 
+        [HttpPost]
+        [ActionName("SaveImage")]
+        public void SaveImage(string image)
+        {
+            image = image.Substring(image.IndexOf(",")+1);
+            byte[] byteArray = Convert.FromBase64String(image);
+            _menuHttpService.Add(DateTime.Now, byteArray);
+        }
+
+
         public static SettingsViewModel? ViewModel { get; set; }
 
         [HttpPut]
