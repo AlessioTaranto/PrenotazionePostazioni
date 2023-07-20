@@ -62,12 +62,11 @@
     if (getByEmail.StatusCode == HttpStatusCode.OK)
     {
         user = getByEmail.Content.ReadFromJsonAsync<User>().Result;
-        user.IdRole = 1017;
+        user.IdRole = 4;
     } else
     {
-        user = new User(User.Claims.ElementAt(2).Value, User.Claims.ElementAt(3).Value, User.Claims.ElementAt(4).Value, 1017, User.Claims.ElementAt(5).Value);
+        user = new User(User.Claims.ElementAt(2).Value, User.Claims.ElementAt(3).Value, User.Claims.ElementAt(4).Value, 4, User.Claims.ElementAt(5).Value);
         HttpResponseMessage add = await _userHttpService.Add(user);
-        <p>ADD: @add.StatusCode</p>
     }
     LoggedUser = new User(user.Id, user.Name, user.Surname, user.Email, user.IdRole, user.Image);
     UserHttpService.LoggedUser = LoggedUser;

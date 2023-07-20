@@ -7,6 +7,7 @@
 
 @inject IHttpContextAccessor HttpContextAccessor
 @inject UserHttpService _userHttpService;
+@inject RoleHttpService _roleHttpService;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,10 +97,19 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
                         </li>
+                        HttpResponseMessage getById = await _roleHttpService.GetById(UserHttpService.LoggedUser.IdRole);
+                        Role? role = null;
 
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
-                        </li>
+                        if(getById.StatusCode == HttpStatusCode.OK){
+                            role = await getById.Content.ReadFromJsonAsync<Role?>();
+
+                            if (role.AccessToSettings)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
+                                </li>
+                            }
+                        }
                     }
                 }
             </ul>
