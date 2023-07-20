@@ -171,15 +171,30 @@
                 <div class="collapse navbar-collapse bg-darkorange" id="navbarNavAltMarkup">
                 <hr>
                 <ul>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
-                    </li>
+                    @{
+                    if (UserHttpService.LoggedUser != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
+                        </li>
+                        HttpResponseMessage getById = await _roleHttpService.GetById(UserHttpService.LoggedUser.IdRole);
+                        Role? role = null;
+
+                        if(getById.StatusCode == HttpStatusCode.OK){
+                            role = await getById.Content.ReadFromJsonAsync<Role?>();
+                            if (role.AccessToSettings)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
+                                </li>
+                            }
+                        }
+                    }
+                }
                 </ul>
                 <hr>
                     
@@ -297,7 +312,7 @@
         .theme-dark {
             --bkg-color: #2c2c2c;
             --font-color: white;
-            --shadow-color: orange;
+            --shadow-color: #111;
             --bkg1-color: black;
         }
         .theme-light {

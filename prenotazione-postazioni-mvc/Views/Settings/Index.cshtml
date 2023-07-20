@@ -195,7 +195,6 @@
                                             }
                                         }
                                     }
-                                    <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="send-menu" style="color: var(--font-color);" onclick="sendmenu()">Imeil</button>
                                 </div>
                                 <br>
                                 <ul id="lista-feste"></ul>
@@ -298,7 +297,7 @@
                                                 presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
                                                 for (int i = 0; i < presenti.Count; i++)
                                                 {
-                                                    <li class="presenti_item">
+                                                    <li class="presenti_item" style="color: var(--font-color);">
                                                         <img class="presenti_img" src="@presenti[@i].Image">@presenti[@i].Name @presenti[@i].Surname
                                                     </li>
                                                 }
@@ -434,20 +433,23 @@
 
                    <div class="settings_postazioni">
                    
-                            <div class="upload-box">
+                            <div class="upload-box"  style="flex-direction: column; align-items: center; justify-content: center; padding: 2%">
                                 <input
                                     type="file"
                                     id="fileInput"
                                     accept="image/*"
                                     style="display: none"
                                 />
-                                <button class="custom-file-upload" id="customUploadButton">
+                                <button class="btn btn-primary bg-darkorange color-white border-0" id="customUploadButton">
                                     Carica il Menu
                                 </button>
-                                <div class="image-preview">
+                                <div class="image-preview" style="width: 100%; height: 100%">
                                     <img id="previewImage" src="#" alt="Anteprima immagine" />
                                 </div>
-                                </div>
+                                @if(DateTime.Now.Hour < 12 && DateTime.Now.Minute <= 30){
+                                <button class="btn btn-primary bg-darkorange color-white border-0" id="send-menu" onclick="sendmenu()">Invia Email</button>
+                                }
+                            </div>
 
                                 <script>
                                 console.log("log");
@@ -488,24 +490,6 @@
                                     console.log("FINE")
                                 };
                                 </script>
-
-                                <div class="form-container">
-                                <div class="form-content">
-                                    <form>
-                                    <label for="orario">Orario:</label>
-                                    <input
-                                        type="time"
-                                        id="orario"
-                                        name="orario"
-                                        min="00:00"
-                                        max="23:59"
-                                        required
-                                        style="color: var(--font-color);"
-                                    />
-                                    <input type="submit" style="color: var(--font-color);" value="Invia" />
-                                    </form>
-                                </div>
-                                </div>
                     </div>
                     
 

@@ -51,7 +51,7 @@ namespace prenotazione_postazioni_mvc.Controllers
 
             image = image.Substring(image.IndexOf(",")+1);
             byte[] byteArray = Convert.FromBase64String(image);
-            _menuHttpService.Add(DateTime.Now, byteArray);
+            await _menuHttpService.Add(DateTime.Now, byteArray);
         }
 
 
