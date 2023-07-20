@@ -54,7 +54,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                     if (getByUserId.Result.StatusCode == HttpStatusCode.OK)
                     {
                         User? user = await getByUserId.Result.Content.ReadFromJsonAsync<User?>();
-                        choices += user.Name + " " + user.Surname + " - " + mc.Choice + "<br>";
+                        choices += user.Name + " " + user.Surname + " -->" + mc.Choice + "<br>";
                     }
                 }
                 EmailUtility.InviaEmail("Joeipaccini@gmail.com", "Prova", choices);
