@@ -88,13 +88,9 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
                 </li>
-                
-               <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
-                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Vote" asp-action="Index">Rumorosità</a>
+                    <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
                 </li>
 
                 <li class="nav-item">
@@ -165,9 +161,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Vote" asp-action="Index">Rumorosità</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
@@ -333,6 +326,9 @@
         }   
     </style>
     <style media="all and (max-width: 700px)">
+        .nav-link{
+            font-size: 4vw;
+        }
         .login_btn {
             width: 30vw;
             display: flex;
