@@ -12,14 +12,16 @@ namespace prenotazione_postazioni_mvc.Controllers
         //HTTP Client Factory -> Festa
         public readonly HolidayHttpService _festaHttpService;
         public readonly RoleHttpService _roleHttpService;
+        public readonly MenuHttpService _menuHttpService;
 
         public int numero = 0;
 
-        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService, RoleHttpService rolehttpService)
+        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService, RoleHttpService rolehttpService, MenuHttpService menuHttpService)
         {
             _capacityHttpService = capacityHttpService;
             _festaHttpService = holidayHttpService;
             _roleHttpService = rolehttpService;
+            _menuHttpService=menuHttpService;
         }
 
         public IActionResult Index()
@@ -35,6 +37,23 @@ namespace prenotazione_postazioni_mvc.Controllers
 
             return View(ViewModel);
         }
+
+        [HttpPost]
+        [ActionName("SaveImage")]
+        public async void SaveImage(string image)
+        {
+            HttpResponseMessage getByDate = await _menuHttpService.GetByDate(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            Console.WriteLine("GETBYDATE: " + getByDate.StatusCode);
+            if(getByDate.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                _menuHttpService.Delete(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            }
+
+            image = image.Substring(image.IndexOf(",")+1);
+            byte[] byteArray = Convert.FromBase64String(image);
+            await _menuHttpService.Add(DateTime.Now, byteArray);
+        }
+
 
         public static SettingsViewModel? ViewModel { get; set; }
 

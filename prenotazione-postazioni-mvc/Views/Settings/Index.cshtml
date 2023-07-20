@@ -28,6 +28,15 @@
 <body style="background-color:var(--bkg1-color)">
 
 </body>
+<script>
+    function sendmenu () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Menu/sendMail",
+        });
+    }
+</script>
 <link rel="stylesheet" href="css/switch.css">
 <div class="settings_container">
     <!-- Sidebar tab   (Sinistra) -->
@@ -276,38 +285,49 @@
                             </div>
                             <div class="settings_collapse_content">
                                 <h1 id="day-sel-2" style="color: var(--font-color);">
-                                    Seleziona una data
+                                    Presenze registrate:
                                 </h1>
                                 <br>
-                                <div class="btn-collapse">
-                                    <a data-toggle="collapse" id="presenti-btn" href="#presenti" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        Persone presenti
-                                    </a>
-                                    <div class="collapse" id="presenti">
-                                        <div class="card card-body person-div">
-                                            <ul id="lista-presenti">
-                                                @{
-                                                    HttpResponseMessage? getUtentiPrenotatiByDayResult = await _userHttpService.GetByDate(ViewModel.AttendanceSettingsViewModel.AttendanceSelected);
-                                                    List<User>? presenti = null;
-                                                    if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
-                                                    {
-                                                        presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
-                                                        for (int i = 0; i < presenti.Count; i++)
-                                                        {
-                                                            <li>
-                                                                <img src="~/img/example/example-1.png">@presenti[@i].Name @presenti[@i].Surname
-                                                            </li>
-                                                        }
-                                                    }
+                                    <ul class="lista_presenti" id="lista-presenti" style="list-style: none;">
+                                        @{
+                                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _userHttpService.GetByDate(ViewModel.AttendanceSettingsViewModel.AttendanceSelected);
+                                            List<User>? presenti = null;
+                                            if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
+                                                for (int i = 0; i < presenti.Count; i++)
+                                                {
+                                                    <li class="presenti_item" style="color: var(--font-color);">
+                                                        <img class="presenti_img" src="@presenti[@i].Image">@presenti[@i].Name @presenti[@i].Surname
+                                                    </li>
                                                 }
-                                            </ul>
-                                        </div>
-                                    </div>
+                                            }
+                                        }
+                                        <style>
+                                            
+                                            .lista_presenti{
+                                                width: 100%;
+                                                max-height: 50%;
+                                                overflow-y: scroll;
+                                                gap: 1vw
+                                            }
+                                            .presenti_item {
+                                                display: flex;
+                                                align-items: center;
+                                                margin-bottom: 10px;
+                                            }
+
+                                            .presenti_img {
+                                                width: 50px;
+                                                height: 50px;
+                                                border-radius: 50%;
+                                                margin-right: 10px;
+                                            }
+                                        </style>
+                                    </ul>
                                 </div>
-                                
                             </div>
                         </div>
-                    </div>
                     break;
                 case 3:
                     <div class="settings_postazioni">
@@ -316,7 +336,7 @@
                             <h2 style="color: var(--font-color);">Lista Utenti</h2>
                             <br />
                             <div class="list-group user-list">
-                                <table class="table">
+                                <table class="table"  style="height: 80%;">
                                     <thead style="color: var(--font-color);"> 
                                         <tr>
                                         <th scope="col">Nome e Cognome</th>
@@ -324,7 +344,7 @@
                                         <th scope="col">Ruolo</th>
                                         </tr>
                                     </thead>
-                                    <tbody  >
+                                    <tbody>
                                         @{
                                             Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAllWithRole();
                                             getAllUtentiList.Wait();
@@ -409,25 +429,30 @@
 
                 case 4:
                    
-                    <div class="settings_postazioni">
+                   
 
-                        
-                            <div class="upload-box">
+                   <div class="settings_postazioni">
+                   
+                            <div class="upload-box"  style="flex-direction: column; align-items: center; justify-content: center; padding: 2%">
                                 <input
                                     type="file"
                                     id="fileInput"
                                     accept="image/*"
                                     style="display: none"
                                 />
-                                <button class="custom-file-upload" id="customUploadButton">
+                                <button class="btn btn-primary bg-darkorange color-white border-0" id="customUploadButton">
                                     Carica il Menu
                                 </button>
-                                <div class="image-preview">
+                                <div class="image-preview" style="width: 100%; height: 100%">
                                     <img id="previewImage" src="#" alt="Anteprima immagine" />
                                 </div>
-                                </div>
+                                @if(DateTime.Now.Hour < 12 && DateTime.Now.Minute <= 30){
+                                <button class="btn btn-primary bg-darkorange color-white border-0" id="send-menu" onclick="sendmenu()">Invia Email</button>
+                                }
+                            </div>
 
                                 <script>
+                                console.log("log");
                                 const fileInput = document.getElementById("fileInput");
                                 const previewImage = document.getElementById("previewImage");
                                 const imagePreviewDiv = document.querySelector(".image-preview");
@@ -438,53 +463,34 @@
                                 });
 
                                 fileInput.addEventListener("change", function () {
-                                    const file = fileInput.files[0];
-                                    const reader = new FileReader();
+                                        const file = fileInput.files[0];
+                                        const reader = new FileReader();
 
-                                    reader.onload = function () {
-                                    previewImage.src = reader.result;
-                                    imagePreviewDiv.style.display = "block";
+                                        reader.onload = function () {
+                                        previewImage.src = reader.result;
+                                        imagePreviewDiv.style.display = "block";
                                     };
 
                                     if (file) {
                                     reader.readAsDataURL(file);
                                     }
                                 });
+
+                                previewImage.onload = function () {
+
+                                    // Recupera il valore dell'immagine selezionata
+                                    const imageValue = previewImage.src;
+
+                                    // Invia i dati al server usando AJAX
+                                    $.ajax({
+                                        url: 'Settings/SaveImage', // Sostituisci "ControllerName" con il nome del tuo controller C#
+                                        type: 'POST',
+                                        data: { "image": imageValue } 
+                                    });
+                                    console.log("FINE")
+                                };
                                 </script>
-
-                        
-
-
-
-
-
-
-
-
-
-                                <div class="form-container">
-                                <div class="form-content">
-                                    <form>
-                                    <label for="orario">Orario:</label>
-                                    <input
-                                        type="time"
-                                        id="orario"
-                                        name="orario"
-                                        min="00:00"
-                                        max="23:59"
-                                        required
-                                        style="color: var(--font-color);"
-                                    />
-                                    <input type="submit" style="color: var(--font-color);" value="Invia" />
-                                    </form>
-                                </div>
-                                </div>
-
-
-
-
                     </div>
-
                     
 
 
@@ -493,36 +499,36 @@
                 case 5:
                     <div class="settings_postazioni">
                 <div class="emmergenza_content">
-    <div>
-        <br>
-        <h5 style="color: var(--font-color);">Modalità Emergenza</h5>
-        <label class="switch">
-            @{
-                HttpResponseMessage? getCovidMode = await _capacityHttpService.GetModEmergency();
-                bool Covid = false;
-                if (getCovidMode.StatusCode == HttpStatusCode.OK)
-                {
-                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
+                    <div>
+                        <br>
+                        <h5 style="color: var(--font-color);">Modalità Emergenza</h5>
+                        <label class="switch">
+                            @{
+                                HttpResponseMessage? getCovidMode = await _capacityHttpService.GetModEmergency();
+                                bool Covid = false;
+                                if (getCovidMode.StatusCode == HttpStatusCode.OK)
+                                {
+                                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
 
-                    if (Covid)
-                    {
-                        <input type="checkbox" id="covid-switch-btn" checked>
-                    }
-                    else
-                    {
-                        <input type="checkbox" id="covid-switch-btn">
-                    }
-                }
-            }
-            <div class="background-button" style="display: flex; justify-content: center; align-items: center;">
-                <button class="button">
-                    EMERGENZA
-                </button>
-            </div>
-        </label>
-        <br>
-    </div>
-</div>
+                                    if (Covid)
+                                    {
+                                        <input type="checkbox" id="covid-switch-btn" checked>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="covid-switch-btn">
+                                    }
+                                }
+                            }
+                            <div class="background-button" style="display: flex; justify-content: center; align-items: center;">
+                                <button class="button">
+                                    EMERGENZA
+                                </button>
+                            </div>
+                        </label>
+                        <br>
+                    </div>
+                </div>
 
 
                                 

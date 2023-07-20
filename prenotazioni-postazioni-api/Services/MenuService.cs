@@ -53,7 +53,7 @@ namespace prenotazioni_postazioni_api.Services
                 throw new PrenotazionePostazioniApiException("data gia occupata da un altro menu!!!");
             }
             logger.Info("MenuDto e' valido. Cercando di salvare Menu nel database...");
-            _menuRepository.Add(new Menu(menuDto.Date, menuDto.Image));
+            _menuRepository.Add(new Menu(menuDto.Date, menuDto.MenuImage));
         }
         internal void Delete(DateTime day) 
         {

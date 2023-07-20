@@ -67,6 +67,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
 
             var jsonBooking = JsonConvert.SerializeObject(user);
+            Console.WriteLine(jsonBooking);
             StringContent content = new StringContent(jsonBooking, Encoding.UTF8, "application/json");
 
             var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/user/add", content);

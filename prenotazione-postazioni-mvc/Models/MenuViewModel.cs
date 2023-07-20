@@ -31,9 +31,9 @@ namespace prenotazione_postazioni_mvc.Models
             _userHttpService = userHttpService;
         }
 
-        public string GetImage()
+        public byte[] GetImage()
         {
-            return Menu != null ? Menu.Image : "";
+            return Menu != null ? Menu.MenuImage : null;
         }
 
         public string GetMenuChoice()
@@ -43,7 +43,7 @@ namespace prenotazione_postazioni_mvc.Models
 
         public string GetDescriptionHoliday()
         {
-            return DescriptionHoliday != null ? $"per festività : {DescriptionHoliday}" : "";
+            return DescriptionHoliday != null ? $"per festivitï¿½ : {DescriptionHoliday}" : "";
         }
 
         public async Task ReloadHoliday()

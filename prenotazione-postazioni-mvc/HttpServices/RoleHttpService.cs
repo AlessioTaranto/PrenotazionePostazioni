@@ -25,6 +25,15 @@ namespace prenotazione_postazioni_mvc.HttpServices
             return httpResponseMessage;
         }
 
+        public async Task<HttpResponseMessage> GetById(int id)
+        {
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Role");
+
+            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/role/getById?idRole={id}");
+
+            return httpResponseMessage;
+        }
+
         public async Task<HttpResponseMessage> Update(int idUser, string futureRole)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Role");
