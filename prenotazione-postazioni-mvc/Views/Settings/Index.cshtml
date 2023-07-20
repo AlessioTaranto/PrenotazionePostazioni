@@ -28,6 +28,15 @@
 <body style="background-color:var(--bkg1-color)">
 
 </body>
+<script>
+    function sendmenu () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Menu/sendMail",
+        });
+    }
+</script>
 <link rel="stylesheet" href="css/switch.css">
 <div class="settings_container">
     <!-- Sidebar tab   (Sinistra) -->
@@ -186,6 +195,7 @@
                                             }
                                         }
                                     }
+                                    <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="send-menu" style="color: var(--font-color);" onclick="sendmenu()">Imeil</button>
                                 </div>
                                 <br>
                                 <ul id="lista-feste"></ul>

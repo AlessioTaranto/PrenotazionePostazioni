@@ -33,19 +33,7 @@ namespace prenotazione_postazioni_mvc.Controllers
             return View(ViewModel);
         }
 
-        /*[HttpPost]
-        [ActionName("sendMail")]
-        public async Task<IActionResult> SendMail()
-        {
-            
-            string destinatario = "Joeipaccini@gmail.com";
-            string oggetto = "Prova";
-            string corpo = "Ciao Rullooooooo";
-
-            EmailUtility.InviaEmail(destinatario, oggetto, corpo);
-
-            return RedirectToAction("Index");
-        }*/
+        
 
         [HttpPost]
         [ActionName("sendMail")]
@@ -63,7 +51,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 foreach(MenuChoices mc in menuChoices) {
                     choices += mc.Choice + "\n";
                 }
-                EmailUtility.InviaEmail("andrix.braia@gmail.com", "Prova", choices);
+                EmailUtility.InviaEmail("Joeipaccini@gmail.com", "Prova", choices);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -74,6 +62,7 @@ namespace prenotazione_postazioni_mvc.Controllers
                 return View("Error");
             }
         }
+
 
 
         [HttpGet]
