@@ -62,7 +62,6 @@
     if (getByEmail.StatusCode == HttpStatusCode.OK)
     {
         user = getByEmail.Content.ReadFromJsonAsync<User>().Result;
-        user.IdRole = 4;
     } else
     {
         user = new User(User.Claims.ElementAt(2).Value, User.Claims.ElementAt(3).Value, User.Claims.ElementAt(4).Value, 4, User.Claims.ElementAt(5).Value);

@@ -40,8 +40,15 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         [HttpPost]
         [ActionName("SaveImage")]
-        public void SaveImage(string image)
+        public async void SaveImage(string image)
         {
+            HttpResponseMessage getByDate = await _menuHttpService.GetByDate(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            Console.WriteLine("GETBYDATE: " + getByDate.StatusCode);
+            if(getByDate.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                _menuHttpService.Delete(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            }
+
             image = image.Substring(image.IndexOf(",")+1);
             byte[] byteArray = Convert.FromBase64String(image);
             _menuHttpService.Add(DateTime.Now, byteArray);
