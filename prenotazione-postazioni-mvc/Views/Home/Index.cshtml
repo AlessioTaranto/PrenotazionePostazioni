@@ -35,6 +35,15 @@
     //prova
     //prova2
 }
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Menu/sendMail",
+        });
+    })
+</script>
 
 <script>
     $(document).ready(function(){
@@ -65,7 +74,9 @@
 
     
 }
-
+    <body style="background-color:var(--bkg1-color)">
+    
+    </body>
 
 <!-- HIDDEN VALUES -->
 <p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>

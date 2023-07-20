@@ -131,6 +131,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  height: 100vh;
 }
 .postazioni_image_container img {
   width: 50vw;
@@ -293,7 +294,7 @@
   background-color: var(--bkg-color);
   padding: 1.5rem;
   border-radius: 10px;
-  box-shadow: 0px 48px 35px -48px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 48px 35px -48px var(--font-color);
 }
 
 .custum-file-upload .icon {

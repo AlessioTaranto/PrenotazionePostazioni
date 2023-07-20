@@ -420,79 +420,98 @@
 
                 case 4:
                    
+                   
+
                     <div class="settings_postazioni">
-
                         
-                            <div class="upload-box">
-                                <input
-                                    type="file"
-                                    id="fileInput"
-                                    accept="image/*"
-                                    style="display: none"
-                                />
-                                <button class="custom-file-upload" id="customUploadButton">
-                                    Carica il Menu
-                                </button>
-                                <div class="image-preview">
-                                    <img id="previewImage" src="#" alt="Anteprima immagine" />
-                                </div>
-                                </div>
+                        <style>
+                                .menu_img { 
 
-                                <script>
-                                const fileInput = document.getElementById("fileInput");
-                                const previewImage = document.getElementById("previewImage");
-                                const imagePreviewDiv = document.querySelector(".image-preview");
-                                const customUploadButton = document.getElementById("customUploadButton");
+                                    position: absolute;
+                                    left: 480px;
+                                    top: 367px;
 
-                                customUploadButton.addEventListener("click", function () {
-                                    fileInput.click();
-                                });
+                                }
+                                .time{
 
-                                fileInput.addEventListener("change", function () {
-                                    const file = fileInput.files[0];
-                                    const reader = new FileReader();
+                                    position: absolute;
+                                    left: 780px;
+                                    top: 300px;
 
-                                    reader.onload = function () {
-                                    previewImage.src = reader.result;
-                                    imagePreviewDiv.style.display = "block";
-                                    };
-
-                                    if (file) {
-                                    reader.readAsDataURL(file);
-                                    }
-                                });
-                                </script>
-
-                        
+                                }
+                        </style>
 
 
-
-
-
-
-
-
-
-                                <div class="form-container">
-                                <div class="form-content">
-                                    <form>
-                                    <label for="orario">Orario:</label>
+                        <div class="emmergenza-content">
+                            <div class="menu_img">
+                                <div class="upload-box">
                                     <input
-                                        type="time"
-                                        id="orario"
-                                        name="orario"
-                                        min="00:00"
-                                        max="23:59"
-                                        required
-                                        style="color: var(--font-color);"
+                                        type="file"
+                                        id="fileInput"
+                                        accept="image/*"
+                                        style="display: none"
                                     />
-                                    <input type="submit" style="color: var(--font-color);" value="Invia" />
-                                    </form>
-                                </div>
-                                </div>
+                                    <button class="custom-file-upload" id="customUploadButton">
+                                        Carica il Menu
+                                    </button>
+                                    <div class="image-preview">
+                                        <img id="previewImage" src="#" alt="Anteprima immagine" />
+                                    </div>
+                                    </div>
+
+                                    <script>
+                                    const fileInput = document.getElementById("fileInput");
+                                    const previewImage = document.getElementById("previewImage");
+                                    const imagePreviewDiv = document.querySelector(".image-preview");
+                                    const customUploadButton = document.getElementById("customUploadButton");
+
+                                    customUploadButton.addEventListener("click", function () {
+                                        fileInput.click();
+                                    });
+
+                                    fileInput.addEventListener("change", function () {
+                                        const file = fileInput.files[0];
+                                        const reader = new FileReader();
+
+                                        reader.onload = function () {
+                                        previewImage.src = reader.result;
+                                        imagePreviewDiv.style.display = "block";
+                                        };
+
+                                        if (file) {
+                                        reader.readAsDataURL(file);
+                                        }
+                                    });
+                                    </script>
+
+                            
+
+                            </div>
 
 
+                        <style>
+                                .custom-time-picker {
+                                    color: var(--font-color);
+                                    background-color: var(--bkg-color);
+                                    width: 200px;
+                                    height: 40px;
+                                    border-radius: 5px;
+                                    box-shadow: 0 0 0 1px var(--font-color);
+                                    padding: 5px; /* Aggiungi un padding per dare spazio al bordo */
 
+                                }
+                        </style>
+
+                            <div class="time">
+
+                             <div class="container mt-4">
+                                <h2 style="color: var(--font-color);">Cambia orario</h2>
+                                <input type="time" class="custom-time-picker">
+                            </div>
+
+                            </div>
+
+                      </div>
 
                     </div>
 
@@ -504,36 +523,36 @@
                 case 5:
                     <div class="settings_postazioni">
                 <div class="emmergenza_content">
-    <div>
-        <br>
-        <h5 style="color: var(--font-color);">Modalità Emergenza</h5>
-        <label class="switch">
-            @{
-                HttpResponseMessage? getCovidMode = await _capacityHttpService.GetModEmergency();
-                bool Covid = false;
-                if (getCovidMode.StatusCode == HttpStatusCode.OK)
-                {
-                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
+                    <div>
+                        <br>
+                        <h5 style="color: var(--font-color);">Modalità Emergenza</h5>
+                        <label class="switch">
+                            @{
+                                HttpResponseMessage? getCovidMode = await _capacityHttpService.GetModEmergency();
+                                bool Covid = false;
+                                if (getCovidMode.StatusCode == HttpStatusCode.OK)
+                                {
+                                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
 
-                    if (Covid)
-                    {
-                        <input type="checkbox" id="covid-switch-btn" checked>
-                    }
-                    else
-                    {
-                        <input type="checkbox" id="covid-switch-btn">
-                    }
-                }
-            }
-            <div class="background-button" style="display: flex; justify-content: center; align-items: center;">
-                <button class="button">
-                    EMERGENZA
-                </button>
-            </div>
-        </label>
-        <br>
-    </div>
-</div>
+                                    if (Covid)
+                                    {
+                                        <input type="checkbox" id="covid-switch-btn" checked>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="covid-switch-btn">
+                                    }
+                                }
+                            }
+                            <div class="background-button" style="display: flex; justify-content: center; align-items: center;">
+                                <button class="button">
+                                    EMERGENZA
+                                </button>
+                            </div>
+                        </label>
+                        <br>
+                    </div>
+                </div>
 
 
                                 
