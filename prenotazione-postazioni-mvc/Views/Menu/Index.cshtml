@@ -294,30 +294,33 @@
 
                             // hex-string is converted to byte-array
                             HttpResponseMessage getByDate = await _menuHttpService.GetByDate(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-                            Menu? menu = await getByDate.Content.ReadFromJsonAsync<Menu>();
 
-                            // byte-array is converted base64-string
-                            string res = System.Convert.ToBase64String(menu.MenuImage);
+                            if(getByDate.StatusCode == HttpStatusCode.OK){
+                                Menu? menu = await getByDate.Content.ReadFromJsonAsync<Menu>();
 
-                        }
-                           <!-- Paragrafo che conterrà la stringa Base64 -->
-                            <p id="res" style="display: none;">@res</p>
+                                // byte-array is converted base64-string
+                                string res = System.Convert.ToBase64String(menu.MenuImage);
 
-                            <!-- Immagine con ID "imgMenu" che visualizzerà l'immagine Base64 -->
-                            <img class="menu-image" id="imgMenu" src="" alt="Menu Image">
+                            
+                            <!-- Paragrafo che conterrà la stringa Base64 -->
+                                <p id="res" style="display: none;">@res</p>
 
-                            <!-- Script JavaScript per impostare l'immagine da Base64 -->
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    // Ottieni il paragrafo con ID "res" che contiene la stringa Base64
-                                    var base64String = document.getElementById("res").textContent;
+                                <!-- Immagine con ID "imgMenu" che visualizzerà l'immagine Base64 -->
+                                <img class="menu-image" id="imgMenu" src="" alt="Menu Image">
 
-                                    // Imposta l'immagine Base64 come sorgente dell'elemento <img>
-                                    var imgElement = document.getElementById("imgMenu");
-                                    imgElement.src = "data:image/png;base64," + base64String;
-                                });
+                                <!-- Script JavaScript per impostare l'immagine da Base64 -->
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        // Ottieni il paragrafo con ID "res" che contiene la stringa Base64
+                                        var base64String = document.getElementById("res").textContent;
+
+                                        // Imposta l'immagine Base64 come sorgente dell'elemento <img>
+                                        var imgElement = document.getElementById("imgMenu");
+                                        imgElement.src = "data:image/png;base64," + base64String;
+                                    });
                             </script>
-
+                            }
+                        }
 
                     <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="fullscreen-button" style="color: var(--font-color);">Menu schermo intero</button>
                 </div>
