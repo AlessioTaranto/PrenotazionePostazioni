@@ -422,99 +422,81 @@
                    
                    
 
-                    <div class="settings_postazioni">
-                        
-                        <style>
-                                .menu_img { 
+                   <div class="settings_postazioni">
+                   
+                            <div class="upload-box">
+                                <input
+                                    type="file"
+                                    id="fileInput"
+                                    accept="image/*"
+                                    style="display: none"
+                                />
+                                <button class="custom-file-upload" id="customUploadButton">
+                                    Carica il Menu
+                                </button>
+                                <div class="image-preview">
+                                    <img id="previewImage" src="#" alt="Anteprima immagine" />
+                                </div>
+                                </div>
 
-                                    position: absolute;
-                                    left: 480px;
-                                    top: 367px;
+                                <script>
+                                console.log("log");
+                                const fileInput = document.getElementById("fileInput");
+                                const previewImage = document.getElementById("previewImage");
+                                const imagePreviewDiv = document.querySelector(".image-preview");
+                                const customUploadButton = document.getElementById("customUploadButton");
 
-                                }
-                                .time{
+                                customUploadButton.addEventListener("click", function () {
+                                    fileInput.click();
+                                });
 
-                                    position: absolute;
-                                    left: 780px;
-                                    top: 300px;
-
-                                }
-                        </style>
-
-
-                        <div class="emmergenza-content">
-                            <div class="menu_img">
-                                <div class="upload-box">
-                                    <input
-                                        type="file"
-                                        id="fileInput"
-                                        accept="image/*"
-                                        style="display: none"
-                                    />
-                                    <button class="custom-file-upload" id="customUploadButton">
-                                        Carica il Menu
-                                    </button>
-                                    <div class="image-preview">
-                                        <img id="previewImage" src="#" alt="Anteprima immagine" />
-                                    </div>
-                                    </div>
-
-                                    <script>
-                                    const fileInput = document.getElementById("fileInput");
-                                    const previewImage = document.getElementById("previewImage");
-                                    const imagePreviewDiv = document.querySelector(".image-preview");
-                                    const customUploadButton = document.getElementById("customUploadButton");
-
-                                    customUploadButton.addEventListener("click", function () {
-                                        fileInput.click();
-                                    });
-
-                                    fileInput.addEventListener("change", function () {
+                                fileInput.addEventListener("change", function () {
                                         const file = fileInput.files[0];
                                         const reader = new FileReader();
 
                                         reader.onload = function () {
                                         previewImage.src = reader.result;
                                         imagePreviewDiv.style.display = "block";
-                                        };
+                                    };
 
-                                        if (file) {
-                                        reader.readAsDataURL(file);
-                                        }
+                                    if (file) {
+                                    reader.readAsDataURL(file);
+                                    }
+                                });
+
+                                previewImage.onload = function () {
+
+                                    // Recupera il valore dell'immagine selezionata
+                                    const imageValue = previewImage.src;
+
+                                    // Invia i dati al server usando AJAX
+                                    $.ajax({
+                                        url: 'Settings/SaveImage', // Sostituisci "ControllerName" con il nome del tuo controller C#
+                                        type: 'POST',
+                                        data: { "image": imageValue } 
                                     });
-                                    </script>
+                                    console.log("FINE")
+                                };
+                                </script>
 
-                            
-
-                            </div>
-
-
-                        <style>
-                                .custom-time-picker {
-                                    color: var(--font-color);
-                                    background-color: var(--bkg-color);
-                                    width: 200px;
-                                    height: 40px;
-                                    border-radius: 5px;
-                                    box-shadow: 0 0 0 1px var(--font-color);
-                                    padding: 5px; /* Aggiungi un padding per dare spazio al bordo */
-
-                                }
-                        </style>
-
-                            <div class="time">
-
-                             <div class="container mt-4">
-                                <h2 style="color: var(--font-color);">Cambia orario</h2>
-                                <input type="time" class="custom-time-picker">
-                            </div>
-
-                            </div>
-
-                      </div>
-
+                                <div class="form-container">
+                                <div class="form-content">
+                                    <form>
+                                    <label for="orario">Orario:</label>
+                                    <input
+                                        type="time"
+                                        id="orario"
+                                        name="orario"
+                                        min="00:00"
+                                        max="23:59"
+                                        required
+                                        style="color: var(--font-color);"
+                                    />
+                                    <input type="submit" style="color: var(--font-color);" value="Invia" />
+                                    </form>
+                                </div>
+                                </div>
                     </div>
-
                     
 
 
