@@ -16,11 +16,12 @@ namespace prenotazione_postazioni_mvc.Controllers
 
         public int numero = 0;
 
-        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService, RoleHttpService rolehttpService)
+        public SettingsController(CapacityHttpService capacityHttpService, HolidayHttpService holidayHttpService, RoleHttpService rolehttpService, MenuHttpService menuHttpService)
         {
             _capacityHttpService = capacityHttpService;
             _festaHttpService = holidayHttpService;
             _roleHttpService = rolehttpService;
+            _menuHttpService=menuHttpService;
         }
 
         public IActionResult Index()
