@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using prenotazioni_postazioni_api.Repositories.Database;
 using log4net;
 using System.Data.SqlClient;
+using System.Data;
+
 namespace prenotazioni_postazioni_api.Repositories
 {
     public class MenuRepository
@@ -34,10 +36,10 @@ namespace prenotazioni_postazioni_api.Repositories
         }
         internal void Add(Menu menu)
         {
-            string query = $"INSERT INTO Menu (date, image) VALUES (@date, @image);";
+            string query = $"INSERT INTO Menu (date, menuImage) VALUES (@date, @image);";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@date", menu.Date.ToString("yyyy-MM-ddTHH:mm:ss"));
-            sqlCommand.Parameters.AddWithValue("@image", menu.Image);
+            sqlCommand.Parameters.AddWithValue("@image", menu.MenuImage);
             DatabaseManager<object>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 

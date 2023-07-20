@@ -12,6 +12,7 @@ namespace prenotazione_postazioni_mvc.Controllers
         //HTTP Client Factory -> Festa
         public readonly HolidayHttpService _festaHttpService;
         public readonly RoleHttpService _roleHttpService;
+        public readonly MenuHttpService _menuHttpService;
 
         public int numero = 0;
 

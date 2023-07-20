@@ -1,5 +1,9 @@
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using prenotazione_postazioni_libs.Dto;
+using prenotazione_postazioni_libs.Models;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace prenotazione_postazioni_mvc.HttpServices
 {
@@ -33,15 +37,20 @@ namespace prenotazione_postazioni_mvc.HttpServices
 
             return httpResponseMessage;
         }
-        public async Task<HttpResponseMessage> Add(DateOnly day, string image)
+        public async Task<HttpResponseMessage> Add(DateTime date, byte[] image)
         {
-            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Menu");
+            MenuDto menuDto = new MenuDto(date, image)
+            {
+                Date = date,
+                MenuImage = image
+            };
 
-            string json = "{\"day\": \"" + day.ToString("yyyy-MM-ddTHH:mm:ss") + "\", \"image\": \"" + image + "\"}";
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Menu");
 
-            var httpResponseMessage =
-                await httpClient.PostAsync($"https://localhost:7126/api/menu/add", content);
+            var jsonMenu = JsonConvert.SerializeObject(menuDto);
+            StringContent content = new StringContent(jsonMenu, Encoding.UTF8, "application/json");
+
+            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/menu/add", content);
 
             return httpResponseMessage;
         }

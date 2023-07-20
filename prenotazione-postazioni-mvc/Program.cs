@@ -176,8 +176,6 @@ app.Run(async context =>
 // Configurazione di Hangfire con SQL Server come storage
 string connectionString = "Data Source=localhost;Initial Catalog=PrenotazioniPostazioni;User Id=Stagista-5;Integrated Security=True;TrustServerCertificate=True;"; // Imposta la tua connection string del database
 GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
-app.UseHangfireServer();
-app.UseHangfireDashboard();
 
 // Imposta l'ora e i minuti desiderati per l'invio delle email (esempio: 18:30)
 int ora = 17;
