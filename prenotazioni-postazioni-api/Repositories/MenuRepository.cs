@@ -43,6 +43,15 @@ namespace prenotazioni_postazioni_api.Repositories
             DatabaseManager<object>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
 
+        internal void Update(Menu menu) 
+        {
+            string query = $"UPDATE Menu SET menuImage = @image WHERE date = @date;";
+            SqlCommand sqlCommand = new SqlCommand(query);
+            sqlCommand.Parameters.AddWithValue("@date", menu.Date.ToString("yyyy-MM-ddTHH:mm:ss"));
+            sqlCommand.Parameters.AddWithValue("@image", menu.MenuImage);
+            DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
+        }
+
         internal void Delete(DateTime date) 
         {
             string query = $"DELETE FROM Menu WHERE date = @date;";

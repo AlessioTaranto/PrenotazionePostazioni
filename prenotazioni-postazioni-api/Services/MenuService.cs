@@ -49,11 +49,15 @@ namespace prenotazioni_postazioni_api.Services
             logger.Info("Controllando se menuDto e' valido...");
             if(_menuRepository.GetByDate(menuDto.Date) != null)
             {
-                logger.Warn("MenuDto non e' valido, ho lanciato una prenotazionePostazioniApiException!");
-                throw new PrenotazionePostazioniApiException("data gia occupata da un altro menu!!!");
+                Console.WriteLine("UPDATE");
+                _menuRepository.Update(new Menu(menuDto.Date, menuDto.MenuImage));
             }
-            logger.Info("MenuDto e' valido. Cercando di salvare Menu nel database...");
-            _menuRepository.Add(new Menu(menuDto.Date, menuDto.MenuImage));
+            else 
+            {
+                Console.WriteLine("ADD");
+                logger.Info("MenuDto e' valido. Cercando di salvare Menu nel database...");
+                _menuRepository.Add(new Menu(menuDto.Date, menuDto.MenuImage));
+            }
         }
         internal void Delete(DateTime day) 
         {

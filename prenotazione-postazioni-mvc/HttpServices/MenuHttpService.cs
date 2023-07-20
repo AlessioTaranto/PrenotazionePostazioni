@@ -49,7 +49,6 @@ namespace prenotazione_postazioni_mvc.HttpServices
 
             var jsonMenu = JsonConvert.SerializeObject(menuDto);
             StringContent content = new StringContent(jsonMenu, Encoding.UTF8, "application/json");
-            Console.WriteLine("JSON: " + jsonMenu);
 
             var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/menu/add", content);
 
