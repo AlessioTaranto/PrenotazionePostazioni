@@ -44,12 +44,18 @@ namespace prenotazione_postazioni_mvc.Controllers
                 // Chiamata al metodo InviaEmail
                 Task<HttpResponseMessage> getIdMenu = _menuHttpService.GetByDate(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                 Menu? menu = await getIdMenu.Result.Content.ReadFromJsonAsync<Menu?>();
-                Task<HttpResponseMessage> getAllChoice = _choicesHttpService.GetByIdMenu(menu.Id);
+                Task<HttpResponseMessage> getAllChoices = _choicesHttpService.GetByIdMenu(menu.Id);
                 List<MenuChoices>? menuChoices = null;
-                menuChoices = await getAllChoice.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
+                menuChoices = await getAllChoices.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
                 string choices = "";
                 foreach(MenuChoices mc in menuChoices) {
-                    choices += mc.Choice + "\n";
+                    Task<HttpResponseMessage> getByUserId = _userHttpService.GetById(mc.IdUser);
+                    Console.WriteLine(mc.IdUser + ": " + getByUserId.Result.StatusCode);
+                    if (getByUserId.Result.StatusCode == HttpStatusCode.OK)
+                    {
+                        User? user = await getByUserId.Result.Content.ReadFromJsonAsync<User?>();
+                        choices += user.Name + " " + user.Surname + " - " + mc.Choice + "<br>";
+                    }
                 }
                 EmailUtility.InviaEmail("Joeipaccini@gmail.com", "Prova", choices);
                 return RedirectToAction("Index");
