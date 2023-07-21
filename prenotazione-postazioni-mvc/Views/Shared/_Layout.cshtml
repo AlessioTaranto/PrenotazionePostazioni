@@ -1,72 +1,433 @@
-﻿<!DOCTYPE html>
+﻿@using System.Net;
+@using Newtonsoft.Json;
+@using prenotazione_postazioni_libs.Models;
+@using Microsoft.AspNetCore.Http;
+@using prenotazione_postazioni_mvc.Controllers;
+@using prenotazione_postazioni_mvc.HttpServices;
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject UserHttpService _userHttpService;
+@inject RoleHttpService _roleHttpService;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="255636661130-apnu1c5f0r8bdh2g689cofid82j7g5m9.apps.googleusercontent.com">
 
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"] | Omnia Group</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/impostazioni.css">
     <link rel="stylesheet" href="css/votazioni.css">
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="./_Layout.css">
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <script src="js/festivita-utils.js"></script>
     <script src="js/calendar.js"></script>
+    <script src="js/calendarPresenze.js"></script>
     <script src="js/impostazioni.js"></script>
-    <script src="js/selecter.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 </head>
 <body>
+    <div id="loader" class="loader_container">
+        <div class="loader_content">
+            <div class="loader">
+                <svg viewBox="0 0 187.3 93.7" height="200px" width="400px" class="svgbox">
+                    <defs>
+                        <linearGradient y2="0%" x2="100%" y1="0%" x1="0%" id="gradient">
+                            <stop stop-color="yellow" offset="0%"></stop>
+
+                            <stop stop-color="darkorange" offset="100%"></stop>
+                        </linearGradient>
+                    </defs>
+
+                    <path stroke="url(#gradient)" d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z"></path>
+                </svg>
+
+            </div>            <img src="img/logoFHD.png" style="width: 25vw">
+        </div>
+        
+    </div>
+    
 <header>
+    
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
-    <nav class="navbar navbar-expand-sm bg-darkorange">
-        <a class="navbar-brand" href="#">
-            <img src="img/logo.png" alt="logo" class="logo-img">
-        </a>
+<script>
+     function test() {
+            var screenWidth = window.innerWidth;
+            console.log(screenWidth);
+            $.ajax({
+                type: "POST",
+                url: "Navbar/SetScreenWidth",
+                data: { width: screenWidth },
+            });
+        };
+</script>
 
-        <ul class="navbar-nav nav ml-nav">
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Votazioni" asp-action="Index">Rumorosità</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Impostazioni" asp-action="Index">Impostazioni</a>
-            </li>
-        </ul>
-    </nav>
+        <nav class="navbar_menu">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="logo" class="logo-img">
+            </a>
+            <ul>
+                
+                @{
+                    if (UserHttpService.LoggedUser != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
+                        </li>
 
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
+                        </li>
+                        HttpResponseMessage getById = await _roleHttpService.GetById(UserHttpService.LoggedUser.IdRole);
+                        Role? role = null;
 
-    <nav class="navbar navbar-expand-sm bg-light">
-        <div class="ml-3 order-0">
-            <a class="navbar-brand mx-auto black" href="#">@ViewData["Title"]</a>
-        </div>
-        <div class="navbar-collapse collapse w-000 order-3 dual-collapse2">
-            <ul class="navbar-nav ml-2-nav">
-                <li class="nav-item">
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                    <!--<a href="#" onclick="signOut();">Sign out</a>-->
-                </li>
-
+                        if(getById.StatusCode == HttpStatusCode.OK){
+                            role = await getById.Content.ReadFromJsonAsync<Role?>();
+                            if (role.AccessToSettings)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
+                                </li>
+                            }
+                        }
+                    }
+                }
             </ul>
+        </nav>
+        <div class="subnavigation" id="sub1">
+            @{
+                if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
+                    <div class="subnavbar_title">
+                            <a>Prenota postazione per il:</a>
+                            <span style="font-weight: 700;">@ViewData["DateSelected"]</span>
+                    </div>
+                }else{
+                    <div class="subnavbar_title">
+                        <a>@ViewData["Title"]</a>
+                    </div>
+                }
+            }
+        
+            <div>
+                <button id="pulsante" class="btn_theme" onclick="reloadPage()">
+                    Tema
+                </button>
+                
+            </div>
+            @if(UserHttpService.LoggedUser == null){
+                <div class="order-3">
+                    <a class="login_btn" asp-area="" asp-controller="Home" asp-action="Login">
+                        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+                        <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                        <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                        <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                        <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                        </svg>
+                        Login
+                    </a>  
+                </div>
+            }else{
+                <div class="order-3">
+                    <a class="login_btn" Wasp-area="" asp-controller="Home" asp-action="Logout" onclick="deleteCookies()">
+                        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+                        <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                        <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                        <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                        <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                        </svg>
+                        Logout
+                    </a>  
+                </div>
+            }
+            
+            
         </div>
-    </nav>
 
+        <nav class="navbar_menu_2 navbar navbar-expand-lg navbar-light bg-darkorange">
+            <div class="container-fluid">
+                <img src="img/logo.png" alt="logo" class="logo-img">
+                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse bg-darkorange" id="navbarNavAltMarkup">
+                <hr>
+                <ul>
+                    @{
+                    if (UserHttpService.LoggedUser != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Postazioni</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
+                        </li>
+                        HttpResponseMessage getById = await _roleHttpService.GetById(UserHttpService.LoggedUser.IdRole);
+                        Role? role = null;
+
+                        if(getById.StatusCode == HttpStatusCode.OK){
+                            role = await getById.Content.ReadFromJsonAsync<Role?>();
+                            if (role.AccessToSettings)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">Impostazioni</a>
+                                </li>
+                            }
+                        }
+                    }
+                }
+                </ul>
+                <hr>
+                    
+                 <div class="subnavigation2">
+                    @{
+                        if(@ViewData["DateSelected"] != null && @ViewData["Title"].ToString() == "Prenota postazioni"){
+                            <div class="subnavbar_title">
+                                    <a>Prenota postazione per il:</a>
+                                    <span style="font-weight: 700;">@ViewData["DateSelected"]</span>
+                            </div>
+                        }else{
+                            <div class="subnavbar_title">
+                                <a>@ViewData["Title"]</a>
+                            </div>
+                        }
+                    }
+                
+                    <div>
+                        <button id="pulsante" class="btn_theme" onclick="reloadPage()">
+                            Tema
+                        </button>
+                    </div>
+                    @if(UserHttpService.LoggedUser == null){
+                            <div class="order-3">
+                                <a class="login_btn" asp-area="" asp-controller="Home" asp-action="Login">
+                                    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+                                    <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                                    <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                                    <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                                    <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                                    </svg>
+                                    Login
+                                </a>  
+                            </div>
+                        }else{
+                            <div class="order-3">
+                                <a class="login_btn" Wasp-area="" asp-controller="Home" asp-action="Logout" onclick="deleteCookies()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+                                    <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                                    <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                                    <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                                    <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                                    </svg>
+                                    Logout
+                                </a>  
+                            </div>
+                        }
+                </div>
+                </div>
+            </div>
+        </nav>     
+
+    
+    <style>
+        .login_btn {
+            width: 7vw;
+            display: flex;
+            padding: 0.5vw;
+            align-items: center;
+            justify-content: center;
+            font-size: 1vw;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            gap: 0.75rem;
+            color: rgb(65, 63, 63);
+            background-color: #fff;
+            cursor: pointer;
+            transition: all .6s ease;
+        }
+
+        .login_btn svg {
+            height: 1VW;
+        }
+
+        .login_btn:hover {
+            text-decoration: none;
+            color: #000;
+            transform: scale(1.02);
+        }
+
+        .navbar_menu_2{
+            display: none;
+        }
+        .navbar_menu_2 ul{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+        }
+        .subnavigation {
+            width: 100%;
+            height: 5vw;
+            padding: 2%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-color) 0px 10px 20px, var(--shadow-color) 0px 6px 6px;
+            background-color: var(--bkg-color);
+        }
+        .subnavbar_title {
+            display: flex;
+            flex-direction: row;
+            font-size: 1.3vw;
+            gap: 1vw;
+            color:var(--font-color);
+        }
+        .subnavbar_title_container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+        .theme-dark {
+            --bkg-color: #2c2c2c;
+            --font-color: white;
+            --shadow-color: #111;
+            --bkg1-color: black;
+        }
+        .theme-light {
+            --bkg-color: white;
+            --font-color: black;
+            --shadow-color: rgba(0, 0, 0, 0.16 );
+        }
+        .coloreTesto{
+            color: var(--font-color);
+        }
+        .btn_theme {
+            border-radius: 0.5vw;
+            font-size: 17px;
+            background: transparent;
+            border: none;
+            padding: 1em 1.5em;
+            color: var(--font-color);
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .btn_theme::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 0;
+            background-color: darkorange;
+            transition: .5s ease;
+        }
+        .btn_theme:hover {
+            color: var(--font-color);
+        }   
+        .btn_theme:hover::before {
+            width: 100%;
+        }
+        .btn_theme:hover::after {
+            height: 100%;
+            color: aliceblue;
+        }   
+    </style>
+    <style media="all and (max-width: 700px)">
+        .nav-link{
+            font-size: 4vw;
+        }
+        .login_btn {
+            width: 30vw;
+            display: flex;
+            padding: 3vw;
+            align-items: center;
+            justify-content: center;
+            font-size: 4vw;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            gap: 0.75rem;
+            color: rgb(65, 63, 63);
+            background-color: #fff;
+            cursor: pointer;
+            transition: all .6s ease;
+        }
+
+        .login_btn svg {
+            height: 4vw;
+        }
+
+        .login_btn:hover {
+            text-decoration: none;
+            color: #000;
+            transform: scale(1.02);
+        }
+
+        .navbar_menu_2 {
+            display: block;  
+        }
+        .nav-item li{
+            font-size: 4vw;
+        }
+        .navbar_menu{
+            display: none;
+        }
+        .subnavigation{
+            display: none;
+        }
+        .subnavigation2{
+            width: 100%;
+            height: auto;
+            padding: 2%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4vw;
+        }
+        .logo-img {
+            width: 40vw;
+            height: 10vw;
+        }
+        .subnavbar_title{
+            flex-direction: column;
+            font-size: 4vw;
+            text-align: center;
+        }
+        .btn_theme{
+            font-size: 17px;
+            background: transparent;
+            border: none;
+            padding: 1em 1.5em;
+            background-color: #fff;
+            color: #000;
+            text-transform: uppercase;
+            position: relative;
+        }
+    </style>
+ 
     <script>
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
@@ -82,38 +443,84 @@
                 console.log('User signed out.');
             });
         }
+            function deleteCookies() {
+                console.log(document.cookie);
+                var cookies = document.cookie.split(";");
+
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                }
+            }
     </script>
 </header>
 
-    <main role="main">
-            @RenderBody()
-    </main>
+<main role="main">
+    @RenderBody()
+</main>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 
-    <!--Inerente alla pagina Prenotazioni. NON SPOSTARE -->
-    <script src="js/jquery.rwdImageMaps.min.js"></script>
+<!--Inerente alla pagina Prenotazioni. NON SPOSTARE -->
+<script src="js/jquery.rwdImageMaps.min.js"></script>
+
 <script>
-    $(document).ready(function(e) {
+
+    // Rende responsive le ImageMap
+    $(document).ready(function() {
         $('img[usemap]').rwdImageMaps();
 
         
     });
-
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        localStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
-
-    var activeTab = localStorage.getItem('activeTab');
-    if(activeTab){
-        $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
-    }
 </script>
 
+
+    <script>
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+        }
+
+        function toogleTheme() {
+            if (localStorage.getItem('theme') === 'theme-light') {
+                setTheme('theme-dark');
+            } else {
+                setTheme('theme-light');
+            }
+
+        }
+
+        //funzione che deve essere invocato al inizio del caricamento
+        (function () {
+
+            if (localStorage.getItem('theme') === 'theme-light') {
+                setTheme('theme-light');
+            } else {
+                setTheme('theme-dark');
+            }
+        })();
+
+
+        function reloadPage(){
+                
+            //mostra loader
+            document.getElementById("loader").style.display = "block";
+            //Carica il tema
+            toogleTheme();
+
+            setTimeout(() => { 
+                document.getElementById("loader").style.display = "none";
+                location.reload();
+            }, 1500);
+            
+            
+        }
+    </script>
 </body>
 </html>

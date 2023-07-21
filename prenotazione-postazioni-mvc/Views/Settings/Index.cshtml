@@ -1,0 +1,873 @@
+@{
+    ViewData["Title"] = "Impostazioni";
+
+    SettingsViewModel ViewModel = Model;
+}
+
+@using System.Net
+@using prenotazione_postazioni_libs.Models;
+@using prenotazione_postazioni_libs.Dto;
+@using prenotazione_postazioni_mvc.HttpServices;
+@using Newtonsoft.Json;
+@inject UserHttpService _userHttpService;
+@inject HolidayHttpService _holidayHttpService;
+@inject CapacityHttpService _capacityHttpService;
+@inject RoleHttpService _roleHttpService;
+
+<script>
+    function changeTab(pageNumber) {
+        $.ajax({
+            type: "POST",
+            url: "Settings/ChangeStateTab",
+            data: { number: pageNumber },
+        }).done(function () {
+            window.location.reload();
+        });
+    };
+</script>
+<body style="background-color:var(--bkg1-color)">
+
+</body>
+<script>
+    function sendmenu () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Menu/sendMail",
+        });
+    }
+</script>
+<link rel="stylesheet" href="css/switch.css">
+<div class="settings_container">
+    <!-- Sidebar tab   (Sinistra) -->
+    <div class="nav settings_sidebar_box">
+        <div class="settings_sidebar_itemList">
+            <a onClick="changeTab(0)" class=@(ViewModel.StateTab == 0 ? "sidebar_checked" : " ")>Postazioni</a>
+            <a onClick="changeTab(1)" class=@(ViewModel.StateTab == 1 ? "sidebar_checked" : " ")>Festività</a>
+            <a onClick="changeTab(2)" class=@(ViewModel.StateTab == 2 ? "sidebar_checked" : " ")>Presenze</a>
+            <a onClick="changeTab(3)" class=@(ViewModel.StateTab == 3 ? "sidebar_checked" : " ")>Utenti</a>
+            <a onClick="changeTab(4)" class=@(ViewModel.StateTab == 4 ? "sidebar_checked" : " ")>Menu</a>
+            <a onClick="changeTab(5)" class=@(ViewModel.StateTab == 5 ? "sidebar_checked" : " ")>Emergenza</a>
+        </div>
+    </div>
+    <!-- Pagina caricata a destra -->
+    <div class="settings_content">
+        @{
+            switch (ViewModel.StateTab)
+            {
+                case 0:
+                    <div class="settings_postazioni">
+                        <div class="postazioni_image_container">
+
+                            <img id="changeMap" src="/img/piantina.png" usemap="#image-map">
+
+                            <map name="image-map">
+                                <area alt="Bansky" title="Bansky" href="" coords="3865,1581,3871,936,4701,938,4708,1684" shape="poly">
+                                <area alt="OpenSpace_1" title="OpenSpace_1" href="" coords="5084,529,5039,821,6336,1003,6381,705" shape="poly">
+                                <area alt="OpenSpace_2" title="OpenSpace_2" href="" coords="5097,1172,6381,1334,6323,1645,5052,1464" shape="poly">
+                                <area alt="Sviluppo" title="Sviluppo" href="" coords="4623,2381,4623,2556,4591,2576,4591,4113,5551,4113,5557,2517,5136,2427" shape="poly">
+                                <area alt="Assistenza" title="Assistenza" href="" coords="3598,2310,3565,2491,3481,2628,3487,4100,4467,4120,4415,2368,3747,2264,3727,2297" shape="poly">
+                                <area alt="Commerciale" title="Commerciale" href="" coords="2587,3251,2580,4120,3449,4107,3443,3075,3021,3095" shape="poly">
+                                <area alt="Meeting" title="Meeting" href="" coords="2334,1881,2749,1771,3060,1829,3235,1933,3287,2063,3307,2192,3268,2342,3242,2420,3190,2530,3138,2588,3080,2640,2982,2725,2827,2822,2749,2874,2554,2913,2282,2958,2108,2934,1912,2789,1796,2584,1860,2322,2100,2011" shape="poly">
+                                <area alt="Contabilità" title="Contabilità" href="" coords="634,1226,1601,1096,1588,344,647,344" shape="poly">
+                                <area alt="Call Green" title="Call_Green" href="" coords="5168,1797,5713,1869,5674,2193,5136,2109" shape="poly">
+                                <area alt="Call White" title="Call_White" href="" coords="5733,1874,6297,1965,6232,2263,5700,2185" shape="poly">
+                            </map>
+                        </div>
+
+                        <div class="postazioni_information">
+                            <br>
+                            <h1 style="color: var(--font-color);">@ViewModel.CapacitySettingsViewModel.GetRoom().Replace("_", " ")</h1>
+                            @if (ViewModel.CapacitySettingsViewModel.Room != null)
+                            {
+                                <div class="postazioni_information_form">
+
+                                    <h5>Capienza Normale</h5>
+                                    <input class="form-control" type="number" id="capienzaNormale" name="capienzaNormale" min="1" max="20" style="width: 100%" value=@ViewModel.CapacitySettingsViewModel.GetCapacity(@ViewModel.CapacitySettingsViewModel.Room)>
+                                    <h5>Capienza emergenza</h5>
+                                    <input class="form-control" type="number" id="capienzaCovid" name="capienzaCovid" min="1" max="20" style="width: 100%" value=@(ViewModel.CapacitySettingsViewModel.GetCapacityEmergency(@ViewModel.CapacitySettingsViewModel.Room))>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    break;
+                case 1:
+                    <div class="settings_postazioni">
+                        <div class="settings_presenze_content">
+                            <div class="settings_calendar">
+                                <div class="calendar">
+                                    <div class="head">
+                                        <ul class="d-flex align-items-center justify-content-center">
+                                            <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
+                                            <li><a class="item" id="month-year"></a></li>
+                                            <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="body">
+                                        <table>
+                                            <tr>
+                                                <th>Lun</th>
+                                                <th>Mar</th>
+                                                <th>Mer</th>
+                                                <th>Gio</th>
+                                                <th>Ven</th>
+                                                <th>Sab</th>
+                                                <th>Dom</th>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-0">1</td>
+                                                <td id="1-0">2</td>
+                                                <td id="2-0">3</td>
+                                                <td id="3-0">4</td>
+                                                <td id="4-0">5</td>
+                                                <td id="5-0">6</td>
+                                                <td id="6-0">7</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-1">8</td>
+                                                <td id="1-1">9</td>
+                                                <td id="2-1">10</td>
+                                                <td id="3-1">11</td>
+                                                <td id="4-1">12</td>
+                                                <td id="5-1">13</td>
+                                                <td id="6-1">14</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-2">15</td>
+                                                <td id="1-2">16</td>
+                                                <td id="2-2">17</td>
+                                                <td id="3-2">18</td>
+                                                <td id="4-2">19</td>
+                                                <td id="5-2">20</td>
+                                                <td id="6-2">21</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-3">22</td>
+                                                <td id="1-3">23</td>
+                                                <td id="2-3">24</td>
+                                                <td id="3-3">25</td>
+                                                <td id="4-3">26</td>
+                                                <td id="5-3">27</td>
+                                                <td id="6-3">28</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-4">29</td>
+                                                <td id="1-4">30</td>
+                                                <td id="2-4">31</td>
+                                                <td id="3-4">1</td>
+                                                <td id="4-4">2</td>
+                                                <td id="5-4">3</td>
+                                                <td id="6-4">4</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-5">29</td>
+                                                <td id="1-5">30</td>
+                                                <td id="2-5">31</td>
+                                                <td id="3-5">1</td>
+                                                <td id="4-5">2</td>
+                                                <td id="5-5">3</td>
+                                                <td id="6-5">4</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings_collapse_content">
+                                <h1 style="color: var(--font-color);">@ViewModel.GetHolidaySelected()</h1>
+                                <br>
+                                <div>
+                                    @{
+
+                                        var getFesta = _holidayHttpService.GetByDate(ViewModel.HolidaySelected.Year, ViewModel.HolidaySelected.Month, ViewModel.HolidaySelected.Day);
+
+                                        if (ViewModel.HolidaySelected.Year != 1)
+                                        {
+                                            getFesta.Wait();
+                                            HttpResponseMessage festa = getFesta.Result;
+
+                                            if (festa.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="removefestabutton" value="Rimuovi festività">Rimuovi festività</button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="festabutton" value="Imposta come festività">Imposta come festività</button>
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <br>
+                                <ul id="lista-feste"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    break;
+                case 2:
+                    <div class="settings_postazioni">
+                        <div class="settings_presenze_content">
+                            <div class="settings_calendar">
+                                <div class="calendar">
+                                    <div class="head">
+                                        <ul class="d-flex align-items-center justify-content-center">
+                                            <li><img class="item item-img" src="img/left.png" alt="left-1" onclick="prevMonth1()"></li>
+                                            <li><a class="item" id="month-year-1"></a></li>
+                                            <li><img class="item item-img" src="img/right.png" alt="right-1" onclick="nextMonth1()"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="body">
+                                        <table>
+                                            <tr>
+                                                <th>Lun</th>
+                                                <th>Mar</th>
+                                                <th>Mer</th>
+                                                <th>Gio</th>
+                                                <th>Ven</th>
+                                                <th>Sab</th>
+                                                <th>Dom</th>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-01">1</td>
+                                                <td id="1-01">2</td>
+                                                <td id="2-01">3</td>
+                                                <td id="3-01">4</td>
+                                                <td id="4-01">5</td>
+                                                <td id="5-01">6</td>
+                                                <td id="6-01">7</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-11">8</td>
+                                                <td id="1-11">9</td>
+                                                <td id="2-11">10</td>
+                                                <td id="3-11">11</td>
+                                                <td id="4-11">12</td>
+                                                <td id="5-11">13</td>
+                                                <td id="6-11">14</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-21">15</td>
+                                                <td id="1-21">16</td>
+                                                <td id="2-21">17</td>
+                                                <td id="3-21">18</td>
+                                                <td id="4-21">19</td>
+                                                <td id="5-21">20</td>
+                                                <td id="6-21">21</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-31">22</td>
+                                                <td id="1-31">23</td>
+                                                <td id="2-31">24</td>
+                                                <td id="3-31">25</td>
+                                                <td id="4-31">26</td>
+                                                <td id="5-31">27</td>
+                                                <td id="6-31">28</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-41">29</td>
+                                                <td id="1-41">30</td>
+                                                <td id="2-41">31</td>
+                                                <td id="3-41">1</td>
+                                                <td id="4-41">2</td>
+                                                <td id="5-41">3</td>
+                                                <td id="6-41">4</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="0-51">29</td>
+                                                <td id="1-51">30</td>
+                                                <td id="2-51">31</td>
+                                                <td id="3-51">1</td>
+                                                <td id="4-51">2</td>
+                                                <td id="5-51">3</td>
+                                                <td id="6-51">4</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings_collapse_content">
+                                <h1 id="day-sel-2" style="color: var(--font-color);">
+                                    Presenze registrate:
+                                </h1>
+                                <br>
+                                    <ul class="lista_presenti" id="lista-presenti" style="list-style: none;">
+                                        @{
+                                            HttpResponseMessage? getUtentiPrenotatiByDayResult = await _userHttpService.GetByDate(ViewModel.AttendanceSettingsViewModel.AttendanceSelected);
+                                            List<User>? presenti = null;
+                                            if (getUtentiPrenotatiByDayResult != null && getUtentiPrenotatiByDayResult.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                presenti = await getUtentiPrenotatiByDayResult.Content.ReadFromJsonAsync<List<User>?>();
+                                                for (int i = 0; i < presenti.Count; i++)
+                                                {
+                                                    <li class="presenti_item" style="color: var(--font-color);">
+                                                        <img class="presenti_img" src="@presenti[@i].Image">@presenti[@i].Name @presenti[@i].Surname
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                        <style>
+                                            
+                                            .lista_presenti{
+                                                width: 100%;
+                                                max-height: 50%;
+                                                overflow-y: scroll;
+                                                gap: 1vw
+                                            }
+                                            .presenti_item {
+                                                display: flex;
+                                                align-items: center;
+                                                margin-bottom: 10px;
+                                            }
+
+                                            .presenti_img {
+                                                width: 50px;
+                                                height: 50px;
+                                                border-radius: 50%;
+                                                margin-right: 10px;
+                                            }
+                                        </style>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    break;
+                case 3:
+                    <div class="settings_postazioni">
+                        <div class="settings_user_content">
+                            <br />
+                            <h2 style="color: var(--font-color);">Lista Utenti</h2>
+                            <br />
+                            <div class="list-group user-list">
+                                <table class="table"  style="height: 80%;">
+                                    <thead style="color: var(--font-color);"> 
+                                        <tr>
+                                        <th scope="col">Nome e Cognome</th>
+                                        <th scope="col"> Email</th>
+                                        <th scope="col">Ruolo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            Task<HttpResponseMessage> getAllUtentiList = _userHttpService.GetAllWithRole();
+                                            getAllUtentiList.Wait();
+
+                                            Task<HttpResponseMessage> getAllRoles = _roleHttpService.GetAll();
+                                            getAllRoles.Wait();
+
+                                            List<UserRole>? ListUtenti = null;
+                                            List<Role>? ListRoles = null;
+
+                                            if (getAllUtentiList.Result != null && getAllUtentiList.Result.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                ListUtenti = await getAllUtentiList.Result.Content.ReadFromJsonAsync<List<UserRole>?>();
+                                                ListRoles = await getAllRoles.Result.Content.ReadFromJsonAsync<List<Role>?>();
+                                                
+                                                
+                                                foreach (UserRole userRole in ListUtenti){
+                                                    <tr scope="row">
+                                                        <td style="color: var(--font-color);" class="user_table">@userRole.Username @userRole.Surname</td>
+                                                        <td style="color: var(--font-color);" class="user_table">@userRole.Email</td>
+                                                        <td>
+                                                            <!-- Button trigger modal -->
+                                                            <button style="color: var(--font-color);"class="btn btn-primary bg-darkorange border-0"  data-toggle="modal" data-target="#exampleModal_@userRole.Id">
+                                                               <i class="bi bi-pencil"></i> @userRole.Rolename
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <script>
+
+                                                    </script>
+
+                                                    <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModal_@userRole.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                    <div style="background-color: var(--bkg-color);" class="modal-header">
+                                                                        <h5 style="color: var(--font-color);" class="modal-title" id="exampleModalLabel">Modifica Ruolo</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true" style="color: var(--font-color);">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body" style="color:var(--font-color); background-color: var(--bkg-color);" >
+                                                                        Seleziona il nuovo ruolo da assegnare all'utente: 
+                                                                        <br>
+                                                                        <b>@userRole.Username @userRole.Surname</b>
+                                                                        <br>
+                                                                        <select style="color: var(--font-color); background-color: var(--bkg-color);" class="form-select" aria-label="Default select example" id="roleSelect_@userRole.Id">
+                                                                            <option selected>
+                                                                                @userRole.Rolename
+                                                                            </option>
+                                                                            @foreach(Role role in ListRoles){
+                                                                                if(role.Name != userRole.Rolename){
+                                                                                    <option id="roleSelect" value=@role.Name >
+                                                                                        @role.Name
+                                                                                    </option>
+                                                                                }
+                                                                            }
+                                                                        </select>
+
+                                                                    </div>
+                                                                    <div class="modal-footer" style="background-color: var(--bkg-color);">
+                                                                        <button type="button" class="btn btn-danger border-0" data-dismiss="modal">Chiudi</button>
+                                                                        <button onclick="updateRole(@userRole.Id, $('#roleSelect_@userRole.Id').val())" type="button" class="btn btn-success border-0">Salva le modifiche</button>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                }
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                break;
+
+                case 4:
+                   
+                   
+
+                   <div class="settings_postazioni">
+                   
+                            <div class="upload-box"  style="flex-direction: column; align-items: center; justify-content: center; padding: 2%">
+                                <input
+                                    type="file"
+                                    id="fileInput"
+                                    accept="image/*"
+                                    style="display: none"
+                                />
+                                <button class="btn btn-primary bg-darkorange color-white border-0" id="customUploadButton">
+                                    Carica il Menu
+                                </button>
+                                <div class="image-preview" style="width: 100%; height: 100%">
+                                    <img id="previewImage" src="#" alt="Anteprima immagine" />
+                                </div>
+                                
+                                <button class="btn btn-primary bg-darkorange color-white border-0" id="send-menu" onclick="sendmenu()">Invia Email</button>
+                                
+                            </div>
+
+                                <script>
+                                console.log("log");
+                                const fileInput = document.getElementById("fileInput");
+                                const previewImage = document.getElementById("previewImage");
+                                const imagePreviewDiv = document.querySelector(".image-preview");
+                                const customUploadButton = document.getElementById("customUploadButton");
+
+                                customUploadButton.addEventListener("click", function () {
+                                    fileInput.click();
+                                });
+
+                                fileInput.addEventListener("change", function () {
+                                        const file = fileInput.files[0];
+                                        const reader = new FileReader();
+
+                                        reader.onload = function () {
+                                        previewImage.src = reader.result;
+                                        imagePreviewDiv.style.display = "block";
+                                    };
+
+                                    if (file) {
+                                    reader.readAsDataURL(file);
+                                    }
+                                });
+
+                                previewImage.onload = function () {
+
+                                    // Recupera il valore dell'immagine selezionata
+                                    const imageValue = previewImage.src;
+
+                                    // Invia i dati al server usando AJAX
+                                    $.ajax({
+                                        url: 'Settings/SaveImage', // Sostituisci "ControllerName" con il nome del tuo controller C#
+                                        type: 'POST',
+                                        data: { "image": imageValue } 
+                                    });
+                                    console.log("FINE")
+                                };
+                                </script>
+                    </div>
+                    
+
+
+
+                    break;
+                case 5:
+                    <div class="settings_postazioni">
+                <div class="emmergenza_content">
+                    <div>
+                        <br>
+                        <h5 style="color: var(--font-color);">Modalità Emergenza</h5>
+                        <label class="switch">
+                            @{
+                                HttpResponseMessage? getCovidMode = await _capacityHttpService.GetModEmergency();
+                                bool Covid = false;
+                                if (getCovidMode.StatusCode == HttpStatusCode.OK)
+                                {
+                                    Covid = await getCovidMode.Content.ReadFromJsonAsync<bool>();
+
+                                    if (Covid)
+                                    {
+                                        <input type="checkbox" id="covid-switch-btn" checked>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="covid-switch-btn">
+                                    }
+                                }
+                            }
+                            <div class="background-button" style="display: flex; justify-content: center; align-items: center;">
+                                <button class="button">
+                                    EMERGENZA
+                                </button>
+                            </div>
+                        </label>
+                        <br>
+                    </div>
+                </div>
+
+
+                                
+                            </div>
+                           
+                    break;
+            }
+        }
+    </div>
+</div>
+
+<!-- Alert Box -->
+<div class="alert-box">
+    <div class="alert-box-view" style="opacity: 0" id="error-box">
+        <!-- Qui dentro viene inserito il codice di errore NON MODIFICARE -->
+    </div>
+</div>
+
+<!-- Alert Script -->
+<script>
+
+    let usingAlertBox = false;
+
+    function alertBox(message) {
+        let alertBox = $('#error-box');
+
+        alertBox.text(message);
+
+        if (usingAlertBox === false) {
+            usingAlertBox = true;
+            alertBox.animate({ opacity: 0 }, 0);
+            alertBox.animate({ opacity: 1 },
+                750,
+                "swing",
+                function () {
+                    setTimeout(function () {
+                        alertBox.animate({ opacity: 0 },
+                            750,
+                            "swing",
+                            function () {
+                                usingAlertBox = false;
+                                alertBox.text("");
+                            });
+                    },
+                        3000);
+                });
+        }
+
+    }
+</script>
+
+
+<!-- StateBar Script -->
+<script>
+
+    /*
+     * Salva lo stato del tab Sidebar: Ogni volta che viene ricaricata la pagina, quindi
+     * ogni volta che viene aggiornato un dato, mantiene attivo lo stato del tab senza resettarlo.
+     *
+     * Senza questa funzione il tab tornerà sempre sul primo stato ("Covid")
+     */
+
+    // ---------------------------------------
+
+    let stateView = @ViewModel.StateTab;
+
+    let selecPillsTab = [
+        '#options-pills-covid-tab', '#options-pills-festivita-tab', '#options-pills-presenze-tab', '#options-pills-presenze-users', '#options-pills-admin-tab',
+        '#options-pills-covid', '#options-pills-festivita', '#options-pills-presenze', '#options-pills-users', '#options-pills-admin'];
+
+    for (let i = 0; i < selecPillsTab.length; i++) {
+        if (i > 4)
+            $(selecPillsTab[i]).removeClass('show');
+        $(selecPillsTab[i]).removeClass('active');
+    }
+
+    $(selecPillsTab[stateView]).addClass('active');
+    $(selecPillsTab[stateView + 5]).addClass('active show');
+
+
+    let presenzeBtn = $('#presenti-btn');
+    let presenzeDiv = $('#presenti');
+
+    let statePresenzeCollapse = @ViewModel.AttendanceSettingsViewModel.CollapsedList;
+
+    if (statePresenzeCollapse === 1) {
+        presenzeBtn.removeClass('collapsed');
+        presenzeDiv.addClass('show');
+    }
+
+
+
+    // ---------------------------------------
+
+    /*
+     * Salva lo stato del collapse Lista presenze: Ogni volta che viene ricaricata la pagina, quindi
+     * ogni volta che viene aggiornato un dato, mantiene attivo lo stato del collapse senza resettarlo.
+     *
+     * Senza questa funzione il collapse si chiuderà sempre.
+     */
+
+    // ---------------------------------------
+
+    // Fix spam click btn
+    let clickedPresenze = false;
+
+    $('#presenti-btn').on('click', function () {
+        if (clickedPresenze === false) {
+            clickedPresenze = true;
+            $.ajax({
+                type: "POST",
+                url: "Settings/CollapseAttendance"
+            }).done(function () {
+                clickedPresenze = false;
+            });
+        }
+    });
+
+    // ---------------------------------------
+
+</script>
+
+<!-- Questo script serve per adattare le coordinate dell'ImageMap alla viewport dell'utente -->
+<script src="js/jquery.rwdImageMaps.min.js"></script>
+
+<!-- Calendar Script -->
+<script>
+
+    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
+
+    $.ajax({
+        type: "GET",
+        url: "Settings/ReloadHoliday",
+        dataType: 'json',
+        error: function (xhr) { }
+    });
+
+    let festeJSON = JSON.parse("@ViewModel.HolidayJSON".replaceAll("&quot;", "\""));
+
+    for (var i in festeJSON)
+        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
+
+    // Carica tutti i dati del Calendar Feste in quanto non è selezionato un giorno.
+    loadCalendar();
+
+    // Giorni selezionati dall'utente, non possono essere nulli. Null -> Year: 1901
+    let festaSelezionata = new Date(@ViewModel.HolidaySelected.Year, (@ViewModel.HolidaySelected.Month - 1), @ViewModel.HolidaySelected.Day);
+    let presenzaSelezionata = new Date(@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Year, (@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Month - 1), @ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Day);
+
+    // Se l'anno è 1901, allora non è stato selezionato un giorno. C# ha come anno default 1901
+
+    if (festaSelezionata.getFullYear() !== 1901) {
+        goDate(festaSelezionata);
+        if ((month === 11 ? 0 : (month + 1)) === festaSelezionata.getMonth())
+            clickCalendarFest(getIdDay(@ViewModel.HolidaySelected.Day));
+    }
+
+    if (presenzaSelezionata.getFullYear() !== 1901) {
+        goDate1(presenzaSelezionata);
+        if ((month1 === 11 ? 0 : (month1 + 1)) === presenzaSelezionata.getMonth())
+            clickCalendarPres(getIdDay1(@ViewModel.AttendanceSettingsViewModel.AttendanceSelected.Day));
+    }
+
+    /*
+    * ! <area> è utilizzato unicamente nella Map.
+    * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
+    */
+
+    $('area').on('click', function () {
+        let nameStanza = event.target.alt;
+        console.log(nameStanza)
+        $.ajax({
+            type: "POST",
+            url: "Settings/SelectRoom",
+            data: { "room": nameStanza }
+        });
+
+    });
+    /*
+     * ! <td> è utilizzato unicamente nei Calendar.
+     * Raccoglie il click da un calendar, comprende il tipo di calendar in base alla quantità
+     * di caratteri dell'id del <td> sulla quale è stato chiamato l'evento.
+     *
+     * ID length 3 -> Calendar Festività
+     * ID length 4 -> Calendar Presenze
+     */
+
+        $('td').on('click', function (event) {
+            if (event.target.id.length === 3){
+                $.ajax({
+                    type: "POST",
+                    url: "Settings/SelectHoliday",
+                    data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                    error: function (xhr) {
+                        alertBox(xhr.responseText);
+                        event.preventDefault();
+                    }
+                }).done(function () {
+                    window.location.reload();
+                });
+            }else {
+                if (isValidDay(event.target.id))
+                    $.ajax({
+                        type: "POST",
+                        url: "Settings/SelectAttendance",
+                        data: { "year": date1.getFullYear(), "month": date1.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                        error: function(xhr) {
+                            alertBox(xhr.responseText);
+                            event.preventDefault();
+                        }
+                    }).done(function() {
+                        window.location.reload();
+                    });
+            }
+        });
+
+
+</script>
+
+<script>
+    function updateRole(id, selectedRole) {
+        $.ajax({
+            type: "PUT",
+            url: "Settings/UpdateRole",
+            data: { "idUser": id, "futureRole": selectedRole },
+        });
+        setTimeout(() => {location.reload()}, 500);
+    } 
+</script>
+
+<!-- Buttons Script -->
+<script>
+
+    $('#covid-switch-btn').on('click',
+        function () {
+            $.ajax({
+                type: "POST",
+                url: "Settings/ToggleModEmergency"
+            })
+        });
+
+    $('#capienzaNormale').on('change',
+        function (event) {
+            console.log("change");
+
+            console.log("Room: " + "@ViewModel.CapacitySettingsViewModel.Room" + "\nCapacity: " + event.target.value);
+            $.ajax({
+                type: "POST",
+                url: "Settings/ReloadCapacity",
+                data: { "room": "@ViewModel.CapacitySettingsViewModel.Room", "capacity": event.target.value },
+                error: function (xhr) {
+                    alertBox(xhr.responseText);
+                    event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapacityDefault(@ViewModel.CapacitySettingsViewModel.Room);
+                    event.preventDefault();
+                }
+            });
+            console.log("@ViewModel.CapacitySettingsViewModel.GetCapacity(@ViewModel.CapacitySettingsViewModel.Room)");
+        });
+
+    $('#capienzaCovid').on('change',
+        function (event) {
+            $.ajax({
+                type: "POST",
+                url: "Settings/ReloadCapacityEmergency",
+                data: { "room": "@ViewModel.CapacitySettingsViewModel.Room", "capacity": event.target.value },
+                error: function (xhr) {
+                    alertBox(xhr.responseText);
+                    event.target.value = @ViewModel.CapacitySettingsViewModel.GetCapacityEmergencyDefault(@ViewModel.CapacitySettingsViewModel.Room);
+                    event.preventDefault();
+                }
+            });
+        });
+
+    $('#festabutton').on('click',
+        function() {
+            let year = @ViewModel.HolidaySelected.Year;
+            let month = @ViewModel.HolidaySelected.Month;
+            let day = @ViewModel.HolidaySelected.Day;
+           
+            $.ajax({
+                type: "POST",
+                url: "Settings/AddHoliday",
+                data: { "year": year, "month": month, "day": day, "description": "None" },
+                error: function(xhr) {
+                    alertBox(xhr.responseText);
+                    event.preventDefault();
+                }
+            }).done(function() {
+                window.location.reload();
+            });
+        });
+
+    $('#removefestabutton').on('click',
+        function (event) {
+            $.ajax({
+                type: "DELETE",
+                url: "Settings/DeleteHoliday",
+                data: { "year": "@ViewModel.HolidaySelected.Year", "month": "@ViewModel.HolidaySelected.Month", "day": "@ViewModel.HolidaySelected.Day" },
+                error: function (xhr) {
+                    alertBox(xhr.responseText);
+                    event.preventDefault();
+                }
+            }).done(function () {
+                window.location.reload();
+            });
+        });
+
+</script>
+
+
+<!-- Questo script serve per adattare le coordinate dell'ImageMap alla viewport dell'utente -->
+<script src="js/jquery.rwdImageMaps.min.js"></script>
+
+<script>
+    /*
+    * ! <area> è utilizzato unicamente nella Map.
+    * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
+    */
+    $('area').on('click', function () {
+        let nameStanza = event.target.title;
+        console.log("SelectRoom: " + nomeStanza);
+        $.ajax({
+            type: "POST",
+            url: "Settings/SelectRoom",
+            data: { "stanza": nameStanza }
+        });
+        //location.window.reload();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        if (localStorage.getItem("theme") == "theme-light") {
+            document.getElementById("changeMap").src = "/img/piantina.png";
+            console.log("test1")
+        } else {
+            document.getElementById("changeMap").src = "/img/piantinaWhite.png";
+            console.log("test")
+        }
+    })
+
+</script>

@@ -6,8 +6,16 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazioni-postazioni-api", "prenotazioni-postazioni-api\prenotazioni-postazioni-api.csproj", "{69E53831-5D1A-4B02-A91A-5F0ACA8F9E89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni-mvc", "prenotazione-postazioni-mvc\prenotazione-postazioni-mvc.csproj", "{35677C43-2E26-4733-B218-DA00DE771748}"
+	ProjectSection(ProjectDependencies) = postProject
+		{37463ED7-6FC6-4EA3-B379-C47B8F390854} = {37463ED7-6FC6-4EA3-B379-C47B8F390854}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prenotazione-postazioni-libs", "prenotazione-postazioni-libs\prenotazione-postazioni-libs.csproj", "{37463ED7-6FC6-4EA3-B379-C47B8F390854}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{45F4D11D-E725-4888-B027-6D87B426280C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,523 @@
+@{
+
+    ViewData["Title"] = "Pranzo";
+    MenuViewModel ViewModel = (MenuViewModel)Model;
+    ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM/yyyy");
+
+}
+@using System.Net
+@using prenotazione_postazioni_libs.Models;
+@using prenotazione_postazioni_libs.Dto;
+@using prenotazione_postazioni_mvc.HttpServices;
+@using Newtonsoft.Json;
+@inject MenuChoicesHttpService _menuChoicesHttpService;
+@inject MenuHttpService _menuHttpService;
+@inject UserHttpService _userHttpService;
+ 
+@*
+ <script>
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Menu/sendMail",
+        });
+    })
+</script>
+*@
+
+@{
+    //ViewModel.Menu = null;
+    User? LoggedUser = UserHttpService.LoggedUser;
+
+    if (ViewModel.Menu != null && LoggedUser != null)
+    {
+        HttpResponseMessage checkExists = await _menuChoicesHttpService.GetByUserAndIdMenu(ViewModel.Menu.Id, LoggedUser.Id);
+        HttpStatusCode code = checkExists.StatusCode;
+        if (code == HttpStatusCode.OK)
+        {
+            MenuChoices? menuChoice = await checkExists.Content.ReadFromJsonAsync<MenuChoices>();
+
+            if (menuChoice != null) ViewModel.MenuChoice = menuChoice;
+
+        }
+    }
+    else
+    {
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#modalMenuNull" id="button1">
+            Launch static backdrop modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalMenuNull" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div style="background-color: var(--bkg-color);" class="modal-header">
+                        <h1 style="color: var(--font-color);" class="modal-title fs-5" id="staticBackdropLabel">Info Menu</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="javascript:history.back()"></button>
+                    </div>
+                    <div style="background-color: var(--bkg-color); color: var(--font-color); " class="modal-body">
+                        Il menu del @ViewData["DateSelected"] non è disponibile @ViewModel.GetDescriptionHoliday()
+                    </div>
+                    <div style="background-color: var(--bkg-color);" class="modal-footer">
+                        <button type="button" class="btn btn-secondary bg-darkorange" data-bs-dismiss="modal" onclick="javascript:history.back()">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () { $("#button1").trigger("click") })
+        </script>
+    }
+}
+
+    <body style="background-color:var(--bkg1-color)">
+    
+    </body>
+    
+<style>
+    .user-table-col {
+        width: 200px;
+    }
+
+    .user-table-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .user-table-scroll {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .user-table-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: var(--bkg-color);
+        border-radius: 15px;
+        box-shadow: 0 2px 5px var(--shadow-color);
+    }
+
+    .user-table-item img {
+        width: 3vw;
+        height: auto;
+        margin-right: 10px;
+        object-fit: contain;
+    }
+
+    .user-table-item h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--font-color);
+    }
+
+    .user-table-item p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .menu-image {
+        width: 70%;
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 5px;
+        margin: 20px auto;
+    }
+
+    .btn-invia {
+        background-color: #f57c00;
+        border-color: #f57c00;
+        color: var(--font-color);
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, border-color 0.3s;
+        
+    }
+
+    .btn-invia:hover {
+        background-color: #e66000;
+        border-color: #e66000;
+    }
+
+    .btn-invia:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    #risposta {
+        color: #f57c00;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .choice-input {
+        height: 5rem;
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid var(--shadow-color);
+        border-radius: 5px;
+        background-color: var(--bkg-color);
+        color: #495057;
+        position: relative;
+    }
+
+    .progress-bar {
+        height: 20px;
+        background-color: var(--bkg-color);
+        border-radius: 5px;
+        box-shadow: 0 2px 5px var(--shadow-color);
+        overflow: hidden;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background-color: #FF8C00;
+        width: 0;
+        transition: width 1s linear;
+        position: relative;
+    }
+
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        color: var(--font-color);
+    }
+    </style>
+
+<script>
+    // Calculate the progress in percentage and expiration time
+    function calculateProgress() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const totalMinutes = (hours * 60) + minutes;
+        const maxMinutes = 18 * 60; 
+
+        const progress = Math.min((totalMinutes / maxMinutes) * 100, 100);
+        const expirationTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0); 
+
+        return {
+            progress: progress.toFixed(2),
+            expirationTime: expirationTime,
+            currentTime: now
+        };
+    }
+
+    // Update the width of the progress bar fill and display the progress and expiration time
+    function updateProgressBar() {
+        const { progress, expirationTime, currentTime } = calculateProgress();
+        $('.progress-bar-fill').css('width', `${progress}%`);
+        if (progress < 100) {
+            $('.progress-text').text(`Avanzamento: ${progress}% - Prenotare entro il tempo limite: ${expirationTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`);
+        }
+        else {
+            $('.progress-text').text(`Tempo scaduto alle ore ${expirationTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}, non puoi più ordinare`);
+        }
+
+        if (currentTime >= expirationTime) {
+            disableSubmitButton();
+        }
+    }
+
+    // Disable the submit button
+    function disableSubmitButton() {
+        $('#invia').prop('disabled', true);
+        $('#invia').addClass('disabled');
+    }
+
+    // Call the update function initially and every minute
+    $(document).ready(function () {
+        updateProgressBar();
+        setInterval(updateProgressBar, 60000); // Update every minute
+    });
+</script>
+
+<main class="menu_page">
+    <div class="progress-bar">
+            <div class="progress-bar-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-text"></div>
+        </div>
+    <div class="menu_content">
+        
+
+        <div class="menu_row1">
+
+                <div class="menu_table_left">
+                    
+                
+                    <!-- Codice per la tabella degli utenti -->
+                    <div class="div_table">
+                    @{
+                        if (ViewModel.Menu != null)
+                        {
+                            Task<HttpResponseMessage> getAllByMenu = _menuChoicesHttpService.GetByIdMenu(ViewModel.Menu.Id);
+                            getAllByMenu.Wait();
+
+                            List<MenuChoices>? menuChoices = null;
+                            User? user = null;
+
+                            if (getAllByMenu.Result != null && getAllByMenu.Result.StatusCode == HttpStatusCode.OK)
+                            {
+                                menuChoices = await getAllByMenu.Result.Content.ReadFromJsonAsync<List<MenuChoices>?>();
+                                foreach (MenuChoices menuChoice in menuChoices)
+                                {
+                                    Task<HttpResponseMessage> getUserById = _userHttpService.GetById(menuChoice.IdUser);
+                                    getUserById.Wait();
+                                    user = await getUserById.Result.Content.ReadFromJsonAsync<User?>();
+                                    <div class="user-table-item">
+                                        
+                                            <img src="@user.Image" alt="@menuChoice.IdUser" style="border-radius: 100%;">
+                                        
+                                        
+                                        <div class="user-table-col">
+                                            <h4>@user.Name @user.Surname</h4>
+                                            <p style="color: var(--font-color);">@menuChoice.Choice</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        }
+                    }
+                    </div>
+
+                    @{
+                    if (ViewModel.Menu != null)
+                    {
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="myButton">
+                            Launch static backdrop modal
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Menu @ViewData["DateSelected"]</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Ordine inviato con successo
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-bs-dismiss="modal" onclick="location.reload()">Chiudi</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input  type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64" value="@ViewModel.GetMenuChoice()">
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="invia">Invia ordine</button>
+
+                        if (ViewModel.MenuChoice == null && LoggedUser != null)
+                        {
+                            <script>
+                                $("#invia").on("click", function () {
+                                    var choice = $("#myInputChoice").val().trim();
+                                    var idMenu = @ViewModel.Menu.Id;
+                                    var idUser = @LoggedUser.Id;
+
+                                    console.log("Choice: " + choice + " idMenu: " + idMenu + " idUser: " + idUser);
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/Menu/addChoice",
+                                        data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
+                                        success: function () {
+                                            $('#myButton').trigger('click');
+                                        }
+                                    });
+                                })
+                            </script>
+                        }
+                        else if(LoggedUser != null)
+                        {
+                            <script>
+                                $("#invia").on("click", function () {
+                                    var choice = $("#myInputChoice").val().trim();
+                                    var idMenu = @ViewModel.Menu.Id;
+                                    var idUser = @LoggedUser.Id;
+                                    var previousChoice = "@ViewModel.MenuChoice.Choice";
+                                    console.log("eliminazione : Choice: " + choice + " idMenu: " + idMenu + " idUser: " + idUser);
+
+                                    if (previousChoice !== choice) {
+                                        $.ajax({
+                                            type: "DELETE",
+                                            url: "/Menu/deleteChoice",
+                                            data: { "idMenu": idMenu, "idUser": idUser }
+                                        }).done(function () {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "/Menu/addChoice",
+                                                data: { "choice": choice, "idUser": idUser, "idMenu": idMenu },
+                                                success: function () {
+                                                    $('#myButton').trigger('click');
+                                                }
+                                            });
+                                        })
+                                    }
+                                    else {
+                                        $('#myButton').trigger('click');
+                                    }
+                                    location.reload();
+                                });
+                            </script>
+                        }
+
+                       
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control overflow-hidden bd-darkorange choice-input" placeholder="Cosa vuoi ordinare?" id="myInputChoice" maxlength="64" disabled>
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4" id="invia" disabled>Invia</button>
+                    }
+                }
+                </div>
+           
+           
+                        <div class="image_loader">
+                            
+                        @{
+
+                            // hex-string is converted to byte-array
+                            HttpResponseMessage getByDate = await _menuHttpService.GetByDate(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+                            if(getByDate.StatusCode == HttpStatusCode.OK){
+                                Menu? menu = await getByDate.Content.ReadFromJsonAsync<Menu>();
+
+                                // byte-array is converted base64-string
+                                string res = System.Convert.ToBase64String(menu.MenuImage);
+
+                            
+                            <!-- Paragrafo che conterrà la stringa Base64 -->
+                                <p id="res" style="display: none;">@res</p>
+
+                                <!-- Immagine con ID "imgMenu" che visualizzerà l'immagine Base64 -->
+                                <img class="menu-image" id="imgMenu" src="" alt="Menu Image">
+
+                                <!-- Script JavaScript per impostare l'immagine da Base64 -->
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        // Ottieni il paragrafo con ID "res" che contiene la stringa Base64
+                                        var base64String = document.getElementById("res").textContent;
+
+                                        // Imposta l'immagine Base64 come sorgente dell'elemento <img>
+                                        var imgElement = document.getElementById("imgMenu");
+                                        imgElement.src = "data:image/png;base64," + base64String;
+                                    });
+                            </script>
+                            }
+                        }
+                        <button class="btn btn-primary bg-darkorange bd-darkorange mt-4 btn-invia" id="fullscreen-button" style="color: var(--font-color);">Menu schermo intero</button>
+                        
+                    </div>
+
+                    
+               
+
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $('#fullscreen-button').click(function () {
+                        var imageElement = document.getElementsByClassName('menu-image')[0];
+
+                        if (imageElement.requestFullscreen) {
+                            imageElement.requestFullscreen();
+                        } else if (imageElement.mozRequestFullScreen) { // Supporto per Firefox
+                            imageElement.mozRequestFullScreen();
+                        } else if (imageElement.webkitRequestFullscreen) { // Supporto per Chrome, Safari e Opera
+                            imageElement.webkitRequestFullscreen();
+                        } else if (imageElement.msRequestFullscreen) { // Supporto per Internet Explorer e Edge
+                            imageElement.msRequestFullscreen();
+                        }
+                    });
+                });
+            </script>
+
+        </div>
+
+
+
+        <script>
+            // Disable the submit button on page load if the expiration time has passed
+            $(document).ready(function () {
+                const { expirationTime, currentTime } = calculateProgress();
+                if (currentTime >= expirationTime || LoggedUser == null) {
+                    disableSubmitButton();
+                }
+            });
+        </script>
+    </div>
+    <style media="all and (max-width: 700px)">
+    .menu_content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 2vw;
+    }
+    .menu_row1{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+</style>
+    <style>
+    .menu_page{
+        padding: 2%
+    }
+    .menu_content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 2vw;
+    }
+    .menu_row1{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 2vw;
+    }
+    .image_loader{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        flex-direction: column;
+        gap: 2vw;
+    }
+    .image_loader img{
+        width: auto;
+        height: 100%;
+    }
+    .menu_table_left{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 2vw;
+    }
+</style>
+
+</main>
+
+
+
+
+

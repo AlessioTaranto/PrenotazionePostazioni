@@ -1,74 +1,276 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using prenotazione_postazioni_mvc.Models;
+using Microsoft.AspNetCore.Authorization;
+using prenotazione_postazioni_libs.Models;
+using Newtonsoft.Json;
+using prenotazione_postazioni_mvc.HttpServices;
+using System.Net;
 
 namespace prenotazione_postazioni_mvc.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public static BookingViewModel? ViewModel { get; set; }
+
+    //HTTP Client Factory -> Prenotazioni
+    public readonly BookingHttpSerivice _bookingHttpService;
+    //HTTP Client Factory -> Festa
+    public readonly HolidayHttpService _holidayHttpService;
+
+    public HomeController(BookingHttpSerivice bookingHttpService, HolidayHttpService holidayHttpService)
     {
-        _logger = logger;
+        _bookingHttpService = bookingHttpService;
+        _holidayHttpService = holidayHttpService;
     }
-
-    public static PrenotazioneViewModel ViewModel { get; set; }
 
     public IActionResult Index()
     {
 
         if (ViewModel == null)
-            ViewModel = new PrenotazioneViewModel();
+            ViewModel = new BookingViewModel(_bookingHttpService,_holidayHttpService);
+
+        ReloadHoliday();
 
         return View(ViewModel);
     }
 
+    /// <summary>
+    ///     Cambia il giorno selezionato del Calendar.
+    /// </summary>
+    /// <param name="year">Anno selezionato</param>
+    /// <param name="month">Mese selezionato</param>
+    /// <param name="day">Giorno selezionato</param>
+    /// <returns>Giorno aggiornato</returns>
+
     [HttpPost]
-    [ActionName("ReloadDay")]
-    public IActionResult ReloadDay(int year, int month, int day)
+    [ActionName("ReloadDate")]
+    public IActionResult ReloadDate(int year, int month, int day)
     {
+        //Dicembre
 
-        ViewModel.Date = new DateTime(year, month, day);
-        ViewModel.Start = new DateTime(year, month, day, ViewModel.Start.Hour, 0, 0);
-        ViewModel.End = new DateTime(year, month, day, ViewModel.End.Hour, 0, 0);
+        if (month == 0)
+        {
+            month = 12;
+            year--;
+        }
 
-        return RedirectToAction("Index");
+        try
+        {
+            ViewModel?.ChangeSelectedDay(year, month, day);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+
+        return Ok("Giorno selezionato");
     }
+
+    /// <summary>
+    ///     Cambia la stanza selezionata dalla Map.
+    /// </summary>
+    /// <param name="room">Nome della Stanza selezionata</param>
+    /// <returns>Stanza aggiornata</returns>
 
     [HttpPost]
     [ActionName("ReloadRoom")]
     public IActionResult ReloadRoom(string room)
     {
-        ViewModel.Stanza = room;
-
-        return RedirectToAction("Index");
+        if (ViewModel != null)
+        {
+            ViewModel.Room = room;
+        } 
+        return Ok("Stanza selezionata");
     }
+
+    /// <summary>
+    ///     Cambia il l'orario di inzio di una prenotazione.
+    /// </summary>
+    /// <param name="hour">Inizio selezionato</param>
+    /// <returns>Aggiorna orario di inizio</returns>
 
     [HttpPost]
-    [ActionName("ReloadStart")]
-    public IActionResult ReloadStart(int hour)
+    [ActionName("ReloadStartHour")]
+    public IActionResult ReloadStartHour(int hour)
     {
+        try
+        {
+            ViewModel?.ChangeSelectedStartHour(hour);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
 
-        ViewModel.Start = new DateTime(ViewModel.Date.Year, ViewModel.Date.Month, ViewModel.Date.Day, hour, 0, 0);
-
-        return RedirectToAction("Index");
+        return Ok("Orario d'inizio aggiornato");
     }
+
+    /// <summary>
+    ///     Cambia il l'orario di termine di una prenotazione.
+    /// </summary>
+    /// <param name="hour">Termine selezionato</param>
+    /// <returns>Orario di termine aggiornato</returns>
 
     [HttpPost]
-    [ActionName("ReloadFinish")]
-    public IActionResult ReloadFinish(int hour)
+    [ActionName("ReloadEndHour")]
+    public IActionResult ReloadEndHour(int hour)
     {
+        try
+        {
+            ViewModel?.ChangeSelectedEndHour(hour);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
 
-        ViewModel.End = new DateTime(ViewModel.Date.Year, ViewModel.Date.Month, ViewModel.Date.Day, hour, 0, 0);
-
-        return RedirectToAction("Index");
+        return Ok("Orario di termine aggiornato");
     }
+
+    /// <summary>
+    ///     Cambia lo stato del Collapse "#orario"
+    /// </summary>
+    /// <returns>Ok -> Collapse aggiornato</returns>
 
     [HttpPost]
     [ActionName("CollapseHour")]
-    public void CollapseHour(int collapse)
+    public IActionResult CollapseHour()
     {
-        ViewModel.CollapsedHour = collapse;
+        ViewModel?.ToggleCollapseHour();
+
+        return Ok("Collapse change");
+    }
+
+    /// <summary>
+    ///     Cambia lo stato del Collapse "#prenotazioni"
+    /// </summary>
+    /// <returns>Ok -> Collapse aggiornato</returns>
+
+    [HttpPost]
+    [ActionName("CollapseList")]
+    public IActionResult CollapseList()
+    {
+        ViewModel?.ToggleCollapseList();
+
+        return Ok("Collapse change");
+    }
+
+
+    [HttpPost]
+    [ActionName("Booking")]
+    public IActionResult Booking(string userParam, string roomParam, string startDate, string endDate)
+    {
+        Task<HttpStatusCode>? getRq = ViewModel?.ExistBooking(userParam, roomParam, startDate, endDate);
+        getRq.Wait();
+
+        HttpStatusCode code = getRq.Result;
+
+        if (code == HttpStatusCode.NotFound)
+        {
+            //Translating json text to objects
+            User? user = JsonConvert.DeserializeObject<User>(userParam);
+            Room? room = JsonConvert.DeserializeObject<Room>(roomParam);
+            DateTime inizio = JsonConvert.DeserializeObject<DateTime>(startDate);
+            DateTime fine = JsonConvert.DeserializeObject<DateTime>(endDate);
+
+            //Non trova prenotazioni per quel giorno
+            ViewModel?.DoBookingAsync(user, room, inizio, fine);
+
+            return Ok("Prenotazione effettuata");
+        }
+        else if (code == HttpStatusCode.OK)
+        {
+            return NotFound("Prenotazione già effettuata");
+        }
+        else
+        {
+            return BadRequest("Errore");
+        }
+    }
+
+    [HttpDelete]
+    [ActionName("Delete")]
+    public IActionResult Delete(string user, string room, string startDate, string endDate)
+    {
+
+        Task<Booking> bookingTask = ViewModel?.GetBooking(user, room, startDate, endDate);
+        bookingTask.Wait();
+        Booking? booking = bookingTask.Result;
+
+        if (booking == null)
+            return NotFound("Prenotazione non trovata");
+
+        Task<HttpResponseMessage>? getRq = ViewModel?.Delete(booking.Id);
+        getRq.Wait();
+        HttpStatusCode code = getRq.Result.StatusCode;
+
+        if (code == HttpStatusCode.OK)
+            return Ok("Prenotazione cancellata");    
+        else  
+            return NotFound("Errore");
+    }
+
+    [HttpPost]
+    [ActionName("GetAllBookedUser")]
+    public IActionResult GetAllBookedUser(int startDate, int endDate)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Serve a caricare nel calendario le feste, [da aggiungere dove vi si trova un calendario]
+    /// 
+    /// TIP: Ricreare un modello apposito da implementare alle varie model
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [ActionName("ReloadHoliday")]
+    public IActionResult ReloadHoliday()
+    {
+        Task task = ViewModel.ReloadHoliday();
+        //task.Wait();
+
+        return Ok("Festività ricaricate");
+    }
+
+
+    [ActionName("Login")]
+    public async Task Login()
+    {
+        Console.WriteLine("Login");
+        await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
+        {
+            RedirectUri = Url.Action("GoogleResponse")
+        });
+    }
+
+    [ActionName("GoogleResponse")]
+    public async Task<IActionResult> GoogleResponse()
+    {
+        Console.Write("GoogleResponse");
+        var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        var claims = result.Principal.Identities
+            .FirstOrDefault().Claims.Select(claim => new
+            {
+                claim.Issuer,
+                claim.OriginalIssuer,
+                claim.Type,
+                claim.Value
+            });
+
+        return RedirectToAction("Index");
+        return Json(claims);
+    }
+
+    [ActionName("Logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync();
+        UserHttpService.LoggedUser = null;
+        return RedirectToAction("Index");
     }
 }

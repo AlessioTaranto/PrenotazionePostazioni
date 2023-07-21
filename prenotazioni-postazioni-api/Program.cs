@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Log4Net.AspNetCore;
 using prenotazioni_postazioni_api.Controllers;
 using prenotazioni_postazioni_api.Repositories;
+using prenotazioni_postazioni_api.Repositories.Database;
 using prenotazioni_postazioni_api.Services;
 
 
@@ -18,34 +19,44 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<FestaController, FestaController>();
-builder.Services.AddSingleton<FestaService, FestaService>();
-builder.Services.AddSingleton<FestaRepository, FestaRepository>();
+builder.Services.AddSingleton<HolidayController, HolidayController>();
+builder.Services.AddSingleton<HolidayService, HolidayService>();
+builder.Services.AddSingleton<HolidayRepository, HolidayRepository>();
 
-builder.Services.AddSingleton<ImpostazioneController, ImpostazioneController>();
-builder.Services.AddSingleton<ImpostazioneRepository, ImpostazioneRepository>();
-builder.Services.AddSingleton<ImpostazioneService, ImpostazioneService>();
+builder.Services.AddSingleton<SettingsController, SettingsController>();
+builder.Services.AddSingleton<SettingsRepository, SettingsRepository>();
+builder.Services.AddSingleton<SettingsService, SettingsService>();
 
-builder.Services.AddSingleton<PrenotazioneController, PrenotazioneController>();
-builder.Services.AddSingleton<PrenotazioneService, PrenotazioneService>();
-builder.Services.AddSingleton<PrenotazioneRepository, PrenotazioneRepository>();
+builder.Services.AddSingleton<BookingController, BookingController>();
+builder.Services.AddSingleton<BookingService, BookingService>();
+builder.Services.AddSingleton<BookingRepository, BookingRepository>();
 
-builder.Services.AddSingleton<RuoloController, RuoloController>();
-builder.Services.AddSingleton<RuoloService, RuoloService>();
-builder.Services.AddSingleton<RuoloRepository, RuoloRepository>();
+builder.Services.AddSingleton<RoleController, RoleController>();
+builder.Services.AddSingleton<RoleService, RoleService>();
+builder.Services.AddSingleton<RoleRepository, RoleRepository>();
 
-builder.Services.AddSingleton<StanzaController, StanzaController>();
-builder.Services.AddSingleton<StanzaService, StanzaService>();
-builder.Services.AddSingleton<StanzaRepository, StanzaRepository>();
+builder.Services.AddSingleton<RoomController, RoomController>();
+builder.Services.AddSingleton<RoomService, RoomService>();
+builder.Services.AddSingleton<RoomRepository, RoomRepository>();
 
-builder.Services.AddSingleton<UtenteController, UtenteController>();
-builder.Services.AddSingleton<UtenteService, UtenteService>();
-builder.Services.AddSingleton<UtenteRepository, UtenteRepository>();
+builder.Services.AddSingleton<UserController, UserController>();
+builder.Services.AddSingleton<UserService, UserService>();
+builder.Services.AddSingleton<UserRepository, UserRepository>();
 
-builder.Services.AddSingleton<VotoController, VotoController>();
-builder.Services.AddSingleton<VotoService, VotoService>();
-builder.Services.AddSingleton<VotoRepository, VotoRepository>();
+builder.Services.AddSingleton<VoteController, VoteController>();
+builder.Services.AddSingleton<VoteService, VoteService>();
+builder.Services.AddSingleton<VoteRepository, VoteRepository>();
 
+builder.Services.AddSingleton<MenuController, MenuController>();
+builder.Services.AddSingleton<MenuService, MenuService>();
+builder.Services.AddSingleton<MenuRepository, MenuRepository>();
+
+builder.Services.AddSingleton<MenuChoicesController, MenuChoicesController>();
+builder.Services.AddSingleton<MenuChoicesService, MenuChoicesService>();
+builder.Services.AddSingleton<MenuChoicesRepository, MenuChoicesRepository>();
+
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
+DatabaseInfo.DefaultConnectionString = connectionString;
 
 var app = builder.Build();
 

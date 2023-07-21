@@ -1,251 +1,622 @@
-﻿@{
-    ViewData["Title"] = "Postazioni";
+@{
+    ViewData["Title"] = "Prenota postazioni";
 
-    PrenotazioneViewModel ViewModel = (PrenotazioneViewModel) Model;
+    BookingViewModel ViewModel = (BookingViewModel)Model;
+    ViewData["DateSelected"] = ViewModel.Date.ToString("dd/MM/yyyy");
+}
 
+@using System.Net
+@using prenotazione_postazioni_libs.Models;
+@using prenotazione_postazioni_mvc.HttpServices;
+
+@inject SettingsHttpService _settingsHttpService;
+@using Newtonsoft.Json;
+@inject UserHttpService _userHttpService;
+@inject RoomHttpService _roomHttpService;
+@inject BookingHttpSerivice _bookingHttpService;
+@inject HolidayHttpService _holidayHttpService;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    <!-- Utente fittizzio -->
+    User? LoggedUser = null;
+
+    Room? Room = null;
+
+    HttpResponseMessage checkRoom = await _roomHttpService.GetByName(ViewModel.Room);
+
+    if (checkRoom.StatusCode == HttpStatusCode.OK)
+    {
+        Console.WriteLine("Stanza trovata");
+        Room = await checkRoom.Content.ReadFromJsonAsync<Room>();
+    }
+
+    //Add Guest features
+    //prova
+    //prova2
 }
 
 
-    <div class="container mt-4 ml-3 position-fixed calendar-div">
-        <div class="calendar">
-            <div class="head">
-                <ul class="d-flex align-items-center justify-content-center">
-                    <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
-                    <li><a class="item" id="month-year"></a></li>
-                    <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
-                </ul>
-            </div>
-            <div class="body">
-                <table>
-                    <tr>
-                        <th>Lun</th>
-                        <th>Mar</th>
-                        <th>Mer</th>
-                        <th>Gio</th>
-                        <th>Ven</th>
-                        <th>Sab</th>
-                        <th>Dom</th>
-                    </tr>
-                    <tr>
-                        <td id="0-0">1</td>
-                        <td id="1-0">2</td>
-                        <td id="2-0">3</td>
-                        <td id="3-0">4</td>
-                        <td id="4-0">5</td>
-                        <td id="5-0">6</td>
-                        <td id="6-0">7</td>
-                    </tr>
-                    <tr>
-                        <td id="0-1">8</td>
-                        <td id="1-1">9</td>
-                        <td id="2-1">10</td>
-                        <td id="3-1">11</td>
-                        <td id="4-1">12</td>
-                        <td id="5-1">13</td>
-                        <td id="6-1">14</td>
-                    </tr>
-                    <tr>
-                        <td id="0-2">15</td>
-                        <td id="1-2">16</td>
-                        <td id="2-2">17</td>
-                        <td id="3-2">18</td>
-                        <td id="4-2">19</td>
-                        <td id="5-2">20</td>
-                        <td id="6-2">21</td>
-                    </tr>
-                    <tr>
-                        <td id="0-3">22</td>
-                        <td id="1-3">23</td>
-                        <td id="2-3">24</td>
-                        <td id="3-3">25</td>
-                        <td id="4-3">26</td>
-                        <td id="5-3">27</td>
-                        <td id="6-3">28</td>
-                    </tr>
-                    <tr>
-                        <td id="0-4">29</td>
-                        <td id="1-4">30</td>
-                        <td id="2-4">31</td>
-                        <td id="3-4">1</td>
-                        <td id="4-4">2</td>
-                        <td id="5-4">3</td>
-                        <td id="6-4">4</td>
-                    </tr>
-                    <tr>
-                        <td id="0-5">29</td>
-                        <td id="1-5">30</td>
-                        <td id="2-5">31</td>
-                        <td id="3-5">1</td>
-                        <td id="4-5">2</td>
-                        <td id="5-5">3</td>
-                        <td id="6-5">4</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+<script>
+    $(document).ready(function(){
+        if(localStorage.getItem("theme") =="theme-light"){
+            document.getElementById("changeMap").src = "/img/piantina.png";
+        } else {
+            document.getElementById("changeMap").src = "/img/piantinaWhite.png";
+        }
+    })
+    
+</script>
+@if (User.Identity.IsAuthenticated)
+{
+    HttpResponseMessage getByEmail = await _userHttpService.GetByEmail(@User.Claims.ElementAt(4).Value);
+    User? user = null;
+    if (getByEmail.StatusCode == HttpStatusCode.OK)
+    {
+        user = getByEmail.Content.ReadFromJsonAsync<User>().Result;
+    } else
+    {
+        user = new User(User.Claims.ElementAt(2).Value, User.Claims.ElementAt(3).Value, User.Claims.ElementAt(4).Value, 4, User.Claims.ElementAt(5).Value);
+        HttpResponseMessage add = await _userHttpService.Add(user);
+    }
+    LoggedUser = new User(user.Id, user.Name, user.Surname, user.Email, user.IdRole, user.Image);
+    UserHttpService.LoggedUser = LoggedUser;
 
-    <div class="container mt-4 ml-21 position-fixed piantina-div">
-        <img src="img/piantina.png" usemap="#image-map">
+    
+}
+    <body style="background-color:var(--bkg1-color)">
+    
+    </body>
 
-        <map name="image-map" id="image-map">
-            <area alt="Contabilità" title="Contabilità" coords="44,47,140,45,143,132,38,148" shape="poly">
-            <!--<area alt="s2" title="s2" coords="148,155,182,161,182,122,310,119,312,39,148,40" shape="poly">
-            <area alt="s3" title="s3" coords="185,161,185,127,300,126,300,175" shape="poly">
-            <area alt="s4" title="s4" coords="306,126,344,128,344,182,306,177" shape="poly">
-            <area alt="s5" title="s5" coords="316,117,342,117,344,101,388,98,389,39,318,42,317,62" shape="poly">
-            <area alt="s6" title="s6" coords="349,183,390,189,391,111,350,110" shape="poly">.-->
-            <!--<area alt="Finanze" title="Finanze" coords="400,40,484,41,484,107,401,110" shape="poly">-->
-            <area alt="Bansky" title="Bansky" coords="398,118,488,119,486,204,398,193" shape="poly">
-            <area alt="OpenSpace #1" title="OpenSpace #1" coords="491,40,706,64,708,145,492,123" shape="poly">
-            <area alt="OpenSpace #2" title="OpenSpace #2" coords="492,207,704,231,704,147,492,126" shape="poly">
-            <!--<area alt="s10" title="s10" coords="544,225,598,232,595,265,540,261" shape="poly">
-            <area alt="s11" title="s11" coords="606,233,660,242,655,275,600,266" shape="poly">
-            <area alt="s12" title="s12" coords="588,310,705,330,708,495,588,495" shape="poly">-->
-            <area alt="Sviluppo" title="Sviluppo" coords="480,292,578,311,577,501,478,506" shape="poly">
-            <area alt="Assistenza" title="Assistenza" coords="357,494,456,498,450,291,371,293,360,327" shape="poly">
-            <!--<area alt="s15" title="s15" coords="43,246,134,260,135,376,122,383,46,384" shape="poly">
-            <area alt="s16" title="s16" coords="43,399,125,397,147,415,149,508,52,509" shape="poly">
-            <area alt="s17" title="s17" coords="161,508,247,508,248,403,178,403,160,417" shape="poly">-->
-            <area alt="Commerciale" title="Commerciale" coords="262,405,301,385,344,382,347,506,259,507" shape="poly">
-            <area alt="Meeting" title="Meeting" coords="207,251,230,236,259,225,278,223,301,228,318,241,328,267,324,291,316,308,301,327,285,340,262,351,236,359,198,352,186,339,180,324,180,306,186,281" shape="poly">
+<!-- HIDDEN VALUES -->
+<p style="display: none" id="_valueUser">@JsonConvert.SerializeObject(LoggedUser)</p>
+<p style="display: none" id="_valueRoom">@JsonConvert.SerializeObject(Room)</p>
+<p style="display: none" id="_valueDateStart">@JsonConvert.SerializeObject(@ViewModel.StartDate)</p>
+<p style="display: none" id="_valueDateEnd">@JsonConvert.SerializeObject(@ViewModel.EndDate)</p>
+
+  
+<!---->
+<div class="home_container">
+<!--Maremma-->
+    <!-- Piantina Div -->
+    <div class="piantina_container" >
+  
+        <img id="changeMap" src="/img/piantina.png" usemap="#image-map">
+
+        <map name="image-map">
+            <area alt="Bansky" title="Bansky" href="" coords="3865,1581,3871,936,4701,938,4708,1684" shape="poly">
+            <area alt="OpenSpace_1" title="OpenSpace_1" href="" coords="5084,529,5039,821,6336,1003,6381,705" shape="poly">
+            <area alt="OpenSpace_2" title="OpenSpace_2" href="" coords="5097,1172,6381,1334,6323,1645,5052,1464" shape="poly">
+            <area alt="Sviluppo" title="Sviluppo" href="" coords="4623,2381,4623,2556,4591,2576,4591,4113,5551,4113,5557,2517,5136,2427" shape="poly">
+            <area alt="Assistenza" title="Assistenza" href="" coords="3598,2310,3565,2491,3481,2628,3487,4100,4467,4120,4415,2368,3747,2264,3727,2297" shape="poly">
+            <area alt="Commerciale" title="Commerciale" href="" coords="2587,3251,2580,4120,3449,4107,3443,3075,3021,3095" shape="poly">
+            <area alt="Meeting" title="Meeting" href="" coords="2334,1881,2749,1771,3060,1829,3235,1933,3287,2063,3307,2192,3268,2342,3242,2420,3190,2530,3138,2588,3080,2640,2982,2725,2827,2822,2749,2874,2554,2913,2282,2958,2108,2934,1912,2789,1796,2584,1860,2322,2100,2011" shape="poly">
+            <area alt="Contabilità" title="Contabilità" href="" coords="634,1226,1601,1096,1588,344,647,344" shape="poly">
+            <area alt="Call Green" title="Call_Green" href="" coords="5168,1797,5713,1869,5674,2193,5136,2109" shape="poly">
+            <area alt="Call White" title="Call_White" href="" coords="5733,1874,6297,1965,6232,2263,5700,2185" shape="poly">
         </map>
     </div>
 
-    <script src="js/selecter.js"></script>
+    <!-- Room info Div -->
+    <div class="room_info_container">
+        <div class="room_info_div">
+        <div id="room-info-content">
+            <div class="coloreTesto">
 
-<div class="container mt-4 ml-70 position-fixed room-info-div">
-    <h1>@ViewModel.GetStanza()</h1>
-    <br>
-    <div class="btn-collapse">
-        <a data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Seleziona orario
-        </a>
-    </div>
-    <div>
-        <div class="collapse" id="orario">
-            <div class="card card-body">
-                <label for="start">Inizio</label>
-                <input type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.Start.Hour):00"
-                       min="07:00" max="22:00" required>
-                <label for="finish">Termine</label>
-                <input type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.End.Hour):00"
-                       min="07:00" max="22:00" required>
+            <h2>@ViewModel.GetRoom().Replace('_', ' ')</h2>
+             </div>
+            <br>
+            @{
+                if(Room != null){   
+                    HttpResponseMessage holiday = await _holidayHttpService.GetAll();
+                    List<Holiday>? holidayList = null;
+                        if(holiday.StatusCode == HttpStatusCode.OK){
+                            holidayList = holiday.Content.ReadFromJsonAsync<List<Holiday>>().Result;
+                        }
+
+                        bool isHoliday = false;
+
+                        for(int i = 0; holidayList != null && i < holidayList.Count; i++)
+                            if(holidayList[i].Date.ToString("yyyy/MM/dd") == ViewModel.Date.ToString("yyyy/MM/dd")){
+                                isHoliday = true;
+                                break;
+                            }
+                        
+                        if (isHoliday){
+                            <div style="font-size: 1.5vw ;">
+                                Chiuso per ferie!
+                            </div>
+                        }else{
+                            <div class="btn-collapse" id="selectHour">
+                                <a style="color: var(--font-color);" class="fw-bold" data-toggle="collapse" id="orario-btn" href="#orario" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Seleziona orario
+                                </a>
+                            </div>
+                            <div>
+                                <div style="color: var(--font-color);" class="collapse" id="orario">
+                                    <div class="p-2 d-flex flex-column align-items-left justify-content-center gap-3">
+                                        <div style="color: var(--font-color);" class="d-flex flex-column user-select-none">
+                                            <label for="start" >Inizio</label>
+                                            <input style="background-color: var(--bkg-color); color:var(--font-color);" class="form-control" type="time" id="start" name="start" step="3600000" value="@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00"
+                                            min="07:00" max="22:00" required>
+                                        </div>
+                                                    
+                                        <div style="color: var(--font-color); " class="d-flex flex-column user-select-none">
+                                            <label for="finish">Termine</label>
+                                            <input style="background-color: var(--bkg-color); color:var(--font-color);" class="form-control" type="time" id="finish" name="finish" step="3600000" value="@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00"
+                                            min="07:00" max="22:00" required>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                            <br>
+                            <div class="btn-collapse">
+                                <a style="color: var(--font-color);" class="fw-bold" data-toggle="collapse" id="prenotazioni-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Prenotazioni
+                                </a>
+                            </div>
+                            <div class="collapse" id="prenotazioni">
+                                <div class="p-2 h-auto">
+                                    <ul id="lista-prenotazioni" class="d-flex flex-column align-items-left gap-2" style="list-style: none; padding: 0; margin: 0;">
+                                        @{
+                                            HttpResponseMessage? getDayBookings = await _bookingHttpService.GetByDate(Room.Id, @ViewModel.StartDate, @ViewModel.EndDate);
+                                            List<Booking>? bookings = null;
+                                            if (getDayBookings.StatusCode == HttpStatusCode.OK)
+                                            {
+                                                bookings = await getDayBookings.Content.ReadFromJsonAsync<List<Booking>?>();
+
+                                                if (bookings != null && bookings.Count>0)
+                                                {
+                                                    for (int j = 0; j < bookings.Count; j++)
+                                                    {
+                                                        HttpResponseMessage? getUserFromBooking = await _userHttpService.GetById(@bookings[@j].IdUser);
+                                                        User? user = null; 
+                                                        <li class="d-flex flex-row justify-content-left align-items-center">
+                                                                <div class="reservation d-flex flex-row justify-content-center align-items-center" style="font-size: 1vw;">
+                                                                    
+                                                                    @if(getUserFromBooking.StatusCode == HttpStatusCode.OK)
+                                                                    {
+                                                                        user = await getUserFromBooking.Content.ReadFromJsonAsync<User>();
+                                                                            <img src="@user.Image">
+                                                                        <span>@user.Name @user.Surname</span> 
+                                                                    }
+                                                            </div>
+                                                            </li>
+                                                        }
+                                                    }else{
+                                                        <li class="m-0" style="color: var(--font-color);">
+                                                            Nessuna prenotazione
+                                                        </li>
+                                                    }
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                @{
+                                    
+                                    Task<Booking?>? getPrenotazione = ViewModel.GetBooking(JsonConvert.SerializeObject(LoggedUser)
+                                    , JsonConvert.SerializeObject(Room), JsonConvert.SerializeObject(ViewModel.StartDate), JsonConvert.SerializeObject(ViewModel.EndDate));
+                                    getPrenotazione.Wait();
+                                    Booking? prenotazione = getPrenotazione != null ? getPrenotazione.Result : null;
+
+                                    <button class="room_info_btn" style="border: none;" type="button" id="prenota"> Prenota</button>
+                                    <button class="room_info_btn" style="border: none;" type="button" id="cancprenota">Annulla prenotazione</button>
+                                    if ((ViewModel.StartDate.Year < DateTime.Now.Year) || (ViewModel.StartDate.Month < DateTime.Now.Month && ViewModel.StartDate.Year == DateTime.Now.Year) || (ViewModel.StartDate.Day < DateTime.Now.Day && ViewModel.StartDate.Month == DateTime.Now.Month && ViewModel.StartDate.Year == DateTime.Now.Year))
+                                    {
+                                        <script>
+                                            $('#prenota').css('display', 'none');
+                                            $('#cancprenota').css('display', 'none');
+                                            $('#selectHour').css('display', 'none');
+                                        </script>
+                                    }
+                                    else
+                                    {
+                                        if (prenotazione != null)
+                                        {
+                                            <script>
+                                                $('#prenota').css('display', 'none');
+                                                $('#cancprenota').css('display', 'block');
+                                            </script>
+                                        }
+                                        else
+                                        {
+                                            <script>
+                                                $('#prenota').css('display', 'block');
+                                                $('#cancprenota').css('display', 'none');
+                                            </script>
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    }     
+            <div class="alert-box">
+                <div class="alert-box-view" style="opacity: 0" id="error-box">
+                 <!-- Qui dentro viene inserito il codice di errore -->
+                </div>
             </div>
-        </div>
-        <script>
-            //Problemi collapse orario
-            let openCollapse = @ViewModel.CollapsedHour;
-
-            if (openCollapse === 0) {
-                $('#orario').addClass("collapse");
-                $('#orario').removeClass("collapsed");
-            } else{
-                $('#orario').addClass("collapsed");
-                $('#orario').removeClass("collapse");
             }
-        </script>
+        </div>
     </div>
-    <br>
-    <div class="btn-collapse">
-        <a data-toggle="collapse" id="list-btn" href="#prenotazioni" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Persone prenotate
-        </a>
-    </div>
-    <div>
-        <div class="collapse" id="prenotazioni">
-            <div class="card card-body person-div">
-                <ul>
-                    <!--
-                    <li><img src="img/" alt=""></li>
-                    -->
-                </ul>
+
+
+    <button type="button" class="room_info_btn" style="border: none;" data-toggle="modal" data-target="#exampleModalLong">
+        Seleziona una data
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Calendario</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="calendar">
+                            <div class="head">
+                                <ul class="d-flex align-items-center justify-content-center">
+                                    <li><img class="item item-img" src="img/left.png" alt="left" onclick="prevMonth()"></li>
+                                    <li><a class="item" id="month-year"></a></li>
+                                    <li><img class="item item-img" src="img/right.png" alt="right" onclick="nextMonth()"></li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <table>
+                                    <tr>
+                                        <th>Lun</th>
+                                        <th>Mar</th>
+                                        <th>Mer</th>
+                                        <th>Gio</th>
+                                        <th>Ven</th>
+                                        <th>Sab</th>
+                                        <th>Dom</th>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-0">1</td>
+                                        <td id="1-0">2</td>
+                                        <td id="2-0">3</td>
+                                        <td id="3-0">4</td>
+                                        <td id="4-0">5</td>
+                                        <td id="5-0">6</td>
+                                        <td id="6-0">7</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-1">8</td>
+                                        <td id="1-1">9</td>
+                                        <td id="2-1">10</td>
+                                        <td id="3-1">11</td>
+                                        <td id="4-1">12</td>
+                                        <td id="5-1">13</td>
+                                        <td id="6-1">14</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-2">15</td>
+                                        <td id="1-2">16</td>
+                                        <td id="2-2">17</td>
+                                        <td id="3-2">18</td>
+                                        <td id="4-2">19</td>
+                                        <td id="5-2">20</td>
+                                        <td id="6-2">21</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-3">22</td>
+                                        <td id="1-3">23</td>
+                                        <td id="2-3">24</td>
+                                        <td id="3-3">25</td>
+                                        <td id="4-3">26</td>
+                                        <td id="5-3">27</td>
+                                        <td id="6-3">28</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-4">29</td>
+                                        <td id="1-4">30</td>
+                                        <td id="2-4">31</td>
+                                        <td id="3-4">1</td>
+                                        <td id="4-4">2</td>
+                                        <td id="5-4">3</td>
+                                        <td id="6-4">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="0-5">29</td>
+                                        <td id="1-5">30</td>
+                                        <td id="2-5">31</td>
+                                        <td id="3-5">1</td>
+                                        <td id="4-5">2</td>
+                                        <td id="5-5">3</td>
+                                        <td id="6-5">4</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary bg-darkorange bd-darkorange" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-    <br>
-    <div>
-        <button class="btn btn-primary bg-darkorange bd-darkorange" type="button" id="prenota">Prenota</button>
     </div>
 
-</div>
-
-    <script>
-        loadCalendar();
-    </script>
-    <script src="js/selecter.js"></script>
 <script>
 
+    let usingAlertBox = false;
+
+    function alertBox(message, color) {
+        let alertBox = $('#error-box');
+
+        alertBox.text(message);
+        alertBox.css('background-color', color)
+
+        if (usingAlertBox === false) {
+            usingAlertBox = true;
+            alertBox.animate({ opacity: 0 }, 0);
+            alertBox.animate({ opacity: 1 },
+                750,
+                "swing",
+                function() {
+                    setTimeout(function() {
+                            alertBox.animate({ opacity: 0 },
+                                750,
+                                "swing",
+                                function() {
+                                    usingAlertBox = false;
+                                    alertBox.text("");
+                                });
+                        },
+                        3000);
+                });
+        } 
+
+    }
+
+</script>
+
+<script>
+
+    $(document).ready(function() {
+
+        // Id dei collapse #orario
+        let orarioBtn = $('#orario-btn');
+        let orarioDiv = $('#orario');
+
+        // Id dei collapse #prenotazioni 
+        let prenotazioniBtn = $('#prenotazioni-btn');
+        let prenotazioniDiv = $('#prenotazioni');
+
+        // Stato dei collapse
+        let stateCollapseHour = @ViewModel.CollapsedHour;
+        let stateCollapseList = @ViewModel.CollapsedList;
+
+        // Se lo stato salvato === 1, allora visulaizza il collapse aperto, altrimenti tieni chiuso
+        if (stateCollapseHour === 1) {
+            orarioBtn.removeClass('collapsed');
+            orarioDiv.addClass('show');
+        }
+
+        if (stateCollapseList === 1) {
+            prenotazioniBtn.removeClass('collapsed');
+            prenotazioniDiv.addClass('show');
+        }
+
+        // Fix spam click
+        let clickedOrarioBtn = false;
+        let clickedPrenotazioniBtn = false;
+
+        /*
+         * Salva lo stato dei collapse: Ogni volta che viene ricaricata la pagina, quindi
+         * ogni volta che viene aggiornato un dato, mantiene attivo lo stato dei collapse senza resettarli.
+         *
+         * Senza questa funzione i collapse si chiuderanno sempre.
+         */
+
+        // Collapse #orario
+
+        orarioBtn.on('click', function(event) {
+                if (clickedOrarioBtn === false) {
+                    clickedOrarioBtn = true;
+                    $.ajax({
+                        type: "POST",
+                        url: "Home/CollapseHour"
+                    }).done(function() {
+                        clickedOrarioBtn = false;
+                    });
+                }
+            }
+        );
+
+        // Collapse  #prenotazioni
+
+        prenotazioniBtn.on('click', function(event) {
+                if (clickedPrenotazioniBtn === false) {
+                    clickedPrenotazioniBtn = true;
+                    $.ajax({
+                        type: "POST",
+                        url: "Home/CollapseList"
+                    }).done(function() {
+                        clickedPrenotazioniBtn = false;
+                    });
+                }
+            }
+        );
+    });
+</script>
+<script>
+
+    //Per caricare le feste nel calendario fare una richiesta get al db con ajax, quando risponde carica l'array festivita e tramite esso verra ricaricato il calendar
+
+    $.ajax({
+        type: "GET",
+        url: "Home/ReloadHoliday",
+        dataType: 'json',
+        error: function (xhr) { }
+    });
+
+    let festeJSON = JSON.parse("@ViewModel.HolidayJSON".replaceAll("&quot;", "\""));
+
+    for (var i in festeJSON)
+        addFesta(festeJSON[i].idFesta, festeJSON[i].giorno, festeJSON[i].descrizione);
+    
+    // Giorno selezionato nel calendario
     let daySel = new Date(@ViewModel.Date.Year, (@ViewModel.Date.Month - 1), @ViewModel.Date.Day);
 
+    // Porta il calendario al giorno selezionato
     goDate(daySel);
-    clickCalendar(getIdDay(@ViewModel.Date.Day));
-    selectDay(daySel);
+    
+    // Controlla se nel mese corrente è presente un giorno selezionato
+    if ((month === 11 ? 0 : (month+1)) === daySel.getMonth())
+        clickCalendar(getIdDay(@ViewModel.Date.Day));
+
+    /*
+    * ! <area> è utilizzato unicamente nella Map.
+    * Raccoglie il click dalla mappa delle stanze, cambia il valore nel ViewModel e ricarica la pagina.
+    */
+
+
+    
 
     $('area').on('click', function () {
         let nameStanza = event.target.alt;
-
+        console.log(nameStanza);
         $.ajax({
             type: "POST",
             url: "Home/ReloadRoom",
             data: { "room": nameStanza }
-        }).done(function() {
+        }).done(function(data) {
             window.location.reload();
         });
+        
     });
+
+    /*
+     * ! <td> è utilizzato unicamente nei Calendar.
+     * Raccoglie il click da un calendar, comprende il tipo di calendar in base alla quantità
+     * di caratteri dell'id del <td> sulla quale è stato chiamato l'evento.
+     */
 
     $('td').on('click', function(event) {
         if (isValidDay(event.target.id))
             $.ajax({
                 type: "POST",
-                url: "Home/ReloadDay",
-                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() }
-            }).done(function() {
+                url: "Home/ReloadDate",
+                data: { "year": date.getFullYear(), "month": date.getMonth(), "day": $('#'.concat(event.target.id)).text() },
+                error: function(xhr) {
+                    alertBox(xhr.responseText, "#de4802");
+                    event.preventDefault();
+                }
+            }).done(function(data) {
                 window.location.reload();
             });
     });
+
+    /**
+     * Seleziona un nuovo orario di Inizio, controlla se valido e infine ricarica la pagina con la lista
+     * presenze aggiornata.
+     */
 
     $('#start').on('change', function(event) {
-        let hourSel = (event.target.value).split(":")[0];
-
-        if (hourSel >= 8 && hourSel <= 22)
-            $.ajax({
-                type: "POST",
-                url: "Home/ReloadStart",
-                data: { "hour": hourSel }
-            }).done(function() {
-                window.location.reload();
-            });
+        $.ajax({
+            type: "POST",
+            url: "Home/ReloadStartHour",
+            data: { "hour": (event.target.value).split(":")[0] },
+            error: function(xhr) {
+                alertBox(xhr.responseText, "#de4802");
+                event.preventDefault();
+                event.target.value = "@ViewModel.FormatHour(@ViewModel.StartDate.Hour):00";
+            }
+        })
     });
 
-    $('#finish').on('change', function(event) {
-        let hourSel = (event.target.value).split(":")[0];
+    /**
+     * Seleziona un nuovo orario di Termine, controlla se valido e infine ricarica la pagina con la lista
+     * presenze aggiornata.
+     */
 
-        if (hourSel >= 8 && hourSel <= 22)
-            $.ajax({
-                type: "POST",
-                url: "Home/ReloadFinish",
-                data: { "hour": hourSel }
-            }).done(function() {
-                window.location.reload();
-            });
+        $('#finish').on('change', function (event) {
+            console.log((event.target.value).split(":")[0]);
+        $.ajax({
+            type: "POST",
+            url: "Home/ReloadEndHour",
+            data: { "hour": (event.target.value).split(":")[0] },
+            error: function(xhr) {
+                alertBox(xhr.responseText, "#de4802");
+                event.preventDefault();
+                event.target.value = "@ViewModel.FormatHour(@ViewModel.EndDate.Hour):00";
+            }
+        });
     });
 
 </script>
+
+<!-- Qui viene gestito lato Javascript il processo di prenotazione. (Btn, cancellazione e errori) -->
 <script>
 
-    //Da problemi (Collapse orario)
+    $('#prenota').on('click', function(event) {
 
-    $(document).ready(function() {
-        $('#orario-btn').on('click',
-            function(event) {
-                $.ajax({
-                    type: "POST",
-                    url: "Home/CollapseHour",
-                    data: { "collapse": (event.target.classList.contains("collapsed") ? 1 : 0) }
-                }).done(function() {
-                });
+        if ($('#_valueRoom').text() === "null") {
+            alertBox("Seleziona una stanza ", "#de4802");
+            return;
+        } else if ($('#_valueUser').text() === "null") {
+            alertBox("Non puoi effettuare prenotazioni come Guest", "#de4802");
+            return;
+        }
+
+            console.log("Booking - startDate: " + $('#_valueDateStart').text() + " - endDate: " + $('#_valueDateEnd').text());
+
+        $.ajax({
+            type: "POST",
+            url: "Home/Booking",
+            data: { "userParam": $('#_valueUser').text(), "roomParam": $('#_valueRoom').text(), "startDate": $('#_valueDateStart').text(), "endDate": $('#_valueDateEnd').text() },
+            error: function (xhr) {
             }
-        );
+        }).done(function (data, statusText, xhr) {
+            var status = xhr.status;
+            if (status === 200) {
+                $('#prenota').css('display', 'none');
+                $('#cancprenota').css('display', 'block');
+                location.reload();
+
+                alertBox("Prenotazione effettuata", "#08a100");
+            } else if (status === 404) 
+                alertBox("Non puoi prenotarti nuovamente", "#de4802");
+            else
+                alertBox("Errore", "#de4802");
+        });
+
     });
+
+    $('#cancprenota').on('click', function(event) {
+
+        if ($('#_valueRoom').text() === "null") {
+            alertBox("Seleziona una stanza", "#de4802");
+            return;
+        } else if ($('#_valueUser').text() === "null") {
+            alertBox("Non puoi cancellare prenotazioni come Guest", "#de4802");
+            return;
+        }
+
+        $.ajax({
+                type: "DELETE",
+                url: "Home/Delete",
+                data: { "user": $('#_valueUser').text(), "room": $('#_valueRoom').text(), "startDate": $('#_valueDateStart').text(), "endDate": $('#_valueDateEnd').text() },
+                error: function (xhr) {
+            }
+        }).done(function (data, statusText, xhr) {
+            var status = xhr.status;
+            if (status === 200) {
+                $('#prenota').css('display', 'block');
+                $('#cancprenota').css('display', 'none');
+                location.reload();
+
+                alertBox("Prenotazione cancellata", "#08a100");
+            } else if (status === 404) 
+                alertBox("Prenotazione non trovata", "#de4802");
+            else
+                alertBox("Errore", "#de4802");
+        });
+
+    });
+
 </script>

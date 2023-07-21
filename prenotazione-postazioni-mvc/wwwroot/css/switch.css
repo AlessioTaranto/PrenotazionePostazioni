@@ -1,0 +1,212 @@
+﻿.background-button {
+  background: repeating-linear-gradient(
+    45deg,
+    #3c2209 0 20px,
+    #ff9c00 20px 40px
+  );
+  width: 10em;
+  height: 10em;
+  -webkit-box-shadow: 15px 15px 50px 5px #5f5f5f;
+  box-shadow: 15px 15px 50px 5px #5f5f5f;
+  position: relative;
+  display: inline-block;
+  outline: 2px solid black;
+}
+
+.background-button::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  background: #a0b8c4;
+  border: 2px solid #3c2209;
+}
+
+.button {
+  background: #cc2a1f;
+  width: 65%;
+  height: 65%;
+  border-radius: 50%;
+  position: absolute;
+  top: 7.5%;
+  left: 18.25%;
+  color: white;
+  font-size: 1em;
+  font-weight: 900;
+  font-family: "Courier New", Courier, monospace;
+  -webkit-box-shadow: 0 15px 0 0 #842a2a;
+  box-shadow: 0 15px 0 0 #842a2a;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  border: 2px solid black;
+}
+
+.button:active {
+  -webkit-box-shadow: 0 1px 1px 1px #8c0606;
+  box-shadow: 0 1px 1px 1px #8c0606;
+  top: 15%;
+}
+
+.background-button:has(.button:active) + .emergency {
+  display: block;
+  -webkit-transform: rotate(0deg) scaleY(1);
+  -ms-transform: rotate(0deg) scaleY(1);
+  transform: rotate(0deg) scaleY(1);
+  -webkit-animation: anims 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation: anims 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@keyframes anims {
+  0% {
+    -webkit-transform: rotate(-30deg) scaleY(0.25);
+    transform: rotate(-30deg) scaleY(0.25);
+  }
+
+  100% {
+    -webkit-transform: rotate(0deg) scaleY(1);
+    transform: rotate(0deg) scaleY(1);
+  }
+}
+
+.emergency {
+  position: absolute;
+  display: none;
+}
+
+.upload-box {
+  text-align: center;
+}
+
+.custom-file-upload {
+  cursor: pointer;
+  background-color: darkorange;
+  color: var(--font-color);
+  padding: 10px 20px;
+  border: none; /* Rimuovi il bordo */
+  border-radius: 20px; /* Arrotonda le estremità */
+  display: inline-block;
+  outline: none; /* Rimuovi l'outline quando selezionato */
+}
+
+.image-preview {
+  margin-top: 20px;
+  display: none;
+}
+
+.image-preview img {
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  top: 10px;
+}
+
+.form-content {
+  background-color: var(--bkg-color);
+  border-radius: 8px;
+  width: 400px;
+}
+
+.form-content label {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--font-color);
+  align-items: center;
+}
+
+.form-content input[type="time"] {
+  border: 2px solid var(--shadow-color);
+  border-radius: 4px;
+  width: 20.7rem;
+  font-size: 16px;
+  outline: none;
+  background-color: var(--bkg-color);
+}
+
+.form-content input[type="submit"] {
+  background-color: darkorange;
+  color: var(--bkg-color);
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  transition: background-color 0.3s;
+  box-sizing: content-box;
+}
+
+.form-content input[type="submit"]:hover {
+  background-color: orange;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 6px;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: darkorange;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px darkorange;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
