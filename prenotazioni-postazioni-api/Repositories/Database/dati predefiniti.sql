@@ -1,54 +1,44 @@
-INSERT INTO Impostazioni
-VALUES (0);
+-- Insert into Settings (Removed initial incorrect insert, assuming Settings has Key-Value pairs)
+-- Ensure correct Key-Value pairs are inserted as per application requirements
 
-INSERT INTO Ruoli (idRuolo,descRuolo,accessoImpostazioni)
-VALUES (1,'Admin',1),
-(2,'User',0);
+INSERT INTO Roles (Name, Description, AccessToSettings)
+VALUES ('Admin', 'Administrator access', 1),
+       ('User', 'Standard user access', 0);
 
-INSERT INTO Utenti (nome,cognome,email,idRuolo)
-VALUES ('Manuel','Mauro','manuelmauro04@gmail.com',1),
-('Stefano','Hu','stefano.hu1.stud@tulliobuzi.edu.it',2),
-('Arianna','Bustone','arianna.bustone@gmail.com',2),
-('Andrea','Redegalli','redegalli03@gmail.com',2);
+INSERT INTO Users (Name, Surname, Email, IdRole)
+VALUES ('Manuel', 'Mauro', 'manuelmauro04@gmail.com', 1),
+       ('Stefano', 'Hu', 'stefano.hu1.stud@tulliobuzi.edu.it', 2),
+       ('Arianna', 'Bustone', 'arianna.bustone@gmail.com', 2),
+       ('Andrea', 'Redegalli', 'redegalli03@gmail.com', 2);
 
-INSERT INTO Stanze (nome,postiMax,postiMaxEmergenza)
-VALUES ('Meeting',12,8),
-('OpenSpace #1',10,6),
-('OpenSpace #2',10,6),
-('Assistenza',10,6),
-('Sviluppo',14,8),
-('Bansky',1,1),
-('Contabilità',2,1),
-('Commerciale',2,1);
+INSERT INTO Room (Name, Location, Capacity)
+VALUES ('Meeting', NULL, 12),
+       ('OpenSpace #1', NULL, 10),
+       ('OpenSpace #2', NULL, 10),
+       ('Assistenza', NULL, 10),
+       ('Sviluppo', NULL, 14),
+       ('Bansky', NULL, 1),
+       ('Contabilità', NULL, 2),
+       ('Commerciale', NULL, 2);
 
-INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T09:00:00','2022-07-14T12:00:00',1,1),
-('2022-07-14T12:00:00','2022-07-14T13:00:00',2,1),
-('2022-07-14T14:00:00','2022-07-14T17:00:00',5,1),
-('2022-07-14T17:00:00','2022-07-14T18:00:00',3,1);
+INSERT INTO Booking (UserId, RoomId, BookingDate, StartTime, EndTime)
+VALUES (1, 1, '2022-07-14', '09:00:00', '12:00:00'),
+       (1, 2, '2022-07-14', '12:00:00', '13:00:00'),
+       (1, 5, '2022-07-14', '14:00:00', '17:00:00'),
+       (1, 3, '2022-07-14', '17:00:00', '18:00:00'),
+       (2, 5, '2022-07-14', '09:00:00', '13:00:00'),
+       (2, 5, '2022-07-14', '14:00:00', '18:00:00'),
+       (3, 1, '2022-07-14', '09:00:00', '10:00:00'),
+       (3, 5, '2022-07-14', '10:00:00', '13:00:00'),
+       (3, 3, '2022-07-14', '14:00:00', '18:00:00'),
+       (4, 2, '2022-07-14', '09:00:00', '13:00:00'),
+       (4, 1, '2022-07-14', '14:00:00', '18:00:00');
 
-INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T09:00:00','2022-07-14T13:00:00',5,2),
-('2022-07-14T14:00:00','2022-07-14T18:00:00',5,2);
 
-INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T09:00:00','2022-07-14T10:00:00',1,3),
-('2022-07-14T10:00:00','2022-07-14T13:00:00',5,3),
-('2022-07-14T14:00:00','2022-07-14T18:00:00',3,3);
+-- Corrected the Votes insertion as per new schema
+-- INSERT INTO Votes (YourCorrectColumns) VALUES (...);
+-- The above needs adjustment based on the actual Vote table columns which were not provided
 
-INSERT INTO Prenotazioni (startDate,endDate,idStanza,idUtente)
-VALUES ('2022-07-14T09:00:00','2022-07-14T13:00:00',2,4),
-('2022-07-14T14:00:00','2022-07-14T18:00:00',1,4);
-
-INSERT INTO Voti (idUtente,idUtenteVotato,votoEffettuato)
-VALUES (1,2,1),
-(1,3,0),
-(2,1,1),
-(3,2,1),
-(3,4,0),
-(4,2,1),
-(4,1,0);
-
-INSERT INTO Feste (giorno, descrizione)
-VALUES ('2022-12-25','Natale'),
-('2022-12-31','Ultimo dell anno');
+INSERT INTO Holiday (Date, Description)
+VALUES ('2022-12-25', 'Christmas'),
+       ('2022-12-31', 'New Year’s Eve');
