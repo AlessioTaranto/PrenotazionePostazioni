@@ -3,16 +3,19 @@
     public class CapacityHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public CapacityHttpService(IHttpClientFactory httpClientFactory)
+        private readonly string _apiBaseUrl; // Variable to hold the API base URL
+
+        public CapacityHttpService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _apiBaseUrl = configuration.GetValue<string>("ApiPath");
         }
 
         public async Task<HttpResponseMessage> GetModEmergency()
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capacity");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/settings/get");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/settings/get");
 
             return httpResponseMessage;
         }
@@ -20,7 +23,7 @@
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capacity");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/settings/update", null);
+            var httpResponseMessage = await httpClient.PostAsync($"{_apiBaseUrl}/api/settings/update", null);
 
             return httpResponseMessage;
         }
@@ -29,7 +32,7 @@
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capacity");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getAll");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/room/getAll");
 
             return httpResponseMessage;
         }
@@ -38,7 +41,7 @@
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capacity");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/room/updateCapacity?capacity=" + capacity + "&name=" + room, null);
+            var httpResponseMessage = await httpClient.PostAsync($"{_apiBaseUrl}/api/room/updateCapacity?capacity=" + capacity + "&name=" + room, null);
 
             return httpResponseMessage;
         }
@@ -47,7 +50,7 @@
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Capacity");
 
-            var httpResponseMessage = await httpClient.PostAsync($"https://localhost:7126/api/room/updateCapacityEmergency?capacity=" + capacity + "&name=" + room, null);
+            var httpResponseMessage = await httpClient.PostAsync($"{_apiBaseUrl}/api/room/updateCapacityEmergency?capacity=" + capacity + "&name=" + room, null);
 
             return httpResponseMessage;
         }

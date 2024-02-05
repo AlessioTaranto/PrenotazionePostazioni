@@ -10,22 +10,25 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class MenuHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _apiBaseUrl; // Variable to hold the API base URL
 
-        public MenuHttpService(IHttpClientFactory httpClientFactory)
+
+        public MenuHttpService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _apiBaseUrl = configuration.GetValue<string>("ApiPath");
         }
         public async Task<HttpResponseMessage> GetAll()
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Menu");
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menu/getAll");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/menu/getAll");
             return httpResponseMessage;
         }
 
         public async Task<HttpResponseMessage> GetByDate(int year, int month, int day)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Menu");
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menu/getByDate?year={year}&month={month}&date={day}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/menu/getByDate?year={year}&month={month}&date={day}");
             return httpResponseMessage;
         }
 
@@ -33,7 +36,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Menu");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menu/getById?id={id}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/menu/getById?id={id}");
 
             return httpResponseMessage;
         }
@@ -50,7 +53,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var jsonMenu = JsonConvert.SerializeObject(menuDto);
             StringContent content = new StringContent(jsonMenu, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/menu/add", content);
+            var httpResponseMessage = await httpClient.PostAsync("{_apiBaseUrl}/api/menu/add", content);
 
             return httpResponseMessage;
         }
@@ -59,7 +62,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Menu");
 
-            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/menu/delete?year={year}&month={month}&day={day}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{_apiBaseUrl}/api/menu/delete?year={year}&month={month}&day={day}");
 
             return httpResponseMessage;
         }

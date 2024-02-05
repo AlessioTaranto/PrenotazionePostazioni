@@ -8,16 +8,19 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class VoteHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public VoteHttpService(IHttpClientFactory httpClientFactory)
+        private readonly string _apiBaseUrl; // Variable to hold the API base URL
+
+        public VoteHttpService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _apiBaseUrl = configuration.GetValue<string>("ApiPath");
         }
 
         public async Task<HttpResponseMessage> GetUserVotes(int idUser)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Vote");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/vote/getUserVotes?idUser={idUser}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/vote/getUserVotes?idUser={idUser}");
 
             return httpResponseMessage;
         }
@@ -26,7 +29,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Vote");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/vote/getVictimVotes?idVictim={idVictim}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/vote/getVictimVotes?idVictim={idVictim}");
 
             return httpResponseMessage;
         }
@@ -40,7 +43,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             string json = JsonConvert.SerializeObject(vote); 
             //var content = new StringContent(json);
 
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7126/api/vote/add");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "{_apiBaseUrl}/api/vote/add");
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var httpResponseMessage = await httpClient.SendAsync(request);
@@ -52,7 +55,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Vote");
 
-            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/vote/delete?idUser={idUser}&idVictim={idVictim}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{_apiBaseUrl}/api/vote/delete?idUser={idUser}&idVictim={idVictim}");
 
             return httpResponseMessage;
         }

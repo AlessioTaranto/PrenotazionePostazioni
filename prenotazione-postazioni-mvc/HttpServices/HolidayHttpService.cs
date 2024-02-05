@@ -8,10 +8,13 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class HolidayHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _apiBaseUrl; // Variable to hold the API base URL
 
-        public HolidayHttpService(IHttpClientFactory httpClientFactory)
+
+        public HolidayHttpService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _apiBaseUrl = configuration.GetValue<string>("ApiPath");
         }
 
         public async Task<HttpResponseMessage> GetAll()
@@ -19,7 +22,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Holiday");
 
             var httpResponseMessage =
-                await httpClient.GetAsync($"https://localhost:7126/api/holiday/getAll");
+                await httpClient.GetAsync($"{_apiBaseUrl}/api/holiday/getAll");
 
             return httpResponseMessage;
         }
@@ -29,7 +32,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Holiday");
 
             var httpResponseMessage =
-                await httpClient.GetAsync($"https://localhost:7126/api/holiday/getByDate?year={year}&month={month}&day={day}");
+                await httpClient.GetAsync($"{_apiBaseUrl}/api/holiday/getByDate?year={year}&month={month}&day={day}");
 
             return httpResponseMessage;
         }
@@ -47,7 +50,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var jsonHoliday = JsonConvert.SerializeObject(holidayDto);
             StringContent content = new StringContent(jsonHoliday, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/holiday/add", content);
+            var httpResponseMessage = await httpClient.PostAsync("{_apiBaseUrl}/api/holiday/add", content);
 
             return httpResponseMessage;
 
@@ -57,7 +60,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var httpResponseMessage =
-                await httpClient.PostAsync($"https://localhost:7126/api/holiday/add", content);
+                await httpClient.PostAsync($"{_apiBaseUrl}/api/holiday/add", content);
 
             return httpResponseMessage;*/
         }
@@ -66,7 +69,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Holiday");
 
-            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/holiday/delete?year={year}&month={month}&day={day}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{_apiBaseUrl}/api/holiday/delete?year={year}&month={month}&day={day}");
 
             return httpResponseMessage;
         }

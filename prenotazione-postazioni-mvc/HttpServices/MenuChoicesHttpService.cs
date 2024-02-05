@@ -7,36 +7,39 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class MenuChoicesHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public MenuChoicesHttpService(IHttpClientFactory httpClientFactory)
+        private readonly string _apiBaseUrl; // Variable to hold the API base URL
+
+        public MenuChoicesHttpService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _apiBaseUrl = configuration.GetValue<string>("ApiPath");
         }
 
         public async Task<HttpResponseMessage> GetAll()
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-MenuChoices");
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menuChoices/getAll");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/menuChoices/getAll");
             return httpResponseMessage;
         }
 
         public async Task<HttpResponseMessage> GetById(int id)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-MenuChoices");
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menuChoices/getById?id={id}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/menuChoices/getById?id={id}");
             return httpResponseMessage;
         }
 
         public async Task<HttpResponseMessage> GetByIdMenu(int idMenu)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-MenuChoices");
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menuChoices/getByIdMenu?idMenu={idMenu}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/menuChoices/getByIdMenu?idMenu={idMenu}");
             return httpResponseMessage;
         }
 
         public async Task<HttpResponseMessage> GetByUserAndIdMenu(int idMenu, int idUser)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-MenuChoices");
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/menuChoices/getByUserAndIdMenu?idMenu={idMenu}&idUser={idUser}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/menuChoices/getByUserAndIdMenu?idMenu={idMenu}&idUser={idUser}");
             return httpResponseMessage;
         }
 
@@ -49,7 +52,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             //Console.WriteLine(JsonConvert.SerializeObject(menuChoicesDto));
             //Console.WriteLine("\\n content : " + json);
             var httpResponseMessage =
-               await httpClient.PostAsync($"https://localhost:7126/api/menuChoices/add", content);
+               await httpClient.PostAsync($"{_apiBaseUrl}/api/menuChoices/add", content);
            
             return httpResponseMessage;
         }
@@ -58,7 +61,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-MenuChoices");
 
-            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/menuChoices/delete?idMenu={idMenu}&idUser={idUser}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{_apiBaseUrl}/api/menuChoices/delete?idMenu={idMenu}&idUser={idUser}");
 
             return httpResponseMessage;
         }

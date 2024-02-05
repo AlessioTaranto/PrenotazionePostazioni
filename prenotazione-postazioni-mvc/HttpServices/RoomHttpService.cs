@@ -6,17 +6,20 @@ namespace prenotazione_postazioni_mvc.HttpServices
     public class RoomHttpService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _apiBaseUrl; // Variable to hold the API base URL
 
-        public RoomHttpService(IHttpClientFactory httpClientFactory)
+
+        public RoomHttpService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _apiBaseUrl = configuration.GetValue<string>("ApiPath");
         }
 
         public async Task<HttpResponseMessage> GetAll()
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Room");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getAll");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/room/getAll");
 
             return httpResponseMessage;
         }
@@ -25,7 +28,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Room");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getById?id={id}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/room/getById?id={id}");
 
             return httpResponseMessage;
         }
@@ -34,7 +37,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Room");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/room/getByName?name={name}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/room/getByName?name={name}");
 
             return httpResponseMessage;
         }

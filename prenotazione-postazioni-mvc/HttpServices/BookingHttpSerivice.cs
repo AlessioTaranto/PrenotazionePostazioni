@@ -10,17 +10,20 @@ namespace prenotazione_postazioni_mvc.HttpServices
     {
 
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _apiBaseUrl; // Variable to hold the API base URL
 
-        public BookingHttpSerivice(IHttpClientFactory httpClientFactory)
+
+        public BookingHttpSerivice(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _apiBaseUrl = configuration.GetValue<string>("ApiPath");
         }
 
         public async Task<HttpResponseMessage> GetById(int id)
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Booking");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/booking/getById?id={id}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/booking/getById?id={id}");
 
             return httpResponseMessage;
         }
@@ -29,7 +32,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Booking");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/booking/getAll");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/booking/getAll");
 
             return httpResponseMessage;
         }
@@ -38,7 +41,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Booking");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/booking/getByRoom?idRoom={idRoom}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/booking/getByRoom?idRoom={idRoom}");
 
             return httpResponseMessage;
         }
@@ -47,7 +50,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Booking");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/booking/getByUser?idUser={idUser}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/booking/getByUser?idUser={idUser}");
 
             return httpResponseMessage;
         }
@@ -56,7 +59,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-Booking");
 
-            var httpResponseMessage = await httpClient.GetAsync($"https://localhost:7126/api/booking/getByDate?idRoom={idRoom}&startDateYear={start.Year}&startDateMonth={start.Month}&startDateDay={start.Day}&startDateHour={start.Hour}&startDateMinute={start.Minute}&endDateYear={end.Year}&endDateMonth={end.Month}&endDateDay={end.Day}&endDateHour={end.Hour}&endDateMinute={end.Minute}");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/booking/getByDate?idRoom={idRoom}&startDateYear={start.Year}&startDateMonth={start.Month}&startDateDay={start.Day}&startDateHour={start.Hour}&startDateMinute={start.Minute}&endDateYear={end.Year}&endDateMonth={end.Month}&endDateDay={end.Day}&endDateHour={end.Hour}&endDateMinute={end.Minute}");
 
             return httpResponseMessage;
         }
@@ -76,7 +79,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var jsonBooking = JsonConvert.SerializeObject(bookingDto);
             StringContent content = new StringContent(jsonBooking, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync("https://localhost:7126/api/booking/add", content);
+            var httpResponseMessage = await httpClient.PostAsync("{_apiBaseUrl}/api/booking/add", content);
 
             return httpResponseMessage;
         }
@@ -86,7 +89,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazione-Booking");
 
-            var httpResponseMessage = await httpClient.DeleteAsync($"https://localhost:7126/api/booking/delete?id={id}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{_apiBaseUrl}/api/booking/delete?id={id}");
 
             return httpResponseMessage;
         }
