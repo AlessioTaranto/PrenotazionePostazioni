@@ -73,12 +73,13 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Add(User utente)
         {
-            string query = $"INSERT INTO [User] (name, surname, email, idRole, image) VALUES (@name, @surname, @email, @idRole, @image);";
+            string query = $"INSERT INTO [User] (name, surname, email, idRole, googleId, image) VALUES (@name, @surname, @email, @idRole, @googleId, @image);";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@name", utente.Name);
             sqlCommand.Parameters.AddWithValue("@surname", utente.Surname);
             sqlCommand.Parameters.AddWithValue("@email", utente.Email);
             sqlCommand.Parameters.AddWithValue("@idRole", utente.IdRole);
+            sqlCommand.Parameters.AddWithValue("@googleId", utente.GoogleId);
             sqlCommand.Parameters.AddWithValue("@image", utente.Image);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }

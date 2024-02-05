@@ -19,3 +19,6 @@ VALUES ('Meeting', NULL, 12),
 INSERT INTO Holiday ([Date], [Description])
 VALUES ('2022-12-25', 'Christmas'),
        ('2022-12-31', 'New Year’s Eve');
+
+INSERT INTO Settings([modEmergency])
+VALUES (0);

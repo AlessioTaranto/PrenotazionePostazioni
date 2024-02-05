@@ -14,12 +14,13 @@ namespace prenotazione_postazioni_libs.Models
         public string Email { get; set; }
         public int IdRole { get; set; }
         public string Image { get; set; }
+        public string GoogleId { get; set; }
 
 
         private Exception ModelException { get; set; } = new Exception();
         public bool IsValid { get; set; } = false;
 
-        public User(int id, string name, string surname, string email, int idRole)
+        public User(int id, string name, string surname, string email, int idRole, string googleId)
         {
             this.Id = id;
             this.Name = name;
@@ -28,36 +29,40 @@ namespace prenotazione_postazioni_libs.Models
             this.IdRole = idRole;
 
             this.Validate();
+            GoogleId = googleId;
         }
 
-        public User(int id, string name, string surname, string email, int idRole, string Image)
+        public User(int id, string name, string surname, string email, int idRole, string googleId, string Image)
         {
             this.Id = id;
             this.Name = name;
             this.Surname = surname;
             this.Email = email;
             this.IdRole = idRole;
+            this.GoogleId = googleId;
             this.Image = Image;
 
             this.Validate();
         }
 
-        public User(string name, string surname, string email, int idRole)
+        public User(string name, string surname, string email, int idRole, string googleId)
         {
             Name = name;
             Surname = surname;
             Email = email;
             IdRole = idRole;
+            GoogleId = googleId;
             this.Validate();
         }
 
-        public User(string name, string surname, string email, int idRole, string Image)
+        public User(string name, string surname, string email, int idRole, string googleId, string Image)
         {
             Name = name;
             Surname = surname;
             Email = email;
             IdRole = idRole;
             this.Image = Image;
+            GoogleId = googleId;
 
             this.Validate();
         }
@@ -81,6 +86,9 @@ namespace prenotazione_postazioni_libs.Models
                     throw new Exception("L'indirizzo Email non può essere nullo");
                 else if (!this.Email.Contains("@") && !this.Email.Contains("."))
                     throw new Exception("L'indirizzo Email non è valido");
+
+                if (this.IdRole <= 0)
+                    throw new Exception("Il ruolo non è valido");
 
 
                 this.IsValid = true;

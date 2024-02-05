@@ -8,6 +8,7 @@ using prenotazione_postazioni_libs.Models;
 using Newtonsoft.Json;
 using prenotazione_postazioni_mvc.HttpServices;
 using System.Net;
+using System.Security.Claims;
 
 namespace prenotazione_postazioni_mvc.Controllers;
 
@@ -20,11 +21,13 @@ public class HomeController : Controller
     public readonly BookingHttpSerivice _bookingHttpService;
     //HTTP Client Factory -> Festa
     public readonly HolidayHttpService _holidayHttpService;
+    public readonly UserHttpService _userHttpService;
 
-    public HomeController(BookingHttpSerivice bookingHttpService, HolidayHttpService holidayHttpService)
+    public HomeController(BookingHttpSerivice bookingHttpService, HolidayHttpService holidayHttpService, UserHttpService userHttpService)
     {
         _bookingHttpService = bookingHttpService;
         _holidayHttpService = holidayHttpService;
+        _userHttpService = userHttpService;
     }
 
     public IActionResult Index()
@@ -249,20 +252,61 @@ public class HomeController : Controller
     [ActionName("GoogleResponse")]
     public async Task<IActionResult> GoogleResponse()
     {
-        Console.Write("GoogleResponse");
         var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        var claims = result.Principal.Identities
-            .FirstOrDefault().Claims.Select(claim => new
-            {
-                claim.Issuer,
-                claim.OriginalIssuer,
-                claim.Type,
-                claim.Value
-            });
+        var claims = result.Principal.Identities.FirstOrDefault()?.Claims.ToList();
 
-        return RedirectToAction("Index");
-        return Json(claims);
+        var emailClaim = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+        var email = emailClaim?.Value;
+        var nameClaim = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+        var fullName = nameClaim?.Value;
+        // Assuming the claim type for the Google ID is "sub"; adjust as necessary based on the actual claim provided by Google.
+        var googleIdClaim = claims?.FirstOrDefault(c => c.Type == "sub");
+        var googleId = googleIdClaim?.Value;
+
+        // Splitting fullName into name and surname
+        var names = fullName?.Split(' ');
+        var name = names?.FirstOrDefault();
+        var surname = names?.Length > 1 ? string.Join(" ", names.Skip(1)) : "";
+
+        // Attempt to retrieve user by email
+        var response = await _userHttpService.GetByEmail(email);
+        User user = null;
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            user = JsonConvert.DeserializeObject<User>(content);
+        }
+
+        if (user == null)
+        {
+            // User not found, create a new user
+            user = new User
+            {
+                Name = name,
+                Surname = surname,
+                Email = email,
+                IdRole = 2, // Assuming 1 is a default role ID; adjust this according to your roles setup
+                Image = null, // Or a default image URL/path if you have one
+                GoogleId = googleId // Add the GoogleId to the user object
+            };
+
+            var addResponse = await _userHttpService.Add(user);
+            if (!addResponse.IsSuccessStatusCode)
+            {
+                // Handle failure
+                throw new Exception("Failed to create user.");
+            }
+
+            // Optionally, read the response to get the newly created user object
+            // This might include setting the LoggedUser if needed
+        }
+
+        // Set the LoggedUser static property or use another method to manage session/user state
+        UserHttpService.LoggedUser = user;
+
+        return RedirectToAction("Index"); // Or redirect as appropriate
     }
+
 
     [ActionName("Logout")]
     public async Task<IActionResult> Logout()
