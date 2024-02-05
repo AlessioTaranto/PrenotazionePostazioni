@@ -43,7 +43,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             string json = JsonConvert.SerializeObject(vote); 
             //var content = new StringContent(json);
 
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "{_apiBaseUrl}/api/vote/add");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"{_apiBaseUrl}/api/vote/add");
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var httpResponseMessage = await httpClient.SendAsync(request);

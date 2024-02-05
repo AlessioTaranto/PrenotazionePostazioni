@@ -79,7 +79,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var jsonBooking = JsonConvert.SerializeObject(bookingDto);
             StringContent content = new StringContent(jsonBooking, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync("{_apiBaseUrl}/api/booking/add", content);
+            var httpResponseMessage = await httpClient.PostAsync($"{_apiBaseUrl}/api/booking/add", content);
 
             return httpResponseMessage;
         }

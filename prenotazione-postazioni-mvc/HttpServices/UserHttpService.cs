@@ -22,7 +22,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
 
-            var httpResponseMessage = await httpClient.GetAsync("{_apiBaseUrl}/api/user/getAll");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/user/getAll");
 
             return httpResponseMessage;
         }
@@ -31,7 +31,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
         {
             var httpClient = _httpClientFactory.CreateClient("PrenotazionePostazioni-User");
 
-            var httpResponseMessage = await httpClient.GetAsync("{_apiBaseUrl}/api/user/getAllWithRole");
+            var httpResponseMessage = await httpClient.GetAsync($"{_apiBaseUrl}/api/user/getAllWithRole");
 
             return httpResponseMessage;
         }
@@ -73,7 +73,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             Console.WriteLine(jsonBooking);
             StringContent content = new StringContent(jsonBooking, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync("{_apiBaseUrl}/api/user/add", content);
+            var httpResponseMessage = await httpClient.PostAsync($"{_apiBaseUrl}/api/user/add", content);
 
             return httpResponseMessage;
         }

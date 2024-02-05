@@ -50,7 +50,7 @@ namespace prenotazione_postazioni_mvc.HttpServices
             var jsonHoliday = JsonConvert.SerializeObject(holidayDto);
             StringContent content = new StringContent(jsonHoliday, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await httpClient.PostAsync("{_apiBaseUrl}/api/holiday/add", content);
+            var httpResponseMessage = await httpClient.PostAsync($"{_apiBaseUrl}/api/holiday/add", content);
 
             return httpResponseMessage;
 

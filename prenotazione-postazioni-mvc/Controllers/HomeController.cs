@@ -162,12 +162,10 @@ public class HomeController : Controller
 
     [HttpPost]
     [ActionName("Booking")]
-    public IActionResult Booking(string userParam, string roomParam, string startDate, string endDate)
+    public async Task<IActionResult> Booking(string userParam, string roomParam, string startDate, string endDate)
     {
-        Task<HttpStatusCode>? getRq = ViewModel?.ExistBooking(userParam, roomParam, startDate, endDate);
-        getRq.Wait();
+        HttpStatusCode code = await ViewModel?.ExistBooking(userParam, roomParam, startDate, endDate);
 
-        HttpStatusCode code = getRq.Result;
 
         if (code == HttpStatusCode.NotFound)
         {
