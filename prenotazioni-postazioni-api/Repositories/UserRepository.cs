@@ -23,7 +23,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Utente trovati, null altrimenti</returns>
         internal List<User>? GetAll()
         {
-            string query = "SELECT * FROM [User];";
+            string query = "SELECT * FROM [Users];";
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<List<User>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
@@ -34,7 +34,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Lista di Utente con i loro ruoli trovati, null altrimenti</returns>
         internal List<UserRole>? GetAllWithRole()
         {
-            string query = $"SELECT u.name AS 'username', u.surname, u.id, u.email, r.name AS 'rolename' FROM [User] u JOIN Role r ON u.idRole = r.id;";
+            string query = $"SELECT u.name AS 'username', u.surname, u.id, u.email, r.name AS 'rolename' FROM [Users] u JOIN Role r ON u.idRole = r.id;";
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<List<UserRole>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
@@ -47,7 +47,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal User? GetById(int idUser)
         {
-            string query = $"SELECT * FROM [User] WHERE id = @idUser;";
+            string query = $"SELECT * FROM [Users] WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);
             return DatabaseManager<User>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -60,7 +60,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>L'utente trovato, null altrimenti</returns>
         internal User? GetByEmail(string email)
         {
-            string query = $"SELECT * FROM [User] WHERE email = @email;";
+            string query = $"SELECT * FROM [Users] WHERE email = @email;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@email", email);
             return DatabaseManager<User>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -73,20 +73,19 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="utente">L'utente che verra salvato nel database (tabella Utenti)</param>
         internal void Add(User utente)
         {
-            string query = $"INSERT INTO [User] (name, surname, email, idRole, googleId, image) VALUES (@name, @surname, @email, @idRole, @googleId, @image);";
+            string query = $"INSERT INTO [Users] (name, surname, email, idRole, image) VALUES (@name, @surname, @email, @idRole, @image);";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@name", utente.Name);
             sqlCommand.Parameters.AddWithValue("@surname", utente.Surname);
             sqlCommand.Parameters.AddWithValue("@email", utente.Email);
             sqlCommand.Parameters.AddWithValue("@idRole", utente.IdRole);
-            sqlCommand.Parameters.AddWithValue("@googleId", utente.GoogleId);
             sqlCommand.Parameters.AddWithValue("@image", utente.Image);
             DatabaseManager<object>.GetInstance().MakeQueryNoResult(sqlCommand);
         }
 
         internal User? GetByName(string name, string surname)
         {
-            string query = $"SELECT * FROM [User] WHERE (name = @name AND surname = @surname)";
+            string query = $"SELECT * FROM [Users] WHERE (name = @name AND surname = @surname)";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@name", name);
             sqlCommand.Parameters.AddWithValue("@surname", surname);

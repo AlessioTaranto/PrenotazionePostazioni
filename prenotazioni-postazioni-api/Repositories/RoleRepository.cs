@@ -18,7 +18,7 @@ namespace prenotazioni_postazioni_api.Repositories
         }
         public List<Role>? GetAll()
         {
-            string query = $"SELECT * FROM Role;";
+            string query = $"SELECT * FROM Roles;";
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<List<Role>>.GetInstance().MakeQueryMoreResults(sqlCommand);
         }
@@ -30,7 +30,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Ruolo trovato, null altrimenti</returns>
         public Role? GetById(int idRole)
         {
-            string query = $"SELECT * FROM Role WHERE id = {idRole};";
+            string query = $"SELECT * FROM Roles WHERE id = {idRole};";
             SqlCommand sqlCommand = new SqlCommand(query);
             return DatabaseManager<Role>.GetInstance().MakeQueryOneResult(sqlCommand);
         }
@@ -42,7 +42,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <returns>Ruolo dell'utente, null altrimenti</returns>
         public Role? GetByUser(int idUser)
         {
-            string query = $"SELECT * FROM [User] WHERE id = @idUser;";
+            string query = $"SELECT * FROM [Users] WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);
             User? utente = DatabaseManager<User>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -50,7 +50,7 @@ namespace prenotazioni_postazioni_api.Repositories
             {
                 throw new PrenotazionePostazioniApiException("IdUtente non trovato");
             }
-            query = $"SELECT * FROM Role WHERE id = @idRole;";
+            query = $"SELECT * FROM Roles WHERE id = @idRole;";
             sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idRole", utente.IdRole);
             return DatabaseManager<Role>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -58,7 +58,7 @@ namespace prenotazioni_postazioni_api.Repositories
 
         public Role? GetByName(string name)
         {
-            string query = $"SELECT * FROM Role WHERE name = @name;";
+            string query = $"SELECT * FROM Roles WHERE name = @name;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@name", name);
             return DatabaseManager<Role>.GetInstance().MakeQueryOneResult(sqlCommand);
@@ -70,7 +70,7 @@ namespace prenotazioni_postazioni_api.Repositories
         /// <param name="idRole">Il ruolo con cui verra aggiornato l'utente</param>
         internal void UpdateUserRole(int idUser, int idRole)
         {
-            string query = $"UPDATE [User] SET idRole = @idRole WHERE id = @idUser;";
+            string query = $"UPDATE [Users] SET idRole = @idRole WHERE id = @idUser;";
             SqlCommand sqlCommand = new SqlCommand(query);
             sqlCommand.Parameters.AddWithValue("@idRole", idRole);
             sqlCommand.Parameters.AddWithValue("@idUser", idUser);

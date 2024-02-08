@@ -259,14 +259,15 @@ public class HomeController : Controller
         var email = emailClaim?.Value;
         var nameClaim = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name);
         var fullName = nameClaim?.Value;
-        // Assuming the claim type for the Google ID is "sub"; adjust as necessary based on the actual claim provided by Google.
-        var googleIdClaim = claims?.FirstOrDefault(c => c.Type == "sub");
-        var googleId = googleIdClaim?.Value;
 
         // Splitting fullName into name and surname
         var names = fullName?.Split(' ');
         var name = names?.FirstOrDefault();
         var surname = names?.Length > 1 ? string.Join(" ", names.Skip(1)) : "";
+
+        // Get image if it exists
+        var imageClaim = claims?.FirstOrDefault(c => c.Type == "urn:google:picture");
+        var image = imageClaim?.Value;
 
         // Attempt to retrieve user by email
         var response = await _userHttpService.GetByEmail(email);
@@ -285,9 +286,8 @@ public class HomeController : Controller
                 Name = name,
                 Surname = surname,
                 Email = email,
-                IdRole = 2, // Assuming 1 is a default role ID; adjust this according to your roles setup
-                Image = null, // Or a default image URL/path if you have one
-                GoogleId = googleId // Add the GoogleId to the user object
+                IdRole = 2, // deault user
+                Image = image, // Or a default image URL/path if you have one
             };
 
             var addResponse = await _userHttpService.Add(user);

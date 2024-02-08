@@ -13,14 +13,13 @@ namespace prenotazione_postazioni_libs.Models
         public string Surname { get; set; }
         public string Email { get; set; }
         public int IdRole { get; set; }
-        public string Image { get; set; }
-        public string GoogleId { get; set; }
+        public string? Image { get; set; }
 
 
         private Exception ModelException { get; set; } = new Exception();
         public bool IsValid { get; set; } = false;
 
-        public User(int id, string name, string surname, string email, int idRole, string googleId)
+        public User(int id, string name, string surname, string email, int idRole)
         {
             this.Id = id;
             this.Name = name;
@@ -29,40 +28,36 @@ namespace prenotazione_postazioni_libs.Models
             this.IdRole = idRole;
 
             this.Validate();
-            GoogleId = googleId;
         }
 
-        public User(int id, string name, string surname, string email, int idRole, string googleId, string Image)
+        public User(int id, string name, string surname, string email, int idRole, string Image)
         {
             this.Id = id;
             this.Name = name;
             this.Surname = surname;
             this.Email = email;
             this.IdRole = idRole;
-            this.GoogleId = googleId;
             this.Image = Image;
 
             this.Validate();
         }
 
-        public User(string name, string surname, string email, int idRole, string googleId)
+        public User(string name, string surname, string email, int idRole)
         {
             Name = name;
             Surname = surname;
             Email = email;
             IdRole = idRole;
-            GoogleId = googleId;
             this.Validate();
         }
 
-        public User(string name, string surname, string email, int idRole, string googleId, string Image)
+        public User(string name, string surname, string email, int idRole, string? Image)
         {
             Name = name;
             Surname = surname;
             Email = email;
             IdRole = idRole;
             this.Image = Image;
-            GoogleId = googleId;
 
             this.Validate();
         }
